@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PreferenceSpecifiers</key>
+	<array>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
+			<string>version 1.2</string>
+		</dict>
+	</array>
+	<key>StringsTable</key>
+	<string>Root</string>
+	<key>UserName</key>
+	<string></string>
+	<key>UserID</key>
+	<string></string>
+	<key>isLoadAvatar</key>
+	<true/>
+	<key>uploadImage</key>
+	<integer>0</integer>
+	<key>isNotFirstLoad</key>
+	<false/>
+	<key>NotificationCount</key>
+	<integer>0</integer>
+	<key>ShowAttachments</key>
+	<true/>
+	<key>isGotDeviceToken</key>
+	<false/>
+	<key>isIntroShowed</key>
+	<false/>
+	<key>preVersion</key>
+	<string>1.1</string>
+	<key>isPostDeviceToken</key>
+	<false/>
+	<key>DeviceToken</key>
+	<string></string>
+	<key>UserAvatar</key>
+	<string></string>
+	<key>UserToken</key>
+	<string></string>
+</dict>
+</plist>

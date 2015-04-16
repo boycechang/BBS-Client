@@ -1,0 +1,406 @@
+//
+//  TQRichTextView.m
+//  TQRichTextViewDemo
+//
+//  Created by fuqiang on 13-9-12.
+//  Copyright (c) 2013年 fuqiang. All rights reserved.
+//
+
+#import "TQRichTextView.h"
+#import <CoreText/CoreText.h>
+#import "TQRichTextEmojiRun.h"
+#import "TQRichTextURLRun.h"
+
+@implementation TQRichTextView
+@synthesize addHeight;
+
+- (id)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        self.text = @"";
+        self.font = [UIFont systemFontOfSize:17.0];
+        self.textColor = [UIColor blackColor];
+        _lineSpacing = -1.0;
+        self.addHeight = 0;
+        
+        //
+        _richTextRunsArray = [[NSMutableArray alloc] init];
+        _richTextRunRectDic = [[NSMutableDictionary alloc] init];
+        //_textAnalyzed = [self analyzeText:_text];
+    }
+    return self;
+}
+
+-(void)awakeFromNib
+{
+    self.text = @"";
+    self.font = [UIFont systemFontOfSize:17.0];
+    self.textColor = [UIColor blackColor];
+    _lineSpacing = -1.0;
+    self.addHeight = 0;
+    //
+    _richTextRunsArray = [[NSMutableArray alloc] init];
+    _richTextRunRectDic = [[NSMutableDictionary alloc] init];
+}
+
+#pragma mark - Draw Rect
+- (void)drawRect:(CGRect)rect
+{
+    //解析文本
+    _textAnalyzed = [self analyzeText:text];
+    
+    //要绘制的文本
+    NSMutableAttributedString* attString = [[NSMutableAttributedString alloc] initWithString:self.textAnalyzed];
+    
+    
+    //设置字体
+    CTFontRef aFont = CTFontCreateWithName((__bridge CFStringRef)self.font.fontName, self.font.pointSize, NULL);
+    [attString addAttribute:(NSString*)kCTFontAttributeName value:(__bridge id)aFont range:NSMakeRange(0,attString.length)];
+    CFRelease(aFont);
+    
+    //CTLineBreakMode aBreakMode = CTL
+    NSMutableParagraphStyle *ps = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    [ps setLineBreakMode:NSLineBreakByCharWrapping];
+    [attString addAttribute:NSParagraphStyleAttributeName value:ps range:NSMakeRange(0,attString.length)];
+    
+    
+    //设置颜色
+    [attString addAttribute:(NSString *)kCTForegroundColorAttributeName value:(id)self.textColor.CGColor range:NSMakeRange(0,attString.length)];
+    
+    //文本处理
+    for (TQRichTextBaseRun *textRun in self.richTextRunsArray)
+    {
+        [textRun replaceTextWithAttributedString:attString];
+    }
+
+    //绘图上下文
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    //修正坐标系
+
+    CGAffineTransform textTran = CGAffineTransformIdentity;
+    textTran = CGAffineTransformMakeTranslation(0.0, self.bounds.size.height);
+    textTran = CGAffineTransformScale(textTran, 1.0, -1.0);
+    CGContextConcatCTM(context, textTran);
+    
+    
+    //绘制
+    int lineCount = 0;
+    CFRange lineRange = CFRangeMake(0,0);
+    CTTypesetterRef typeSetter = CTTypesetterCreateWithAttributedString((__bridge CFAttributedStringRef)attString);
+    float drawLineX = 0;
+    float drawLineY = self.bounds.origin.y + self.bounds.size.height - self.font.ascender;
+    BOOL drawFlag = YES;
+    [self.richTextRunRectDic removeAllObjects];
+    UIView *view;
+    for (view in [self subviews]) {
+        [view removeFromSuperview];
+    }
+    
+    while(drawFlag)
+    {
+        CFIndex testLineLength = CTTypesetterSuggestLineBreak(typeSetter,lineRange.location,self.bounds.size.width);
+check:  lineRange = CFRangeMake(lineRange.location,testLineLength);
+        CTLineRef line = CTTypesetterCreateLine(typeSetter,lineRange);
+        CFArrayRef runs = CTLineGetGlyphRuns(line);
+        
+        //边界检查
+        CTRunRef lastRun = CFArrayGetValueAtIndex(runs, CFArrayGetCount(runs) - 1);
+        CGFloat lastRunAscent;
+        CGFloat laseRunDescent;
+        CGFloat lastRunWidth  = CTRunGetTypographicBounds(lastRun, CFRangeMake(0,0), &lastRunAscent, &laseRunDescent, NULL);
+        CGFloat lastRunPointX = drawLineX + CTLineGetOffsetForStringIndex(line, CTRunGetStringRange(lastRun).location, NULL);
+        
+        if ((lastRunWidth + lastRunPointX) >= self.bounds.size.width)
+        {
+            testLineLength--;
+            CFRelease(line);
+goto check;
+        }
+        
+        //绘制普通行元素
+        drawLineX = CTLineGetPenOffsetForFlush(line, 0,self.bounds.size.width);
+        CGContextSetTextPosition(context, drawLineX, drawLineY);
+        CTLineDraw(line,context);
+        
+        //绘制替换过的特殊文本单元
+        for (int i = 0; i < CFArrayGetCount(runs); i++)
+        {
+            CTRunRef run = CFArrayGetValueAtIndex(runs, i);
+            NSDictionary* attributes = (__bridge NSDictionary*)CTRunGetAttributes(run);
+            TQRichTextBaseRun *textRun = [attributes objectForKey:@"TQRichTextAttribute"];
+            if (textRun)
+            {
+                CGFloat runAscent,runDescent;
+                CGFloat runWidth  = CTRunGetTypographicBounds(run, CFRangeMake(0,0), &runAscent, &runDescent, NULL);
+                CGFloat runHeight = runAscent + (-runDescent);
+                CGFloat runPointX = drawLineX + CTLineGetOffsetForStringIndex(line, CTRunGetStringRange(run).location, NULL);
+                CGFloat runPointY = drawLineY - (-runDescent);
+
+                CGRect runRect = CGRectMake(runPointX, runPointY, runWidth, runHeight);
+                
+                BOOL isDraw = [textRun drawRunWithRect:runRect];
+                
+                if (isDraw) {
+                    [self addEmoji:(TQRichTextEmojiRun*)textRun InRect:runRect];
+                }
+                
+                if (textRun.isResponseTouch)
+                {
+                    if (isDraw)
+                    {
+                        [self.richTextRunRectDic setObject:textRun forKey:[NSValue valueWithCGRect:runRect]];
+                    }
+                    else
+                    {
+                        runRect = CTRunGetImageBounds(run, context, CFRangeMake(0, 0));
+                        runRect.origin.x = runPointX;
+                        [self.richTextRunRectDic setObject:textRun forKey:[NSValue valueWithCGRect:runRect]];
+                    }
+                }
+            }
+        }
+
+        CFRelease(line);
+        
+        if(lineRange.location + lineRange.length >= attString.length)
+        {
+            drawFlag = NO;
+        }
+
+        lineCount++;
+        drawLineY -= self.font.ascender + (- self.font.descender) + self.lineSpacing;
+        lineRange.location += lineRange.length;
+    }
+    
+    CFRelease(typeSetter);
+    addHeight = (-drawLineY - 10);
+}
+
+#pragma mark - Analyze Text
+//-- 解析文本内容
+- (NSString *)analyzeText:(NSString *)string
+{
+    [self.richTextRunsArray removeAllObjects];
+    [self.richTextRunRectDic removeAllObjects];
+    
+    NSString *result = @"";
+    NSMutableArray *array = self.richTextRunsArray;
+    
+    result = [TQRichTextEmojiRun analyzeText:string runsArray:&array];
+    
+    result = [TQRichTextURLRun analyzeText:result runsArray:&array];
+    
+    [self.richTextRunsArray makeObjectsPerformSelector:@selector(setOriginalFont:) withObject:self.font];
+
+    return result;
+}
+
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    /*
+    CGPoint location = [(UITouch *)[touches anyObject] locationInView:self];
+    CGPoint runLocation = CGPointMake(location.x, self.frame.size.height - location.y);
+    
+    if (self.delegage && [self.delegage respondsToSelector:@selector(richTextView: touchBeginRun:)])
+    {
+        __weak TQRichTextView *weakSelf = self;
+        [self.richTextRunRectDic enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop)
+         {
+             CGRect rect = [((NSValue *)key) CGRectValue];
+             TQRichTextBaseRun *run = obj;
+             if(CGRectContainsPoint(rect, runLocation))
+             {
+                 [weakSelf.delegage richTextView:weakSelf touchBeginRun:run];
+             }
+         }];
+    }
+     */
+}
+
+-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    CGPoint location = [(UITouch *)[touches anyObject] locationInView:self];
+    CGPoint runLocation = CGPointMake(location.x, self.frame.size.height - location.y);
+    
+    [self.richTextRunRectDic enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop)
+     {
+         CGRect rect = [((NSValue *)key) CGRectValue];
+         TQRichTextBaseRun *run = obj;
+         if(CGRectContainsPoint(rect, runLocation))
+         {
+             if (run.type == richTextURLRunType)
+             {
+                 if (run.originalText.length >= 8 && ![[run.originalText substringWithRange:NSMakeRange(0, 7)] isEqualToString:@"http://"] && ![[run.originalText substringWithRange:NSMakeRange(0, 8)] isEqualToString:@"https://"] && ![[run.originalText substringWithRange:NSMakeRange(0, 6)] isEqualToString:@"ftp://"]) {
+                     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@", run.originalText]]];
+                 }
+                 else {
+                     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:run.originalText]];
+
+                 }
+             }
+         }
+     }];
+    
+    return;
+}
+
+
+#pragma mark - Set
+- (void)setText:(NSString *)newtext
+{
+    text = newtext;
+    [self setNeedsDisplay];
+}
+
+- (void)setFont:(UIFont *)newfont
+{
+    font = newfont;
+    [self setNeedsDisplay];
+}
+
+- (void)setTextColor:(UIColor *)newtextColor
+{
+    textColor = newtextColor;
+    [self setNeedsDisplay];
+}
+
+- (void)setLineSpacing:(float)lineSpacing
+{
+    _lineSpacing = lineSpacing;
+    [self setNeedsDisplay];
+}
+
+-(void)addEmoji:(TQRichTextEmojiRun *)emojiRun InRect:(CGRect)rect
+{
+    NSString *path = [[NSBundle mainBundle] pathForResource:emojiRun.originalText ofType:@"gif"];
+    NSData *gifData = [NSData dataWithContentsOfFile:path];
+    
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(rect.origin.x, self.frame.size.height - rect.origin.y - rect.size.height, rect.size.width, rect.size.height)];
+    imageView.backgroundColor = [UIColor clearColor];
+    imageView.userInteractionEnabled = NO;
+    [imageView setImage:[UIImage imageWithData:gifData]];
+    [self addSubview:imageView];
+    [self setNeedsDisplay];
+    /*
+    UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectMake(rect.origin.x, self.frame.size.height - rect.origin.y - rect.size.height, rect.size.width, rect.size.height)];
+    webView.backgroundColor = [UIColor clearColor];
+    webView.userInteractionEnabled = NO;
+    webView.scalesPageToFit = YES;
+    [webView loadData:gifData MIMEType:@"image/gif" textEncodingName:nil baseURL:nil];
+    [self addSubview:webView];
+    [self setNeedsDisplay];
+     */
+}
+
+
++(float)getHeightWithString:(NSString *)string FrameWidth:(float)width
+{
+    TQRichTextView *textLabel = [[TQRichTextView alloc] initWithFrame:CGRectMake(0, 0, width, 0)];
+    textLabel.font = [UIFont systemFontOfSize:17.0];
+    [textLabel setText:string];
+    [textLabel getHeight:CGRectMake(0, 0, width, 0)];
+    return textLabel.addHeight;
+}
+
+- (void)getHeight:(CGRect)rect
+{
+    //解析文本
+    _textAnalyzed = [self analyzeText:text];
+    
+    //要绘制的文本
+    NSMutableAttributedString* attString = [[NSMutableAttributedString alloc] initWithString:self.textAnalyzed];
+    
+    //设置字体
+    CTFontRef aFont = CTFontCreateWithName((__bridge CFStringRef)self.font.fontName, self.font.pointSize, NULL);
+    [attString addAttribute:(NSString*)kCTFontAttributeName value:(__bridge id)aFont range:NSMakeRange(0,attString.length)];
+    CFRelease(aFont);
+    
+    //CTLineBreakMode aBreakMode = CTL
+    NSMutableParagraphStyle *ps = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    [ps setLineBreakMode:NSLineBreakByCharWrapping];
+    [attString addAttribute:NSParagraphStyleAttributeName value:ps range:NSMakeRange(0,attString.length)];
+    
+    
+    //设置颜色
+    [attString addAttribute:(NSString *)kCTForegroundColorAttributeName value:(id)self.textColor.CGColor range:NSMakeRange(0,attString.length)];
+    
+    //文本处理
+    for (TQRichTextBaseRun *textRun in self.richTextRunsArray)
+    {
+        [textRun replaceTextWithAttributedString:attString];
+    }
+    
+    //绘图上下文
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    //修正坐标系
+    CGAffineTransform textTran = CGAffineTransformIdentity;
+    textTran = CGAffineTransformMakeTranslation(0.0, self.bounds.size.height);
+    textTran = CGAffineTransformScale(textTran, 1.0, -1.0);
+    CGContextConcatCTM(context, textTran);
+    
+    //绘制
+    int lineCount = 0;
+    CFRange lineRange = CFRangeMake(0,0);
+    CTTypesetterRef typeSetter = CTTypesetterCreateWithAttributedString((__bridge CFAttributedStringRef)attString);
+    float drawLineX = 0;
+    float drawLineY = self.bounds.origin.y + self.bounds.size.height - self.font.ascender;
+    BOOL drawFlag = YES;
+    [self.richTextRunRectDic removeAllObjects];
+    
+    while(drawFlag)
+    {
+        CFIndex testLineLength = CTTypesetterSuggestLineBreak(typeSetter,lineRange.location,self.bounds.size.width);
+    check:  lineRange = CFRangeMake(lineRange.location,testLineLength);
+        CTLineRef line = CTTypesetterCreateLine(typeSetter,lineRange);
+        CFArrayRef runs = CTLineGetGlyphRuns(line);
+        
+        //边界检查
+        CTRunRef lastRun = CFArrayGetValueAtIndex(runs, CFArrayGetCount(runs) - 1);
+        CGFloat lastRunAscent;
+        CGFloat laseRunDescent;
+        CGFloat lastRunWidth  = CTRunGetTypographicBounds(lastRun, CFRangeMake(0,0), &lastRunAscent, &laseRunDescent, NULL);
+        CGFloat lastRunPointX = drawLineX + CTLineGetOffsetForStringIndex(line, CTRunGetStringRange(lastRun).location, NULL);
+        
+        if ((lastRunWidth + lastRunPointX) >= self.bounds.size.width)
+        {
+            testLineLength--;
+            CFRelease(line);
+            goto check;
+        }
+        
+        CFRelease(line);
+        
+        if(lineRange.location + lineRange.length >= attString.length)
+        {
+            drawFlag = NO;
+        }
+        
+        lineCount++;
+        drawLineY -= self.font.ascender + (- self.font.descender) + self.lineSpacing;
+        lineRange.location += lineRange.length;
+    }
+    
+    CFRelease(typeSetter);
+    addHeight = (-drawLineY - 10);
+}
+
+
+@end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
