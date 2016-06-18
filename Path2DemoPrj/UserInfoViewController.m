@@ -7,7 +7,7 @@
 //
 
 #import "UserInfoViewController.h"
-#import "UIImageView+WebCache.h"
+#import "UIImageView+AFNetworking.h"
 #import "UIViewController+MJPopupViewController.h"
 #import "POP.h"
 
@@ -49,15 +49,12 @@
     
     if (user.isOnline) {
         [isOnline setText:[NSString stringWithFormat:@"在线:%@",lastloginstring]];
-        
         if ([[[UIDevice currentDevice]systemVersion]floatValue] >= 7.0) {
             [isOnline setTextColor:[UIColor colorWithRed:34/255.0 green:124/255.0 blue:255/255.0 alpha:1]];
-        }
-        else {
+        } else {
             [isOnline setTextColor:[UIColor whiteColor]];
         }
-    }
-    else {
+    } else {
         [isOnline setText:[NSString stringWithFormat:@"不在线:%@",lastloginstring]];
         [isOnline setTextColor:[UIColor darkGrayColor]];
     }
@@ -74,8 +71,7 @@
         popOutAnimation.springSpeed = 10.0;
         [avatar pop_addAnimation:popOutAnimation forKey:@"pop"];
         isShowBigAvatar = YES;
-    }
-    else {
+    } else {
         avatar.layer.cornerRadius = 50.0f;
         isShowBigAvatar = NO;
         POPSpringAnimation *popOutAnimation = [POPSpringAnimation animation];
@@ -120,11 +116,9 @@
                         [defaults setValue:[myBBS.mySelf.avatar absoluteString] forKey:@"UserAvatar"];
                     }
                 }
-            }
-            else if (myBBS.mySelf){
+            } else if (myBBS.mySelf){
                 [sentMailButton setEnabled:YES];
-            }
-            else if (myBBS.mySelf.ID != nil && ![myBBS.mySelf.ID isEqualToString:userString]){
+            } else if (myBBS.mySelf.ID != nil && ![myBBS.mySelf.ID isEqualToString:userString]){
                 [sentMailButton setEnabled:YES];
                 [addFriendButton setEnabled:YES];
             }
@@ -144,8 +138,7 @@
                 [avatar setImageWithURL:user.avatar];
                 avatar.layer.cornerRadius = 50.0f;
                 avatar.clipsToBounds = YES;
-            }
-            else {
+            } else {
                 [avatar setImage:[UIImage imageNamed:@"leftbackground"]];
                 avatar.layer.cornerRadius = 50.0f;
                 avatar.clipsToBounds = YES;

@@ -78,17 +78,16 @@
 
 - (void)setupSubmenus
 {
-    for (int i = 0; i < 2; ++i)
-    {
-        for (int j = 0; j < 3; ++j)
-        {
+    for (int i = 0; i < 2; ++i) {
+        for (int j = 0; j < 3; ++j) {
+            if (i * 3 + j >= self.submenus.count) {
+                return;
+            }
             TumblrLikeMenuItem *subMenu = self.submenus[i * 3 + j];
             subMenu.center = CGPointMake(100 * j + 62, CGRectGetHeight(self.frame) + i * 125 + 40);
-            if (NULL == subMenu.selectBlock)
-            {
+            if (NULL == subMenu.selectBlock) {
                 __weak TumblrLikeMenu *weakSelf = self;
-                subMenu.selectBlock = ^(TumblrLikeMenuItem *item)
-                {
+                subMenu.selectBlock = ^(TumblrLikeMenuItem *item) {
                     NSUInteger index = [weakSelf.submenus indexOfObject:item];
                     if (index != NSNotFound) {
                         [weakSelf handleSelectAtIndex:index];

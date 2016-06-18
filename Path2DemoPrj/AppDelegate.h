@@ -11,7 +11,6 @@
 #import "MyBBS.h"
 #import "MPNotificationView.h"
 #import "EAIntroView.h"
-#import <AVOSCloud/AVOSCloud.h>
 #import "IntroViewViewController.h"
 
 NSUInteger DeviceSystemMajorVersion ();
@@ -23,7 +22,6 @@ NSUInteger DeviceSystemMajorVersion ();
     MyBBS * myBBS;
     BOOL isSearching;
     NSDictionary * selectedUserInfo;
-    AVGeoPoint *geoPoint;
     IntroViewViewController *intro;
 }
 

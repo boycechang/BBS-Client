@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "DataModel.h"
 
-
 @interface JsonParseEngine : NSObject
 
 +(User *)parseLogin:(NSDictionary *)loginDictionary;                       ///

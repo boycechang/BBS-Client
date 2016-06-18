@@ -13,7 +13,6 @@
 #include <sys/sysctl.h>
 #import "CommonUI.h"
 #import "SlideImageView.h"
-#import "ImageHistoryViewController.h"
 
 @implementation AboutViewController
 @synthesize mDelegate;
@@ -90,7 +89,7 @@
         return 3;
     }
     if (section == 3) {
-        return 2;
+        return 1;
     }
     if (section == 4) {
         return 1;
@@ -218,18 +217,13 @@
             switch (indexPath.row) {
                 case 0:
                 {
-                    cell.textLabel.text = @"浏览图片缓存";
-                }
-                    break;
-                case 1:
-                {
                     cell.textLabel.text = @"清除缓存";
                     if (imageCache != 0) {
                         cell.detailTextLabel.text = [NSString stringWithFormat:@"%0.2f M", imageCache];
                     }
                     else {
                         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                            imageCache = [[SDImageCache sharedImageCache] getSize] / 1024.0 / 1024.0;
+                            imageCache = 0.0;//[[SDImageCache sharedImageCache] getSize] / 1024.0 / 1024.0;
                             dispatch_async(dispatch_get_main_queue(), ^{
                                 cell.detailTextLabel.text = [NSString stringWithFormat:@"%0.2f M", imageCache];
                             });
@@ -296,16 +290,7 @@
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=736043107"]];
     }
     
-    if(indexPath.section == 3 && indexPath.row == 0) {
-        ImageHistoryViewController * imageHistoryViewController = [[ImageHistoryViewController alloc] init];
-        UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:imageHistoryViewController];
-        [self presentViewController:nav animated:YES completion:nil];
-    }
-    
-    if(indexPath.section == 3 && indexPath.row == 1){
-        [[SDImageCache sharedImageCache] cleanDisk];
-        [[SDImageCache sharedImageCache] clearDisk];
-        [[SDImageCache sharedImageCache] clearMemory];
+    if(indexPath.section == 3 && indexPath.row == 0){
         [ASIHTTPRequest clearSession];
         [[NSURLCache sharedURLCache] removeAllCachedResponses];
         

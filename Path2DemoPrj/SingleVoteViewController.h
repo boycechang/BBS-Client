@@ -13,7 +13,7 @@
 #import "DataModel.h"
 #import "WBUtil.h"
 #import "BBSAPI.h"
-#import "UIImageView+WebCache.h"
+#import "UIImageView+AFNetworking.h"
 #import "VoteCellView.h"
 #import "OptionCellView.h"
 

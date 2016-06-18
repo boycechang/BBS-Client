@@ -10,9 +10,6 @@
 #import "ImageBlur.m"
 #import "TumblrLikeMenu.h"
 #import "CommonUI.h"
-#import "ImageHistoryViewController.h"
-#import "MapNewsViewController.h"
-#import "PostMapNewsViewController.h"
 #import "ImageBlur.m"
 #import "HotTopicsViewController.h"
 
@@ -75,11 +72,6 @@
     NSData * backImageData = [defaults dataForKey:@"backImage"];
     UIImage * image = [UIImage imageWithData:backImageData];
     [leftBackView setImage:image];
-}
-
--(IBAction)cancelSearchButtonClicked:(id)sender
-{
-    [self searchBarCancelButtonClicked:search];
 }
 
 #pragma mark - UITableView delegate
@@ -160,7 +152,6 @@
 
 #pragma mark - AboutViewDelegate
 -(void)logout{
-    [AVUser logOut];
     [myBBS userLogout];
     [self.accountInfoViewHeader refresh];
 }
@@ -170,13 +161,6 @@
 - (UIViewController*)airMenu:(XDKAirMenuController*)airMenu viewControllerAtIndexPath:(NSIndexPath*)indexPath
 {
     if (indexPath.row == 0 && indexPath.section == 0) {
-        /*
-        HotTopicsViewController *hot = [[HotTopicsViewController alloc] init];
-        UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:hot];
-        nav.navigationBar.hidden = YES;
-        return nav;
-        */
-        
         TopTenViewController * topTenViewController = [[TopTenViewController alloc] init];
         UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:topTenViewController];
         return nav;
@@ -212,30 +196,22 @@
     TumblrLikeMenuItem *menuItem0 = [[TumblrLikeMenuItem alloc] initWithImage:[UIImage imageNamed:@"TumblrNews"]
                                                              highlightedImage:[UIImage imageNamed:@"TumblrNews"]
                                                                          text:@"公告活动"];
-    TumblrLikeMenuItem *menuItem1 = [[TumblrLikeMenuItem alloc] initWithImage:[UIImage imageNamed:@"TumblrImage"]
-                                                             highlightedImage:[UIImage imageNamed:@"TumblrImage"]
-                                                                         text:@"发现好图"];
-    TumblrLikeMenuItem *menuItem2 = [[TumblrLikeMenuItem alloc] initWithImage:[UIImage imageNamed:@"TumblrVote"]
+    
+    TumblrLikeMenuItem *menuItem1 = [[TumblrLikeMenuItem alloc] initWithImage:[UIImage imageNamed:@"TumblrVote"]
                                                              highlightedImage:[UIImage imageNamed:@"TumblrVote"]
                                                                          text:@"全站投票"];
-    TumblrLikeMenuItem *menuItem3 = [[TumblrLikeMenuItem alloc] initWithImage:[UIImage imageNamed:@"TumblrMapNews"]
-                                                             highlightedImage:[UIImage imageNamed:@"TumblrMapNews"]
-                                                                         text:@"身边事儿"];
-    TumblrLikeMenuItem *menuItem4 = [[TumblrLikeMenuItem alloc] initWithImage:[UIImage imageNamed:@"TumblrWrite"]
-                                                             highlightedImage:[UIImage imageNamed:@"TumblrWrite"]
-                                                                         text:@"发布身边事"];
-    TumblrLikeMenuItem *menuItem5 = [[TumblrLikeMenuItem alloc] initWithImage:[UIImage imageNamed:@"TumblrSettings"]
+    
+    TumblrLikeMenuItem *menuItem2 = [[TumblrLikeMenuItem alloc] initWithImage:[UIImage imageNamed:@"TumblrSettings"]
                                                              highlightedImage:[UIImage imageNamed:@"TumblrSettings"]
                                                                          text:@"设置"];
     
-    NSArray *subMenus = @[menuItem0, menuItem1, menuItem2, menuItem3, menuItem4, menuItem5];
+    NSArray *subMenus = @[menuItem0, menuItem1, menuItem2];
     TumblrLikeMenu *menu = [[TumblrLikeMenu alloc] initWithFrame:self.view.bounds
                                                         subMenus:subMenus
                                                              tip:@"取消"];
     menu.selectBlock = ^(NSUInteger index) {
         switch (index) {
-            case 0:
-            {
+            case 0: {
                 GlobalViewController * globalViewController = [[GlobalViewController alloc] init];
                 UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:globalViewController];
                 nav.modalPresentationStyle = UIModalPresentationCustom;
@@ -247,23 +223,7 @@
                 [self presentViewController:nav animated:YES completion:nil];
             }
                 break;
-            case 1:
-            {
-                GlobalImageViewController * globalImageViewController = [[GlobalImageViewController alloc] init];
-                
-                UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:globalImageViewController];
-                nav.modalPresentationStyle = UIModalPresentationCustom;
-                
-                self.animator = [[ZFModalTransitionAnimator alloc] initWithModalViewController:nav];
-                self.animator.dragable = YES;
-                self.animator.direction = ZFModalTransitonDirectionBottom;
-                nav.transitioningDelegate = self.animator;
-                
-                [self presentViewController:nav animated:YES completion:nil];
-            }
-                break;
-            case 2:
-            {
+            case 1: {
                 VoteListViewController *voteListViewController = [[VoteListViewController alloc] init];
                 UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:voteListViewController];
                 nav.modalPresentationStyle = UIModalPresentationCustom;
@@ -275,46 +235,7 @@
                 [self presentViewController:nav animated:YES completion:nil];
             }
                 break;
-            case 3:
-            {
-                MapNewsViewController *mapNewsViewController = [[MapNewsViewController alloc] init];
-                UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:mapNewsViewController];
-                nav.modalPresentationStyle = UIModalPresentationCustom;
-                
-                self.animator = [[ZFModalTransitionAnimator alloc] initWithModalViewController:nav];
-                self.animator.dragable = YES;
-                self.animator.direction = ZFModalTransitonDirectionBottom;
-                nav.transitioningDelegate = self.animator;
-                [self presentViewController:nav animated:YES completion:nil];
-            }
-                break;
-            case 4:
-            {
-                AVUser * currentUser = [AVUser currentUser];
-                if (currentUser == nil) {
-                    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-                    hud.mode = MBProgressHUDModeText;
-                    hud.labelText = @"请先登录";
-                    hud.margin = 30.f;
-                    hud.yOffset = 0.f;
-                    hud.removeFromSuperViewOnHide = YES;
-                    [hud hide:YES afterDelay:0.8];
-                } else {
-                    PostMapNewsViewController *postMapNewsViewController = [[PostMapNewsViewController alloc] init];
-                    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:postMapNewsViewController];
-                    nav.modalPresentationStyle = UIModalPresentationCustom;
-                    
-                    self.animator = [[ZFModalTransitionAnimator alloc] initWithModalViewController:nav];
-                    self.animator.dragable = YES;
-                    self.animator.direction = ZFModalTransitonDirectionBottom;
-                    nav.transitioningDelegate = self.animator;
-                    
-                    [self presentViewController:nav animated:YES completion:nil];
-                }
-            }
-                break;
-            case 5:
-            {
+            case 2: {
                 AboutViewController * aboutViewController = [[AboutViewController alloc] initWithNibName:@"AboutViewController" bundle:nil];
                 aboutViewController.mDelegate = self;
                 UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:aboutViewController];
@@ -338,15 +259,13 @@
 
 
 #pragma mark AccountInfoHeaderViewDelegate
-- (void)loginButtonClicked
-{
+- (void)loginButtonClicked {
     LoginViewController * loginViewController = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
     loginViewController.mDelegate = self;
     [self presentViewController:loginViewController animated:YES completion:nil];
 }
 
-- (void)favButtonClicked
-{
+- (void)favButtonClicked {
     AllFavViewController *allFavViewController = [[AllFavViewController alloc] init];
     UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:allFavViewController];
     nav.modalPresentationStyle = UIModalPresentationCustom;
@@ -355,12 +274,10 @@
     self.animator.dragable = YES;
     self.animator.direction = ZFModalTransitonDirectionBottom;
     nav.transitioningDelegate = self.animator;
-    
     [self presentViewController:nav animated:YES completion:nil];
 }
 
-- (void)mailButtonClicked
-{
+- (void)mailButtonClicked {
     MailBoxViewController * mailBoxViewController = [[MailBoxViewController alloc] init];
     UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:mailBoxViewController];
     nav.modalPresentationStyle = UIModalPresentationCustom;

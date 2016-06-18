@@ -83,14 +83,10 @@
 
 #pragma mark -
 #pragma mark tableViewDelegate
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UIView* myView = [[UIView alloc] init];
     myView.backgroundColor = [UIColor colorWithRed:0.95 green:0.95 blue:0.95 alpha:1];
-    
-    UIView* myViewDropLine = [[UIView alloc] initWithFrame:CGRectMake(0, 22.5, self.view.frame.size.width, 0.5)];
-    myViewDropLine.backgroundColor = [UIColor whiteColor];
-    [myView addSubview:myViewDropLine];
     
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, 200, 22)];
     titleLabel.font = [UIFont boldSystemFontOfSize:12];
@@ -98,14 +94,17 @@
     titleLabel.backgroundColor = [UIColor clearColor];
     
     NSArray *nameArray = [NSArray arrayWithObjects:@"今日十大", @"本站站务 十大", @"北邮校园 十大", @"学术科技 十大", @"信息社会 十大", @"人文艺术 十大", @"生活时尚 十大", @"休闲娱乐 十大", @"体育健身 十大", @"游戏对战 十大", nil];
-    
     titleLabel.text = [nameArray objectAtIndex:section];
     [myView addSubview:titleLabel];
     return myView;
 }
 
--(NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
-{
+- (nullable NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    NSArray *nameArray = [NSArray arrayWithObjects:@"今日十大", @"本站站务 十大", @"北邮校园 十大", @"学术科技 十大", @"信息社会 十大", @"人文艺术 十大", @"生活时尚 十大", @"休闲娱乐 十大", @"体育健身 十大", @"游戏对战 十大", nil];
+    return [nameArray objectAtIndex:section];
+}
+
+- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
     NSArray *nameArray = [NSArray arrayWithObjects:
                           @"今", @"", @"本", @"", @"北", @"", @"学", @"",
                           @"信", @"", @"人", @"", @"生", @"", @"休", @"",
@@ -113,8 +112,7 @@
     return nameArray;
 }
 
--(NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index {
-
+- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index {
     NSArray *nameArray = [NSArray arrayWithObjects:@"今", @"本", @"北", @"学", @"信", @"人", @"生", @"休", @"体", @"游", nil];
     for(int i = 0; i < [nameArray count]; i++) {
         if([title isEqualToString:[nameArray objectAtIndex:i]]) {
@@ -124,18 +122,16 @@
     return -1;
 }
 
--(NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
-{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return [topTenArray count];
 }
--(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSArray * array = [topTenArray objectAtIndex:section];
     return [array count];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString * identi = @"TopTenTableViewCell";
     TopTenTableViewCell * cell = (TopTenTableViewCell *)[tableView dequeueReusableCellWithIdentifier:identi];
     if (cell == nil) {
@@ -159,8 +155,7 @@
     return cell;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath   
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath    {
     return 70;
 }
 

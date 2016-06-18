@@ -22,6 +22,8 @@
 
 #import <Foundation/Foundation.h>
 #import <objc/runtime.h>
+#import "AppDelegate.h"
+#define APPKEY @"ff7504fa9d6a4975"
 
 #if defined(__IPHONE_OS_VERSION_MIN_REQUIRED)
 #import "UIImageView+AFNetworking.h"
@@ -86,8 +88,16 @@ static char kAFImageRequestOperationObjectKey;
 - (void)setImageWithURL:(NSURL *)url
        placeholderImage:(UIImage *)placeholderImage
 {
+    url = [NSURL URLWithString:[NSString stringWithFormat:@"%@?appkey=%@", url.absoluteString, APPKEY]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
+    
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    if (appDelegate.myBBS.mySelf != nil) {
+        //[request setValue:<#(nullable NSString *)#> forHTTPHeaderField:<#(nonnull NSString *)#>];
+    //setUsername:appDelegate.myBBS.mySelf.username];
+        //[request setPassword:appDelegate.myBBS.mySelf.password];
+    }
 
     [self setImageWithURLRequest:request placeholderImage:placeholderImage success:nil failure:nil];
 }

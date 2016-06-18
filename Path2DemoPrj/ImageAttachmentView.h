@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UIImageView+WebCache.h"
+#import "UIImageView+AFNetworking.h"
 
 @protocol ImageAttachmentViewDelegate <NSObject>
 

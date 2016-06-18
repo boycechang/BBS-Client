@@ -7,7 +7,6 @@
 //
 
 #import "MyBBS.h"
-#import <AVOSCloud/AVOSCloud.h>
 
 @implementation MyBBS
 @synthesize allSections;
@@ -35,8 +34,7 @@
 @synthesize voteListHot;
 @synthesize voteListAll;
 
-- (id)init
-{
+- (id)init {
     self = [super init];
     
     if (self) {
@@ -55,23 +53,6 @@
             mySelf.username = userid;
             mySelf.password = usertoken;
             
-            if ([AVUser currentUser] == nil) {
-                AVUser * avuser = [AVUser user];
-                avuser.username = mySelf.ID;
-                avuser.password =  mySelf.password;
-                [avuser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                    if (succeeded) {
-                    } else {
-                        [AVUser logInWithUsernameInBackground:mySelf.ID password:mySelf.password block:^(AVUser *user, NSError *error) {
-                            if (user != nil) {
-                                NSLog(@"login success");
-                            }
-                        }];
-                        
-                    }
-                }];
-            }
-            
             if (userAvatar != NULL) {
                 mySelf.avatar = [NSURL URLWithString:userAvatar];
             }
@@ -80,14 +61,12 @@
     return self;
 }
 
--(User *)userLogin:(NSString *)user Pass:(NSString *)pass
-{
+- (User *)userLogin:(NSString *)user Pass:(NSString *)pass {
     self.mySelf = [BBSAPI login:user Pass:pass];
     
     if (mySelf == nil) {
         return nil;
-    }
-    else {
+    } else {
         User *mySelfDetal = [BBSAPI userInfo:mySelf.ID];
         if (mySelfDetal) {
             self.mySelf.avatar = mySelfDetal.avatar;
@@ -114,16 +93,14 @@
     }   
 }
 
--(BOOL)addPushNotificationToken
-{
+- (BOOL)addPushNotificationToken {
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     BOOL success = [BBSAPI addNotificationToken:mySelf.token iToken:[defaults objectForKey:@"DeviceToken"]];
     [defaults setBool:success forKey:@"isPostDeviceToken"];
     return success;
 }
 
--(void)userLogout
-{
+- (void)userLogout {
     mySelf.name = nil;
     mySelf.ID = nil;
     mySelf.token = nil;
@@ -141,27 +118,16 @@
     [defaults setValue:NULL forKey:@"UserAvatar"];
 }
 
--(void)refreshNotification {
+- (void)refreshNotification {
     Notification *notifacation = [BBSAPI getAllNotificationCount:mySelf];
     self.notification = notifacation;
-    
     if ((notification.atCount + notification.replyCount) > self.notificationCount) {
         AudioServicesPlayAlertSound (1009);
-        
-        /*
-        dispatch_async(dispatch_get_main_queue(), ^{
-            MPNotificationView * notificationView = [MPNotificationView notifyWithText:@"您有新消息"
-                                        detail:[NSString stringWithFormat:@"%i条未读", notification.atCount + notification.replyCount]
-                                         image:[UIImage imageNamed:@"76.png"]
-                                   andDuration:5.0];
-            [notificationView setUserInteractionEnabled:NO];
-        });
-         */
     }
     self.notificationCount = notification.atCount + notification.replyCount;
 }
 
--(void)clearNotification {
+- (void)clearNotification {
     [BBSAPI clearNotification:mySelf];
 }
 

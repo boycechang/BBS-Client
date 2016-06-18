@@ -7,11 +7,9 @@
 //
 
 #import "LoginViewController.h"
-#import <AVOSCloud/AVOSCloud.h>
 
 @implementation LoginViewController
 @synthesize mDelegate;
-
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -72,16 +70,14 @@
 
 
 #pragma mark - Others
-- (void)resignKeyboard:(id)sender
-{
+- (void)resignKeyboard:(id)sender {
     id firstResponder = [self getFirstResponder];
     if ([firstResponder isKindOfClass:[UITextField class]]) {
         [firstResponder resignFirstResponder];
     }
 }
 
-- (void)previousField:(id)sender
-{
+- (void)previousField:(id)sender {
     id firstResponder = [self getFirstResponder];
     if ([firstResponder isKindOfClass:[UITextField class]]) {
         NSUInteger tag = [firstResponder tag];
@@ -91,8 +87,7 @@
     }
 }
 
-- (void)nextField:(id)sender
-{
+- (void)nextField:(id)sender {
     id firstResponder = [self getFirstResponder];
     if ([firstResponder isKindOfClass:[UITextField class]]) {
         NSUInteger tag = [firstResponder tag];
@@ -102,8 +97,7 @@
     }
 }
 
-- (id)getFirstResponder
-{
+- (id)getFirstResponder {
     NSUInteger index = 0;
     while (index <= 2) {
         UITextField *textField = (UITextField *)[self.view viewWithTag:index];
@@ -122,21 +116,17 @@
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 }
--(void)dealloc
-{
+- (void)dealloc {
     [super dealloc];
-    
 }
 
--(IBAction)back:(id)sender
-{
+- (IBAction)back:(id)sender {
     [user resignFirstResponder];
     [pass resignFirstResponder];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
--(IBAction)login:(id)sender
-{
+- (IBAction)login:(id)sender {
     [user resignFirstResponder];
     [pass resignFirstResponder];
     
@@ -147,8 +137,7 @@
     [HUD release];
 }
 
--(void)firstTimeLoad
-{
+- (void)firstTimeLoad {
     User * myself = [myBBS userLogin:user.text Pass:pass.text];
     [HUD removeFromSuperview];
     if (myself == nil) {
@@ -163,22 +152,6 @@
         });
     } else {
         dispatch_async(dispatch_get_main_queue(), ^{
-            AVUser * avuser = [AVUser user];
-            avuser.username = myself.ID;
-            avuser.password =  myself.password;
-            [avuser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                if (succeeded) {
-                } else {
-                    [AVUser logInWithUsernameInBackground:myself.ID password:myself.password block:^(AVUser *user, NSError *error) {
-                        if (user != nil) {
-                            NSLog(@"login success");
-                        }
-                    }];
-
-                }
-            }];
-
-            
             [self dismissViewControllerAnimated:YES completion:nil];
             [mDelegate LoginSuccess];
         });
@@ -186,13 +159,13 @@
 }
 
 #pragma mark - Rotation
--(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
     return YES;
 }
 - (BOOL)shouldAutorotate{
     return YES;
 }
--(NSUInteger)supportedInterfaceOrientations{
+- (NSUInteger)supportedInterfaceOrientations{
     return UIInterfaceOrientationMaskAllButUpsideDown;
 }
 @end

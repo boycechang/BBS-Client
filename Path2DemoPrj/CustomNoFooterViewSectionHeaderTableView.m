@@ -60,23 +60,22 @@
 }
 
 /**************************  tableview Delegate ***************************/
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    if([mDelegate respondsToSelector:@selector(tableView:viewForHeaderInSection:)])
-        return [mDelegate tableView:tableView viewForHeaderInSection:section];
+- (nullable NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    if([mDelegate respondsToSelector:@selector(tableView:titleForHeaderInSection:)])
+        return [mDelegate tableView:tableView titleForHeaderInSection:section];
     else {
         return nil;
     }
     return nil;
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-    if([mDelegate respondsToSelector:@selector(tableView:titleForHeaderInSection:)])
-        return [mDelegate tableView:tableView titleForHeaderInSection:section];
+- (nullable UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    if([mDelegate respondsToSelector:@selector(tableView:viewForHeaderInSection:)])
+        return [mDelegate tableView:tableView viewForHeaderInSection:section];
     else {
         return nil;
     }
+    return nil;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index {

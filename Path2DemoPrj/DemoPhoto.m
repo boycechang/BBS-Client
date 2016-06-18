@@ -8,7 +8,8 @@
 
 #import "DemoPhoto.h"
 #import "DemoPhotoLoadingView.h"
-#import "SDWebImageManager.h"
+#import "UIImageView+AFNetworking.h"
+
 @interface DemoPhoto ()
 {
     DemoPhotoLoadingView *_photoLoadingView;
@@ -27,26 +28,19 @@
 - (void)loadImageFromURLAsync:(NSURL *)url
 {
     [self notifyImageDidStartLoad];
-    SDWebImageManager *manager = [SDWebImageManager sharedManager];
-    [manager downloadWithURL:url options:0 progress:^(NSUInteger receivedSize, long long expectedSize)
-    {
-        [_photoLoadingView loadWithReceivedSize:receivedSize expectedSize:expectedSize];
-    } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished) {
-        if (!error)
-        {
-            _underlyingImage = image;
-            
-            [self notifyImageDidFinishLoad];
-        }
-        else
-        {
-            [self notifyImageDidFailLoadWithError:error];
-        }
-    }];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
+    [[UIImageView new] setImageWithURLRequest:request placeholderImage:nil
+                                      success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+                                          _underlyingImage = image;
+                                          [self notifyImageDidFinishLoad];
+                                      } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+                                          [self notifyImageDidFailLoadWithError:error];
+                                      }];
 }
 
-- (void)unloadImage
-{
+- (void)unloadImage {
     [super unloadImage];
 }
 

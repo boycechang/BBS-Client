@@ -11,7 +11,7 @@
 #import "AttachmentView.h"
 #import "ImageAttachmentView.h"
 #import "TQRichTextView.h"
-#import "UIImageView+WebCache.h"
+#import "UIImageView+AFNetworking.h"
 
 @protocol SingleTopicCellDelegate <NSObject>
 -(void)imageAttachmentViewInCellTaped:(int)indexRow Index:(int)indexNum;

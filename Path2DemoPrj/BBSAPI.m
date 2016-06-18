@@ -9,6 +9,8 @@
 #import "BBSAPI.h"
 #import "Reachability.h"
 #import "ASIHTTPRequest.h"
+#import "AppDelegate.h"
+
 #define APIADDR @"http://api.byr.cn"
 //#define APIADDR  @"http://napi.tdrd.org"
 
@@ -18,10 +20,8 @@
 
 @implementation BBSAPI
 
-+(NSArray *)searchTopics:(NSString *)key start:(NSInteger)start User:(User *)user BoardName:(NSString *)board
-{
-    if(![BBSAPI isNetworkReachable] || start%50 != 0)
-    {
++ (NSArray *)searchTopics:(NSString *)key start:(NSInteger)start User:(User *)user BoardName:(NSString *)board {
+    if (![BBSAPI isNetworkReachable] || start%50 != 0) {
         return nil;
     }
     
@@ -37,8 +37,7 @@
     if (user == nil) {
         [request setUsername:@"guest"];
         [request setPassword:@""];
-    }
-    else {
+    } else {
         [request setUsername:user.username];
         [request setPassword:user.password];
     }
@@ -48,20 +47,18 @@
     if (feedback == nil) {
         return nil;
     }
+    
     NSDictionary *topTenTopics = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
     NSArray * Status = [JsonParseEngine parseSearchTopics:topTenTopics];
     if (Status == nil) {
         return nil;
-    }
-    else {
+    } else {
         return Status;
     }
 }
 
-+(NSArray *)searchBoards:(NSString *)key User:(User *)user
-{
-    if(![BBSAPI isNetworkReachable])
-    {
++ (NSArray *)searchBoards:(NSString *)key User:(User *)user {
+    if (![BBSAPI isNetworkReachable]) {
         return nil;
     }
     
@@ -75,35 +72,29 @@
     if (user == nil) {
         [request setUsername:@"guest"];
         [request setPassword:@""];
-    }
-    else {
+    } else {
         [request setUsername:user.username];
         [request setPassword:user.password];
     }
     [request setAllowCompressedResponse:YES];
     [request startSynchronous];
-    NSData *feedback = [request responseData];
     
+    NSData *feedback = [request responseData];
     if (feedback == nil) {
         return nil;
     }
     NSDictionary *topTenTopics = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
     
-    
     NSArray * Status = [JsonParseEngine parseBoards:topTenTopics];
     if (Status == nil) {
         return nil;
-    }
-    else {
+    } else {
         return Status;
     }
 }
 
-
-+(User *)login:(NSString *)user Pass:(NSString *)pass
-{
-    if(![BBSAPI isNetworkReachable])
-    {
++ (User *)login:(NSString *)user Pass:(NSString *)pass {
+    if (![BBSAPI isNetworkReachable]) {
         return nil;
     }
     
@@ -123,22 +114,18 @@
         return nil;
     }
     NSDictionary *userDictionary = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
-    
     User * myself = [JsonParseEngine parseLogin:userDictionary];
     if (myself == nil) {
         return nil;
-    }
-    else {
+    } else {
         myself.username = user;
         myself.password = pass;
         return myself;
     }
 }
 
-+(BOOL)addNotificationToken:(NSString *)token iToken:(NSString *)iToken
-{
-    if(![BBSAPI isNetworkReachable])
-    {
++ (BOOL)addNotificationToken:(NSString *)token iToken:(NSString *)iToken {
+    if (![BBSAPI isNetworkReachable]) {
         return false;
     }
     
@@ -156,10 +143,8 @@
     return success;
 }
 
-+(NSArray *)topTen
-{
-    if(![BBSAPI isNetworkReachable])
-    {
++ (NSArray *)topTen {
+    if (![BBSAPI isNetworkReachable]) {
         return nil;
     }
 
@@ -169,8 +154,15 @@
     
     NSURL *url = [NSURL URLWithString:baseurl];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    [request setUsername:@"guest"];
-    [request setPassword:@""];
+    
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    if (appDelegate.myBBS.mySelf != nil) {
+        [request setUsername:appDelegate.myBBS.mySelf.username];
+        [request setPassword:appDelegate.myBBS.mySelf.password];
+    } else {
+        [request setUsername:@"guest"];
+        [request setPassword:@""];
+    }
     [request setAllowCompressedResponse:YES];
     [request startSynchronous];
     
@@ -180,26 +172,31 @@
         return nil;
     }
     NSDictionary *topTenTopics = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
-    
     NSArray * Status = [JsonParseEngine parseTopics:topTenTopics];
     if (Status == nil) {
         return [NSArray arrayWithObject:nil];
-    }
-    else {
+    } else {
         return Status;
     }
 }
 
-+(NSArray *)sectionTopTen:(int)sectionNumber
-{
++ (NSArray *)sectionTopTen:(int)sectionNumber {
     NSMutableString * baseurl = [APIADDR mutableCopy];
     [baseurl appendFormat:@"/widget/section-%i.json?", sectionNumber];
     [baseurl appendFormat:@"appkey=%@", APPKEY];
     
     NSURL *url = [NSURL URLWithString:baseurl];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    [request setUsername:@"guest"];
-    [request setPassword:@""];
+    
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    if (appDelegate.myBBS.mySelf != nil) {
+        [request setUsername:appDelegate.myBBS.mySelf.username];
+        [request setPassword:appDelegate.myBBS.mySelf.password];
+    } else {
+        [request setUsername:@"guest"];
+        [request setPassword:@""];
+    }
+    
     [request setAllowCompressedResponse:YES];
     [request startSynchronous];
     NSData *feedback = [request responseData];
@@ -207,21 +204,18 @@
     if (feedback == nil) {
         return nil;
     }
-    NSDictionary *topTenTopics = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
     
+    NSDictionary *topTenTopics = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
     NSArray * Status = [JsonParseEngine parseTopics:topTenTopics];
     if (Status == nil) {
         return [NSArray arrayWithObject:nil];
-    }
-    else {
+    } else {
         return Status;
     }
 }
 
-+(NSArray *)hotTopics
-{
-    if(![BBSAPI isNetworkReachable])
-    {
++ (NSArray *)hotTopics {
+    if(![BBSAPI isNetworkReachable]) {
         return nil;
     }
     
@@ -231,39 +225,43 @@
     
     NSURL *url = [NSURL URLWithString:baseurl];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    [request setUsername:@"guest"];
-    [request setPassword:@""];
+    
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    if (appDelegate.myBBS.mySelf != nil) {
+        [request setUsername:appDelegate.myBBS.mySelf.username];
+        [request setPassword:appDelegate.myBBS.mySelf.password];
+    } else {
+        [request setUsername:@"guest"];
+        [request setPassword:@""];
+    }
+    
     [request setAllowCompressedResponse:YES];
     [request startSynchronous];
     NSData *feedback = [request responseData];
-
     if (feedback == nil) {
         return nil;
     }
+    
     NSDictionary *hotTopics = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
     
     NSArray * Status = [JsonParseEngine parseTopics:hotTopics];
     if (Status == nil) {
         return nil;
-    }
-    else {
+    } else {
         return Status;
     }
 }
 
 
-+(NSArray *)getBoards:(User *)user Section:(NSString *)section
-{
-    if(![BBSAPI isNetworkReachable])
-    {
++ (NSArray *)getBoards:(User *)user Section:(NSString *)section {
+    if (![BBSAPI isNetworkReachable]) {
         return nil;
     }
     
     NSMutableString * baseurl = [APIADDR mutableCopy];
     if (section == nil) {
         [baseurl appendString:@"/section.json?"];
-    }
-    else {
+    } else {
         [baseurl appendFormat:@"/section/%@.json?", section];
     }
     [baseurl appendFormat:@"appkey=%@", APPKEY];
@@ -274,8 +272,7 @@
     if (user == nil) {
         [request setUsername:@"guest"];
         [request setPassword:@""];
-    }
-    else {
+    } else {
         [request setUsername:user.username];
         [request setPassword:user.password];
     }
@@ -291,17 +288,14 @@
     NSArray * Status = [JsonParseEngine parseBoards:topTenTopics];
     if (Status == nil) {
         return nil;
-    }
-    else {
+    } else {
         return Status;
     }
     return nil;
 }
 
-+(NSArray *)allFavSections:(User *)user
-{
-    if(![BBSAPI isNetworkReachable])
-    {
++ (NSArray *)allFavSections:(User *)user {
+    if (![BBSAPI isNetworkReachable]) {
         return nil;
     }
     
@@ -314,8 +308,7 @@
     if (user == nil) {
         [request setUsername:@"guest"];
         [request setPassword:@""];
-    }
-    else {
+    } else {
         [request setUsername:user.username];
         [request setPassword:user.password];
     }
@@ -330,16 +323,13 @@
     NSArray * Status = [JsonParseEngine parseBoards:topTenTopics];
     if (Status == nil) {
         return nil;
-    }
-    else {
+    } else {
         return Status;
     }
 }
 
-+(NSArray *)onlineFriends:(NSString *)token
-{
-    if(![BBSAPI isNetworkReachable])
-    {
++ (NSArray *)onlineFriends:(NSString *)token {
+    if (![BBSAPI isNetworkReachable]) {
         return nil;
     }
     
@@ -355,19 +345,16 @@
     }
     NSDictionary *topTenTopics = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
 
-    NSArray * Status = [JsonParseEngine parseFriends:topTenTopics];
+    NSArray *Status = [JsonParseEngine parseFriends:topTenTopics];
     if (Status == nil) {
         return nil;
-    }
-    else {
+    } else {
         return Status;
     }
 }
 
-+(NSArray *)allFriends:(NSString *)token
-{
-    if(![BBSAPI isNetworkReachable])
-    {
++ (NSArray *)allFriends:(NSString *)token {
+    if (![BBSAPI isNetworkReachable]) {
         return nil;
     }
     
@@ -386,16 +373,13 @@
     NSArray * Status = [JsonParseEngine parseFriends:topTenTopics];
     if (Status == nil) {
         return nil;
-    }
-    else {
+    } else {
         return Status;
     }
 }
 
-+(BOOL)deletFriend:(NSString *)token ID:(NSString *)ID
-{
-    if(![BBSAPI isNetworkReachable])
-    {
++ (BOOL)deletFriend:(NSString *)token ID:(NSString *)ID {
+    if (![BBSAPI isNetworkReachable]) {
         return false;
     }
     
@@ -408,15 +392,11 @@
         return NO;
     }
     NSDictionary *topTenTopics = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
-    
-    
     BOOL success = [[topTenTopics objectForKey:@"success"] boolValue];
     return success;
 }
-+(BOOL)addFriend:(NSString *)token ID:(NSString *)ID
-{
-    if(![BBSAPI isNetworkReachable])
-    {
++ (BOOL)addFriend:(NSString *)token ID:(NSString *)ID {
+    if (![BBSAPI isNetworkReachable]) {
         return false;
     }
     
@@ -430,7 +410,6 @@
     }
     NSDictionary *topTenTopics = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
     
-    
     int result = [[topTenTopics objectForKey:@"result"] intValue];
     BOOL success = NO;
     if (result == 0) {
@@ -439,8 +418,7 @@
     return success;
 }
 
-+(BOOL)addFavBoard:(User *)user BoardName:(NSString *)BoardName
-{
++ (BOOL)addFavBoard:(User *)user BoardName:(NSString *)BoardName {
     if(![BBSAPI isNetworkReachable]) {
         return NO;
     }
@@ -448,7 +426,6 @@
     NSMutableString * baseurl = [APIADDR mutableCopy];
     [baseurl appendFormat:@"/favorite/add/0.json?"];
     [baseurl appendFormat:@"appkey=%@", APPKEY];
-    
     NSURL *url = [NSURL URLWithString:baseurl];
     
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
@@ -462,7 +439,6 @@
     
     [request setPostValue:BoardName forKey:@"name"];
     [request setPostValue:@"0" forKey:@"dir"];
-    
     [request setAllowCompressedResponse:YES];
     [request setRequestMethod:@"POST"];
     [request startSynchronous];
@@ -476,8 +452,7 @@
     return YES;
 }
 
-+(BOOL)deleteFavBoard:(User *)user BoardName:(NSString *)BoardName
-{
++ (BOOL)deleteFavBoard:(User *)user BoardName:(NSString *)BoardName {
     if(![BBSAPI isNetworkReachable]) {
         return NO;
     }
@@ -499,7 +474,6 @@
     
     [request setPostValue:BoardName forKey:@"name"];
     [request setPostValue:@"0" forKey:@"dir"];
-    
     [request setAllowCompressedResponse:YES];
     [request setRequestMethod:@"POST"];
     [request startSynchronous];
@@ -542,10 +516,8 @@
     return FALSE;
 }
 
-+(NSArray *)getMails:(User *)user Type:(int)type Start:(int)start
-{
-    if(![BBSAPI isNetworkReachable] || start%50 != 0)
-    {
++ (NSArray *)getMails:(User *)user Type:(int)type Start:(int)start {
+    if (![BBSAPI isNetworkReachable] || start%50 != 0) {
         return nil;
     }
     
@@ -574,8 +546,7 @@
     if (user == nil) {
         [request setUsername:@"guest"];
         [request setPassword:@""];
-    }
-    else {
+    } else {
         [request setUsername:user.username];
         [request setPassword:user.password];
     }
@@ -597,8 +568,7 @@
     }
 }
 
-+(Mail *)getSingleMail:(User *)user Type:(int)type ID:(int)ID
-{
++ (Mail *)getSingleMail:(User *)user Type:(int)type ID:(int)ID {
     if(![BBSAPI isNetworkReachable])
     {
         return nil;
@@ -628,34 +598,28 @@
     if (user == nil) {
         [request setUsername:@"guest"];
         [request setPassword:@""];
-    }
-    else {
+    } else {
         [request setUsername:user.username];
         [request setPassword:user.password];
     }
     [request setAllowCompressedResponse:YES];
     [request startSynchronous];
     NSData *feedback = [request responseData];
-    
     if (feedback == nil) {
         return nil;
     }
+    
     NSDictionary *topTenTopics = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
-    
-    
     Mail * Status = [JsonParseEngine parseSingleMail:topTenTopics Type:type];
     if (Status == nil) {
         return nil;
-    }
-    else {
+    } else {
         return Status;
     }
 }
 
-+(BOOL)deleteSingleMail:(User *)user Type:(int)type ID:(int)ID
-{
-    if(![BBSAPI isNetworkReachable])
-    {
++ (BOOL)deleteSingleMail:(User *)user Type:(int)type ID:(int)ID {
+    if (![BBSAPI isNetworkReachable]) {
         return false;
     }
     
@@ -683,8 +647,7 @@
     if (user == nil) {
         [request setUsername:@"guest"];
         [request setPassword:@""];
-    }
-    else {
+    } else {
         [request setUsername:user.username];
         [request setPassword:user.password];
     }
@@ -699,8 +662,9 @@
     
     NSDictionary *topTenTopics = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
     NSString * code = [topTenTopics objectForKey:@"code"];
-    if (!code)
+    if (!code) {
         return true;
+    }
     
     return false;
 }
@@ -967,13 +931,15 @@
     NSURL *url = [NSURL URLWithString:baseurl];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
     
-    if (user != nil) {
-        [request setUsername:user.username];
-        [request setPassword:user.password];
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    if (appDelegate.myBBS.mySelf != nil) {
+        [request setUsername:appDelegate.myBBS.mySelf.username];
+        [request setPassword:appDelegate.myBBS.mySelf.password];
     } else {
         [request setUsername:@"guest"];
         [request setPassword:@""];
     }
+    
     [request setAllowCompressedResponse:YES];
     [request startSynchronous];
     NSData *feedback = [request responseData];
@@ -1120,10 +1086,8 @@
 }
 
 
-+(User *)userInfo:(NSString *)userID
-{
-    if(![BBSAPI isNetworkReachable])
-    {
++ (User *)userInfo:(NSString *)userID {
+    if (![BBSAPI isNetworkReachable]) {
         return nil;
     }
     
@@ -1133,8 +1097,15 @@
     
     NSURL *url = [NSURL URLWithString:baseurl];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    [request setUsername:@"guest"];
-    [request setPassword:@""];
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    if (appDelegate.myBBS.mySelf != nil) {
+        [request setUsername:appDelegate.myBBS.mySelf.username];
+        [request setPassword:appDelegate.myBBS.mySelf.password];
+    } else {
+        [request setUsername:@"guest"];
+        [request setPassword:@""];
+    }
+    
     [request setAllowCompressedResponse:YES];
     [request startSynchronous];
     NSData *feedback = [request responseData];
@@ -1146,17 +1117,15 @@
     User * Status = [JsonParseEngine parseUserInfo:userInfo];
     if (Status == nil) {
         return nil;
-    }
-    else {
+    } else {
         return Status;
     }
 }
 
 
-+(BOOL)editTopic:(User *)user Board:(NSString *)board Title:(NSString *)title Content:(NSString *)content Reid:(int)reid
++ (BOOL)editTopic:(User *)user Board:(NSString *)board Title:(NSString *)title Content:(NSString *)content Reid:(int)reid
 {
-    if(![BBSAPI isNetworkReachable])
-    {
+    if (![BBSAPI isNetworkReachable]) {
         return false;
     }
     
@@ -1169,14 +1138,12 @@
     if (user == nil) {
         [request setUsername:@"guest"];
         [request setPassword:@""];
-    }
-    else {
+    } else {
         [request setUsername:user.username];
         [request setPassword:user.password];
     }
     [request setAllowCompressedResponse:YES];
     [request setRequestMethod:@"POST"];
-    
     [request setPostValue:[NSString stringWithFormat:@"%i", reid] forKey:@"reid"];
     [request setPostValue:[title URLEncodedString] forKey:@"title"];
     [request setPostValue:[content URLEncodedString] forKey:@"content"];
@@ -1282,36 +1249,32 @@
     NSLog(@"%@", feedbackString);
     
     if (feedback == nil) {
-        return NO;
+        return nil;
     }
     NSDictionary *attDic = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
     NSArray *attArray=[JsonParseEngine parseAttachments:attDic];
     if (attArray!=nil) {
         return attArray;
-    }
-    else
-    {
+    } else {
         return nil;
     }
 }
 
 
-+(void)utfAppendBody:(NSMutableData *)body data:(NSString *)data {
++ (void)utfAppendBody:(NSMutableData *)body data:(NSString *)data {
 	[body appendData:[data dataUsingEncoding:NSUTF8StringEncoding]];
 }
 
-+(NSArray* )deleteAttachmentsFromTopic:(User *)user Board:(NSString *)board ID:(int)ID Name:(NSString *)name
++ (NSArray* )deleteAttachmentsFromTopic:(User *)user Board:(NSString *)board ID:(int)ID Name:(NSString *)name
 {
-    if(![BBSAPI isNetworkReachable])
-    {
+    if (![BBSAPI isNetworkReachable]) {
         return nil;
     }
     
     NSMutableString * baseurl = [APIADDR mutableCopy];
     if (ID != 0) {
         [baseurl appendFormat:@"/attachment/%@/delete/%i.json?", board, ID];
-    }
-    else {
+    } else {
         [baseurl appendFormat:@"/attachment/%@/delete.json?", board];
     }
     
@@ -1322,8 +1285,7 @@
     if (user == nil) {
         [request setUsername:@"guest"];
         [request setPassword:@""];
-    }
-    else {
+    } else {
         [request setUsername:user.username];
         [request setPassword:user.password];
     }
@@ -1333,35 +1295,29 @@
     [request startSynchronous];
     
     NSData *feedback = [request responseData];
-    NSString * feedbackString = [[NSString alloc] initWithData:feedback encoding:NSUTF8StringEncoding];
-    NSLog(@"%@", feedbackString);
-    
     if (feedback == nil) {
-        return NO;
+        return nil;
     }
+    
     NSDictionary *attDic = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
     NSArray *attArray=[JsonParseEngine parseAttachments:attDic];
     if (attArray!=nil) {
         return attArray;
-    }
-    else
-    {
+    } else {
         return nil;
     }
 }
 
-+(NSArray* )getAttachmentsFromTopic:(User *)user Board:(NSString *)board ID:(int)ID
++ (NSArray* )getAttachmentsFromTopic:(User *)user Board:(NSString *)board ID:(int)ID
 {
-    if(![BBSAPI isNetworkReachable])
-    {
+    if (![BBSAPI isNetworkReachable]) {
         return nil;
     }
     
     NSMutableString * baseurl = [APIADDR mutableCopy];
     if (ID != 0) {
         [baseurl appendFormat:@"/attachment/%@/%i.json?", board, ID];
-    }
-    else {
+    } else {
        [baseurl appendFormat:@"/attachment/%@.json?", board];
     }
 
@@ -1372,8 +1328,7 @@
     if (user == nil) {
         [request setUsername:@"guest"];
         [request setPassword:@""];
-    }
-    else {
+    } else {
         [request setUsername:user.username];
         [request setPassword:user.password];
     }
@@ -1383,15 +1338,13 @@
     
     NSData *feedback = [request responseData];
     if (feedback == nil) {
-        return NO;
+        return nil;
     }
     NSDictionary *attDic = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
     NSArray *attArray=[JsonParseEngine parseAttachments:attDic];
     if (attArray!=nil) {
         return attArray;
-    }
-    else
-    {
+    } else {
         return nil;
     }
 }
@@ -1491,8 +1444,15 @@
     
     NSURL *url = [NSURL URLWithString:baseurl];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    [request setUsername:@"guest"];
-    [request setPassword:@""];
+    
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    if (appDelegate.myBBS.mySelf != nil) {
+        [request setUsername:appDelegate.myBBS.mySelf.username];
+        [request setPassword:appDelegate.myBBS.mySelf.password];
+    } else {
+        [request setUsername:@"guest"];
+        [request setPassword:@""];
+    }
     
     [request setAllowCompressedResponse:YES];
     [request startSynchronous];
@@ -1527,7 +1487,7 @@
     return newAllArray;
 }
 
-+(NSArray *)picturesTopics:(int)start;
++ (NSArray *)picturesTopics:(int)start;
 {
     NSArray * PicturesArray = [BBSAPI boardTopics:@"Picture" Start:start Limit:10 User:nil Mode:6];
     NSMutableArray * newAllArray = [[NSMutableArray alloc] init];
@@ -1544,8 +1504,7 @@
 
 +(NSArray *)getVoteList:(User *)user Type:(NSString *)type   ///type: me|join|list|new|hot|all
 {
-    if(![BBSAPI isNetworkReachable])
-    {
+    if (![BBSAPI isNetworkReachable]) {
         return nil;
     }
     
@@ -1558,35 +1517,31 @@
     if (user == nil) {
         [request setUsername:@"guest"];
         [request setPassword:@""];
-    }
-    else {
+    } else {
         [request setUsername:user.username];
         [request setPassword:user.password];
     }
     [request setAllowCompressedResponse:YES];
     [request startSynchronous];
+    
     NSData *feedback = [request responseData];
-    NSString * feedbackString = [[NSString alloc] initWithData:feedback encoding:NSUTF8StringEncoding];
-    NSLog(@"%@", feedbackString);
     
     if (feedback == nil) {
         return nil;
     }
+    
     NSDictionary *singleTopic = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
     NSArray * Status = [JsonParseEngine parseVoteList:singleTopic];
     if (Status == nil) {
         return nil;
-    }
-    else {
+    } else {
         return Status;
     }
 }
 
 
-+(Vote *)getSingleVote:(User *)user ID:(int)ID
-{
-    if(![BBSAPI isNetworkReachable])
-    {
++ (Vote *)getSingleVote:(User *)user ID:(int)ID {
+    if (![BBSAPI isNetworkReachable]) {
         return nil;
     }
     

@@ -19,7 +19,6 @@
 #import "NotificationViewController.h"
 #import "TopicsViewController.h"
 #import "AboutViewController.h"
-#import "GlobalImageViewController.h"
 #import "VoteListViewController.h"
 #import "XDKAirMenuController.h"
 #import "AccountInfoHeaderView.h"
