@@ -12,7 +12,6 @@
 #include <sys/types.h>
 #include <sys/sysctl.h>
 #import "CommonUI.h"
-#import "SlideImageView.h"
 
 @implementation AboutViewController
 @synthesize mDelegate;

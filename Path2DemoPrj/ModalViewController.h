@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UINavigationController+MHDismissModalView.h"
 
 @protocol ModalViewControllerDelegate <NSObject>
 -(void)didSelectPage:(int)index;

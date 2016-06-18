@@ -24,12 +24,12 @@
 @synthesize selectedUserInfo;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    self.myBBS = [[MyBBS alloc] init];
+    application.statusBarStyle = UIStatusBarStyleLightContent;
     
+    self.myBBS = [[MyBBS alloc] init];
     [self.leftnavController.navigationBar setHidden:YES];
     
     self.window.backgroundColor = [UIColor clearColor];
-    self.window.opaque = NO;
     self.window.rootViewController = self.leftnavController;
     [self.window makeKeyAndVisible];
     
@@ -41,21 +41,12 @@
         [defaults setBool:YES forKey:@"ShowAttachments"];
     }
     
-    NSString *version = [defaults stringForKey:@"preVersion"];
-    if (![version isEqualToString:@"1.2"]) {
-        [defaults setValue:@"1.2" forKey:@"preVersion"];
-        [self showIntro];
-    } else {
-        [self showWave];
-    }
-    
+    [self showWave];
     [NSTimer scheduledTimerWithTimeInterval:10.0 target:self selector:@selector(refreshNotification) userInfo:nil repeats:YES];
-    
     return YES;
 }
 
-- (void)showWave
-{
+- (void)showWave {
     VWWWaterView *waterView = [[VWWWaterView alloc] initWithFrame:CGRectMake(0, 0, self.window.bounds.size.width, self.window.bounds.size.height + 200)];
     waterView.transform = CGAffineTransformIdentity;
     [self.window addSubview:waterView];
@@ -66,19 +57,6 @@
     }];
 }
 
-- (void)enterButtonClicked
-{
-    [intro.view removeFromSuperview];
-    intro = nil;
-    [self showWave];
-}
-
-- (void)showIntro {
-    intro = [IntroViewViewController new];
-    intro.mDelegate = self;
-    [self.window addSubview:intro.view];
-}
-
 - (void)refreshNotification {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [self.myBBS refreshNotification];
@@ -87,7 +65,6 @@
         });
     });
 }
-
 
 -(void)applicationDidBecomeActive:(UIApplication *)application {
     [self refreshNotification];
@@ -102,8 +79,4 @@
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:self.myBBS.notificationCount];
 }
 
-#pragma mark - EAIntroDelegate
-- (void)introDidFinish {
-    NSLog(@"Intro callback");
-}
 @end

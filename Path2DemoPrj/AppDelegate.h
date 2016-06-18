@@ -10,19 +10,16 @@
 #import <UIKit/UIKit.h>
 #import "MyBBS.h"
 #import "MPNotificationView.h"
-#import "EAIntroView.h"
-#import "IntroViewViewController.h"
 
 NSUInteger DeviceSystemMajorVersion ();
 
 @class LeftViewController;
 @class PushNotificationWindow;
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, MPNotificationViewDelegate, UIAlertViewDelegate, EAIntroDelegate, IntroViewViewControllerDelegate> {
+@interface AppDelegate : UIResponder <UIApplicationDelegate, MPNotificationViewDelegate, UIAlertViewDelegate> {
     MyBBS * myBBS;
     BOOL isSearching;
     NSDictionary * selectedUserInfo;
-    IntroViewViewController *intro;
 }
 
 @property (strong, nonatomic) IBOutlet UIWindow *window;

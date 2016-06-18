@@ -8,7 +8,6 @@
 
 #import "LeftViewController.h"
 #import "ImageBlur.m"
-#import "TumblrLikeMenu.h"
 #import "CommonUI.h"
 #import "ImageBlur.m"
 #import "HotTopicsViewController.h"
@@ -165,10 +164,6 @@
         
         FTPagingViewController *hotPage = [[FTPagingViewController alloc] initWithViewControllers:@[topTenVC, globalVC, globalVC2] titles:@[@"十大", @"公告", @"活动"]];
         UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:hotPage];
-//        
-//        nav.navigationBar.barTintColor = [UIColor lightGrayColor];
-//        nav.navigationBar.tintColor = [UIColor whiteColor];
-//        [nav.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
         
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         UIBarButtonItem *menuBarItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menuiconwhite.png"] style:UIBarButtonItemStyleDone target:appDelegate.leftViewController action:@selector(showLeftView:)];
@@ -214,38 +209,19 @@
 - (void)favButtonClicked {
     AllFavViewController *allFavViewController = [[AllFavViewController alloc] init];
     UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:allFavViewController];
-    nav.modalPresentationStyle = UIModalPresentationCustom;
-    
-    self.animator = [[ZFModalTransitionAnimator alloc] initWithModalViewController:nav];
-    self.animator.dragable = YES;
-    self.animator.direction = ZFModalTransitonDirectionBottom;
-    nav.transitioningDelegate = self.animator;
     [self presentViewController:nav animated:YES completion:nil];
 }
 
 - (void)mailButtonClicked {
     AboutViewController * aboutViewController = [[AboutViewController alloc] init];
+    aboutViewController.mDelegate = self;
     UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:aboutViewController];
-    nav.modalPresentationStyle = UIModalPresentationCustom;
-    
-    self.animator = [[ZFModalTransitionAnimator alloc] initWithModalViewController:nav];
-    self.animator.dragable = YES;
-    self.animator.direction = ZFModalTransitonDirectionBottom;
-    nav.transitioningDelegate = self.animator;
-    
     [self presentViewController:nav animated:YES completion:nil];
 }
 
 - (void)notificationButtonClicked {
     NotificationViewController * notificationViewController = [[NotificationViewController alloc] init];
     UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:notificationViewController];
-    nav.modalPresentationStyle = UIModalPresentationCustom;
-    
-    self.animator = [[ZFModalTransitionAnimator alloc] initWithModalViewController:nav];
-    self.animator.dragable = YES;
-    self.animator.direction = ZFModalTransitonDirectionBottom;
-    nav.transitioningDelegate = self.animator;
-    
     [self presentViewController:nav animated:YES completion:nil];
 }
 

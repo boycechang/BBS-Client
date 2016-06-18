@@ -10,8 +10,6 @@
 #import "CXPhotoBrowser.h"
 #import "DemoPhoto.h"
 #import "CommonUI.h"
-#import "UIImage+ImageEffects.h"
-#import "UINavigationController+MHDismissModalView.h"
 #import "POP.h"
 
 @implementation SingleTopicViewController

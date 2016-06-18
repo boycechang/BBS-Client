@@ -19,7 +19,6 @@
 #import "UserInfoViewController.h"
 #import "WebViewController.h"
 #import "UIViewController+MJPopupViewController.h"
-#import "MJNIndexView.h"
 #import "ModalViewController.h"
 
 @protocol SingleTopicViewControllerDelegate <NSObject>

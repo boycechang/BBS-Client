@@ -22,7 +22,6 @@
 #import "VoteListViewController.h"
 #import "XDKAirMenuController.h"
 #import "AccountInfoHeaderView.h"
-#import "ZFModalTransitionAnimator.h"
 
 @interface LeftViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UIActionSheetDelegate, AboutViewControllerDelegate, XDKAirMenuDelegate, AccountInfoHeaderViewDelegate> {
     
@@ -42,7 +41,6 @@
 @property (nonatomic, strong) IBOutlet UITableView * mainTableView;
 @property (nonatomic, strong) XDKAirMenuController *airMenuController;
 @property (nonatomic, strong) AccountInfoHeaderView * accountInfoViewHeader;
-@property (nonatomic, strong) ZFModalTransitionAnimator *animator;
 
 - (IBAction)showLeftView:(id)sender;
 
