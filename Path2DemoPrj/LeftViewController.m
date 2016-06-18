@@ -12,10 +12,10 @@
 #import "CommonUI.h"
 #import "ImageBlur.m"
 #import "HotTopicsViewController.h"
+#import "FTPagingViewController.h"
 
 @implementation LeftViewController
 @synthesize mainTableView;
-@synthesize animator;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -33,14 +33,11 @@
     [self.view setFrame:CGRectMake(0, 0, rect.size.width, rect.size.height)];
     self.title = @"北邮人";
     
-    search.delegate = self;
-    search.alpha = 0.8;
-    
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     myBBS = appDelegate.myBBS;
     
-    tableTitles = [NSArray arrayWithObjects:@"热帖", @"版面", nil];
-    tableIcon1 = [NSArray arrayWithObjects:@"TopTenIcon", @"BoardIcon", nil];
+    tableTitles = [NSArray arrayWithObjects:@"热门", @"版面", @"投票", @"邮件", nil];
+    tableIcon1 = [NSArray arrayWithObjects:@"TopTenIcon", @"BoardIcon", @"VoteIcon", @"MailIcon", nil];
     
     [self changeLeftBack];
     
@@ -62,7 +59,6 @@
 
 - (void)dealloc {
     tableTitles = nil;
-    search = nil;
     myBBS = nil;
 }
 
@@ -161,8 +157,23 @@
 - (UIViewController*)airMenu:(XDKAirMenuController*)airMenu viewControllerAtIndexPath:(NSIndexPath*)indexPath
 {
     if (indexPath.row == 0 && indexPath.section == 0) {
-        TopTenViewController * topTenViewController = [[TopTenViewController alloc] init];
-        UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:topTenViewController];
+        TopTenViewController * topTenVC = [TopTenViewController new];
+        GlobalViewController * globalVC = [GlobalViewController new];
+        globalVC.mode = 0;
+        GlobalViewController * globalVC2 = [GlobalViewController new];
+        globalVC2.mode = 1;
+        
+        FTPagingViewController *hotPage = [[FTPagingViewController alloc] initWithViewControllers:@[topTenVC, globalVC, globalVC2] titles:@[@"十大", @"公告", @"活动"]];
+        UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:hotPage];
+//        
+//        nav.navigationBar.barTintColor = [UIColor lightGrayColor];
+//        nav.navigationBar.tintColor = [UIColor whiteColor];
+//        [nav.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+        
+        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        UIBarButtonItem *menuBarItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menuiconwhite.png"] style:UIBarButtonItemStyleDone target:appDelegate.leftViewController action:@selector(showLeftView:)];
+        nav.navigationItem.leftBarButtonItem = menuBarItem;
+        
         return nav;
     }
     if (indexPath.row == 1 && indexPath.section == 0) {
@@ -175,86 +186,21 @@
         UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:voteListViewController];
         return nav;
     }
+    if (indexPath.row == 3 && indexPath.section == 0) {
+        MailBoxViewController * mailVC = [MailBoxViewController new];
+        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:mailVC];
+        return nav;
+    }
     
     return nil;
 }
 
-- (UITableView*)tableViewForAirMenu:(XDKAirMenuController*)airMenu
-{
+- (UITableView *)tableViewForAirMenu:(XDKAirMenuController*)airMenu {
     return self.mainTableView;
 }
 
-- (IBAction)showLeftView:(id)sender
-{
+- (IBAction)showLeftView:(id)sender {
     [self.airMenuController openMenuAnimated];
-}
-
-
-#pragma mark TumblrMenu
-- (IBAction)showTumblrMune:(id)sender
-{
-    TumblrLikeMenuItem *menuItem0 = [[TumblrLikeMenuItem alloc] initWithImage:[UIImage imageNamed:@"TumblrNews"]
-                                                             highlightedImage:[UIImage imageNamed:@"TumblrNews"]
-                                                                         text:@"公告活动"];
-    
-    TumblrLikeMenuItem *menuItem1 = [[TumblrLikeMenuItem alloc] initWithImage:[UIImage imageNamed:@"TumblrVote"]
-                                                             highlightedImage:[UIImage imageNamed:@"TumblrVote"]
-                                                                         text:@"全站投票"];
-    
-    TumblrLikeMenuItem *menuItem2 = [[TumblrLikeMenuItem alloc] initWithImage:[UIImage imageNamed:@"TumblrSettings"]
-                                                             highlightedImage:[UIImage imageNamed:@"TumblrSettings"]
-                                                                         text:@"设置"];
-    
-    NSArray *subMenus = @[menuItem0, menuItem1, menuItem2];
-    TumblrLikeMenu *menu = [[TumblrLikeMenu alloc] initWithFrame:self.view.bounds
-                                                        subMenus:subMenus
-                                                             tip:@"取消"];
-    menu.selectBlock = ^(NSUInteger index) {
-        switch (index) {
-            case 0: {
-                GlobalViewController * globalViewController = [[GlobalViewController alloc] init];
-                UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:globalViewController];
-                nav.modalPresentationStyle = UIModalPresentationCustom;
-                
-                self.animator = [[ZFModalTransitionAnimator alloc] initWithModalViewController:nav];
-                self.animator.dragable = YES;
-                self.animator.direction = ZFModalTransitonDirectionBottom;
-                nav.transitioningDelegate = self.animator;
-                [self presentViewController:nav animated:YES completion:nil];
-            }
-                break;
-            case 1: {
-                VoteListViewController *voteListViewController = [[VoteListViewController alloc] init];
-                UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:voteListViewController];
-                nav.modalPresentationStyle = UIModalPresentationCustom;
-                
-                self.animator = [[ZFModalTransitionAnimator alloc] initWithModalViewController:nav];
-                self.animator.dragable = YES;
-                self.animator.direction = ZFModalTransitonDirectionBottom;
-                nav.transitioningDelegate = self.animator;
-                [self presentViewController:nav animated:YES completion:nil];
-            }
-                break;
-            case 2: {
-                AboutViewController * aboutViewController = [[AboutViewController alloc] initWithNibName:@"AboutViewController" bundle:nil];
-                aboutViewController.mDelegate = self;
-                UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:aboutViewController];
-                nav.modalPresentationStyle = UIModalPresentationCustom;
-                
-                self.animator = [[ZFModalTransitionAnimator alloc] initWithModalViewController:nav];
-                self.animator.dragable = YES;
-                self.animator.direction = ZFModalTransitonDirectionBottom;
-                nav.transitioningDelegate = self.animator;
-                
-                [self presentViewController:nav animated:YES completion:nil];
-            }
-                break;
-            default:
-                break;
-        }
-
-    };
-    [menu show];
 }
 
 
@@ -278,8 +224,8 @@
 }
 
 - (void)mailButtonClicked {
-    MailBoxViewController * mailBoxViewController = [[MailBoxViewController alloc] init];
-    UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:mailBoxViewController];
+    AboutViewController * aboutViewController = [[AboutViewController alloc] init];
+    UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:aboutViewController];
     nav.modalPresentationStyle = UIModalPresentationCustom;
     
     self.animator = [[ZFModalTransitionAnimator alloc] initWithModalViewController:nav];
@@ -290,8 +236,7 @@
     [self presentViewController:nav animated:YES completion:nil];
 }
 
-- (void)notificationButtonClicked
-{
+- (void)notificationButtonClicked {
     NotificationViewController * notificationViewController = [[NotificationViewController alloc] init];
     UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:notificationViewController];
     nav.modalPresentationStyle = UIModalPresentationCustom;

@@ -92,8 +92,8 @@
         });
     });
     
-    UIBarButtonItem *backBarItem=[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"down"] style:UIBarButtonItemStyleBordered target:self action:@selector(back:)];
-    self.navigationItem.leftBarButtonItem = backBarItem;
+    UIBarButtonItem *menuBarItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menuiconwhite.png"] style:UIBarButtonItemStyleDone target:appDelegate.leftViewController action:@selector(showLeftView:)];
+    self.navigationItem.leftBarButtonItem = menuBarItem;
 }
 
 -(IBAction)back:(id)sender

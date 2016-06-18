@@ -33,10 +33,10 @@
     [super viewDidLoad];
     CGRect rect = [[UIScreen mainScreen] bounds];
     [self.view setFrame:CGRectMake(0, 0, rect.size.width, rect.size.height)];
-    self.view.backgroundColor = [UIColor lightGrayColor];
+    self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"投票";
     
-    self.navigationController.navigationBar.barTintColor = [UIColor lightGrayColor];
+    self.navigationController.navigationBar.barTintColor = NAVBARCOLORBLUE;
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     
@@ -49,7 +49,6 @@
     [self.view addSubview:customTableView];
     
     customTableView.backgroundColor = [UIColor clearColor];
-    customTableView.mTableView.backgroundColor = [UIColor clearColor];
     customTableView.mTableView.separatorColor = [UIColor lightGrayColor];
     customTableView.mRefreshTableHeaderView.backgroundColor = [UIColor clearColor];
     
@@ -87,8 +86,8 @@
         });
     });
     
-    UIBarButtonItem *backBarItem=[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"down"] style:UIBarButtonItemStyleBordered target:self action:@selector(back:)];
-    self.navigationItem.leftBarButtonItem = backBarItem;
+    UIBarButtonItem *menuBarItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menuiconwhite.png"] style:UIBarButtonItemStyleDone target:appDelegate.leftViewController action:@selector(showLeftView:)];
+    self.navigationItem.leftBarButtonItem = menuBarItem;
 }
 
 -(IBAction)back:(id)sender

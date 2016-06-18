@@ -32,13 +32,9 @@
     NSArray *tableIcon2;
     NSArray *tableIcon3;
     
-    IBOutlet UISearchBar * search;
-    IBOutlet UITableView * mainTableView;
     IBOutlet UIImageView * leftBackView;
     
     UIView * accountInfoHeaderView;
-    
-    IBOutlet UIButton * settingsButton;
 
     MyBBS * myBBS;
 }
@@ -48,7 +44,6 @@
 @property (nonatomic, strong) AccountInfoHeaderView * accountInfoViewHeader;
 @property (nonatomic, strong) ZFModalTransitionAnimator *animator;
 
-- (IBAction)cancelSearchButtonClicked:(id)sender;
 - (IBAction)showLeftView:(id)sender;
 
 @end

@@ -7,20 +7,17 @@
 //
 
 #import "GlobalViewController.h"
+#import "FTPagingViewController.h"
 
 @implementation GlobalViewController
 @synthesize newsArray;
-@synthesize actionsArray;
 @synthesize customTableView;
-@synthesize readModeSeg;
 @synthesize mDelegate;
 
-- (id)init
-{
+- (id)init {
     self = [super init];
     if (self) {
         newsArray = [[NSMutableArray alloc] init];
-        actionsArray = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -32,16 +29,20 @@
     [self.view setFrame:CGRectMake(0, 0, rect.size.width, rect.size.height)];
     self.view.backgroundColor = [UIColor lightGrayColor];
     
-    self.navigationController.navigationBar.barTintColor = [UIColor lightGrayColor];
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0 green:0.5 blue:1 alpha:1];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     
     [self setAutomaticallyAdjustsScrollViewInsets:NO];
-    self.customTableView = [[CustomNoFooterWithDeleteTableView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height - 64) Delegate:self];
-    activityView = [[FPActivityView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, 1)];
-
-    customTableView.backgroundColor = [UIColor clearColor];
-    customTableView.mTableView.backgroundColor = [UIColor clearColor];
+    
+    if (self.mode == 0) {
+        self.title = @"公告";
+    } else {
+        self.title = @"活动";
+    }
+    
+    self.customTableView = [[CustomNoFooterWithDeleteTableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) Delegate:self];
+    activityView = [[FPActivityView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 1)];
     customTableView.mTableView.separatorColor = [UIColor lightGrayColor];
     customTableView.mRefreshTableHeaderView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:customTableView];
@@ -51,18 +52,21 @@
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        if (appDelegate.myBBS.newsArray != nil && appDelegate.myBBS.actionsArray != nil ) {
-            self.newsArray = [appDelegate.myBBS.newsArray mutableCopy];
-            self.actionsArray = [appDelegate.myBBS.actionsArray mutableCopy];
-        }
-        else {
-            NSArray * topics = [BBSAPI hotTopics];
-            [actionsArray addObjectsFromArray:topics];
-            topics = [BBSAPI boardTopics:@"byr_bulletin" Start:0 Limit:50 User:nil Mode:6];
-            [newsArray addObjectsFromArray:topics];
-
-            appDelegate.myBBS.newsArray = newsArray;
-            appDelegate.myBBS.actionsArray = actionsArray;
+        
+        if (self.mode == 0) {
+            if (appDelegate.myBBS.newsArray != nil) {
+                self.newsArray = [appDelegate.myBBS.newsArray mutableCopy];
+            } else {
+                [newsArray addObjectsFromArray:[BBSAPI boardTopics:@"byr_bulletin" Start:0 Limit:50 User:nil Mode:6]];
+                appDelegate.myBBS.newsArray = newsArray;
+            }
+        } else {
+            if (appDelegate.myBBS.newsArray != nil) {
+                self.newsArray = [appDelegate.myBBS.actionsArray mutableCopy];
+            } else {
+                [newsArray addObjectsFromArray:[BBSAPI hotTopics]];
+                appDelegate.myBBS.actionsArray = newsArray;
+            }
         }
         dispatch_async(dispatch_get_main_queue(), ^{
             [customTableView reloadData];
@@ -70,16 +74,6 @@
             activityView = nil;
         });
     });
-
-    NSArray * itemArray = [NSArray arrayWithObjects:@"北邮人公告", @"近期活动", nil];
-    self.readModeSeg = [[UISegmentedControl alloc] initWithItems:itemArray];
-    [readModeSeg setSelectedSegmentIndex:0];
-    [readModeSeg setFrame:CGRectMake(70, 27, self.view.frame.size.width - 140, 30)];
-    [readModeSeg addTarget:self action:@selector(readModeSegChanged:) forControlEvents:UIControlEventValueChanged];
-    self.navigationItem.titleView = readModeSeg;
-    
-    UIBarButtonItem *backBarItem=[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"down"] style:UIBarButtonItemStyleBordered target:self action:@selector(back:)];
-    self.navigationItem.leftBarButtonItem = backBarItem;
 }
 
 -(IBAction)back:(id)sender
@@ -98,23 +92,8 @@
 #pragma mark -
 #pragma mark tableViewDelegate
 
--(NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
-}
--(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    switch (readModeSeg.selectedSegmentIndex) {
-        case 0:
-            return [newsArray count];
-            break;
-        case 1:
-            return [actionsArray count];
-            break;
-        default:
-            break;
-    }
-    return 0;
+-(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [newsArray count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -127,17 +106,7 @@
     }
     [cell setSelectionStyle:UITableViewCellSelectionStyleDefault];
     
-    Topic *topic;
-    switch (readModeSeg.selectedSegmentIndex) {
-        case 0:
-            topic = [newsArray objectAtIndex:indexPath.row];
-            break;
-        case 1:
-            topic = [actionsArray objectAtIndex:indexPath.row];
-            break;
-        default:
-            break;
-    }
+    Topic *topic = [newsArray objectAtIndex:indexPath.row];
 
     cell.ID = topic.ID;
     cell.title = topic.title;
@@ -168,17 +137,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 
-    Topic *topic;
-    switch (readModeSeg.selectedSegmentIndex) {
-        case 0:
-            topic = [newsArray objectAtIndex:indexPath.row];
-            break;
-        case 1:
-            topic = [actionsArray objectAtIndex:indexPath.row];
-            break;
-        default:
-            break;
-    }
+    Topic *topic = [newsArray objectAtIndex:indexPath.row];
     SingleTopicViewController * singleTopicViewController = [[SingleTopicViewController alloc] initWithRootTopic:topic];
     [self.navigationController pushViewController:singleTopicViewController animated:YES];
 }
@@ -189,14 +148,14 @@
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        NSArray * topics = [BBSAPI hotTopics];
-        [actionsArray addObjectsFromArray:topics];
-        topics = [BBSAPI boardTopics:@"byr_bulletin" Start:0 Limit:50 User:nil Mode:6];
-        [newsArray addObjectsFromArray:topics];
-        
-        appDelegate.myBBS.newsArray = newsArray;
-        appDelegate.myBBS.actionsArray = actionsArray;
-        
+        if (self.mode == 0) {
+            [newsArray addObjectsFromArray:[BBSAPI boardTopics:@"byr_bulletin" Start:0 Limit:50 User:nil Mode:6]];
+            appDelegate.myBBS.newsArray = newsArray;
+        } else {
+            [newsArray addObjectsFromArray:[BBSAPI hotTopics]];
+            
+            appDelegate.myBBS.actionsArray = newsArray;
+        }
         dispatch_async(dispatch_get_main_queue(), ^{
             [customTableView reloadData];
         });
@@ -213,11 +172,18 @@
 -(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
     return (toInterfaceOrientation == UIInterfaceOrientationPortrait);
 }
+
 - (BOOL)shouldAutorotate{
     return NO;
 }
+
 -(NSUInteger)supportedInterfaceOrientations{
     return UIInterfaceOrientationMaskPortrait;
 }
 
+- (NSArray *)leftNavigationBarItemsInPagingViewController:(FTPagingViewController *)controller {
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    UIBarButtonItem *menuBarItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menuiconwhite.png"] style:UIBarButtonItemStyleDone target:appDelegate.leftViewController action:@selector(showLeftView:)];
+    return @[menuBarItem];
+}
 @end

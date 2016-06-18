@@ -16,7 +16,7 @@
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="rDB-1B-5PN">
-                    <rect key="frame" x="0.0" y="140" width="70" height="60"/>
+                    <rect key="frame" x="0.0" y="140" width="60" height="60"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <state key="normal" image="favButton">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -26,9 +26,9 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="x2w-3f-iNR">
-                    <rect key="frame" x="70" y="145" width="60" height="50"/>
+                    <rect key="frame" x="140" y="140" width="60" height="60"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" image="mailButton">
+                    <state key="normal" image="moreButton">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
@@ -36,7 +36,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="yiK-kz-sLV">
-                    <rect key="frame" x="130" y="145" width="70" height="50"/>
+                    <rect key="frame" x="70" y="140" width="60" height="60"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <state key="normal" image="notificationButton">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -75,7 +75,7 @@
     </objects>
     <resources>
         <image name="favButton" width="50" height="50"/>
-        <image name="mailButton" width="50" height="50"/>
+        <image name="moreButton" width="128" height="128"/>
         <image name="notificationButton" width="50" height="50"/>
     </resources>
 </document>

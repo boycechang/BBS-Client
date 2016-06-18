@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -9,7 +9,6 @@
             <connections>
                 <outlet property="leftBackView" destination="fWY-qu-hEu" id="vP8-VF-6W4"/>
                 <outlet property="mainTableView" destination="8" id="18"/>
-                <outlet property="searchDisplayController" destination="vkI-9i-Ajj" id="KGP-I6-Vfc"/>
                 <outlet property="view" destination="6" id="7"/>
             </connections>
         </placeholder>
@@ -18,51 +17,44 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="fWY-qu-hEu">
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fWY-qu-hEu">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </imageView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="InB-dk-Xhh">
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="InB-dk-Xhh">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
                 </imageView>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" directionalLockEnabled="YES" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="8">
-                    <rect key="frame" x="20" y="59" width="200" height="325"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" directionalLockEnabled="YES" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="8">
+                    <rect key="frame" x="20" y="16" width="200" height="448"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="200" id="jeh-TR-nxD"/>
+                        <constraint firstAttribute="height" constant="448" id="voJ-mP-kKG"/>
+                    </constraints>
                     <color key="separatorColor" red="0.408203125" green="0.40728956653225806" blue="0.40686565896739135" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="9"/>
                         <outlet property="delegate" destination="-1" id="10"/>
                     </connections>
                 </tableView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Nn5-75-wEt">
-                    <rect key="frame" x="30" y="405" width="46" height="45"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <state key="normal" image="moreButton">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="showTumblrMune:" destination="-1" eventType="touchUpInside" id="9Pe-Pe-IL4"/>
-                    </connections>
-                </button>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="fWY-qu-hEu" firstAttribute="top" secondItem="6" secondAttribute="top" id="1Aa-gd-e2J"/>
+                <constraint firstAttribute="trailing" secondItem="fWY-qu-hEu" secondAttribute="trailing" id="3Aq-Or-T5b"/>
+                <constraint firstItem="8" firstAttribute="leading" secondItem="6" secondAttribute="leading" constant="20" id="4iM-Se-Bhu"/>
+                <constraint firstAttribute="bottom" secondItem="fWY-qu-hEu" secondAttribute="bottom" id="8yW-ku-aiF"/>
+                <constraint firstItem="InB-dk-Xhh" firstAttribute="leading" secondItem="6" secondAttribute="leading" id="LNW-vC-mmM"/>
+                <constraint firstAttribute="bottom" secondItem="InB-dk-Xhh" secondAttribute="bottom" id="NCV-fn-xLc"/>
+                <constraint firstItem="fWY-qu-hEu" firstAttribute="leading" secondItem="6" secondAttribute="leading" id="OyW-mM-Rq1"/>
+                <constraint firstItem="InB-dk-Xhh" firstAttribute="top" secondItem="6" secondAttribute="top" id="Q5R-8Y-h2I"/>
+                <constraint firstItem="8" firstAttribute="centerY" secondItem="6" secondAttribute="centerY" id="iim-K9-5M9"/>
+                <constraint firstAttribute="trailing" secondItem="InB-dk-Xhh" secondAttribute="trailing" id="jWo-Hg-uRU"/>
+            </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="296" y="261"/>
         </view>
-        <searchDisplayController id="vkI-9i-Ajj">
-            <connections>
-                <outlet property="delegate" destination="-1" id="VCF-JV-5Sw"/>
-                <outlet property="searchContentsController" destination="-1" id="hO9-uU-61j"/>
-                <outlet property="searchResultsDataSource" destination="-1" id="gH3-tL-ISG"/>
-                <outlet property="searchResultsDelegate" destination="-1" id="VtG-nv-jXg"/>
-            </connections>
-        </searchDisplayController>
     </objects>
-    <resources>
-        <image name="moreButton" width="128" height="128"/>
-    </resources>
 </document>

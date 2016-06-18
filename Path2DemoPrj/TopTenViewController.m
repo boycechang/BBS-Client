@@ -8,6 +8,7 @@
 
 #import "TopTenViewController.h"
 #import "CommonUI.h"
+#import "FTPagingViewController.h"
 
 @implementation TopTenViewController
 @synthesize topTenArray;
@@ -28,15 +29,15 @@
     CGRect rect = [[UIScreen mainScreen] bounds];
     [self.view setFrame:CGRectMake(0, 0, rect.size.width, rect.size.height)];
     self.view.backgroundColor = [UIColor whiteColor];
-    self.title = @"热帖";
+    self.title = @"十大";
     
     self.navigationController.navigationBar.barTintColor = NAVBARCOLORBLUE;
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     
     [self setAutomaticallyAdjustsScrollViewInsets:NO];
-    customTableView = [[CustomNoFooterViewSectionHeaderTableView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height - 64) Delegate:self];
-    activityView = [[FPActivityView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, 1)];
+    customTableView = [[CustomNoFooterViewSectionHeaderTableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) Delegate:self];
+    activityView = [[FPActivityView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 1)];
     [self.view addSubview:customTableView];
     
     [activityView start];
@@ -68,10 +69,6 @@
         });
 
     });
-    
-    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    UIBarButtonItem *menuBarItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menuiconwhite.png"] style:UIBarButtonItemStyleDone target:appDelegate.leftViewController action:@selector(showLeftView:)];
-    self.navigationItem.leftBarButtonItem = menuBarItem;
 }
 
 - (void)viewDidUnload
@@ -205,5 +202,11 @@
 }
 -(NSUInteger)supportedInterfaceOrientations{
     return UIInterfaceOrientationMaskAllButUpsideDown;
+}
+
+- (NSArray *)leftNavigationBarItemsInPagingViewController:(FTPagingViewController *)controller {
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    UIBarButtonItem *menuBarItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menuiconwhite.png"] style:UIBarButtonItemStyleDone target:appDelegate.leftViewController action:@selector(showLeftView:)];
+    return @[menuBarItem];
 }
 @end

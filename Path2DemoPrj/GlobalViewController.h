@@ -17,19 +17,17 @@
 @interface GlobalViewController : UIViewController<MBProgressHUDDelegate>
 {
     NSMutableArray * newsArray;
-    NSMutableArray * actionsArray;
     
     CustomNoFooterWithDeleteTableView * customTableView;
     UISegmentedControl * readModeSeg;
     
     FPActivityView* activityView;
-    id __unsafe_unretained mDelegate;
+    id __weak mDelegate;
 }
-@property(nonatomic, strong)NSMutableArray * newsArray;
-@property(nonatomic, strong)NSMutableArray * actionsArray;
-@property(nonatomic, strong)CustomNoFooterWithDeleteTableView * customTableView;
-@property(nonatomic, strong)UISegmentedControl * readModeSeg;
-@property(nonatomic, unsafe_unretained)id mDelegate;
+@property (nonatomic, strong) NSMutableArray * newsArray;
+@property (nonatomic, strong) CustomNoFooterWithDeleteTableView * customTableView;
+@property (nonatomic, weak)id mDelegate;
+@property (nonatomic, assign) int mode;
 
 -(IBAction)readModeSegChanged:(id)sender;
 

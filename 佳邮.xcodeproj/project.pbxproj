@@ -33,8 +33,6 @@
 		000575D318269AA700060E69 /* keyboard_switch_pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 000575AE18269AA700060E69 /* keyboard_switch_pressed.png */; };
 		000575D418269AA700060E69 /* keyboard_switch_pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 000575AF18269AA700060E69 /* keyboard_switch_pressed@2x.png */; };
 		0011C764193C46D700CD5B24 /* SlideImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0011C763193C46D700CD5B24 /* SlideImageView.m */; };
-		0013085E17FADA0A007E7AE4 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0013085D17FADA0A007E7AE4 /* libxml2.2.dylib */; };
-		0013086017FADA2A007E7AE4 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0013085F17FADA2A007E7AE4 /* libz.dylib */; };
 		00165B8B193F864D004CCB70 /* GlobalViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 00165B88193F864D004CCB70 /* GlobalViewCell.m */; };
 		00165B8C193F864D004CCB70 /* GlobalViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 00165B8A193F864D004CCB70 /* GlobalViewCell.xib */; };
 		001864971942466100665DE1 /* QCSlideSwitchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 001864961942466100665DE1 /* QCSlideSwitchView.m */; };
@@ -366,8 +364,6 @@
 		00FC4532193CA73700660E7D /* UINavigationController+MHDismissModalView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00FC4530193CA73700660E7D /* UINavigationController+MHDismissModalView.m */; };
 		00FC4535193CA76200660E7D /* ModalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00FC4534193CA76200660E7D /* ModalViewController.m */; };
 		0290B2FD183E46690097EC60 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0290B2FC183E46690097EC60 /* CoreTelephony.framework */; };
-		0290B2FF183E46800097EC60 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0290B2FE183E46800097EC60 /* libicucore.dylib */; };
-		0290B301183E468A0097EC60 /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0290B300183E468A0097EC60 /* libz.1.2.5.dylib */; };
 		264FEC9514A0EA0B001C15B3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB125691498D519008A4B70 /* main.m */; settings = {COMPILER_FLAGS = ""; }; };
 		264FEC9614A0EA0B001C15B3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB1256D1498D519008A4B70 /* AppDelegate.m */; settings = {COMPILER_FLAGS = ""; }; };
 		264FEC9714A0EA0B001C15B3 /* LeftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB125701498D519008A4B70 /* LeftViewController.m */; settings = {COMPILER_FLAGS = ""; }; };
@@ -403,6 +399,12 @@
 		3EA69A5116C52FE100045198 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EA69A5016C52FE100045198 /* Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3EA69A5716C5340400045198 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EA69A5616C5340400045198 /* CFNetwork.framework */; };
 		3EDA686016BE5CF600137E99 /* UploadAttachmentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EDA685E16BE5CF600137E99 /* UploadAttachmentsViewController.m */; };
+		E107B83F1D15C3750062ED98 /* FTPagingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E107B83A1D15C3750062ED98 /* FTPagingViewController.m */; };
+		E107B8401D15C3750062ED98 /* FTScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = E107B83C1D15C3750062ED98 /* FTScrollView.m */; };
+		E107B8411D15C3750062ED98 /* UIView+FTAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = E107B83E1D15C3750062ED98 /* UIView+FTAdditions.m */; };
+		E1B890D51D15D1EF0039B5C8 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1B890D41D15D1EF0039B5C8 /* LaunchScreen.xib */; };
+		E1B890D71D15D83B0039B5C8 /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E1B890D61D15D83B0039B5C8 /* libz.1.2.5.tbd */; };
+		E1B890DB1D15D8720039B5C8 /* libxml2.2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E1B890DA1D15D8720039B5C8 /* libxml2.2.tbd */; };
 		E905990C157EF31F007EE2D2 /* MailsViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E905990A157EF31F007EE2D2 /* MailsViewCell.m */; settings = {COMPILER_FLAGS = ""; }; };
 		E905990D157EF31F007EE2D2 /* MailsViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E905990B157EF31F007EE2D2 /* MailsViewCell.xib */; };
 		E9059912157F24B9007EE2D2 /* SingleMailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E9059910157F24B9007EE2D2 /* SingleMailViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -432,7 +434,6 @@
 		E973E663154C6127004412CD /* SingleTopicCommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E973E661154C6127004412CD /* SingleTopicCommentCell.xib */; };
 		E980D4E4157A36AE00B9B82B /* BoardsCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = E980D4E2157A36AE00B9B82B /* BoardsCellView.m */; settings = {COMPILER_FLAGS = ""; }; };
 		E9956132157B51BE00DCFCAD /* MyBBS.m in Sources */ = {isa = PBXBuildFile; fileRef = E9956131157B51BE00DCFCAD /* MyBBS.m */; settings = {COMPILER_FLAGS = ""; }; };
-		E9956134157B5D4500DCFCAD /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E9956133157B5D4500DCFCAD /* Settings.bundle */; };
 		E99B9D7C16D1D2EB00FC0A88 /* articleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E99B9D7B16D1D2EB00FC0A88 /* articleViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E99B9D8116D1D2F500FC0A88 /* FTCoreTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = E99B9D7E16D1D2F500FC0A88 /* FTCoreTextView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E99B9D8216D1D2F500FC0A88 /* FTCoreTextStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = E99B9D8016D1D2F500FC0A88 /* FTCoreTextStyle.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -493,8 +494,6 @@
 		000575AF18269AA700060E69 /* keyboard_switch_pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "keyboard_switch_pressed@2x.png"; sourceTree = "<group>"; };
 		0011C762193C46D700CD5B24 /* SlideImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideImageView.h; sourceTree = "<group>"; };
 		0011C763193C46D700CD5B24 /* SlideImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideImageView.m; sourceTree = "<group>"; };
-		0013085D17FADA0A007E7AE4 /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
-		0013085F17FADA2A007E7AE4 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		00165B88193F864D004CCB70 /* GlobalViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlobalViewCell.m; sourceTree = "<group>"; };
 		00165B89193F864D004CCB70 /* GlobalViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlobalViewCell.h; sourceTree = "<group>"; };
 		00165B8A193F864D004CCB70 /* GlobalViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GlobalViewCell.xib; sourceTree = "<group>"; };
@@ -958,10 +957,6 @@
 		00FC4533193CA76200660E7D /* ModalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModalViewController.h; sourceTree = "<group>"; };
 		00FC4534193CA76200660E7D /* ModalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModalViewController.m; sourceTree = "<group>"; };
 		0290B2FC183E46690097EC60 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
-		0290B2FE183E46800097EC60 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
-		0290B300183E468A0097EC60 /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = usr/lib/libz.1.2.5.dylib; sourceTree = SDKROOT; };
-		0290B302183E46960097EC60 /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
-		0290B304183E46A00097EC60 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		049FB87414997D5F003D4DA2 /* LeftViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LeftViewController.xib; sourceTree = "<group>"; };
 		264FECB014A0EA0B001C15B3 /* 佳邮.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "佳邮.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		264FECE914A18427001C15B3 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -1030,6 +1025,16 @@
 		CEB1256F1498D519008A4B70 /* LeftViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LeftViewController.h; sourceTree = "<group>"; };
 		CEB125701498D519008A4B70 /* LeftViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LeftViewController.m; sourceTree = "<group>"; };
 		CEB1257C1498D6BF008A4B70 /* MainWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
+		E107B8391D15C3750062ED98 /* FTPagingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTPagingViewController.h; sourceTree = "<group>"; };
+		E107B83A1D15C3750062ED98 /* FTPagingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTPagingViewController.m; sourceTree = "<group>"; };
+		E107B83B1D15C3750062ED98 /* FTScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTScrollView.h; sourceTree = "<group>"; };
+		E107B83C1D15C3750062ED98 /* FTScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTScrollView.m; sourceTree = "<group>"; };
+		E107B83D1D15C3750062ED98 /* UIView+FTAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+FTAdditions.h"; sourceTree = "<group>"; };
+		E107B83E1D15C3750062ED98 /* UIView+FTAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+FTAdditions.m"; sourceTree = "<group>"; };
+		E1B890D41D15D1EF0039B5C8 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
+		E1B890D61D15D83B0039B5C8 /* libz.1.2.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.2.5.tbd; path = usr/lib/libz.1.2.5.tbd; sourceTree = SDKROOT; };
+		E1B890D81D15D84C0039B5C8 /* libz.1.1.3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.1.3.tbd; path = usr/lib/libz.1.1.3.tbd; sourceTree = SDKROOT; };
+		E1B890DA1D15D8720039B5C8 /* libxml2.2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.2.tbd; path = usr/lib/libxml2.2.tbd; sourceTree = SDKROOT; };
 		E9059909157EF31F007EE2D2 /* MailsViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MailsViewCell.h; sourceTree = "<group>"; };
 		E905990A157EF31F007EE2D2 /* MailsViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MailsViewCell.m; sourceTree = "<group>"; };
 		E905990B157EF31F007EE2D2 /* MailsViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MailsViewCell.xib; sourceTree = "<group>"; };
@@ -1084,7 +1089,6 @@
 		E980D4E2157A36AE00B9B82B /* BoardsCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BoardsCellView.m; sourceTree = "<group>"; };
 		E9956130157B51BE00DCFCAD /* MyBBS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyBBS.h; sourceTree = "<group>"; };
 		E9956131157B51BE00DCFCAD /* MyBBS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyBBS.m; sourceTree = "<group>"; };
-		E9956133157B5D4500DCFCAD /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = ../Settings.bundle; sourceTree = "<group>"; };
 		E99B9D7A16D1D2EB00FC0A88 /* articleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = articleViewController.h; sourceTree = "<group>"; };
 		E99B9D7B16D1D2EB00FC0A88 /* articleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = articleViewController.m; sourceTree = "<group>"; };
 		E99B9D7D16D1D2F500FC0A88 /* FTCoreTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTCoreTextView.h; sourceTree = "<group>"; };
@@ -1127,13 +1131,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1B890DB1D15D8720039B5C8 /* libxml2.2.tbd in Frameworks */,
+				E1B890D71D15D83B0039B5C8 /* libz.1.2.5.tbd in Frameworks */,
 				006A75B4193D06EE00CE3809 /* CoreLocation.framework in Frameworks */,
-				0290B301183E468A0097EC60 /* libz.1.2.5.dylib in Frameworks */,
-				0290B2FF183E46800097EC60 /* libicucore.dylib in Frameworks */,
 				0290B2FD183E46690097EC60 /* CoreTelephony.framework in Frameworks */,
 				005A69AB1826025D003E4397 /* AVFoundation.framework in Frameworks */,
-				0013086017FADA2A007E7AE4 /* libz.dylib in Frameworks */,
-				0013085E17FADA0A007E7AE4 /* libxml2.2.dylib in Frameworks */,
 				E99B9D8716D1D3AF00FC0A88 /* CoreText.framework in Frameworks */,
 				3EA69A5716C5340400045198 /* CFNetwork.framework in Frameworks */,
 				E9AA79321581DC29003C35B1 /* SystemConfiguration.framework in Frameworks */,
@@ -1534,6 +1536,7 @@
 		00A0FA3A1840FBB200CDE9AB /* OpenSourceUI */ = {
 			isa = PBXGroup;
 			children = (
+				E107B8381D15C3660062ED98 /* FTPaging */,
 				008840921944682500DFF1CD /* JazzHands */,
 				00C3D2F9194406B300FCABD9 /* ZFModalTransitionAnimator */,
 				001864941942464600665DE1 /* QCSlideSwitchView */,
@@ -2169,15 +2172,12 @@
 		CEB1255C1498D519008A4B70 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E1B890DA1D15D8720039B5C8 /* libxml2.2.tbd */,
+				E1B890D81D15D84C0039B5C8 /* libz.1.1.3.tbd */,
+				E1B890D61D15D83B0039B5C8 /* libz.1.2.5.tbd */,
 				006A75B3193D06EE00CE3809 /* CoreLocation.framework */,
-				0290B304183E46A00097EC60 /* libsqlite3.dylib */,
-				0290B302183E46960097EC60 /* libstdc++.dylib */,
-				0290B300183E468A0097EC60 /* libz.1.2.5.dylib */,
-				0290B2FE183E46800097EC60 /* libicucore.dylib */,
 				0290B2FC183E46690097EC60 /* CoreTelephony.framework */,
 				005A69AA1826025D003E4397 /* AVFoundation.framework */,
-				0013085F17FADA2A007E7AE4 /* libz.dylib */,
-				0013085D17FADA0A007E7AE4 /* libxml2.2.dylib */,
 				E99B9D8616D1D3AF00FC0A88 /* CoreText.framework */,
 				3EA69A5616C5340400045198 /* CFNetwork.framework */,
 				E9AA79311581DC29003C35B1 /* SystemConfiguration.framework */,
@@ -2204,10 +2204,10 @@
 		CEB125641498D519008A4B70 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				E9956133157B5D4500DCFCAD /* Settings.bundle */,
 				E96967A616C177C100524ACB /* Info.plist */,
 				00ED5F8117C649DD000843DD /* MainWindowiPad.xib */,
 				CEB1257C1498D6BF008A4B70 /* MainWindow.xib */,
+				E1B890D41D15D1EF0039B5C8 /* LaunchScreen.xib */,
 				CEB125691498D519008A4B70 /* main.m */,
 			);
 			name = "Supporting Files";
@@ -2223,6 +2223,19 @@
 				E973E5FE154C094A004412CD /* HomeView */,
 			);
 			name = UI;
+			sourceTree = "<group>";
+		};
+		E107B8381D15C3660062ED98 /* FTPaging */ = {
+			isa = PBXGroup;
+			children = (
+				E107B8391D15C3750062ED98 /* FTPagingViewController.h */,
+				E107B83A1D15C3750062ED98 /* FTPagingViewController.m */,
+				E107B83B1D15C3750062ED98 /* FTScrollView.h */,
+				E107B83C1D15C3750062ED98 /* FTScrollView.m */,
+				E107B83D1D15C3750062ED98 /* UIView+FTAdditions.h */,
+				E107B83E1D15C3750062ED98 /* UIView+FTAdditions.m */,
+			);
+			name = FTPaging;
 			sourceTree = "<group>";
 		};
 		E9059907157EF304007EE2D2 /* MailsViewCell */ = {
@@ -2578,6 +2591,7 @@
 				264FEC9414A0EA0B001C15B3 /* Sources */,
 				264FEC9C14A0EA0B001C15B3 /* Frameworks */,
 				264FECA014A0EA0B001C15B3 /* Resources */,
+				E18F4F511D15CDAF005D73FE /* Build Number */,
 			);
 			buildRules = (
 			);
@@ -2716,7 +2730,6 @@
 				00F4B7BE1823D66E00C6331A /* [emb3].gif in Resources */,
 				00F4B7961823D66E00C6331A /* [emc43].gif in Resources */,
 				00F4B7921823D66E00C6331A /* [emc3].gif in Resources */,
-				E9956134157B5D4500DCFCAD /* Settings.bundle in Resources */,
 				00F4B7C61823D66E00C6331A /* [em11].gif in Resources */,
 				00F4B7EA1823D66E00C6331A /* [em44].gif in Resources */,
 				00F4B77F1823D66E00C6331A /* [emc22].gif in Resources */,
@@ -2797,6 +2810,7 @@
 				00F4B7F21823D66E00C6331A /* [em51].gif in Resources */,
 				00F4B8021823D66E00C6331A /* [em66].gif in Resources */,
 				00F4B8161823D66E00C6331A /* [ema17].gif in Resources */,
+				E1B890D51D15D1EF0039B5C8 /* LaunchScreen.xib in Resources */,
 				00F4B8101823D66E00C6331A /* [ema11].gif in Resources */,
 				00D71EC417BE6899008460E1 /* README.md in Resources */,
 				00F4B7E91823D66E00C6331A /* [em43].gif in Resources */,
@@ -2880,6 +2894,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		E18F4F511D15CDAF005D73FE /* Build Number */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Build Number";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "REV=`git rev-list master | wc -l | awk '{print $1}'`\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion ${REV}\" \"${TARGET_BUILD_DIR}\"/${INFOPLIST_PATH}";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		264FEC9414A0EA0B001C15B3 /* Sources */ = {
@@ -2966,6 +2997,7 @@
 				006329CA17FC4DBC00C0A146 /* ImageBlur.m in Sources */,
 				00C35D0D1941EFDA00CC8ED0 /* BFNavigationBarDrawer.m in Sources */,
 				001864A91942474700665DE1 /* MMDrawerBarButtonItem.m in Sources */,
+				E107B83F1D15C3750062ED98 /* FTPagingViewController.m in Sources */,
 				00469DF21940C80C0067A6A7 /* POPPropertyAnimation.mm in Sources */,
 				E93DE83215806D7300D763D2 /* CustomTableWithDeleteView.m in Sources */,
 				00469DE81940C80C0067A6A7 /* POPAnimationRuntime.mm in Sources */,
@@ -2976,6 +3008,7 @@
 				3EDA686016BE5CF600137E99 /* UploadAttachmentsViewController.m in Sources */,
 				003D992C193B49D500DA5B68 /* UIView+CommonAnimation.m in Sources */,
 				00469DE41940C80C0067A6A7 /* POPAnimatableProperty.mm in Sources */,
+				E107B8401D15C3750062ED98 /* FTScrollView.m in Sources */,
 				0005758A182698A200060E69 /* WUDemoKeyboardTextKeyCell.m in Sources */,
 				00D71E5A17BE49E5008460E1 /* ImageAttachmentView.m in Sources */,
 				00D71E7617BE66C5008460E1 /* CXTapDetectingView.m in Sources */,
@@ -3012,6 +3045,7 @@
 				008840A41944683300DFF1CD /* IFTTTAnimator.m in Sources */,
 				3EA69A3016C527D800045198 /* ASINetworkQueue.m in Sources */,
 				3EA69A3116C527D800045198 /* ASIWebPageRequest.m in Sources */,
+				E107B8411D15C3750062ED98 /* UIView+FTAdditions.m in Sources */,
 				00D71EBB17BE6899008460E1 /* AFHTTPRequestOperation.m in Sources */,
 				0085E5051821F3BE0059D454 /* VoteListViewController.m in Sources */,
 				001864AB1942474700665DE1 /* MMDrawerVisualState.m in Sources */,
@@ -3116,7 +3150,6 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -3165,8 +3198,8 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "佳邮";
-				PROVISIONING_PROFILE = "93C2C815-98B5-4F1F-BC0E-50C621EC89AB";
-				"PROVISIONING_PROFILE[sdk=*]" = "93C2C815-98B5-4F1F-BC0E-50C621EC89AB";
+				PROVISIONING_PROFILE = "79e7f1b5-dc39-49a0-a438-f007516d9e43";
+				"PROVISIONING_PROFILE[sdk=*]" = "79e7f1b5-dc39-49a0-a438-f007516d9e43";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)\" \"$(SRCROOT)/Path2DemoPrj/SDWebImage/SDWebImage\" .. $(SDKROOT)/Path2DemoPrj/ShareSDK_v2.6.0";
 				WRAPPER_EXTENSION = app;
@@ -3179,12 +3212,11 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Xiaobo Zhang (9LWN76ZH4U)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Xiaobo Zhang (UXQ4US7LL6)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Xiaobo Zhang (9LWN76ZH4U)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3227,8 +3259,8 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "佳邮";
-				PROVISIONING_PROFILE = "C34D008C-6A55-4115-9860-EBDDF835593A";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C34D008C-6A55-4115-9860-EBDDF835593A";
+				PROVISIONING_PROFILE = "79e7f1b5-dc39-49a0-a438-f007516d9e43";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "79e7f1b5-dc39-49a0-a438-f007516d9e43";
 				"SDKROOT[arch=*]" = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)\" \"$(SRCROOT)/Path2DemoPrj/SDWebImage/SDWebImage\" .. $(SDKROOT)/Path2DemoPrj/ShareSDK_v2.6.0";
@@ -3242,7 +3274,6 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -3291,8 +3322,8 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "佳邮";
-				PROVISIONING_PROFILE = "93C2C815-98B5-4F1F-BC0E-50C621EC89AB";
-				"PROVISIONING_PROFILE[sdk=*]" = "93C2C815-98B5-4F1F-BC0E-50C621EC89AB";
+				PROVISIONING_PROFILE = "79e7f1b5-dc39-49a0-a438-f007516d9e43";
+				"PROVISIONING_PROFILE[sdk=*]" = "79e7f1b5-dc39-49a0-a438-f007516d9e43";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)\" \"$(SRCROOT)/Path2DemoPrj/SDWebImage/SDWebImage\" .. $(SDKROOT)/Path2DemoPrj/ShareSDK_v2.6.0";
 				WRAPPER_EXTENSION = app;
