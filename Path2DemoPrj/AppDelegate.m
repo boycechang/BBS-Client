@@ -10,9 +10,7 @@
 #import "AppDelegate.h"
 #import "LeftViewController.h"
 #import <QuartzCore/QuartzCore.h>
-#import "AFNetworkActivityIndicatorManager.h"
 #import "VWWWaterView.h"
-#import "POP.h"
 
 @implementation AppDelegate
 
@@ -42,7 +40,6 @@
     }
     
     [self showWave];
-    [NSTimer scheduledTimerWithTimeInterval:10.0 target:self selector:@selector(refreshNotification) userInfo:nil repeats:YES];
     return YES;
 }
 
@@ -75,7 +72,6 @@
         [[UIApplication sharedApplication] setApplicationIconBadgeNumber:1];
         [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
     }
-    
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:self.myBBS.notificationCount];
 }
 

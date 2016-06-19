@@ -154,11 +154,6 @@
     }
 }
 
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-}
-
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     [postTitle resignFirstResponder];
     [postContent resignFirstResponder];
@@ -166,6 +161,7 @@
 
 -(void)cancel
 {
+    [self.view endEditing:YES];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

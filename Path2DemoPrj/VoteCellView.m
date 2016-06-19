@@ -7,7 +7,7 @@
 //
 
 #import "VoteCellView.h"
-#import "UIImageView+AFNetworking.h"
+#import "UIImageView+WebCache.h"
 
 @implementation VoteCellView
 @synthesize vote;

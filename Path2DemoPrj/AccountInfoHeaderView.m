@@ -9,7 +9,7 @@
 #import "AccountInfoHeaderView.h"
 #import "DataModel.h"
 #import "AppDelegate.h"
-#import "UIImageView+AFNetworking.h"
+#import "UIImageView+WebCache.h"
 
 @implementation AccountInfoHeaderView
 

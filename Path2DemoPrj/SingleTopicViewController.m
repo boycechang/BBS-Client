@@ -10,7 +10,6 @@
 #import "CXPhotoBrowser.h"
 #import "DemoPhoto.h"
 #import "CommonUI.h"
-#import "POP.h"
 
 @implementation SingleTopicViewController
 @synthesize rootTopic;
@@ -269,16 +268,13 @@
 
 #pragma -
 #pragma mark CustomtableView delegate
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     if (isPageChangeViewShowing) {
-        POPSpringAnimation *popOutAnimation = [POPSpringAnimation animation];
-        popOutAnimation.property = [POPAnimatableProperty propertyWithName:kPOPViewFrame];
-        popOutAnimation.toValue = [NSValue valueWithCGRect:CGRectMake(pageChangeView.view.frame.origin.x, -300, pageChangeView.view.frame.size.width, pageChangeView.view.frame.size.height)];
-        popOutAnimation.springBounciness = 10.0;
-        popOutAnimation.springSpeed = 10;
-        [pageChangeView.view pop_addAnimation:popOutAnimation forKey:@"slide"];
-        isPageChangeViewShowing = NO;
+        [UIView animateWithDuration:0.25 delay:0.0 usingSpringWithDamping:0.8 initialSpringVelocity:5 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+            pageChangeView.view.frame = CGRectMake(pageChangeView.view.frame.origin.x, -300, pageChangeView.view.frame.size.width, pageChangeView.view.frame.size.height);
+        } completion:^(BOOL finished) {
+            isPageChangeViewShowing = NO;
+        }];
     }
 }
 
@@ -367,21 +363,17 @@
 
 -(void)switchPageChangeView{
     if (isPageChangeViewShowing) {
-        POPSpringAnimation *popOutAnimation = [POPSpringAnimation animation];
-        popOutAnimation.property = [POPAnimatableProperty propertyWithName:kPOPViewFrame];
-        popOutAnimation.toValue = [NSValue valueWithCGRect:CGRectMake(pageChangeView.view.frame.origin.x, -300, pageChangeView.view.frame.size.width, pageChangeView.view.frame.size.height)];
-        popOutAnimation.springBounciness = 10.0;
-        popOutAnimation.springSpeed = 10;
-        [pageChangeView.view pop_addAnimation:popOutAnimation forKey:@"slide"];
-        isPageChangeViewShowing = NO;
+        [UIView animateWithDuration:0.25 delay:0.0 usingSpringWithDamping:0.8 initialSpringVelocity:5 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+            pageChangeView.view.frame = CGRectMake(pageChangeView.view.frame.origin.x, -300, pageChangeView.view.frame.size.width, pageChangeView.view.frame.size.height);
+        } completion:^(BOOL finished) {
+            isPageChangeViewShowing = NO;
+        }];
     } else {
-        POPSpringAnimation *popOutAnimation = [POPSpringAnimation animation];
-        popOutAnimation.property = [POPAnimatableProperty propertyWithName:kPOPViewFrame];
-        popOutAnimation.toValue = [NSValue valueWithCGRect:CGRectMake(pageChangeView.view.frame.origin.x, 70, pageChangeView.view.frame.size.width, pageChangeView.view.frame.size.height)];
-        popOutAnimation.springBounciness = 10.0;
-        popOutAnimation.springSpeed = 10;
-        [pageChangeView.view pop_addAnimation:popOutAnimation forKey:@"slide"];
-        isPageChangeViewShowing = YES;
+        [UIView animateWithDuration:0.25 delay:0.0 usingSpringWithDamping:0.8 initialSpringVelocity:5 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+            pageChangeView.view.frame = CGRectMake(pageChangeView.view.frame.origin.x, 70, pageChangeView.view.frame.size.width, pageChangeView.view.frame.size.height);
+        } completion:^(BOOL finished) {
+            isPageChangeViewShowing = YES;
+        }];
     }
 }
 

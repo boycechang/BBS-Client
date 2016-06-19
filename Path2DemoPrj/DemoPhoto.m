@@ -8,7 +8,7 @@
 
 #import "DemoPhoto.h"
 #import "DemoPhotoLoadingView.h"
-#import "UIImageView+AFNetworking.h"
+#import "UIImageView+WebCache.h"
 
 @interface DemoPhoto ()
 {
@@ -28,16 +28,14 @@
 - (void)loadImageFromURLAsync:(NSURL *)url
 {
     [self notifyImageDidStartLoad];
-    
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
-    [[UIImageView new] setImageWithURLRequest:request placeholderImage:nil
-                                      success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-                                          _underlyingImage = image;
-                                          [self notifyImageDidFinishLoad];
-                                      } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-                                          [self notifyImageDidFailLoadWithError:error];
-                                      }];
+    [[UIImageView new] sd_setImageWithURL:url placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        if (!error) {
+            _underlyingImage = image;
+            [self notifyImageDidFinishLoad];
+        } else {
+            [self notifyImageDidFailLoadWithError:error];
+        }
+    }];
 }
 
 - (void)unloadImage {

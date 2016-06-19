@@ -41,7 +41,7 @@
         self.title = @"活动";
     }
     
-    self.customTableView = [[CustomNoFooterWithDeleteTableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) Delegate:self];
+    self.customTableView = [[CustomNoFooterWithDeleteTableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 64) Delegate:self];
     activityView = [[FPActivityView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 1)];
     customTableView.mTableView.separatorColor = [UIColor lightGrayColor];
     customTableView.mRefreshTableHeaderView.backgroundColor = [UIColor clearColor];

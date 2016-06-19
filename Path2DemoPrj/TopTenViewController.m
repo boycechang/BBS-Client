@@ -36,7 +36,7 @@
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     
     [self setAutomaticallyAdjustsScrollViewInsets:NO];
-    customTableView = [[CustomNoFooterViewSectionHeaderTableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) Delegate:self];
+    customTableView = [[CustomNoFooterViewSectionHeaderTableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 64) Delegate:self];
     activityView = [[FPActivityView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 1)];
     [self.view addSubview:customTableView];
     

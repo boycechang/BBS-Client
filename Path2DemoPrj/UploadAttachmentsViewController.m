@@ -270,11 +270,8 @@
     return newimg;
 }
 
--(void)uploadImage
-{
-    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-    int uploadImage = [defaults integerForKey:@"uploadImage"];
-    UIImage * newImage = [self image:self.image fillSize:CGSizeMake(self.image.size.width/(uploadImage+1), self.image.size.height/(uploadImage+1))];
+-(void)uploadImage {
+    UIImage * newImage = [self image:self.image fillSize:CGSizeMake(self.image.size.width, self.image.size.height)];
     
     if (postType==0 || postType==1) {//新帖或回复
         self.attList = [BBSAPI postImage:myBBS.mySelf Board:board ID:0 Image:newImage ImageName:imageFileName];

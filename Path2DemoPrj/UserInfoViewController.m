@@ -7,9 +7,8 @@
 //
 
 #import "UserInfoViewController.h"
-#import "UIImageView+AFNetworking.h"
+#import "UIImageView+WebCache.h"
 #import "UIViewController+MJPopupViewController.h"
-#import "POP.h"
 
 @implementation UserInfoViewController
 @synthesize userString;
@@ -63,23 +62,19 @@
 - (void)tapAvatar:(UITapGestureRecognizer*)recognizer
 {
     if (!isShowBigAvatar) {
-        avatar.layer.cornerRadius = 10.0f;
-        POPSpringAnimation *popOutAnimation = [POPSpringAnimation animation];
-        popOutAnimation.property = [POPAnimatableProperty propertyWithName:kPOPViewFrame];
-        popOutAnimation.toValue = [NSValue valueWithCGRect:CGRectMake(-5, -5, self.view.frame.size.width + 10, self.view.frame.size.height + 10)];
-        popOutAnimation.springBounciness = 10.0;
-        popOutAnimation.springSpeed = 10.0;
-        [avatar pop_addAnimation:popOutAnimation forKey:@"pop"];
-        isShowBigAvatar = YES;
+        [UIView animateWithDuration:0.25 delay:0.0 usingSpringWithDamping:0.8 initialSpringVelocity:5 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+            avatar.layer.cornerRadius = 10.0f;
+            avatar.frame = CGRectMake(-5, -5, self.view.frame.size.width + 10, self.view.frame.size.height + 10);
+        } completion:^(BOOL finished) {
+            isShowBigAvatar = YES;
+        }];
     } else {
-        avatar.layer.cornerRadius = 50.0f;
-        isShowBigAvatar = NO;
-        POPSpringAnimation *popOutAnimation = [POPSpringAnimation animation];
-        popOutAnimation.property = [POPAnimatableProperty propertyWithName:kPOPViewFrame];
-        popOutAnimation.toValue = [NSValue valueWithCGRect:CGRectMake(90, 32, 100, 100)];
-        popOutAnimation.springBounciness = 10.0;
-        popOutAnimation.springSpeed = 10.0;
-        [avatar pop_addAnimation:popOutAnimation forKey:@"pop"];
+        [UIView animateWithDuration:0.25 delay:0.0 usingSpringWithDamping:0.8 initialSpringVelocity:5 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+            avatar.layer.cornerRadius = 50.0f;
+            avatar.frame = CGRectMake(90, 32, 100, 100);
+        } completion:^(BOOL finished) {
+            isShowBigAvatar = NO;
+        }];
     }
 }
 

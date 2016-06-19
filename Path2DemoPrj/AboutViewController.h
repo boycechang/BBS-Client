@@ -29,7 +29,6 @@
     float imageCache;
     BOOL isLoadAvatar;
     BOOL isLoadImage;
-    NSInteger uploadImageQuality;
     UISwitch * loadAvatarSwitch;
     UISwitch * loadImageSwitch;
 }

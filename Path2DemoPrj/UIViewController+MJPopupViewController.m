@@ -8,7 +8,6 @@
 
 #import "UIViewController+MJPopupViewController.h"
 #import <QuartzCore/QuartzCore.h>
-#import "POP.h"
 
 #define kPopupModalAnimationDuration 0.35
 #define kMJSourceViewTag 23941
@@ -208,17 +207,8 @@
     popupView.alpha = 1.0f;
     
     
-    POPSpringAnimation *popOutAnimation = [POPSpringAnimation animation];
-    popOutAnimation.property = [POPAnimatableProperty propertyWithName:kPOPViewFrame];
-    popOutAnimation.toValue = [NSValue valueWithCGRect:popupEndRect];
-    popOutAnimation.springBounciness = 10.0;
-    popOutAnimation.springSpeed = 10;
-    [popupView pop_addAnimation:popOutAnimation forKey:@"slide"];
- 
-    [UIView animateWithDuration:kPopupModalAnimationDuration
-                          delay:0.0f
-                        options:UIViewAnimationOptionCurveEaseInOut
-                     animations:^{
+    [UIView animateWithDuration:0.25 delay:0.0 usingSpringWithDamping:0.8 initialSpringVelocity:5 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        popupView.frame = popupEndRect;
         backgroundView.alpha = 1.0f;
     } completion:^(BOOL finished) {
         
@@ -254,14 +244,8 @@
                                   popupSize.height);
     }
     
-    POPSpringAnimation *popOutAnimation = [POPSpringAnimation animation];
-    popOutAnimation.property = [POPAnimatableProperty propertyWithName:kPOPViewFrame];
-    popOutAnimation.toValue = [NSValue valueWithCGRect:popupEndRect];
-    popOutAnimation.springBounciness = 10.0;
-    popOutAnimation.springSpeed = 10;
-    [popupView pop_addAnimation:popOutAnimation forKey:@"slide"];
-    
-    [UIView animateWithDuration:kPopupModalAnimationDuration delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
+    [UIView animateWithDuration:0.25 delay:0.0 usingSpringWithDamping:0.8 initialSpringVelocity:5 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        popupView.frame = popupEndRect;
         backgroundView.alpha = 0.0f;
     } completion:^(BOOL finished) {
         [popupView removeFromSuperview];

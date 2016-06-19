@@ -8,7 +8,6 @@
 
 #import "AboutViewController.h"
 #import "UIViewController+MJPopupViewController.h"
-#import "SEFilterControl.h"
 #include <sys/types.h>
 #include <sys/sysctl.h>
 #import "CommonUI.h"
@@ -46,7 +45,6 @@
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     isLoadAvatar = [defaults boolForKey:@"isLoadAvatar"];
     isLoadImage = [defaults boolForKey:@"ShowAttachments"];
-    uploadImageQuality = [defaults integerForKey:@"uploadImage"];
 
     loadAvatarSwitch = [[UISwitch alloc]initWithFrame:CGRectMake(self.view.frame.size.width - 70, 8, 80, 28)];
     [loadAvatarSwitch setOnTintColor:[UIColor colorWithRed:0.22 green:0.55 blue:0.95 alpha:1]];
@@ -82,7 +80,7 @@
         return 2;
     }
     if(section == 1){
-        return 3;
+        return 2;
     }
     if (section == 2) {
         return 3;
@@ -169,21 +167,6 @@
                     cell.selectionStyle = UITableViewCellSelectionStyleNone;
                     break;
                 }
-                case 2:
-                {
-                    cell.textLabel.text = @"传图质量";
-                    
-                    SEFilterControl *filter = [[SEFilterControl alloc] initWithFrame:CGRectMake(self.view.frame.size.width - 170, 4, 170, 70) Titles:[NSArray arrayWithObjects:@"高质", @"中等", @"低质", nil]];
-                    
-                    [filter setSelectedIndex:uploadImageQuality];
-                    [filter setProgressColor:[UIColor colorWithRed:0.22 green:0.55 blue:0.95 alpha:1]];
-                    
-                    [filter addTarget:self action:@selector(filterValueChanged:) forControlEvents:UIControlEventValueChanged];
-                    [cell.contentView addSubview:filter];
-                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                    break;
-                }
-
                 default:
                     break;
             }
@@ -194,7 +177,7 @@
                 {
                     cell.textLabel.text = @"关于";
                     NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
-                    NSString* version = [infoDict objectForKey:@"CFBundleVersion"];
+                    NSString* version = [infoDict objectForKey:@"CFBundleShortVersionString"];
                     cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", version];
                     [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
                     break;
@@ -222,7 +205,7 @@
                     }
                     else {
                         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                            imageCache = 0.0;//[[SDImageCache sharedImageCache] getSize] / 1024.0 / 1024.0;
+                            imageCache = [[SDImageCache sharedImageCache] getSize] / 1024.0 / 1024.0;
                             dispatch_async(dispatch_get_main_queue(), ^{
                                 cell.detailTextLabel.text = [NSString stringWithFormat:@"%0.2f M", imageCache];
                             });
@@ -262,7 +245,6 @@
     
     if (indexPath.section == 0 && indexPath.row == 0 && appDelegate.myBBS.mySelf.ID == nil) {
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        // Configure for text only and offset down
         hud.mode = MBProgressHUDModeText;
         hud.labelText = @"请先登录";
         hud.margin = 30.f;
@@ -290,6 +272,8 @@
     }
     
     if(indexPath.section == 3 && indexPath.row == 0){
+        [[SDImageCache sharedImageCache] clearMemory];
+        [[SDImageCache sharedImageCache] clearDisk];
         [ASIHTTPRequest clearSession];
         [[NSURLCache sharedURLCache] removeAllCachedResponses];
         
@@ -438,15 +422,6 @@
     }
     [controller dismissViewControllerAnimated:YES completion:nil];
 }
-
-#pragma mark - SEFilterControlDelegate
-
--(void)filterValueChanged:(SEFilterControl *) sender{
-    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setInteger:sender.SelectedIndex forKey:@"uploadImage"];
-    uploadImageQuality = sender.SelectedIndex;
-}
-
 
 #pragma mark - Internal Info
 
