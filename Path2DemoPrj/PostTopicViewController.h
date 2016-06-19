@@ -13,16 +13,11 @@
 #import "UINavigationController+SGProgress.h"
 #import "WUDemoKeyboardBuilder.h"
 
-@interface PostTopicViewController : UIViewController<UITextFieldDelegate, UIScrollViewDelegate>
-{
+@interface PostTopicViewController : UIViewController<UITextFieldDelegate, UIScrollViewDelegate> {
     UITextField * postTitle;
     UILabel * postTitleCount;
     UITextView * postContent;
     UIScrollView * postScrollView;
-    UIToolbar *keyboardToolbar;
-    
-    Topic * rootTopic;
-    NSString * boardName;
     
     int postType; // 发表类型，0发表新文章，1回帖，2修改文章
     MyBBS * myBBS;

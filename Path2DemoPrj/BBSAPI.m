@@ -700,9 +700,6 @@
     [request startSynchronous];
     
     NSData *feedback = [request responseData];
-    NSString * feedbackString = [[NSString alloc] initWithData:feedback encoding:NSUTF8StringEncoding];
-    NSLog(@"%@", feedbackString);
-    
     if (feedback == nil) {
         return NO;
     }
@@ -760,9 +757,6 @@
     [request startSynchronous];
     
     NSData *feedback = [request responseData];
-    NSString * feedbackString = [[NSString alloc] initWithData:feedback encoding:NSUTF8StringEncoding];
-    NSLog(@"%@", feedbackString);
-    
     if (feedback == nil) {
         return NO;
     }
@@ -838,8 +832,6 @@
     [request setAllowCompressedResponse:YES];
     [request startSynchronous];
     NSData *feedback = [request responseData];
-    NSString * feedbackString = [[NSString alloc] initWithData:feedback encoding:NSUTF8StringEncoding];
-    NSLog(@"%@", feedbackString);
     if (feedback == nil) {
         return nil;
     }
@@ -874,9 +866,6 @@
     [request setRequestMethod:@"POST"];
     [request startSynchronous];
     NSData *feedback = [request responseData];
-    NSString * feedbackString = [[NSString alloc] initWithData:feedback encoding:NSUTF8StringEncoding];
-    NSLog(@"%@", feedbackString);
-    
     NSDictionary *topTenTopics = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
     return [[topTenTopics objectForKey:@"status"] boolValue];
 }
@@ -1150,9 +1139,6 @@
     [request startSynchronous];
     
     NSData *feedback = [request responseData];
-    NSString * feedbackString = [[NSString alloc] initWithData:feedback encoding:NSUTF8StringEncoding];
-    NSLog(@"%@", feedbackString);
-    
     if (feedback == nil) {
         return NO;
     }
@@ -1196,9 +1182,6 @@
     [request startSynchronous];
     
     NSData *feedback = [request responseData];
-    NSString * feedbackString = [[NSString alloc] initWithData:feedback encoding:NSUTF8StringEncoding];
-    NSLog(@"%@", feedbackString);
-    
     if (feedback == nil) {
         return NO;
     }
@@ -1230,14 +1213,16 @@
     
     NSURL *url = [NSURL URLWithString:baseurl];
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    if (user == nil) {
+    
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    if (appDelegate.myBBS.mySelf != nil) {
+        [request setUsername:appDelegate.myBBS.mySelf.username];
+        [request setPassword:appDelegate.myBBS.mySelf.password];
+    } else {
         [request setUsername:@"guest"];
         [request setPassword:@""];
     }
-    else {
-        [request setUsername:user.username];
-        [request setPassword:user.password];
-    }
+    
     [request setAllowCompressedResponse:YES];
     [request setRequestMethod:@"POST"];
     NSData *data =UIImageJPEGRepresentation(image, 0.5);
@@ -1245,9 +1230,6 @@
     [request startSynchronous];
     
     NSData *feedback = [request responseData];
-    NSString * feedbackString = [[NSString alloc] initWithData:feedback encoding:NSUTF8StringEncoding];
-    NSLog(@"%@", feedbackString);
-    
     if (feedback == nil) {
         return nil;
     }

@@ -275,8 +275,7 @@
     
     if (postType==0 || postType==1) {//新帖或回复
         self.attList = [BBSAPI postImage:myBBS.mySelf Board:board ID:0 Image:newImage ImageName:imageFileName];
-    }
-    else {  //修改
+    } else {  //修改
         self.attList = [BBSAPI postImage:myBBS.mySelf Board:board ID:postId Image:newImage ImageName:imageFileName];
     }
 

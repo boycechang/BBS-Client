@@ -250,6 +250,7 @@
     if (postType == 0) {
         UploadAttachmentsViewController * uavc = [[UploadAttachmentsViewController alloc] init];
         uavc.postType = 0;//新帖
+        uavc.board = boardName;
         UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:uavc];
         [self presentViewController:nav animated:YES completion:nil];
     }
