@@ -118,9 +118,6 @@
                 [addFriendButton setEnabled:YES];
             }
             
-            NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-            BOOL isLoadAvatar = [defaults boolForKey:@"isLoadAvatar"];
-            
             UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAvatar:)];
             tap.numberOfTapsRequired = 1;
             [avatar addGestureRecognizer:tap];
@@ -129,15 +126,9 @@
             tap2.numberOfTapsRequired = 1;
             [avatarBack addGestureRecognizer:tap2];
             
-            if (isLoadAvatar && self.user.avatar != nil) {
-                [avatar setImageWithURL:user.avatar];
-                avatar.layer.cornerRadius = 50.0f;
-                avatar.clipsToBounds = YES;
-            } else {
-                [avatar setImage:[UIImage imageNamed:@"leftbackground"]];
-                avatar.layer.cornerRadius = 50.0f;
-                avatar.clipsToBounds = YES;
-            }
+            [avatar setImageWithURL:user.avatar];
+            avatar.layer.cornerRadius = 50.0f;
+            avatar.clipsToBounds = YES;
             
             [self refreshView];
             [activityView stop];

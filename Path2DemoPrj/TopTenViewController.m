@@ -29,7 +29,7 @@
     CGRect rect = [[UIScreen mainScreen] bounds];
     [self.view setFrame:CGRectMake(0, 0, rect.size.width, rect.size.height)];
     self.view.backgroundColor = [UIColor whiteColor];
-    self.title = @"十大";
+    self.title = @"论坛十大";
     
     self.navigationController.navigationBar.barTintColor = NAVBARCOLORBLUE;
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
@@ -69,6 +69,10 @@
         });
 
     });
+    
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    UIBarButtonItem *menuBarItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menuiconwhite.png"] style:UIBarButtonItemStyleDone target:appDelegate.leftViewController action:@selector(showLeftView:)];
+    self.navigationItem.leftBarButtonItem = menuBarItem;
 }
 
 - (void)viewDidUnload

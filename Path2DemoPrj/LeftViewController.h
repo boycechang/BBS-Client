@@ -26,11 +26,6 @@
 @interface LeftViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UIActionSheetDelegate, AboutViewControllerDelegate, XDKAirMenuDelegate, AccountInfoHeaderViewDelegate> {
     
     NSArray *tableTitles;
-    
-    NSArray *tableIcon1;
-    NSArray *tableIcon2;
-    NSArray *tableIcon3;
-    
     IBOutlet UIImageView * leftBackView;
     
     UIView * accountInfoHeaderView;

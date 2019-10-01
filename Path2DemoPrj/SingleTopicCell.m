@@ -153,6 +153,7 @@
 
 
 #pragma mark UIView
+
 - (void)layoutSubviews {
 	[super layoutSubviews];
     
@@ -179,75 +180,37 @@
     contentLabel.backgroundColor = [UIColor clearColor];
     [contentLabel setText:content];
     
-    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-    BOOL ShowAttachments = [defaults boolForKey:@"ShowAttachments"];
-    if (ShowAttachments) {
-        NSArray * picArray = [self getPicList];
-        for (int i = 0; i < [picArray count]; i++) {
-            Attachment * att = [picArray objectAtIndex:i];
-            ImageAttachmentView * imageAttachmentView = [[ImageAttachmentView alloc] initWithFrame:CGRectMake((self.frame.size.width - 320)/2, i*400 + contentLabel.frame.origin.y + size2.height + 10, 320, 400)];
-            [imageAttachmentView setAttachmentURL:[NSURL URLWithString:att.attUrl] NameText:att.attFileName];
-            imageAttachmentView.indexNum = i;
-            imageAttachmentView.mDelegate = self;
-            [self addSubview:imageAttachmentView];
-            [attachmentsViewArray addObject:imageAttachmentView];
-        }
-        
-        NSArray * docArray = [self getDocList];
-        for (int i = 0; i < [docArray count]; i++) {
-            Attachment * att = [docArray objectAtIndex:i];
-            AttachmentView * attachmentView = [[AttachmentView alloc] initWithFrame:CGRectMake((self.frame.size.width - 290)/2, i*60 + [picArray count]*400 + contentLabel.frame.origin.y + size2.height + 10, 290, 50)];
-            [attachmentView setAttachment:att.attFileName NameText:att.attFileName];
-            attachmentView.isPhoto = NO;
-            attachmentView.indexNum = i;
-            attachmentView.mDelegate = self;
-            [self addSubview:attachmentView];
-            [attachmentsViewArray addObject:attachmentView];
-        }
+    NSArray * picArray = [self getPicList];
+    for (int i = 0; i < [picArray count]; i++) {
+        Attachment * att = [picArray objectAtIndex:i];
+        ImageAttachmentView * imageAttachmentView = [[ImageAttachmentView alloc] initWithFrame:CGRectMake((self.frame.size.width - 320)/2, i*400 + contentLabel.frame.origin.y + size2.height + 10, 320, 400)];
+        [imageAttachmentView setAttachmentURL:[NSURL URLWithString:att.attUrl] NameText:att.attFileName];
+        imageAttachmentView.indexNum = i;
+        imageAttachmentView.mDelegate = self;
+        [self addSubview:imageAttachmentView];
+        [attachmentsViewArray addObject:imageAttachmentView];
     }
-    else
-    {
-        NSArray * picArray = [self getPicList];
-        for (int i = 0; i < [picArray count]; i++) {
-            Attachment * att = [picArray objectAtIndex:i];
-            AttachmentView * attachmentView = [[AttachmentView alloc] initWithFrame:CGRectMake((self.frame.size.width - 290)/2, i*60 + contentLabel.frame.origin.y + size2.height + 10, 290, 50)];
-            [attachmentView setAttachment:att.attFileName NameText:att.attFileName];
-            attachmentView.isPhoto = YES;
-            attachmentView.indexNum = i;
-            attachmentView.mDelegate = self;
-            [self addSubview:attachmentView];
-            [attachmentsViewArray addObject:attachmentView];
-        }
-        
-        NSArray * docArray = [self getDocList];
-        for (int i = 0; i < [docArray count]; i++) {
-            Attachment * att = [docArray objectAtIndex:i];
-            AttachmentView * attachmentView = [[AttachmentView alloc] initWithFrame:CGRectMake((self.frame.size.width - 290)/2, i*60 + [picArray count]*60 + contentLabel.frame.origin.y + size2.height + 10, 290, 50)];
-            [attachmentView setAttachment:att.attFileName NameText:att.attFileName];
-            attachmentView.isPhoto = NO;
-            attachmentView.indexNum = i;
-            attachmentView.mDelegate = self;
-            [self addSubview:attachmentView];
-            [attachmentsViewArray addObject:attachmentView];
-        }
+    
+    NSArray * docArray = [self getDocList];
+    for (int i = 0; i < [docArray count]; i++) {
+        Attachment * att = [docArray objectAtIndex:i];
+        AttachmentView * attachmentView = [[AttachmentView alloc] initWithFrame:CGRectMake((self.frame.size.width - 290)/2, i*60 + [picArray count]*400 + contentLabel.frame.origin.y + size2.height + 10, 290, 50)];
+        [attachmentView setAttachment:att.attFileName NameText:att.attFileName];
+        attachmentView.isPhoto = NO;
+        attachmentView.indexNum = i;
+        attachmentView.mDelegate = self;
+        [self addSubview:attachmentView];
+        [attachmentsViewArray addObject:attachmentView];
     }
     
     authorFaceImageView.layer.cornerRadius = 12;
     authorFaceImageView.clipsToBounds = YES;
-    BOOL isLoadAvatar = [defaults boolForKey:@"isLoadAvatar"];
-    if (isLoadAvatar) {
-        [authorLabel setFrame:CGRectMake(47, authorLabel.frame.origin.y, authorLabel.frame.size.width, authorLabel.frame.size.height)];
-        [loushu setFrame:CGRectMake(47, loushu.frame.origin.y, loushu.frame.size.width, loushu.frame.size.height)];
-        
-        [authorFaceImageView setHidden:NO];
-        [authorFaceImageView setImageWithURL:authorFaceURL];
-    }
-    else {
-        [authorLabel setFrame:CGRectMake(15, authorLabel.frame.origin.y, authorLabel.frame.size.width, authorLabel.frame.size.height)];
-        [loushu setFrame:CGRectMake(15, loushu.frame.origin.y, loushu.frame.size.width, loushu.frame.size.height)];
-        
-        [authorFaceImageView setHidden:YES];
-    }
+    
+    [authorLabel setFrame:CGRectMake(47, authorLabel.frame.origin.y, authorLabel.frame.size.width, authorLabel.frame.size.height)];
+    [loushu setFrame:CGRectMake(47, loushu.frame.origin.y, loushu.frame.size.width, loushu.frame.size.height)];
+    
+    [authorFaceImageView setHidden:NO];
+    [authorFaceImageView setImageWithURL:authorFaceURL];
     
     UITapGestureRecognizer* recognizer;
     recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(userHeadTaped)];

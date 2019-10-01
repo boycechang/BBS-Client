@@ -41,70 +41,36 @@
     UIBarButtonItem *backButton=[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"down"] style:UIBarButtonItemStyleBordered target:self action:@selector(done:)];
     
     self.navigationItem.leftBarButtonItem = backButton;
-    
-    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-    isLoadAvatar = [defaults boolForKey:@"isLoadAvatar"];
-    isLoadImage = [defaults boolForKey:@"ShowAttachments"];
-
-    loadAvatarSwitch = [[UISwitch alloc]initWithFrame:CGRectMake(self.view.frame.size.width - 70, 8, 80, 28)];
-    [loadAvatarSwitch setOnTintColor:[UIColor colorWithRed:0.22 green:0.55 blue:0.95 alpha:1]];
-    loadAvatarSwitch.backgroundColor = [UIColor clearColor];
-    [loadAvatarSwitch addTarget:self action:@selector(showAvatar:) forControlEvents:UIControlEventValueChanged];
-    
-    loadImageSwitch = [[UISwitch alloc]initWithFrame:CGRectMake(self.view.frame.size.width - 70, 8, 80, 28)];
-    [loadImageSwitch setOnTintColor:[UIColor colorWithRed:0.22 green:0.55 blue:0.95 alpha:1]];
-    loadImageSwitch.backgroundColor = [UIColor clearColor];
-    [loadImageSwitch addTarget:self action:@selector(showAttachments:) forControlEvents:UIControlEventValueChanged];
-}
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 5;
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 4;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if(section == 0){
         return 2;
     }
-    if(section == 1){
-        return 2;
-    }
-    if (section == 2) {
+    if (section == 1) {
         return 3;
     }
-    if (section == 3) {
+    if (section == 2) {
         return 1;
     }
-    if (section == 4) {
+    if (section == 3) {
         return 1;
     }
     return 0;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if(indexPath.section == 1 && indexPath.row == 2){
-        return 74;
-    }
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 44;
 }
 
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell;
     
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"Cell"];
@@ -153,28 +119,6 @@
             switch (indexPath.row) {
                 case 0:
                 {
-                    cell.textLabel.text = @"加载头像";
-                    loadAvatarSwitch.on = isLoadAvatar;
-                    [cell.contentView addSubview:loadAvatarSwitch];
-                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                    break;
-                }
-                case 1:
-                {
-                    cell.textLabel.text = @"显示图片";
-                    loadImageSwitch.on = isLoadImage;
-                    [cell.contentView addSubview:loadImageSwitch];
-                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                    break;
-                }
-                default:
-                    break;
-            }
-            break;
-        case 2:
-            switch (indexPath.row) {
-                case 0:
-                {
                     cell.textLabel.text = @"关于";
                     NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
                     NSString* version = [infoDict objectForKey:@"CFBundleShortVersionString"];
@@ -195,7 +139,7 @@
                     break;
             }
             break;
-        case 3:
+        case 2:
             switch (indexPath.row) {
                 case 0:
                 {
@@ -217,7 +161,7 @@
                     break;
             }
             break;
-        case 4:
+        case 3:
         {            
             cell.textLabel.text = @"登出";
             cell.textLabel.textColor = [UIColor redColor];
@@ -258,20 +202,20 @@
         [self pickImageFromAlbum:nil];
     }
     
-    if(indexPath.section == 2 && indexPath.row == 0) {
+    if(indexPath.section == 1 && indexPath.row == 0) {
         articleViewController *articleVC = [[articleViewController alloc] init];
         [self.navigationController pushViewController:articleVC animated:YES];
     }
     
-    if(indexPath.section == 2 && indexPath.row == 1) {
+    if(indexPath.section == 1 && indexPath.row == 1) {
         [self sendFeedBack];
     }
     
-    if(indexPath.section == 2 && indexPath.row == 2) {
+    if(indexPath.section == 1 && indexPath.row == 2) {
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=736043107"]];
     }
     
-    if(indexPath.section == 3 && indexPath.row == 0){
+    if(indexPath.section == 2 && indexPath.row == 0){
         [[SDImageCache sharedImageCache] clearMemory];
         [[SDImageCache sharedImageCache] clearDisk];
         [ASIHTTPRequest clearSession];
@@ -288,7 +232,7 @@
         [tableView reloadData];
     }
     
-    if(indexPath.section == 4 && indexPath.row == 0){
+    if(indexPath.section == 3 && indexPath.row == 0){
         [self showActionSheet:nil];
     }
     
@@ -373,24 +317,6 @@
         [mDelegate logout];
         [self dismissViewControllerAnimated:YES completion:nil];
     }
-}
-
--(void)showAvatar:(id)sender
-{
-    UISwitch *switchButton = (UISwitch*)sender;
-    BOOL isButtonOn = [switchButton isOn];
-    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setBool:isButtonOn forKey:@"isLoadAvatar"];
-    isLoadAvatar = isButtonOn;
-}
-
--(void)showAttachments:(id)sender
-{
-    UISwitch *switchButton = (UISwitch*)sender;
-    BOOL isButtonOn = [switchButton isOn];
-    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setBool:isButtonOn forKey:@"ShowAttachments"];
-    isLoadImage = isButtonOn;
 }
 
 -(void)sendFeedBack

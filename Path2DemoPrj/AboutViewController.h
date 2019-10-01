@@ -27,8 +27,6 @@
     IBOutlet UITableView * settingTableView;
     id __unsafe_unretained mDelegate;
     float imageCache;
-    BOOL isLoadAvatar;
-    BOOL isLoadImage;
     UISwitch * loadAvatarSwitch;
     UISwitch * loadImageSwitch;
 }

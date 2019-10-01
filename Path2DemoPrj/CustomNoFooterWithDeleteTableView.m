@@ -28,6 +28,7 @@
         mTableView.decelerationRate = 0;
         mTableViewCellNum = 0;
         [mTableView setClipsToBounds:NO];
+        mTableView.tableFooterView = [UIView new];
         
         mRefreshTableHeaderView = [[RefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, -mTableView.frame.size.height, mTableView.bounds.size.width, mTableView.bounds.size.height)];
         mRefreshTableHeaderView.delegate = self;
@@ -35,7 +36,6 @@
         
         mRefreshTableFooterView = [[RefreshTableFooterView alloc] initWithFrame:CGRectMake(0.0f, mTableView.frame.size.height, mTableView.bounds.size.width, mTableView.bounds.size.height) SuperScollHeight:mTableView.bounds.size.height];
         mRefreshTableFooterView.delegate = self;
-        //[mTableView addSubview:mRefreshTableFooterView];
         
         [self addSubview:mTableView];
         

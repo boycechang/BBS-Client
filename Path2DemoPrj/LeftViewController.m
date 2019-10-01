@@ -19,15 +19,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-    NSData * backImageData = [defaults dataForKey:@"backImage"];
-    
-    if (backImageData == nil) {
-        UIImage * pickedImage = [UIImage imageNamed:@"leftbackground"];
-        NSData * data = UIImagePNGRepresentation([pickedImage applyBlurWithRadius:10.f tintColor:nil saturationDeltaFactor:1.8 maskImage:nil]);
-        [defaults setObject:data forKey:@"backImage"];
-    }
-    
     CGRect rect = [[UIScreen mainScreen] bounds];
     [self.view setFrame:CGRectMake(0, 0, rect.size.width, rect.size.height)];
     self.title = @"北邮人";
@@ -35,9 +26,7 @@
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     myBBS = appDelegate.myBBS;
     
-    tableTitles = [NSArray arrayWithObjects:@"热门", @"版面", @"投票", @"邮件", nil];
-    tableIcon1 = [NSArray arrayWithObjects:@"TopTenIcon", @"BoardIcon", @"VoteIcon", @"MailIcon", nil];
-    
+    tableTitles = [NSArray arrayWithObjects:@"热门", @"收藏", @"消息", @"站内信", @"版面", @"投票", @"设置", nil];
     [self changeLeftBack];
     
     NSArray * array = [[NSBundle mainBundle] loadNibNamed:@"AccountInfoHeaderView" owner:self options:nil];
@@ -52,17 +41,12 @@
     [self addChildViewController:self.airMenuController];
 }
 
-- (void)viewDidUnload {
-    [super viewDidUnload];
-}
-
 - (void)dealloc {
     tableTitles = nil;
     myBBS = nil;
 }
 
--(void)changeLeftBack
-{
+- (void)changeLeftBack {
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     NSData * backImageData = [defaults dataForKey:@"backImage"];
     UIImage * image = [UIImage imageWithData:backImageData];
@@ -70,23 +54,21 @@
 }
 
 #pragma mark - UITableView delegate
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return 220.0;
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 140.0;
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     return self.accountInfoViewHeader;
 }
 
 #pragma mark - UITableView datasource
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [tableTitles count];
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 60;
 }
 
@@ -119,7 +101,6 @@
     [tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:NO scrollPosition:UITableViewScrollPositionNone];
     
     cell.textLabel.text = [tableTitles objectAtIndex:indexPath.row];
-    [cell.imageView setImage:[UIImage imageNamed:[tableIcon1 objectAtIndex:indexPath.row]]];
 	return cell;
 }
 
@@ -129,61 +110,56 @@
     
 }
 #pragma mark - LoginViewDelegate
--(void)LoginSuccess
-{
+
+- (void)LoginSuccess {
     [self.accountInfoViewHeader refresh];
 }
 
-#pragma mark - Rotation
--(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
-    return YES;
-}
-- (BOOL)shouldAutorotate{
-    return YES;
-}
--(NSUInteger)supportedInterfaceOrientations{
-    return UIInterfaceOrientationMaskAllButUpsideDown;
-}
-
 #pragma mark - AboutViewDelegate
--(void)logout{
+
+- (void)logout {
     [myBBS userLogout];
     [self.accountInfoViewHeader refresh];
 }
 
 #pragma mark - XDKAirMenuDelegate
 
-- (UIViewController*)airMenu:(XDKAirMenuController*)airMenu viewControllerAtIndexPath:(NSIndexPath*)indexPath
+- (UIViewController *)airMenu:(XDKAirMenuController*)airMenu viewControllerAtIndexPath:(NSIndexPath*)indexPath
 {
     if (indexPath.row == 0 && indexPath.section == 0) {
-        TopTenViewController * topTenVC = [TopTenViewController new];
-        GlobalViewController * globalVC = [GlobalViewController new];
-        globalVC.mode = 0;
-        GlobalViewController * globalVC2 = [GlobalViewController new];
-        globalVC2.mode = 1;
-        
-        FTPagingViewController *hotPage = [[FTPagingViewController alloc] initWithViewControllers:@[topTenVC, globalVC, globalVC2] titles:@[@"十大", @"公告", @"活动"]];
-        UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:hotPage];
-        
-        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        UIBarButtonItem *menuBarItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menuiconwhite.png"] style:UIBarButtonItemStyleDone target:appDelegate.leftViewController action:@selector(showLeftView:)];
-        nav.navigationItem.leftBarButtonItem = menuBarItem;
-        
+        TopTenViewController *topTenVC = [[TopTenViewController alloc] init];
+        UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:topTenVC];
         return nav;
     }
     if (indexPath.row == 1 && indexPath.section == 0) {
-        BoardsViewController * boardsViewController = [[BoardsViewController alloc] init];
-        UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:boardsViewController];
+        AllFavViewController *allFavViewController = [[AllFavViewController alloc] init];
+        UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:allFavViewController];
         return nav;
     }
     if (indexPath.row == 2 && indexPath.section == 0) {
-        VoteListViewController *voteListViewController = [[VoteListViewController alloc] init];
-        UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:voteListViewController];
+        NotificationViewController * notificationViewController = [[NotificationViewController alloc] init];
+        UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:notificationViewController];
         return nav;
     }
     if (indexPath.row == 3 && indexPath.section == 0) {
         MailBoxViewController * mailVC = [MailBoxViewController new];
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:mailVC];
+        return nav;
+    }
+    if (indexPath.row == 4 && indexPath.section == 0) {
+        BoardsViewController * boardsViewController = [[BoardsViewController alloc] init];
+        UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:boardsViewController];
+        return nav;
+    }
+    if (indexPath.row == 5 && indexPath.section == 0) {
+        VoteListViewController *voteListViewController = [[VoteListViewController alloc] init];
+        UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:voteListViewController];
+        return nav;
+    }
+    if (indexPath.row == 6 && indexPath.section == 0) {
+        AboutViewController * aboutViewController = [[AboutViewController alloc] init];
+        aboutViewController.mDelegate = self;
+        UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:aboutViewController];
         return nav;
     }
     
@@ -200,6 +176,7 @@
 
 
 #pragma mark AccountInfoHeaderViewDelegate
+
 - (void)loginButtonClicked {
     LoginViewController * loginViewController = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
     loginViewController.mDelegate = self;

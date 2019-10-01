@@ -96,7 +96,7 @@
             if (newRootTopic.ID == newRootTopic.gID) {
                 array = [NSArray arrayWithObjects:replyButton, pageButton, nil];
             } else{
-                UIBarButtonItem *expandButton = [[UIBarButtonItem alloc] initWithTitle:@"同主题展开" style:UIBarButtonItemStylePlain target:self action:@selector(expand)];
+                UIBarButtonItem *expandButton = [[UIBarButtonItem alloc] initWithTitle:@"展开原帖" style:UIBarButtonItemStylePlain target:self action:@selector(expand)];
                 array = [NSArray arrayWithObjects:replyButton, expandButton, nil];
             }
             
@@ -112,13 +112,6 @@
             activityView = nil;
         });
     });
-}
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    customTableView = nil;
-    activityView = nil;
 }
 
 #pragma mark -
@@ -385,7 +378,7 @@
 {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.mode = MBProgressHUDModeText;
-    hud.labelText = @"同主题展开";
+    hud.labelText = @"展开原帖";
     hud.margin = 30.f;
     hud.yOffset = 0.f;
     hud.removeFromSuperViewOnHide = YES;

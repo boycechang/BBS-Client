@@ -10,7 +10,6 @@
 #import "AppDelegate.h"
 #import "LeftViewController.h"
 #import <QuartzCore/QuartzCore.h>
-#import "VWWWaterView.h"
 
 @implementation AppDelegate
 
@@ -31,27 +30,7 @@
     self.window.rootViewController = self.leftnavController;
     [self.window makeKeyAndVisible];
     
-    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-    BOOL isIntroShowed = [defaults boolForKey:@"isIntroShowed"];
-    if (!isIntroShowed) {
-        [defaults setBool:YES forKey:@"isIntroShowed"];
-        [defaults setBool:YES forKey:@"isLoadAvatar"];
-        [defaults setBool:YES forKey:@"ShowAttachments"];
-    }
-    
-    [self showWave];
     return YES;
-}
-
-- (void)showWave {
-    VWWWaterView *waterView = [[VWWWaterView alloc] initWithFrame:CGRectMake(0, 0, self.window.bounds.size.width, self.window.bounds.size.height + 200)];
-    waterView.transform = CGAffineTransformIdentity;
-    [self.window addSubview:waterView];
-    [waterView stopWave];
-    
-    [UIView animateWithDuration:0.4 animations:^{
-        [waterView setFrame:CGRectMake(0, 0, self.window.bounds.size.width, 94)];
-    }];
 }
 
 - (void)refreshNotification {

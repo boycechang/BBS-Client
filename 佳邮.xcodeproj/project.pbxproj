@@ -52,7 +52,6 @@
 		003D991F193B42A900DA5B68 /* AccountInfoHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 003D991E193B42A900DA5B68 /* AccountInfoHeaderView.m */; };
 		003D9921193B433A00DA5B68 /* AccountInfoHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 003D9920193B433A00DA5B68 /* AccountInfoHeaderView.xib */; };
 		003D9954193B726200DA5B68 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 003D9953193B726200DA5B68 /* Images.xcassets */; };
-		00469DF91940C8220067A6A7 /* VWWWaterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00469DF81940C8220067A6A7 /* VWWWaterView.m */; };
 		005A69AB1826025D003E4397 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 005A69AA1826025D003E4397 /* AVFoundation.framework */; };
 		005B5C38181192A400041366 /* UINavigationController+SGProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = 005B5C37181192A400041366 /* UINavigationController+SGProgress.m */; };
 		006329CA17FC4DBC00C0A146 /* ImageBlur.m in Sources */ = {isa = PBXBuildFile; fileRef = 006329C917FC4DBC00C0A146 /* ImageBlur.m */; };
@@ -475,8 +474,6 @@
 		003D9920193B433A00DA5B68 /* AccountInfoHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AccountInfoHeaderView.xib; sourceTree = "<group>"; };
 		003D9946193B5A2200DA5B68 /* CommonUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonUI.h; sourceTree = "<group>"; };
 		003D9953193B726200DA5B68 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		00469DF71940C8220067A6A7 /* VWWWaterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VWWWaterView.h; sourceTree = "<group>"; };
-		00469DF81940C8220067A6A7 /* VWWWaterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VWWWaterView.m; sourceTree = "<group>"; };
 		005A69AA1826025D003E4397 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		005B5C36181192A400041366 /* UINavigationController+SGProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+SGProgress.h"; sourceTree = "<group>"; };
 		005B5C37181192A400041366 /* UINavigationController+SGProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+SGProgress.m"; sourceTree = "<group>"; };
@@ -1144,15 +1141,6 @@
 			name = CommonUI;
 			sourceTree = "<group>";
 		};
-		00469DF61940C8120067A6A7 /* VWWWater */ = {
-			isa = PBXGroup;
-			children = (
-				00469DF71940C8220067A6A7 /* VWWWaterView.h */,
-				00469DF81940C8220067A6A7 /* VWWWaterView.m */,
-			);
-			name = VWWWater;
-			sourceTree = "<group>";
-		};
 		005B5C351811929300041366 /* UINavigationController+SGProgress */ = {
 			isa = PBXGroup;
 			children = (
@@ -1222,7 +1210,6 @@
 				E107B8381D15C3660062ED98 /* FTPaging */,
 				001864941942464600665DE1 /* QCSlideSwitchView */,
 				006329C917FC4DBC00C0A146 /* ImageBlur.m */,
-				00469DF61940C8120067A6A7 /* VWWWater */,
 				00C35D0A1941EFC000CC8ED0 /* BFNavigationBarDrawer */,
 				0038D58417BC0404002CC5ED /* FPActivityView */,
 				000575821826988600060E69 /* MyEmotionKeyboard */,
@@ -1924,11 +1911,6 @@
 				CEB1256F1498D519008A4B70 /* LeftViewController.h */,
 				CEB125701498D519008A4B70 /* LeftViewController.m */,
 				049FB87414997D5F003D4DA2 /* LeftViewController.xib */,
-				E914C3B2157B98E8004CED3C /* AllFavViewController */,
-				E92FE76C157E7CCB002E6747 /* MailBoxViewController */,
-				003D9913193B27F900DA5B68 /* NotificationViewController */,
-				00B7538617FC0ED10081101E /* GlobalViewController */,
-				0085E5021821F3AA0059D454 /* VoteListViewController */,
 				E95498DC157B83BE00E17239 /* LoginViewController */,
 				E9FEB5C4157B39BF00801E7F /* AboutViewController */,
 			);
@@ -1977,6 +1959,11 @@
 		E973E5FE154C094A004412CD /* HomeView */ = {
 			isa = PBXGroup;
 			children = (
+				E914C3B2157B98E8004CED3C /* AllFavViewController */,
+				E92FE76C157E7CCB002E6747 /* MailBoxViewController */,
+				003D9913193B27F900DA5B68 /* NotificationViewController */,
+				00B7538617FC0ED10081101E /* GlobalViewController */,
+				0085E5021821F3AA0059D454 /* VoteListViewController */,
 				001864981942469A00665DE1 /* HotTopicsViewController */,
 				E973E5EE154C08A1004412CD /* TopTenViewController */,
 				E91D85841578E74A00FBDE75 /* BoardsViewController */,
@@ -2183,11 +2170,12 @@
 		CEB125501498D519008A4B70 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 1100;
 				ORGANIZATIONNAME = Ethan;
 				TargetAttributes = {
 					264FEC9314A0EA0B001C15B3 = {
 						DevelopmentTeam = UXQ4US7LL6;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.InterAppAudio = {
 								enabled = 0;
@@ -2201,11 +2189,12 @@
 			};
 			buildConfigurationList = CEB125531498D519008A4B70 /* Build configuration list for PBXProject "佳邮" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				"zh-Hans",
+				Base,
 			);
 			mainGroup = CEB1254E1498D519008A4B70;
 			productRefGroup = CEB1255A1498D519008A4B70 /* Products */;
@@ -2490,7 +2479,6 @@
 				264FEC9514A0EA0B001C15B3 /* main.m in Sources */,
 				0092C5F617FC10480054A1B6 /* GlobalViewController.m in Sources */,
 				00F4B6A11823AACF00C6331A /* TQRichTextView.m in Sources */,
-				00469DF91940C8220067A6A7 /* VWWWaterView.m in Sources */,
 				264FEC9614A0EA0B001C15B3 /* AppDelegate.m in Sources */,
 				264FEC9714A0EA0B001C15B3 /* LeftViewController.m in Sources */,
 				00D71E7017BE66C5008460E1 /* CXBrowserNavBarView.m in Sources */,
@@ -2640,26 +2628,42 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
+				DEVELOPMENT_TEAM = UXQ4US7LL6;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = Automatic;
 				"PROVISIONING_PROFILE[sdk=*]" = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -2670,15 +2674,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Xiaobo Zhang (UXQ4US7LL6)";
-				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Distribution: Xiaobo Zhang (UXQ4US7LL6)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Xiaobo Zhang (UXQ4US7LL6)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = UXQ4US7LL6;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"$(SRCROOT)/Path2DemoPrj/MWPhotoBrowser/Classes\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"",
@@ -2719,9 +2724,11 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = BYR;
 				PRODUCT_NAME = "佳邮";
-				PROVISIONING_PROFILE = "79e7f1b5-dc39-49a0-a438-f007516d9e43";
-				"PROVISIONING_PROFILE[sdk=*]" = "79e7f1b5-dc39-49a0-a438-f007516d9e43";
+				PROVISIONING_PROFILE = Automatic;
+				"PROVISIONING_PROFILE[sdk=*]" = Automatic;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)\" \"$(SRCROOT)/Path2DemoPrj/SDWebImage/SDWebImage\" .. $(SDKROOT)/Path2DemoPrj/ShareSDK_v2.6.0";
 				WRAPPER_EXTENSION = app;
@@ -2732,14 +2739,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Xiaobo Zhang (UXQ4US7LL6)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Xiaobo Zhang (9LWN76ZH4U)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = UXQ4US7LL6;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"$(SRCROOT)/Path2DemoPrj/MWPhotoBrowser/Classes\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"",
@@ -2780,9 +2788,11 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = BYR;
 				PRODUCT_NAME = "佳邮";
-				PROVISIONING_PROFILE = "79e7f1b5-dc39-49a0-a438-f007516d9e43";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "79e7f1b5-dc39-49a0-a438-f007516d9e43";
+				PROVISIONING_PROFILE = Automatic;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = Automatic;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				"SDKROOT[arch=*]" = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)\" \"$(SRCROOT)/Path2DemoPrj/SDWebImage/SDWebImage\" .. $(SDKROOT)/Path2DemoPrj/ShareSDK_v2.6.0";
@@ -2794,15 +2804,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Xiaobo Zhang (UXQ4US7LL6)";
-				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Distribution: Xiaobo Zhang (UXQ4US7LL6)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Xiaobo Zhang (UXQ4US7LL6)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = UXQ4US7LL6;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"$(SRCROOT)/Path2DemoPrj/MWPhotoBrowser/Classes\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"",
@@ -2843,9 +2854,11 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = BYR;
 				PRODUCT_NAME = "佳邮";
-				PROVISIONING_PROFILE = "79e7f1b5-dc39-49a0-a438-f007516d9e43";
-				"PROVISIONING_PROFILE[sdk=*]" = "79e7f1b5-dc39-49a0-a438-f007516d9e43";
+				PROVISIONING_PROFILE = Automatic;
+				"PROVISIONING_PROFILE[sdk=*]" = Automatic;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)\" \"$(SRCROOT)/Path2DemoPrj/SDWebImage/SDWebImage\" .. $(SDKROOT)/Path2DemoPrj/ShareSDK_v2.6.0";
 				WRAPPER_EXTENSION = app;
@@ -2856,17 +2869,33 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = UXQ4US7LL6;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -2874,15 +2903,16 @@
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = Automatic;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 			};
@@ -2892,26 +2922,42 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
+				DEVELOPMENT_TEAM = UXQ4US7LL6;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = Automatic;
 				"PROVISIONING_PROFILE[sdk=*]" = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
