@@ -6,22 +6,9 @@
 //  Copyright (c) 2012 Ethan. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import "CustomNoFooterViewSectionHeaderTableView.h"
-#import "TopTenTableViewCell.h"
-#import "SingleTopicViewController.h"
-#import "DataModel.h"
-#import "WBUtil.h"
-#import "BBSAPI.h"
 
-@interface TopTenViewController : UIViewController<MBProgressHUDDelegate>
-{
-    NSArray * topTenArray;
-    CustomNoFooterViewSectionHeaderTableView * customTableView;
-    FPActivityView* activityView;
-}
+#import "BYRTableViewController.h"
 
-@property(nonatomic, strong)NSArray * topTenArray;
-@property(nonatomic, strong)CustomNoFooterViewSectionHeaderTableView * customTableView;
+@interface TopTenViewController : BYRTableViewController
 
 @end

@@ -10,7 +10,7 @@
 #import "QCSlideSwitchView.h"
 #import "TopTenViewController.h"
 
-@interface HotTopicsViewController : UIViewController<MBProgressHUDDelegate, QCSlideSwitchViewDelegate>
+@interface HotTopicsViewController : UIViewController
 {
     QCSlideSwitchView *_slideSwitchView;
     UINavigationController *_vc1;

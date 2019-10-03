@@ -7,7 +7,7 @@
 //
 
 #import "MailBoxViewController.h"
-#import "CommonUI.h"
+ 
 
 @implementation MailBoxViewController
 @synthesize mailsArray0;
@@ -36,7 +36,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"邮件";
     
-    self.navigationController.navigationBar.barTintColor = NAVBARCOLORBLUE;
+    self.navigationController.navigationBar.barTintColor = [UIColor colorNamed:@"MainTheme"];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     

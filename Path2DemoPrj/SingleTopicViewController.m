@@ -9,7 +9,7 @@
 #import "SingleTopicViewController.h"
 #import "CXPhotoBrowser.h"
 #import "DemoPhoto.h"
-#import "CommonUI.h"
+ 
 
 @implementation SingleTopicViewController
 @synthesize rootTopic;
@@ -37,30 +37,15 @@
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     myBBS = appDelegate.myBBS;
     
-    if (self.navigationController != nil) {
-        if ([[[UIDevice currentDevice]systemVersion]floatValue] >= 7.0) {
-            [self setAutomaticallyAdjustsScrollViewInsets:NO];
-            customTableView = [[CustomTableView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height - 64) Delegate:self];
-            activityView = [[FPActivityView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, 1)];
-            
-        }
-        else {
-            customTableView = [[CustomTableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 64) Delegate:self];
-            activityView = [[FPActivityView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 1)];
-        }
-    }
-    else {
-        customTableView = [[CustomTableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 64) Delegate:self];
-        activityView = [[FPActivityView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 1)];
-    }
-    
+    customTableView = [[CustomTableView alloc] initWithFrame:self.view.frame Delegate:self];
+    activityView = [[FPActivityView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, 1)];
     
     [self.view addSubview:customTableView];
     
     [activityView start];
     [self.view addSubview:activityView];
     
-    pageCount = rootTopic.replies / 20 + 1;
+    pageCount = rootTopic.reply_count / 20 + 1;
     currentLowPage = 1;
     currentHighPage = 1;
     currentShowPage = 1;
@@ -75,10 +60,12 @@
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSArray * topics;
-        if (rootTopic.ID == rootTopic.gID)
-            topics = [BBSAPI singleTopic:rootTopic.board ID:rootTopic.ID Page:1 User:myBBS.mySelf];
-        else
-            topics = [BBSAPI replyTopic:rootTopic.board ID:rootTopic.ID Start:0 User:myBBS.mySelf];
+        if ([rootTopic.id isEqualToString:rootTopic.group_id]) {
+            topics = [BBSAPI singleTopic:rootTopic.board_name ID:rootTopic.id Page:1 User:myBBS.mySelf];
+        }
+        else {
+            topics = [BBSAPI replyTopic:rootTopic.board_name ID:rootTopic.id Start:0 User:myBBS.mySelf];
+        }
         
         if (topics == nil) {
             [activityView stop];
@@ -93,9 +80,9 @@
             
             newRootTopic = [topicsArray objectAtIndex:0];
             NSArray * array;
-            if (newRootTopic.ID == newRootTopic.gID) {
+            if ([newRootTopic.id isEqualToString:newRootTopic.group_id]) {
                 array = [NSArray arrayWithObjects:replyButton, pageButton, nil];
-            } else{
+            } else {
                 UIBarButtonItem *expandButton = [[UIBarButtonItem alloc] initWithTitle:@"展开原帖" style:UIBarButtonItemStylePlain target:self action:@selector(expand)];
                 array = [NSArray arrayWithObjects:replyButton, expandButton, nil];
             }
@@ -142,15 +129,15 @@
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
         
         Topic * topic = [topicsArray objectAtIndex:indexPath.row];
-        cell.ID = topic.ID;
-        cell.time = topic.time;
-        cell.author = topic.author;
-        cell.authorFaceURL = topic.authorFaceURL;
-        cell.title = topic.title;
-        cell.content = topic.content;
-        cell.content = topic.content;
-        cell.attachments = topic.attachments;
-        cell.indexRow = indexPath.row;
+//        cell.ID = topic.id;
+//        cell.time = topic.time;
+//        cell.author = topic.author;
+//        cell.authorFaceURL = topic.authorFaceURL;
+//        cell.title = topic.title;
+//        cell.content = topic.content;
+//        cell.content = topic.content;
+//        cell.attachments = topic.attachments;
+//        cell.indexRow = indexPath.row;
         cell.mDelegate = self;
         return cell;
     }
@@ -164,17 +151,17 @@
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
         
         Topic * topic = [topicsArray objectAtIndex:indexPath.row];
-        cell.ID = topic.ID;
-        cell.time = topic.time;
-        cell.author = topic.author;
-        cell.authorFaceURL = topic.authorFaceURL;
-        cell.quote = topic.quote;
-        cell.quoter = topic.quoter;
-        cell.content = topic.content;
-        cell.num = indexPath.row + (currentLowPage - 1) * 20;
-        cell.content = topic.content;
-        cell.attachments = topic.attachments;
-        cell.indexRow = indexPath.row;
+//        cell.ID = topic.ID;
+//        cell.time = topic.time;
+//        cell.author = topic.author;
+//        cell.authorFaceURL = topic.authorFaceURL;
+//        cell.quote = topic.quote;
+//        cell.quoter = topic.quoter;
+//        cell.content = topic.content;
+//        cell.num = indexPath.row + (currentLowPage - 1) * 20;
+//        cell.content = topic.content;
+//        cell.attachments = topic.attachments;
+//        cell.indexRow = indexPath.row;
         cell.mDelegate = self;
         return cell;
     }
@@ -275,15 +262,15 @@
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSArray * topics;
-        if (rootTopic.ID == rootTopic.gID) {
+        if ([rootTopic.id isEqualToString:rootTopic.group_id]) {
             if (currentLowPage - 1 >= 1) { //有上一页
-                topics = [BBSAPI singleTopic:rootTopic.board ID:rootTopic.ID Page:currentLowPage - 1 User:myBBS.mySelf];
+                topics = [BBSAPI singleTopic:rootTopic.board_name ID:rootTopic.id Page:currentLowPage - 1 User:myBBS.mySelf];
                 if (topics != nil) {
                     [topicsArray insertObjects:topics atIndexes:[NSIndexSet indexSetWithIndexesInRange: NSMakeRange(0, [topics count])]];
                     currentLowPage--;
                 }
             } else { //无上一页
-                topics = [BBSAPI singleTopic:rootTopic.board ID:rootTopic.ID Page:currentLowPage - 1 User:myBBS.mySelf];
+                topics = [BBSAPI singleTopic:rootTopic.board_name ID:rootTopic.id Page:currentLowPage - 1 User:myBBS.mySelf];
                 if ([topicsArray count] < 20 && topics != nil) {
                     [topicsArray removeAllObjects];
                     [topicsArray addObjectsFromArray:topics];
@@ -293,7 +280,7 @@
             }
             
         } else {
-            topics = [BBSAPI replyTopic:rootTopic.board ID:rootTopic.ID Start:0 User:myBBS.mySelf];
+            topics = [BBSAPI replyTopic:rootTopic.board_name ID:rootTopic.id Start:0 User:myBBS.mySelf];
             [topicsArray removeAllObjects];
             [topicsArray addObjectsFromArray:topics];
         }
@@ -308,22 +295,22 @@
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSArray * topics;
-        if (rootTopic.ID == rootTopic.gID) {
+        if ([rootTopic.id isEqualToString:rootTopic.group_id]) {
             if (currentHighPage + 1 <= pageCount) { //有下一页
-                topics = [BBSAPI singleTopic:rootTopic.board ID:rootTopic.ID Page:currentHighPage + 1 User:myBBS.mySelf];
+                topics = [BBSAPI singleTopic:rootTopic.board_name ID:rootTopic.id Page:currentHighPage + 1 User:myBBS.mySelf];
                 if (topics != nil) {
                     [topicsArray addObjectsFromArray:topics];
                     currentHighPage++;
                 }
             } else { //无下一页
-                topics = [BBSAPI singleTopic:rootTopic.board ID:rootTopic.ID Page:currentHighPage User:myBBS.mySelf];
+                topics = [BBSAPI singleTopic:rootTopic.board_name ID:rootTopic.id Page:currentHighPage User:myBBS.mySelf];
                 if (topics != nil) {
                     [topicsArray removeObjectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange: NSMakeRange( (currentHighPage - currentLowPage) * 20, [topicsArray count] - (currentHighPage - currentLowPage) * 20)]];
                     [topicsArray addObjectsFromArray:topics];
                 }
             }
         } else {
-            topics = [BBSAPI replyTopic:rootTopic.board ID:rootTopic.ID Start:[topicsArray count] User:myBBS.mySelf];
+            topics = [BBSAPI replyTopic:rootTopic.board_name ID:rootTopic.id Start:[topicsArray count] User:myBBS.mySelf];
             [topicsArray addObjectsFromArray:topics];
         }
     
@@ -335,7 +322,7 @@
 
 - (void)reply
 {
-    if (myBBS.mySelf.ID == nil) {
+    if (myBBS.mySelf.id == nil) {
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         hud.mode = MBProgressHUDModeText;
         hud.labelText = @"请先登录";
@@ -389,11 +376,11 @@
 
 -(void)ShowgID
 {
-    Topic * oldRootTopic = [topicsArray objectAtIndex:0];
-    Topic * topic = [[Topic alloc] init];
-    topic.ID = oldRootTopic.gID;
-    topic.gID = oldRootTopic.gID;
-    topic.board = oldRootTopic.board;
+    Topic *oldRootTopic = [topicsArray objectAtIndex:0];
+    Topic *topic = [[Topic alloc] init];
+    topic.id = oldRootTopic.id;
+    topic.group_id = oldRootTopic.group_id;
+    topic.board_name = oldRootTopic.board_name;
     SingleTopicViewController * singleTopicViewController = [[SingleTopicViewController alloc] initWithRootTopic:topic];
     [self.navigationController pushViewController:singleTopicViewController animated:YES];
 }
@@ -452,7 +439,7 @@
     Topic *selectTopic = [topicsArray objectAtIndex:row];
     UserInfoViewController * userInfoViewController;
     userInfoViewController = [[UserInfoViewController alloc] initWithNibName:@"UserInfoViewController" bundle:nil];
-    userInfoViewController.userString = selectTopic.author;
+    userInfoViewController.userString = selectTopic.user.id;
     userInfoViewController.mDelegate = self;
     [self presentPopupViewController:userInfoViewController animationType:MJPopupViewAnimationSlideTopBottom];
 }
@@ -504,10 +491,10 @@
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSArray * topics;
-        if (rootTopic.ID == rootTopic.gID) {
-            topics = [BBSAPI singleTopic:rootTopic.board ID:rootTopic.ID Page:currentShowPage User:myBBS.mySelf];
+        if ([rootTopic.id isEqualToString:rootTopic.group_id]) {
+            topics = [BBSAPI singleTopic:rootTopic.board_name ID:rootTopic.id Page:currentShowPage User:myBBS.mySelf];
         } else {
-            topics = [BBSAPI replyTopic:rootTopic.board ID:rootTopic.ID Start:0 User:myBBS.mySelf];
+            topics = [BBSAPI replyTopic:rootTopic.board_name ID:rootTopic.id Start:0 User:myBBS.mySelf];
         }
         
         if (topics != nil) {

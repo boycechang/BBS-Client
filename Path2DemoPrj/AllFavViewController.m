@@ -7,7 +7,7 @@
 //
 
 #import "AllFavViewController.h"
-#import "CommonUI.h"
+ 
 
 @implementation AllFavViewController
 @synthesize topTenArray;
@@ -28,7 +28,7 @@
     [self.view setFrame:CGRectMake(0, 0, rect.size.width, rect.size.height)];
     self.title = @"收藏";
     
-    self.navigationController.navigationBar.barTintColor = NAVBARCOLORBLUE;
+    self.navigationController.navigationBar.barTintColor = [UIColor colorNamed:@"MainTheme"];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     
@@ -74,8 +74,8 @@
         [normalTableView reloadData];
     }
     
-    UIBarButtonItem *backBarItem=[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"down"] style:UIBarButtonItemStyleBordered target:self action:@selector(back:)];
-    self.navigationItem.leftBarButtonItem = backBarItem;
+    UIBarButtonItem *menuBarItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menuiconwhite.png"] style:UIBarButtonItemStyleDone target:appDelegate.leftViewController action:@selector(showLeftView:)];
+    self.navigationItem.leftBarButtonItem = menuBarItem;
 }
 
 -(IBAction)back:(id)sender

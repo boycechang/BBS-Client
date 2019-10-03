@@ -42,7 +42,7 @@
     myBBS = appDelegate.myBBS;
     
     UIBarButtonItem *composeButton=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(postNewTopic)];
-    UIBarButtonItem *changeButton=[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"eye"] style:UIBarButtonItemStylePlain target:self action:@selector(changeReadMode)];
+    UIBarButtonItem *changeButton=[[UIBarButtonItem alloc] initWithImage:[UIImage systemImageNamed:@"eye"] style:UIBarButtonItemStylePlain target:self action:@selector(changeReadMode)];
     NSArray * array = [NSArray arrayWithObjects:composeButton, changeButton, nil];
     self.navigationItem.rightBarButtonItems = array;
     
@@ -79,7 +79,7 @@
     self.drawer.customView = self.customTableView;
 	
 	// Add some buttons to the drawer.
-    UIBarButtonItem *button0 = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"star"] style:UIBarButtonItemStylePlain target:self action:@selector(addFavBoard)];
+    UIBarButtonItem *button0 = [[UIBarButtonItem alloc] initWithImage:[UIImage systemImageNamed:@"star"] style:UIBarButtonItemStylePlain target:self action:@selector(addFavBoard)];
 	UIBarButtonItem *button1 = [[UIBarButtonItem alloc] initWithCustomView:readModeSeg];
 	UIBarButtonItem *button2 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:0];
     UIBarButtonItem *button3 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(showSearch)];
@@ -143,23 +143,23 @@
         topic = [topTenArray objectAtIndex:indexPath.row];
     }
     
-    cell.ID = topic.ID;
-    cell.title = topic.title;
-    cell.time = topic.time;
-    cell.author = topic.author;
-    cell.replies = topic.replies;
-    cell.read = topic.read;
-    cell.board = topic.board;
-    cell.board = nil;
-    cell.top = topic.top;
+//    cell.ID = topic.ID;
+//    cell.title = topic.title;
+//    cell.time = topic.time;
+//    cell.author = topic.author;
+//    cell.replies = topic.replies;
+//    cell.read = topic.read;
+//    cell.board = topic.board;
+//    cell.board = nil;
+//    cell.top = topic.top;
     
-    if (topic.top) {
+    if (topic.is_top) {
         cell.articleTitleLabel.textColor = [UIColor redColor];
     } else {
         cell.articleTitleLabel.textColor = [UIColor blackColor];
     }
-    cell.mark = topic.mark;
-    cell.hasAtt = topic.hasAtt;
+    cell.mark = topic.flag.length;
+    cell.hasAtt = topic.has_attachment;
     cell.unread = YES;
     
     return cell;
@@ -361,7 +361,7 @@
     [customTableView setHidden:NO];
     
     UIBarButtonItem *composeButton=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(postNewTopic)];
-    UIBarButtonItem *changeButton=[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"eye"] style:UIBarButtonItemStylePlain target:self action:@selector(changeReadMode)];
+    UIBarButtonItem *changeButton=[[UIBarButtonItem alloc] initWithImage:[UIImage systemImageNamed:@"eye"] style:UIBarButtonItemStylePlain target:self action:@selector(changeReadMode)];
     NSArray * array = [NSArray arrayWithObjects:composeButton, changeButton, nil];
     self.navigationItem.rightBarButtonItems = array;
     

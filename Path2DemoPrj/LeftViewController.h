@@ -10,7 +10,6 @@
 #import "AppDelegate.h"
 #import "BBSAPI.h"
 #import "MyBBS.h"
-#import "GlobalViewController.h"
 #import "TopTenViewController.h"
 #import "BoardsViewController.h"
 #import "LoginViewController.h"

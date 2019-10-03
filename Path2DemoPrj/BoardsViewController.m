@@ -7,31 +7,22 @@
 //
 
 #import "BoardsViewController.h"
-#import "CommonUI.h"
+#import <Masonry.h>
 #import "AppDelegate.h"
+
+@interface BoardsViewController () {
+    UITableView *customTableView;
+}
+@end
+
 
 @implementation BoardsViewController
 @synthesize topTenArray;
 @synthesize rootSection;
 
-- (id)init
-{
-    self = [super init];
-    if (self) {
-    }
-    return self;
-}
-
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
-    CGRect rect = [[UIScreen mainScreen] bounds];
-    [self.view setFrame:CGRectMake(0, 0, rect.size.width, rect.size.height)];
     self.view.backgroundColor = [UIColor whiteColor];
-    
-    self.navigationController.navigationBar.barTintColor = NAVBARCOLORBLUE;
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     
     if ([rootSection isEqualToString:@"0"]) {
         self.title = @"本站站务";
@@ -65,21 +56,21 @@
     }
     
     if (rootSection == nil) {
-        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        UIBarButtonItem *menuBarItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menuiconwhite.png"] style:UIBarButtonItemStyleDone target:appDelegate.leftViewController action:@selector(showLeftView:)];
-        self.navigationItem.leftBarButtonItem = menuBarItem;
         self.title = @"版面";
     }
     
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     myBBS = appDelegate.myBBS;
     
-    [self setAutomaticallyAdjustsScrollViewInsets:NO];
-    customTableView = [[CustomNoFooterTableView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height - 64) Delegate:self];
-    activityView = [[FPActivityView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, 1)];
+    customTableView = [[UITableView alloc] init];
+    customTableView.refreshControl = [UIRefreshControl new];
+    [customTableView.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
     [self.view addSubview:customTableView];
-    [activityView start];
-    [self.view addSubview:activityView];
+    [customTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.view);
+    }];
+    customTableView.delegate = self;
+    customTableView.dataSource = self;
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
@@ -93,8 +84,6 @@
         }
         dispatch_async(dispatch_get_main_queue(), ^{
             [customTableView reloadData];
-            [activityView stop];
-            activityView = nil;
         });
     });
 }
@@ -165,16 +154,17 @@
 
 #pragma -
 #pragma mark CustomtableView delegate
-- (void)refreshTableHeaderDidTriggerRefresh:(UITableView *)tableView
-{
+- (void)refresh {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         self.topTenArray = [BBSAPI getBoards:appDelegate.myBBS.mySelf Section:rootSection];
-        if (rootSection == nil)
+        if (rootSection == nil) {
             appDelegate.myBBS.allSections = self.topTenArray;
+        }
         
+        [customTableView reloadData];
         dispatch_async(dispatch_get_main_queue(), ^{
-            [customTableView reloadData];
+            [customTableView.refreshControl endRefreshing];
         });
     });
 }

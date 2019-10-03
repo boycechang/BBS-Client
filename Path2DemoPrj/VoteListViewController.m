@@ -7,7 +7,12 @@
 //
 
 #import "VoteListViewController.h"
-#import "CommonUI.h"
+#import <Masonry.h>
+
+@interface VoteListViewController () {
+    UITableView *customTableView;
+}
+@end
 
 @implementation VoteListViewController
 @synthesize mailsArray0;
@@ -23,44 +28,34 @@
     return self;
 }
 
--(void)viewDidDisappear:(BOOL)animated
-{
+- (void)viewDidDisappear:(BOOL)animated {
     [customTableView reloadData];
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
-    CGRect rect = [[UIScreen mainScreen] bounds];
-    [self.view setFrame:CGRectMake(0, 0, rect.size.width, rect.size.height)];
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"投票";
-    
-    self.navigationController.navigationBar.barTintColor = NAVBARCOLORBLUE;
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     myBBS = appDelegate.myBBS;
     
-    [self setAutomaticallyAdjustsScrollViewInsets:NO];
-    customTableView = [[CustomNoFooterWithDeleteTableView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height - 64) Delegate:self];
-    activityView = [[FPActivityView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, 1)];
+    customTableView = [[UITableView alloc] init];
+    customTableView.refreshControl = [UIRefreshControl new];
+    [customTableView.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
     [self.view addSubview:customTableView];
-    
-    customTableView.backgroundColor = [UIColor clearColor];
-    customTableView.mTableView.separatorColor = [UIColor lightGrayColor];
-    customTableView.mRefreshTableHeaderView.backgroundColor = [UIColor clearColor];
+    [customTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.view);
+    }];
+    customTableView.delegate = self;
+    customTableView.dataSource = self;
     
     NSArray * itemArray = [NSArray arrayWithObjects:@"最新投票", @"热门投票", @"全部投票", nil];
     self.seg = [[UISegmentedControl alloc] initWithItems:itemArray];
     [seg setSelectedSegmentIndex:0];
-    [seg setFrame:CGRectMake(70, 27, self.view.frame.size.width - 140, 30)];
+    [seg setFrame:CGRectMake(70, 27, 80 * 3, 30)];
     [seg addTarget:self action:@selector(segmentControlValueChanged:) forControlEvents:UIControlEventValueChanged];
     self.navigationItem.titleView = seg;
-    
-    [activityView start];
-    [self.view addSubview:activityView];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
@@ -81,31 +76,17 @@
         
         dispatch_async(dispatch_get_main_queue(), ^{
             [customTableView reloadData];
-            [activityView removeFromSuperview];
-            activityView = nil;
         });
     });
-    
-    UIBarButtonItem *menuBarItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menuiconwhite.png"] style:UIBarButtonItemStyleDone target:appDelegate.leftViewController action:@selector(showLeftView:)];
-    self.navigationItem.leftBarButtonItem = menuBarItem;
 }
 
--(IBAction)back:(id)sender
-{
+- (IBAction)back:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    customTableView = nil;
-    activityView = nil;
 }
 
 #pragma mark - 
 #pragma mark tableViewDelegate
--(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     switch (seg.selectedSegmentIndex) {
         case 0:
             return [mailsArray0 count];
@@ -122,8 +103,7 @@
     return 0;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     VoteCellView * cell = (VoteCellView *)[tableView dequeueReusableCellWithIdentifier:@"VoteCellView"];
     if (cell == nil) {
         NSArray * array = [[NSBundle mainBundle] loadNibNamed:@"VoteCellView" owner:self options:nil];
@@ -148,12 +128,10 @@
     return cell;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 120;
 }
 
-// Called after the user changes the selection.
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
@@ -175,15 +153,14 @@
 }
 
 
-- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView
+           editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
     return UITableViewCellEditingStyleNone;
 }
 
 #pragma -
 #pragma mark CustomtableView delegate
-- (void)refreshTableHeaderDidTriggerRefresh:(UITableView *)tableView
-{
+- (void)refresh {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         self.mailsArray0 = [BBSAPI getVoteList:myBBS.mySelf Type:@"new"];
@@ -194,27 +171,16 @@
         appDelegate.myBBS.voteListHot = self.mailsArray1;
         appDelegate.myBBS.voteListAll = self.mailsArray2;
         
+        [customTableView reloadData];
         dispatch_async(dispatch_get_main_queue(), ^{
-            [customTableView reloadData];
-
+            [customTableView.refreshControl endRefreshing];
         });
     });
 }
 
--(IBAction)segmentControlValueChanged:(id)sender
-{
-    [customTableView.mTableView setContentOffset:CGPointMake(0, 0)];
+- (IBAction)segmentControlValueChanged:(id)sender {
+    [customTableView setContentOffset:CGPointMake(0, 0)];
     [customTableView reloadData];
 }
 
-#pragma mark - Rotation
--(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
-    return YES;
-}
-- (BOOL)shouldAutorotate{
-    return YES;
-}
--(NSUInteger)supportedInterfaceOrientations{
-    return UIInterfaceOrientationMaskAllButUpsideDown;
-}
 @end

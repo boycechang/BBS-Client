@@ -18,7 +18,7 @@
 - (id)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
 		self.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        self.backgroundColor = [UIColor whiteColor];
+        self.backgroundColor = [UIColor colorNamed:@"Background"];
         
         UIImageView * logoImageView = [[UIImageView alloc] initWithFrame:CGRectMake(frame.size.width/2 - 25, frame.size.height - 75.0f, 50, 50)];
         [logoImageView setImage:[UIImage imageNamed:@"RefreshIcon"]];
@@ -26,15 +26,6 @@
         [self addSubview:logoImageView];
         
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, frame.size.height - 20.0f, self.frame.size.width, 20.0f)];
-        /*
-		label.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-		label.font = [UIFont systemFontOfSize:12.0f];
-		label.textColor = TEXT_COLOR;
-		label.backgroundColor = [UIColor clearColor];
-		label.textAlignment = NSTextAlignmentCenter;
-		[self addSubview:label];
-		_lastUpdatedLabel=label;
-         */
          
         //UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, frame.size.height - 55.0f, self.frame.size.width, 20.0f)];
 		label.autoresizingMask = UIViewAutoresizingFlexibleWidth;

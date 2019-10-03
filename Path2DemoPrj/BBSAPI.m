@@ -10,9 +10,9 @@
 #import "Reachability.h"
 #import "ASIHTTPRequest.h"
 #import "AppDelegate.h"
+#import <AFNetworking.h>
 
 #define APIADDR @"http://api.byr.cn"
-//#define APIADDR  @"http://napi.tdrd.org"
 
 #define APPKEY @"ff7504fa9d6a4975"
 #define AllBoards @"Advice|Announce|BBShelp|Bet|BM_Market|BYR10|Cooperation|ForumCommittee|ID|Progress|Score|sysop|test|BYR|BYRStar|Showcase|AimBUPT|ACETeam|BuptAssociation|BUPTMSTC|BUPTStudentUnion|BUPTSTV|BuptWeekly|ChineseOrchestra|GraduateUnion|OracleClub|Orchestra|Philharmonic|Redcross|SCDA|SICA|WOWBuptGuild|BUPT|BUPTNet|BUPTPost|BYR_Bulletin|CampusCard|daonian|EID|Focus|Graduation|Library|Recommend|School|Selfsupport|StudentAffairs|StudentQuery|BUPTNU|DMDA|GraduateSch|HongFu|INTR|IPOC|IS|SA|SCS|SEE|SEM|SH|SICE|SL|SIE|SS|SPM|SSE|STE|ACM_ICPC|BBSMan_Dev|Circuit|Communications|CPP|Database|dotNET|Economics|Embedded_System|HardWare|Innovation|Java|Linux|MathModel|Matlab|ML_DM|MobileInternet|MobileTerminalAT|Notebook|OfficeTool|Paper|SearchEngine|Security|SoftDesign|Windows|WWWTechnology|Ad_Agent|Advertising|BookTrade|BUPTDiscount|Co_Buying|ComputerTrade|Group_Buying|House|House_Agent|Ticket|AimGraduate|BNU|BUPT_Internet_Club|BYRatSH|BYRatSZ|Certification|CivilServant|Consulting|Entrepreneurship|Financial|FamilyLife|GoAbroad|Home|IT|Job|JobInfo|NetResources|Overseas|ParttimeJob|PMatBUPT|StudyShare|Weather|WorkLife|Astronomy|Debate|DV|EnglishBar|Ghost|Guitar|Humanity|Japanese|KoreanWind|Music|Photo|Poetry|PsyHealthOnline|Quyi|Reading|ScienceFiction|Tshirt|Beauty|Blessing|Clothing|Constellations|DigiLife|Environment|DIYLife|Feeling|Food|Friends|Health|LostandFound|Talking|AutoMotor|BoardGame|Comic|Flash|Hero|Joke|KaraOK|KillBar|Movie|NetLiterature|Pet|Picture|Plant|RadioOnline|Requirement|SuperStar|Travel|TV|VideoCool|Athletics|Badminton|Billiards|Basketball|Chess|Cycling|Dancing|Football|GSpeed|Gymnasium|Kungfu|Rugby|Shuttlecock|Sk8|Skating|Swim|Taekwondo|Tabletennis|Tennis|Volleyball|BUPTDNF|CStrike|Diablo|FootballManager|LOL|OnlineGame|PCGame|PopKart|StarCraft|TVGame|War3RPG|WarCraft|WE|WOW|Xyq"
@@ -34,13 +34,8 @@
     
     NSURL *url = [NSURL URLWithString:baseurl];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    if (user == nil) {
-        [request setUsername:@"guest"];
-        [request setPassword:@""];
-    } else {
-        [request setUsername:user.username];
-        [request setPassword:user.password];
-    }
+    [request setUsername:[MyBBS sharedInstance].username];
+    [request setPassword:[MyBBS sharedInstance].password];
     [request setAllowCompressedResponse:YES];
     [request startSynchronous];
     NSData *feedback = [request responseData];
@@ -69,13 +64,9 @@
     
     NSURL *url = [NSURL URLWithString:baseurl];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    if (user == nil) {
-        [request setUsername:@"guest"];
-        [request setPassword:@""];
-    } else {
-        [request setUsername:user.username];
-        [request setPassword:user.password];
-    }
+    [request setUsername:[MyBBS sharedInstance].username];
+[request setUsername:[MyBBS sharedInstance].username];
+        [request setPassword:[MyBBS sharedInstance].password];
     [request setAllowCompressedResponse:YES];
     [request startSynchronous];
     
@@ -118,8 +109,8 @@
     if (myself == nil) {
         return nil;
     } else {
-        myself.username = user;
-        myself.password = pass;
+        [MyBBS sharedInstance].username = user;
+        [MyBBS sharedInstance].password = pass;
         return myself;
     }
 }
@@ -144,40 +135,18 @@
 }
 
 + (NSArray *)topTen {
-    if (![BBSAPI isNetworkReachable]) {
-        return nil;
-    }
-
     NSMutableString * baseurl = [APIADDR mutableCopy];
-    [baseurl appendString:@"/widget/topten.json?"];
-    [baseurl appendFormat:@"appkey=%@", APPKEY];
+    [baseurl appendString:@"/widget/topten.json"];
     
-    NSURL *url = [NSURL URLWithString:baseurl];
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    
-    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    if (appDelegate.myBBS.mySelf != nil) {
-        [request setUsername:appDelegate.myBBS.mySelf.username];
-        [request setPassword:appDelegate.myBBS.mySelf.password];
-    } else {
-        [request setUsername:@"guest"];
-        [request setPassword:@""];
-    }
-    [request setAllowCompressedResponse:YES];
-    [request startSynchronous];
-    
-    NSData *feedback = [request responseData];
-    
-    if (feedback == nil) {
-        return nil;
-    }
-    NSDictionary *topTenTopics = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
-    NSArray * Status = [JsonParseEngine parseTopics:topTenTopics];
-    if (Status == nil) {
-        return [NSArray arrayWithObject:nil];
-    } else {
-        return Status;
-    }
+    AFHTTPSessionManager *manager  = [AFHTTPSessionManager manager];
+    [manager.requestSerializer setAuthorizationHeaderFieldWithUsername:@"yyjing" password:@"1989128"];
+    [manager GET:baseurl parameters:@{@"appkey" : APPKEY} progress:^(NSProgress * _Nonnull downloadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSArray *status = [JsonParseEngine parseTopics:responseObject];
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
 }
 
 + (NSArray *)sectionTopTen:(int)sectionNumber {
@@ -185,33 +154,15 @@
     [baseurl appendFormat:@"/widget/section-%i.json?", sectionNumber];
     [baseurl appendFormat:@"appkey=%@", APPKEY];
     
-    NSURL *url = [NSURL URLWithString:baseurl];
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    
-    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    if (appDelegate.myBBS.mySelf != nil) {
-        [request setUsername:appDelegate.myBBS.mySelf.username];
-        [request setPassword:appDelegate.myBBS.mySelf.password];
-    } else {
-        [request setUsername:@"guest"];
-        [request setPassword:@""];
-    }
-    
-    [request setAllowCompressedResponse:YES];
-    [request startSynchronous];
-    NSData *feedback = [request responseData];
-    
-    if (feedback == nil) {
-        return nil;
-    }
-    
-    NSDictionary *topTenTopics = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
-    NSArray * Status = [JsonParseEngine parseTopics:topTenTopics];
-    if (Status == nil) {
-        return [NSArray arrayWithObject:nil];
-    } else {
-        return Status;
-    }
+    AFHTTPSessionManager *manager  = [AFHTTPSessionManager manager];
+    [manager.requestSerializer setAuthorizationHeaderFieldWithUsername:@"yyjing" password:@"1989128"];
+    [manager GET:baseurl parameters:@{@"appkey" : APPKEY} progress:^(NSProgress * _Nonnull downloadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSArray *status = [JsonParseEngine parseTopics:responseObject];
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
 }
 
 + (NSArray *)hotTopics {
@@ -225,16 +176,8 @@
     
     NSURL *url = [NSURL URLWithString:baseurl];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    
-    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    if (appDelegate.myBBS.mySelf != nil) {
-        [request setUsername:appDelegate.myBBS.mySelf.username];
-        [request setPassword:appDelegate.myBBS.mySelf.password];
-    } else {
-        [request setUsername:@"guest"];
-        [request setPassword:@""];
-    }
-    
+    [request setUsername:[MyBBS sharedInstance].username];
+    [request setPassword:[MyBBS sharedInstance].password];
     [request setAllowCompressedResponse:YES];
     [request startSynchronous];
     NSData *feedback = [request responseData];
@@ -268,14 +211,8 @@
     
     NSURL *url = [NSURL URLWithString:baseurl];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    
-    if (user == nil) {
-        [request setUsername:@"guest"];
-        [request setPassword:@""];
-    } else {
-        [request setUsername:user.username];
-        [request setPassword:user.password];
-    }
+    [request setUsername:[MyBBS sharedInstance].username];
+    [request setPassword:[MyBBS sharedInstance].password];
     [request setAllowCompressedResponse:YES];
     [request startSynchronous];
     
@@ -305,13 +242,8 @@
     
     NSURL *url = [NSURL URLWithString:baseurl];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    if (user == nil) {
-        [request setUsername:@"guest"];
-        [request setPassword:@""];
-    } else {
-        [request setUsername:user.username];
-        [request setPassword:user.password];
-    }
+    [request setUsername:[MyBBS sharedInstance].username];
+    [request setPassword:[MyBBS sharedInstance].password];
     [request setAllowCompressedResponse:YES];
     [request startSynchronous];
     NSData *feedback = [request responseData];
@@ -328,96 +260,6 @@
     }
 }
 
-+ (NSArray *)onlineFriends:(NSString *)token {
-    if (![BBSAPI isNetworkReachable]) {
-        return nil;
-    }
-    
-    NSMutableString * baseurl = [@"http://bbs.seu.edu.cn/api/friends.json?" mutableCopy];
-    [baseurl appendFormat:@"token=%@", token];
-    NSURL *url = [NSURL URLWithString:baseurl];
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    [request setAllowCompressedResponse:YES];
-    [request startSynchronous];
-    NSData *feedback = [request responseData];
-    if (feedback == nil) {
-        return nil;
-    }
-    NSDictionary *topTenTopics = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
-
-    NSArray *Status = [JsonParseEngine parseFriends:topTenTopics];
-    if (Status == nil) {
-        return nil;
-    } else {
-        return Status;
-    }
-}
-
-+ (NSArray *)allFriends:(NSString *)token {
-    if (![BBSAPI isNetworkReachable]) {
-        return nil;
-    }
-    
-    NSMutableString * baseurl = [@"http://bbs.seu.edu.cn/api/friends/all.json?" mutableCopy];
-    [baseurl appendFormat:@"token=%@", token];
-    NSURL *url = [NSURL URLWithString:baseurl];
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    [request setAllowCompressedResponse:YES];
-    [request startSynchronous];
-    NSData *feedback = [request responseData];
-    if (feedback == nil) {
-        return nil;
-    }
-    NSDictionary *topTenTopics = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
-
-    NSArray * Status = [JsonParseEngine parseFriends:topTenTopics];
-    if (Status == nil) {
-        return nil;
-    } else {
-        return Status;
-    }
-}
-
-+ (BOOL)deletFriend:(NSString *)token ID:(NSString *)ID {
-    if (![BBSAPI isNetworkReachable]) {
-        return false;
-    }
-    
-    NSMutableString * baseurl = [@"http://bbs.seu.edu.cn/api/friends/delete.json?" mutableCopy];
-    [baseurl appendFormat:@"token=%@",token];
-    [baseurl appendFormat:@"&id=%@",ID];
-    NSURL *url = [NSURL URLWithString:baseurl];
-    NSData * feedback = [NSData dataWithContentsOfURL:url];
-    if (feedback == nil) {
-        return NO;
-    }
-    NSDictionary *topTenTopics = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
-    BOOL success = [[topTenTopics objectForKey:@"success"] boolValue];
-    return success;
-}
-+ (BOOL)addFriend:(NSString *)token ID:(NSString *)ID {
-    if (![BBSAPI isNetworkReachable]) {
-        return false;
-    }
-    
-    NSMutableString * baseurl = [@"http://bbs.seu.edu.cn/api/friends/add.json?" mutableCopy];
-    [baseurl appendFormat:@"token=%@", token];
-    [baseurl appendFormat:@"&id=%@",ID];
-    NSURL *url = [NSURL URLWithString:baseurl];
-    NSData * feedback = [NSData dataWithContentsOfURL:url];
-    if (feedback == nil) {
-        return NO;
-    }
-    NSDictionary *topTenTopics = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
-    
-    int result = [[topTenTopics objectForKey:@"result"] intValue];
-    BOOL success = NO;
-    if (result == 0) {
-        success = YES;
-    }
-    return success;
-}
-
 + (BOOL)addFavBoard:(User *)user BoardName:(NSString *)BoardName {
     if(![BBSAPI isNetworkReachable]) {
         return NO;
@@ -429,14 +271,8 @@
     NSURL *url = [NSURL URLWithString:baseurl];
     
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    if (user == nil) {
-        [request setUsername:@"guest"];
-        [request setPassword:@""];
-    } else {
-        [request setUsername:user.username];
-        [request setPassword:user.password];
-    }
-    
+    [request setUsername:[MyBBS sharedInstance].username];
+    [request setPassword:[MyBBS sharedInstance].password];
     [request setPostValue:BoardName forKey:@"name"];
     [request setPostValue:@"0" forKey:@"dir"];
     [request setAllowCompressedResponse:YES];
@@ -464,14 +300,8 @@
     NSURL *url = [NSURL URLWithString:baseurl];
     
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    if (user == nil) {
-        [request setUsername:@"guest"];
-        [request setPassword:@""];
-    } else {
-        [request setUsername:user.username];
-        [request setPassword:user.password];
-    }
-    
+    [request setUsername:[MyBBS sharedInstance].username];
+    [request setPassword:[MyBBS sharedInstance].password];
     [request setPostValue:BoardName forKey:@"name"];
     [request setPostValue:@"0" forKey:@"dir"];
     [request setAllowCompressedResponse:YES];
@@ -543,13 +373,8 @@
     
     NSURL *url = [NSURL URLWithString:baseurl];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    if (user == nil) {
-        [request setUsername:@"guest"];
-        [request setPassword:@""];
-    } else {
-        [request setUsername:user.username];
-        [request setPassword:user.password];
-    }
+    [request setUsername:[MyBBS sharedInstance].username];
+    [request setPassword:[MyBBS sharedInstance].password];
     [request setAllowCompressedResponse:YES];
     [request startSynchronous];
     NSData *feedback = [request responseData];
@@ -595,13 +420,8 @@
     
     NSURL *url = [NSURL URLWithString:baseurl];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    if (user == nil) {
-        [request setUsername:@"guest"];
-        [request setPassword:@""];
-    } else {
-        [request setUsername:user.username];
-        [request setPassword:user.password];
-    }
+    [request setUsername:[MyBBS sharedInstance].username];
+    [request setPassword:[MyBBS sharedInstance].password];
     [request setAllowCompressedResponse:YES];
     [request startSynchronous];
     NSData *feedback = [request responseData];
@@ -644,13 +464,8 @@
     
     NSURL *url = [NSURL URLWithString:baseurl];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    if (user == nil) {
-        [request setUsername:@"guest"];
-        [request setPassword:@""];
-    } else {
-        [request setUsername:user.username];
-        [request setPassword:user.password];
-    }
+    [request setUsername:[MyBBS sharedInstance].username];
+    [request setPassword:[MyBBS sharedInstance].password];
     [request setAllowCompressedResponse:YES];
     [request setRequestMethod:@"POST"];
     [request startSynchronous];
@@ -682,14 +497,8 @@
     
     NSURL *url = [NSURL URLWithString:baseurl];
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    if (myself == nil) {
-        [request setUsername:@"guest"];
-        [request setPassword:@""];
-    }
-    else {
-        [request setUsername:myself.username];
-        [request setPassword:myself.password];
-    }
+    [request setUsername:[MyBBS sharedInstance].username];
+    [request setPassword:[MyBBS sharedInstance].password];
     [request setAllowCompressedResponse:YES];
     [request setRequestMethod:@"POST"];
 
@@ -739,14 +548,8 @@
     
     NSURL *url = [NSURL URLWithString:baseurl];
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    if (myself == nil) {
-        [request setUsername:@"guest"];
-        [request setPassword:@""];
-    }
-    else {
-        [request setUsername:myself.username];
-        [request setPassword:myself.password];
-    }
+    [request setUsername:[MyBBS sharedInstance].username];
+    [request setPassword:[MyBBS sharedInstance].password];
     [request setAllowCompressedResponse:YES];
     [request setRequestMethod:@"POST"];
     
@@ -776,14 +579,8 @@
     
     NSURL *url = [NSURL URLWithString:baseurl];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    if (user == nil) {
-        [request setUsername:@"guest"];
-        [request setPassword:@""];
-    }
-    else {
-        [request setUsername:user.username];
-        [request setPassword:user.password];
-    }
+    [request setUsername:[MyBBS sharedInstance].username];
+    [request setPassword:[MyBBS sharedInstance].password];
     [request setAllowCompressedResponse:YES];
     [request startSynchronous];
     NSData *feedback = [request responseData];
@@ -821,14 +618,8 @@
     
     NSURL *url = [NSURL URLWithString:baseurl];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    if (user == nil) {
-        [request setUsername:@"guest"];
-        [request setPassword:@""];
-    }
-    else {
-        [request setUsername:user.username];
-        [request setPassword:user.password];
-    }
+    [request setUsername:[MyBBS sharedInstance].username];
+    [request setPassword:[MyBBS sharedInstance].password];
     [request setAllowCompressedResponse:YES];
     [request startSynchronous];
     NSData *feedback = [request responseData];
@@ -854,14 +645,8 @@
     
     NSURL *url = [NSURL URLWithString:baseurl];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    if (user == nil) {
-        [request setUsername:@"guest"];
-        [request setPassword:@""];
-    }
-    else {
-        [request setUsername:user.username];
-        [request setPassword:user.password];
-    }
+    [request setUsername:[MyBBS sharedInstance].username];
+    [request setPassword:[MyBBS sharedInstance].password];
     [request setAllowCompressedResponse:YES];
     [request setRequestMethod:@"POST"];
     [request startSynchronous];
@@ -879,14 +664,8 @@
     
     NSURL *url = [NSURL URLWithString:baseurl];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    if (user == nil) {
-        [request setUsername:@"guest"];
-        [request setPassword:@""];
-    }
-    else {
-        [request setUsername:user.username];
-        [request setPassword:user.password];
-    }
+    [request setUsername:[MyBBS sharedInstance].username];
+    [request setPassword:[MyBBS sharedInstance].password];
     [request setAllowCompressedResponse:YES];
     [request setRequestMethod:@"POST"];
     [request startSynchronous];
@@ -919,16 +698,8 @@
     
     NSURL *url = [NSURL URLWithString:baseurl];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    
-    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    if (appDelegate.myBBS.mySelf != nil) {
-        [request setUsername:appDelegate.myBBS.mySelf.username];
-        [request setPassword:appDelegate.myBBS.mySelf.password];
-    } else {
-        [request setUsername:@"guest"];
-        [request setPassword:@""];
-    }
-    
+    [request setUsername:[MyBBS sharedInstance].username];
+    [request setPassword:[MyBBS sharedInstance].password];
     [request setAllowCompressedResponse:YES];
     [request startSynchronous];
     NSData *feedback = [request responseData];
@@ -962,14 +733,8 @@
     
     NSURL *url = [NSURL URLWithString:baseurl];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    
-    if (user != nil) {
-        [request setUsername:user.username];
-        [request setPassword:user.password];
-    } else {
-        [request setUsername:@"guest"];
-        [request setPassword:@""];
-    }
+    [request setUsername:[MyBBS sharedInstance].username];
+    [request setPassword:[MyBBS sharedInstance].password];
     [request setAllowCompressedResponse:YES];
     [request startSynchronous];
     NSData *feedback = [request responseData];
@@ -1008,14 +773,8 @@
     
     NSURL *url = [NSURL URLWithString:baseurl];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    if (user != nil) {
-        [request setUsername:user.username];
-        [request setPassword:user.password];
-    }
-    else {
-        [request setUsername:@"guest"];
-        [request setPassword:@""];
-    }
+    [request setUsername:[MyBBS sharedInstance].username];
+    [request setPassword:[MyBBS sharedInstance].password];
     [request setAllowCompressedResponse:YES];
     [request startSynchronous];
     NSData *feedback = [request responseData];
@@ -1048,15 +807,8 @@
 
     NSURL *url = [NSURL URLWithString:baseurl];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    if (user != nil) {
-        [request setUsername:user.username];
-        [request setPassword:user.password];
-    }
-    else {
-        [request setUsername:@"guest"];
-        [request setPassword:@""];
-    }
-    
+    [request setUsername:[MyBBS sharedInstance].username];
+    [request setPassword:[MyBBS sharedInstance].password];
     [request setAllowCompressedResponse:YES];
     [request startSynchronous];
     NSData *feedback = [request responseData];
@@ -1087,13 +839,8 @@
     NSURL *url = [NSURL URLWithString:baseurl];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    if (appDelegate.myBBS.mySelf != nil) {
-        [request setUsername:appDelegate.myBBS.mySelf.username];
-        [request setPassword:appDelegate.myBBS.mySelf.password];
-    } else {
-        [request setUsername:@"guest"];
-        [request setPassword:@""];
-    }
+        [request setUsername:[MyBBS sharedInstance].username];
+        [request setPassword:[MyBBS sharedInstance].password];
     
     [request setAllowCompressedResponse:YES];
     [request startSynchronous];
@@ -1124,13 +871,9 @@
     
     NSURL *url = [NSURL URLWithString:baseurl];
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    if (user == nil) {
-        [request setUsername:@"guest"];
-        [request setPassword:@""];
-    } else {
-        [request setUsername:user.username];
-        [request setPassword:user.password];
-    }
+    [request setUsername:[MyBBS sharedInstance].username];
+[request setUsername:[MyBBS sharedInstance].username];
+        [request setPassword:[MyBBS sharedInstance].password];
     [request setAllowCompressedResponse:YES];
     [request setRequestMethod:@"POST"];
     [request setPostValue:[NSString stringWithFormat:@"%i", reid] forKey:@"reid"];
@@ -1168,8 +911,8 @@
         [request setPassword:@""];
     }
     else {
-        [request setUsername:user.username];
-        [request setPassword:user.password];
+        [request setUsername:[MyBBS sharedInstance].username];
+        [request setPassword:[MyBBS sharedInstance].password];
     }
     [request setAllowCompressedResponse:YES];
     [request setRequestMethod:@"POST"];
@@ -1215,13 +958,8 @@
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
     
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    if (appDelegate.myBBS.mySelf != nil) {
-        [request setUsername:appDelegate.myBBS.mySelf.username];
-        [request setPassword:appDelegate.myBBS.mySelf.password];
-    } else {
-        [request setUsername:@"guest"];
-        [request setPassword:@""];
-    }
+        [request setUsername:[MyBBS sharedInstance].username];
+        [request setPassword:[MyBBS sharedInstance].password];
     
     [request setAllowCompressedResponse:YES];
     [request setRequestMethod:@"POST"];
@@ -1264,13 +1002,9 @@
     
     NSURL *url = [NSURL URLWithString:baseurl];
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    if (user == nil) {
-        [request setUsername:@"guest"];
-        [request setPassword:@""];
-    } else {
-        [request setUsername:user.username];
-        [request setPassword:user.password];
-    }
+    [request setUsername:[MyBBS sharedInstance].username];
+[request setUsername:[MyBBS sharedInstance].username];
+        [request setPassword:[MyBBS sharedInstance].password];
     [request setAllowCompressedResponse:YES];
     [request setRequestMethod:@"POST"];
     [request setPostValue:[name URLEncodedString] forKey:@"name"];
@@ -1307,13 +1041,9 @@
     
     NSURL *url = [NSURL URLWithString:baseurl];
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    if (user == nil) {
-        [request setUsername:@"guest"];
-        [request setPassword:@""];
-    } else {
-        [request setUsername:user.username];
-        [request setPassword:user.password];
-    }
+    [request setUsername:[MyBBS sharedInstance].username];
+[request setUsername:[MyBBS sharedInstance].username];
+        [request setPassword:[MyBBS sharedInstance].password];
     [request setAllowCompressedResponse:YES];
     [request setRequestMethod:@"GET"];
     [request startSynchronous];
@@ -1426,16 +1156,8 @@
     
     NSURL *url = [NSURL URLWithString:baseurl];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    
-    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    if (appDelegate.myBBS.mySelf != nil) {
-        [request setUsername:appDelegate.myBBS.mySelf.username];
-        [request setPassword:appDelegate.myBBS.mySelf.password];
-    } else {
-        [request setUsername:@"guest"];
-        [request setPassword:@""];
-    }
-    
+    [request setUsername:[MyBBS sharedInstance].username];
+    [request setPassword:[MyBBS sharedInstance].password];
     [request setAllowCompressedResponse:YES];
     [request startSynchronous];
     NSData *feedback = [request responseData];
@@ -1460,7 +1182,7 @@
     NSMutableArray * newAllArray = [[NSMutableArray alloc] init];
     for (int i = 0; i < [PhotographyArray count]; i++) {
         Topic * topic = [PhotographyArray objectAtIndex:i];
-        NSArray * array = [BBSAPI singleTopic:topic.board ID:topic.ID];
+        NSArray * array = [BBSAPI singleTopic:topic.board_name ID:topic.id];
         if (array != nil) {
             topic = [array objectAtIndex:0];
             [newAllArray addObject:topic];
@@ -1475,7 +1197,7 @@
     NSMutableArray * newAllArray = [[NSMutableArray alloc] init];
     for (int i = 0; i < [PicturesArray count]; i++) {
         Topic * topic = [PicturesArray objectAtIndex:i];
-        NSArray * array = [BBSAPI singleTopic:topic.board ID:topic.ID];
+        NSArray * array = [BBSAPI singleTopic:topic.board_name ID:topic.id];
         if (array != nil) {
             topic = [array objectAtIndex:0];
             [newAllArray addObject:topic];
@@ -1496,13 +1218,8 @@
     
     NSURL *url = [NSURL URLWithString:baseurl];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    if (user == nil) {
-        [request setUsername:@"guest"];
-        [request setPassword:@""];
-    } else {
-        [request setUsername:user.username];
-        [request setPassword:user.password];
-    }
+    [request setUsername:[MyBBS sharedInstance].username];
+    [request setPassword:[MyBBS sharedInstance].password];
     [request setAllowCompressedResponse:YES];
     [request startSynchronous];
     
@@ -1533,14 +1250,8 @@
     
     NSURL *url = [NSURL URLWithString:baseurl];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    if (user == nil) {
-        [request setUsername:@"guest"];
-        [request setPassword:@""];
-    }
-    else {
-        [request setUsername:user.username];
-        [request setPassword:user.password];
-    }
+    [request setUsername:[MyBBS sharedInstance].username];
+    [request setPassword:[MyBBS sharedInstance].password];
     [request setAllowCompressedResponse:YES];
     [request startSynchronous];
     NSData *feedback = [request responseData];
@@ -1571,14 +1282,8 @@
     
     NSURL *url = [NSURL URLWithString:baseurl];
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    if (user == nil) {
-        [request setUsername:@"guest"];
-        [request setPassword:@""];
-    }
-    else {
-        [request setUsername:user.username];
-        [request setPassword:user.password];
-    }
+    [request setUsername:[MyBBS sharedInstance].username];
+    [request setPassword:[MyBBS sharedInstance].password];
     [request setAllowCompressedResponse:YES];
     [request setRequestMethod:@"POST"];
     

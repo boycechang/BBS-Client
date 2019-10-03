@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CustomNoFooterTableView.h"
 #import "BoardsCellView.h"
 #import "TopicsViewController.h"
 #import "DataModel.h"
@@ -19,7 +18,6 @@
 @interface BoardsViewController : UIViewController<MBProgressHUDDelegate, UITableViewDataSource, UITableViewDelegate>
 {
     NSArray * topTenArray;
-    CustomNoFooterTableView * customTableView;
     UITableView * normalTableView;
     FPActivityView* activityView;
     

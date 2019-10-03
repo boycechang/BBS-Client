@@ -8,7 +8,7 @@
 
 #import "DemoPhoto.h"
 #import "DemoPhotoLoadingView.h"
-#import "UIImageView+WebCache.h"
+#import <UIImageView+WebCache.h>
 
 @interface DemoPhoto ()
 {

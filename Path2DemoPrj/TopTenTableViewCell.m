@@ -27,20 +27,6 @@
 @synthesize readandreplyLabel;
 @synthesize authorLabel;
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
-{
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) 
-    {
-    }
-    return self;
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
 #pragma mark UIView
 - (void)layoutSubviews {
 	[super layoutSubviews];

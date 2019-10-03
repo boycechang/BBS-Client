@@ -1,6 +1,5 @@
 //
 //  AccountInfoHeaderView.m
-//  佳邮
 //
 //  Created by Boyce on 6/1/14.
 //  Copyright (c) 2014 Ethan. All rights reserved.
@@ -9,7 +8,7 @@
 #import "AccountInfoHeaderView.h"
 #import "DataModel.h"
 #import "AppDelegate.h"
-#import "UIImageView+WebCache.h"
+#import <UIImageView+WebCache.h>
 
 @implementation AccountInfoHeaderView
 
@@ -38,7 +37,7 @@
 - (void)refresh
 {
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    if (appDelegate.myBBS.mySelf.ID == nil) {
+    if (appDelegate.myBBS.mySelf.id == nil) {
         [nameButton setTitle:@"立即登录" forState:UIControlStateNormal];
         [nameButton setEnabled:YES];
         [avatarImageView setUserInteractionEnabled:YES];
@@ -47,13 +46,13 @@
         [notifButton setEnabled:NO];
         [avatarImageView setImage:[UIImage imageNamed:@"LoginAvatar"]];
     } else {
-        [nameButton setTitle:appDelegate.myBBS.mySelf.ID forState:UIControlStateNormal];
+        [nameButton setTitle:appDelegate.myBBS.mySelf.id forState:UIControlStateNormal];
         [nameButton setEnabled:NO];
         [avatarImageView setUserInteractionEnabled:NO];
         [favButton setEnabled:YES];
         [mailButton setEnabled:YES];
         [notifButton setEnabled:YES];
-        [avatarImageView setImageWithURL:appDelegate.myBBS.mySelf.avatar];
+        [avatarImageView sd_setImageWithURL:appDelegate.myBBS.mySelf.face_url];
     }
     
     if (appDelegate.myBBS.notificationCount == 0) {

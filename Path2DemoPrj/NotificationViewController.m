@@ -7,7 +7,7 @@
 //
 
 #import "NotificationViewController.h"
-#import "CommonUI.h"
+#import <Masonry.h>
 
 @implementation NotificationViewController
 @synthesize atArray;
@@ -16,38 +16,20 @@
 @synthesize atImageView;
 @synthesize replyImageView;
 
-- (id)init
-{
-    self = [super init];
-    if (self) {
-    }
-    return self;
-}
-
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
-    CGRect rect = [[UIScreen mainScreen] bounds];
-    [self.view setFrame:CGRectMake(0, 0, rect.size.width, rect.size.height)];
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"提醒";
-    
-    self.navigationController.navigationBar.barTintColor = NAVBARCOLORBLUE;
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
-    
-    [self setAutomaticallyAdjustsScrollViewInsets:NO];
-    
+        
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
      myBBS = appDelegate.myBBS;
     
-    UIToolbar * toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, 44)];
     NSArray * itemArray = [NSArray arrayWithObjects:@"回复", @"@我", nil];
     self.seg = [[UISegmentedControl alloc] initWithItems:itemArray];
     [seg setSelectedSegmentIndex:0];
-    [seg setFrame:CGRectMake(6, 7, self.view.frame.size.width - 10, 30)];
+    [seg setFrame:CGRectMake(70, 27, 80 * 2, 30)];
     [seg addTarget:self action:@selector(segmentControlValueChanged:) forControlEvents:UIControlEventValueChanged];
-    [toolbar addSubview:seg];
+    self.navigationItem.titleView = seg;
     
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         self.replyImageView = [[UIImageView alloc] initWithFrame:CGRectMake(140, 17, 10, 10)];
@@ -69,20 +51,18 @@
     [replyImageView setHidden:YES];
     [atImageView setHidden:YES];
     
-    
-    [toolbar addSubview:replyImageView];
-    [toolbar addSubview:atImageView];
-    [self.view addSubview:toolbar];
-    
     UIBarButtonItem *clearButton=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(clearAll:)];
     self.navigationItem.rightBarButtonItem = clearButton;
     
-    customTableView = [[CustomTableView alloc] initWithFrame:CGRectMake(0, 108, self.view.frame.size.width, self.view.frame.size.height - 108) Delegate:self];
-    activityView = [[FPActivityView alloc] initWithFrame:CGRectMake(0, 44, self.view.frame.size.width, 1)];
-    
-    [self.view insertSubview:customTableView atIndex:0];
-    [activityView start];
-    [self.view addSubview:activityView];
+    customTableView = [[UITableView alloc] init];
+    customTableView.refreshControl = [UIRefreshControl new];
+    [customTableView.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
+    [self.view addSubview:customTableView];
+    [customTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.view);
+    }];
+    customTableView.delegate = self;
+    customTableView.dataSource = self;
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
@@ -102,13 +82,8 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             [self refreshNotificationImageView];
             [customTableView reloadData];
-            [activityView removeFromSuperview];
-            activityView = nil;
         });
     });
-    
-    UIBarButtonItem *backBarItem=[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"down"] style:UIBarButtonItemStyleBordered target:self action:@selector(back:)];
-    self.navigationItem.leftBarButtonItem = backBarItem;
 }
 
 -(IBAction)back:(id)sender
@@ -116,10 +91,6 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-}
 -(void)dealloc
 {
     customTableView = nil;
@@ -163,12 +134,12 @@
             break;
     }
     
-    cell.ID = topic.ID;
+    cell.ID = topic.id;
     cell.title = topic.title;
-    cell.author = topic.author;
-    cell.board = topic.board;
+    cell.author = topic.user.user_name;
+    cell.board = topic.board_name;
     cell.unread = topic.unread;
-    cell.hasAtt = topic.hasAtt;
+    cell.hasAtt = topic.has_attachment;
     
     return cell;
 
@@ -258,8 +229,7 @@
 #pragma -
 #pragma mark CustomtableView delegate
 
-- (void)refreshTableHeaderDidTriggerRefresh:(UITableView *)tableView
-{
+- (void)refresh {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         [appDelegate refreshNotification];
@@ -270,9 +240,10 @@
         appDelegate.myBBS.notification.at = self.atArray;
         appDelegate.myBBS.notification.reply = self.replyArray;
         
+        [customTableView reloadData];
+        [self refreshNotificationImageView];
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self refreshNotificationImageView];
-            [customTableView reloadData];
+            [customTableView.refreshControl endRefreshing];
         });
     });
 }
@@ -308,8 +279,10 @@
             default:
                 break;
         }
+        
+        [customTableView reloadData];
         dispatch_async(dispatch_get_main_queue(), ^{
-            [customTableView reloadData];
+            [customTableView.refreshControl endRefreshing];
         });
     });
 }
@@ -335,14 +308,4 @@
     [customTableView reloadData];
 }
 
-#pragma mark - Rotation
--(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
-    return YES;
-}
-- (BOOL)shouldAutorotate{
-    return YES;
-}
--(NSUInteger)supportedInterfaceOrientations{
-    return UIInterfaceOrientationMaskAllButUpsideDown;
-}
 @end

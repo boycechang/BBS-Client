@@ -10,6 +10,11 @@
 #import "AppDelegate.h"
 #import "LeftViewController.h"
 #import <QuartzCore/QuartzCore.h>
+#import "HomeTabBarController.h"
+
+@interface AppDelegate ()
+@property (nonatomic, strong) IBOutlet HomeTabBarController *homeVC;
+@end
 
 @implementation AppDelegate
 
@@ -17,19 +22,15 @@
 @synthesize leftnavController = _leftnavController;
 @synthesize leftViewController;
 @synthesize myBBS;
-@synthesize isSearching;
 @synthesize selectedUserInfo;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    application.statusBarStyle = UIStatusBarStyleLightContent;
+    [UINavigationBar appearance].prefersLargeTitles = YES;
+    [UINavigationBar appearance].barTintColor = [UIColor colorNamed:@"Background"];
+    [UINavigationBar appearance].tintColor = [UIColor colorNamed:@"MainTheme"];
+//    [UINavigationBar appearance].titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor colorNamed:@"BoldTitle"]};
     
     self.myBBS = [[MyBBS alloc] init];
-    [self.leftnavController.navigationBar setHidden:YES];
-    
-    self.window.backgroundColor = [UIColor clearColor];
-    self.window.rootViewController = self.leftnavController;
-    [self.window makeKeyAndVisible];
-    
     return YES;
 }
 

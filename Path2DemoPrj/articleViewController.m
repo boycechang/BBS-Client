@@ -13,7 +13,6 @@
 @synthesize scrollView;
 @synthesize coreTextView;
 
-
 - (NSString *)textForView
 {
     return [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"text" ofType:@"txt"] encoding:NSUTF8StringEncoding error:nil];

@@ -10,7 +10,7 @@
 #import "UIViewController+MJPopupViewController.h"
 #include <sys/types.h>
 #include <sys/sysctl.h>
-#import "CommonUI.h"
+#import <SDImageCache.h>
 
 @implementation AboutViewController
 @synthesize mDelegate;
@@ -38,9 +38,9 @@
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     
-    UIBarButtonItem *backButton=[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"down"] style:UIBarButtonItemStyleBordered target:self action:@selector(done:)];
-    
-    self.navigationItem.leftBarButtonItem = backButton;
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    UIBarButtonItem *menuBarItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menuiconwhite.png"] style:UIBarButtonItemStyleDone target:appDelegate.leftViewController action:@selector(showLeftView:)];
+    self.navigationItem.leftBarButtonItem = menuBarItem;
 }
 
 #pragma mark - Table view data source
@@ -83,8 +83,8 @@
                 {
                     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
                     cell.textLabel.text = @"当前用户";
-                    if (appDelegate.myBBS.mySelf.ID != nil) {
-                        cell.detailTextLabel.text = appDelegate.myBBS.mySelf.ID;
+                    if (appDelegate.myBBS.mySelf.id != nil) {
+                        cell.detailTextLabel.text = appDelegate.myBBS.mySelf.id;
                         [cell setAccessoryType:UITableViewCellAccessoryNone];
                     }
                     else{
@@ -149,7 +149,7 @@
                     }
                     else {
                         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                            imageCache = [[SDImageCache sharedImageCache] getSize] / 1024.0 / 1024.0;
+                            imageCache = [[SDImageCache sharedImageCache] totalDiskSize] / 1024.0 / 1024.0;
                             dispatch_async(dispatch_get_main_queue(), ^{
                                 cell.detailTextLabel.text = [NSString stringWithFormat:@"%0.2f M", imageCache];
                             });
@@ -178,16 +178,16 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    if (indexPath.section == 0 && indexPath.row == 0 && appDelegate.myBBS.mySelf.ID != nil) {
+    if (indexPath.section == 0 && indexPath.row == 0 && appDelegate.myBBS.mySelf.id != nil) {
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
 
         UserInfoViewController * userInfoViewController;
         userInfoViewController = [[UserInfoViewController alloc] initWithNibName:@"UserInfoViewController" bundle:nil];
-        userInfoViewController.userString = appDelegate.myBBS.mySelf.ID;
+        userInfoViewController.userString = appDelegate.myBBS.mySelf.id;
         [self presentPopupViewController:userInfoViewController animationType:MJPopupViewAnimationSlideTopBottom];
     }
     
-    if (indexPath.section == 0 && indexPath.row == 0 && appDelegate.myBBS.mySelf.ID == nil) {
+    if (indexPath.section == 0 && indexPath.row == 0 && appDelegate.myBBS.mySelf.id == nil) {
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         hud.mode = MBProgressHUDModeText;
         hud.labelText = @"请先登录";
@@ -199,7 +199,7 @@
     }
     
     if (indexPath.section == 0 && indexPath.row == 1) {
-        [self pickImageFromAlbum:nil];
+//        [self pickImageFromAlbum:nil];
     }
     
     if(indexPath.section == 1 && indexPath.row == 0) {
@@ -217,7 +217,7 @@
     
     if(indexPath.section == 2 && indexPath.row == 0){
         [[SDImageCache sharedImageCache] clearMemory];
-        [[SDImageCache sharedImageCache] clearDisk];
+        [[SDImageCache sharedImageCache] clearDiskOnCompletion:nil];
         [ASIHTTPRequest clearSession];
         [[NSURLCache sharedURLCache] removeAllCachedResponses];
         
@@ -239,58 +239,6 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
-- (IBAction)pickImageFromAlbum:(id)sender
-{
-    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-    picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    picker.delegate = self;
-    [self presentViewController:picker animated:YES completion:nil];
-}
-
--(void) imagePickerControllerDidCancel:(UIImagePickerController *)picker{
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (UIImage *)image: (UIImage *)oldimage fillSize: (CGSize) viewsize
-
-{
-    CGSize size = oldimage.size;
-    
-    CGFloat scalex = viewsize.width / size.width;
-    CGFloat scaley = viewsize.height / size.height;
-    CGFloat scale = MAX(scalex, scaley);
-    
-    UIGraphicsBeginImageContext(viewsize);
-    
-    CGFloat width = size.width * scale;
-    CGFloat height = size.height * scale;
-    
-    float dwidth = ((viewsize.width - width) / 2.0f);
-    float dheight = ((viewsize.height - height) / 2.0f);
-    
-    CGRect rect = CGRectMake(dwidth, dheight, size.width * scale, size.height * scale);
-    [oldimage drawInRect:rect];
-    
-    UIImage *newimg = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    return newimg;
-}
-
-- (void) imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
-{
-    [self dismissViewControllerAnimated:YES completion:nil];
-    
-    UIImage * originalImage = [info objectForKey:UIImagePickerControllerOriginalImage];
-    UIImage * pickedImage = [self image:originalImage fillSize:CGSizeMake(originalImage.size.width/4, originalImage.size.height/4)];
-    UIImage *image = [pickedImage applyBlurWithRadius:10.0f tintColor:nil saturationDeltaFactor:1.8 maskImage:nil];
-    NSData * data = UIImagePNGRepresentation(image);
-    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setValue:data forKey:@"backImage"];
-    self.backImage = image;
-    [settingTableView reloadData];
-    [mDelegate changeLeftBack];
-}
 
 -(IBAction)done:(id)sender
 {
@@ -300,7 +248,7 @@
 -(IBAction)showActionSheet:(id)sender
 {
     UIActionSheet*actionSheet = [[UIActionSheet alloc]
-                                 initWithTitle:@"确定登出佳邮？"
+                                 initWithTitle:@"确定登出北邮人？"
                                  delegate:self
                                  cancelButtonTitle:@"取消"
                                  destructiveButtonTitle:@"确定"
@@ -326,8 +274,8 @@
     
     MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
     [picker setToRecipients:[NSArray arrayWithObject:@"zhangxiaobo@me.com"]];
-    [picker setSubject:@"佳邮客户端反馈"];
-    [picker setMessageBody:[NSString stringWithFormat:@"\n\n\n\n设备: %@\n系统: iOS %@\n软件: 佳邮 %@", [self _platformString], [UIDevice currentDevice].systemVersion, version]  isHTML:NO];
+    [picker setSubject:@"北邮人客户端反馈"];
+    [picker setMessageBody:[NSString stringWithFormat:@"\n\n\n\n设备: %@\n系统: iOS %@\n软件: 北邮人 %@", [self _platformString], [UIDevice currentDevice].systemVersion, version]  isHTML:NO];
     picker.mailComposeDelegate = self;
     [self presentViewController:picker animated:YES completion:nil];
 }

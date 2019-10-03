@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
-#import "CustomNoFooterWithDeleteTableView.h"
 #import "SingleVoteViewController.h"
 #import "VoteCellView.h"
 #import "DataModel.h"
@@ -18,9 +17,7 @@
 #import "UIViewController+MJPopupViewController.h"
 
 
-@interface VoteListViewController : UIViewController
-{
-    CustomNoFooterWithDeleteTableView * customTableView;
+@interface VoteListViewController : UIViewController {
     MyBBS * myBBS;
     FPActivityView* activityView;
     

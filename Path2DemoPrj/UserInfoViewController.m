@@ -7,7 +7,7 @@
 //
 
 #import "UserInfoViewController.h"
-#import "UIImageView+WebCache.h"
+#import <UIImageView+WebCache.h>
 #import "UIViewController+MJPopupViewController.h"
 
 @implementation UserInfoViewController
@@ -34,19 +34,19 @@
     
     [astro setText:[NSString stringWithFormat:@"%@", [user.astro isEqualToString:@""]?@"未知":user.astro]];
     
-    [ID setText:[NSString stringWithFormat:@"%@ %@", user.ID, genderString]];
-    [name setText:[NSString stringWithFormat:@"%@", user.name]];
-    [role setText:[NSString stringWithFormat:@"%@", user.level]];
-    [posts setText:[NSString stringWithFormat:@"%i", user.posts]];
-    [medals setText:[NSString stringWithFormat:@"%i", user.medals]];
-    [logins setText:[NSString stringWithFormat:@"%i", user.logins]];
+    [ID setText:[NSString stringWithFormat:@"%@ %@", user.id, genderString]];
+    [name setText:[NSString stringWithFormat:@"%@", user.user_name]];
+    [role setText:[NSString stringWithFormat:@"%i", user.life]];
+    [posts setText:[NSString stringWithFormat:@"%i", user.post_count]];
+    [medals setText:[NSString stringWithFormat:@"%i", user.life]];
+    [logins setText:[NSString stringWithFormat:@"%i", user.life]];
     [life setText:[NSString stringWithFormat:@"%i", user.life]];
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yy-MM-dd hh:mm"];
-    NSString * lastloginstring = [dateFormatter stringFromDate:user.lastlogin];
+    NSString * lastloginstring = [dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:user.last_login_time]];
     
-    if (user.isOnline) {
+    if (user.is_online) {
         [isOnline setText:[NSString stringWithFormat:@"在线:%@",lastloginstring]];
         if ([[[UIDevice currentDevice]systemVersion]floatValue] >= 7.0) {
             [isOnline setTextColor:[UIColor colorWithRed:34/255.0 green:124/255.0 blue:255/255.0 alpha:1]];
@@ -100,20 +100,20 @@
         self.user = [BBSAPI userInfo:userString];
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            if (myBBS.mySelf.ID != nil && [myBBS.mySelf.ID isEqualToString:userString]) {
-                if (myBBS.mySelf.avatar == nil) {
-                    User *mySelfDetal = [BBSAPI userInfo:myBBS.mySelf.ID];
+            if (myBBS.mySelf.id != nil && [myBBS.mySelf.id isEqualToString:userString]) {
+                if (myBBS.mySelf.face_url == nil) {
+                    User *mySelfDetal = [BBSAPI userInfo:myBBS.mySelf.id];
                     if (mySelfDetal) {
-                        myBBS.mySelf.avatar = mySelfDetal.avatar;
+                        myBBS.mySelf.face_url = mySelfDetal.face_url;
                     }
                     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-                    if (myBBS.mySelf.avatar != nil) {
-                        [defaults setValue:[myBBS.mySelf.avatar absoluteString] forKey:@"UserAvatar"];
+                    if (myBBS.mySelf.face_url != nil) {
+                        [defaults setValue:[myBBS.mySelf.face_url absoluteString] forKey:@"UserAvatar"];
                     }
                 }
             } else if (myBBS.mySelf){
                 [sentMailButton setEnabled:YES];
-            } else if (myBBS.mySelf.ID != nil && ![myBBS.mySelf.ID isEqualToString:userString]){
+            } else if (myBBS.mySelf.id != nil && ![myBBS.mySelf.id isEqualToString:userString]){
                 [sentMailButton setEnabled:YES];
                 [addFriendButton setEnabled:YES];
             }
@@ -126,7 +126,7 @@
             tap2.numberOfTapsRequired = 1;
             [avatarBack addGestureRecognizer:tap2];
             
-            [avatar setImageWithURL:user.avatar];
+            [avatar sd_setImageWithURL:user.face_url];
             avatar.layer.cornerRadius = 50.0f;
             avatar.clipsToBounds = YES;
             
@@ -177,7 +177,7 @@
 {
     PostMailViewController * postMailViewController = [[PostMailViewController alloc] init];
     postMailViewController.postType = 2;
-    postMailViewController.sentToUser = user.ID;
+    postMailViewController.sentToUser = user.id;
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:postMailViewController];
     nav.modalPresentationStyle = UIModalPresentationFormSheet;
     [mDelegate presentViewController:nav animated:YES completion:nil];

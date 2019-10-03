@@ -8,50 +8,23 @@
 
 #import "JsonParseEngine.h"
 #import "WBUtil.h"
+#import <MJExtension.h>
+
 @implementation JsonParseEngine
 
 +(User *)parseLogin:(NSDictionary *)loginDictionary
 {
     NSString * code = [loginDictionary objectForKey:@"code"];
-    if (!code)
-    {
+    if (!code) {
         User * myself = [[User alloc] init];
-        myself.ID = [loginDictionary objectForKey:@"id"];
-        myself.name = [loginDictionary objectForKey:@"user_name"];
+        myself.id = [loginDictionary objectForKey:@"id"];
+        myself.user_name = [loginDictionary objectForKey:@"user_name"];
         return myself;
-    }
-    else {
+    } else {
         return nil;
     }
 }
 
-+(NSArray *)parseFriends:(NSDictionary *)friendsDictionary
-{
-    BOOL success = [[friendsDictionary objectForKey:@"success"] boolValue];
-    if (success)
-    {
-        NSMutableArray * friends = [[NSMutableArray alloc] init];
-        NSArray * temp = [friendsDictionary objectForKey:@"friends"];
-        NSUInteger count = [temp count];
-        for (int i=0; i<count; i++) {
-            User * user = [[User alloc] init];
-            
-            NSString * name = [[[friendsDictionary objectForKey:@"friends"] objectAtIndex:i] objectForKey:@"name"];
-            NSString * ID = [[[friendsDictionary objectForKey:@"friends"] objectAtIndex:i] objectForKey:@"id"];
-            NSString * mode = [[[friendsDictionary objectForKey:@"friends"] objectAtIndex:i] objectForKey:@"mode"];
-            
-            user.name = name;
-            user.ID = ID;
-            user.mode = mode;
-            
-            [friends addObject:user];
-        }
-        return friends;
-    }
-    else {
-        return nil;
-    }
-}
 +(NSArray *)parseMails:(NSDictionary *)friendsDictionary Type:(int)type
 {
     NSString * code = [friendsDictionary objectForKey:@"code"];
@@ -195,194 +168,20 @@
     }
 }
 
-+(NSArray *)parseTopics:(NSDictionary *)topicsDictionary
-{
-    NSMutableArray * topTen = [[NSMutableArray alloc] init];
-    NSArray * temp = [topicsDictionary objectForKey:@"article"];
-    NSUInteger count = [temp count];
-    if (count > 0) {
-        topTen = [[NSMutableArray alloc] init];
-    }
-    
-    for (int i=0; i<count; i++) {
-        Topic * topic = [[Topic alloc] init];
-        
-        int ID = [[[[topicsDictionary objectForKey:@"article"] objectAtIndex:i] objectForKey:@"id"] intValue];
-        int gID = [[[[topicsDictionary objectForKey:@"article"] objectAtIndex:i] objectForKey:@"group_id"] intValue];
-        int reID = [[[[topicsDictionary objectForKey:@"article"] objectAtIndex:i] objectForKey:@"reply_id"] intValue];
-        NSString * title = [[[topicsDictionary objectForKey:@"article"] objectAtIndex:i] objectForKey:@"title"];
-        
-        
-        NSString * author;
-        NSObject * authortest = [[[topicsDictionary objectForKey:@"article"] objectAtIndex:i] objectForKey:@"user"];
-        if ([authortest isKindOfClass:[NSDictionary class]]) {
-            author = [[[[topicsDictionary objectForKey:@"article"] objectAtIndex:i] objectForKey:@"user"] objectForKey:@"id"];
-        }
-        else
-            author = [[[topicsDictionary objectForKey:@"article"] objectAtIndex:i] objectForKey:@"user"];
-
-        
-        
-        NSString * board = [[[topicsDictionary objectForKey:@"article"] objectAtIndex:i] objectForKey:@"board_name"];
-        
-        NSTimeInterval interval = [[[[topicsDictionary objectForKey:@"article"] objectAtIndex:i] objectForKey:@"post_time"] doubleValue];
-        NSDate *time = [NSDate dateWithTimeIntervalSince1970:interval];
-        
-        int replies = [[[[topicsDictionary objectForKey:@"article"] objectAtIndex:i] objectForKey:@"reply_count"] intValue];
-        BOOL unread = ![[[[topicsDictionary objectForKey:@"article"] objectAtIndex:i] objectForKey:@"is_read"] boolValue];
-        
-        NSString * markString = [[[topicsDictionary objectForKey:@"article"] objectAtIndex:i] objectForKey:@"flag"];
-        BOOL marked = [markString isEqualToString:@""] ? NO : YES;
-        BOOL top = [[[[topicsDictionary objectForKey:@"article"] objectAtIndex:i] objectForKey:@"is_top"] boolValue];
-        BOOL has_attachment = [[[[topicsDictionary objectForKey:@"article"] objectAtIndex:i] objectForKey:@"has_attachment"] boolValue];
-        
-        int index = [[[[topicsDictionary objectForKey:@"article"] objectAtIndex:i] objectForKey:@"index"] intValue];
-        topic.unread = unread;
-        topic.ID = ID;
-        topic.gID = gID;
-        topic.reid = reID;
-        topic.title = title;
-        topic.author = author;
-        topic.board = board;
-        topic.time = time;
-        topic.replies = replies;
-        topic.mark = marked;
-        topic.top = top;
-        topic.hasAtt = has_attachment;
-        topic.index = index;
-        [topTen addObject:topic];
-    }
-    return topTen;
++ (NSArray *)parseTopics:(NSDictionary *)topicsDictionary {
+    return [Topic mj_objectArrayWithKeyValuesArray:[topicsDictionary objectForKey:@"article"]];
 }
 
-+(NSArray *)parseSearchTopics:(NSDictionary *)topicsDictionary
-{
-    NSMutableArray * topTen = nil;
-    NSArray * temp = [topicsDictionary objectForKey:@"threads"];
-    NSUInteger count = [temp count];
-    if (count > 0) {
-        topTen = [[NSMutableArray alloc] init];
-    }
-    
-    for (int i=0; i<count; i++) {
-        Topic * topic = [[Topic alloc] init];
-        
-        int ID = [[[[topicsDictionary objectForKey:@"threads"] objectAtIndex:i] objectForKey:@"id"] intValue];
-        NSString * title = [[[topicsDictionary objectForKey:@"threads"] objectAtIndex:i] objectForKey:@"title"];
-        
-        
-        NSString * author;
-        NSObject * authortest = [[[topicsDictionary objectForKey:@"threads"] objectAtIndex:i] objectForKey:@"user"];
-        if ([authortest isKindOfClass:[NSDictionary class]]) {
-            author = [[[[topicsDictionary objectForKey:@"threads"] objectAtIndex:i] objectForKey:@"user"] objectForKey:@"id"];
-        }
-        else
-            author = [[[topicsDictionary objectForKey:@"threads"] objectAtIndex:i] objectForKey:@"user"];
-        
-        NSString * board = [[[topicsDictionary objectForKey:@"threads"] objectAtIndex:i] objectForKey:@"board_name"];
-        
-        NSTimeInterval interval = [[[[topicsDictionary objectForKey:@"threads"] objectAtIndex:i] objectForKey:@"post_time"] doubleValue];
-        NSDate *time = [NSDate dateWithTimeIntervalSince1970:interval];
-        
-        int replies = [[[[topicsDictionary objectForKey:@"threads"] objectAtIndex:i] objectForKey:@"reply_count"] intValue];
-        BOOL unread = [[[[topicsDictionary objectForKey:@"threads"] objectAtIndex:i] objectForKey:@"unread"]boolValue];
-        NSString * markString = [[[topicsDictionary objectForKey:@"article"] objectAtIndex:i] objectForKey:@"flag"];
-        BOOL marked = [markString isEqualToString:@""] ? NO : YES;
-        BOOL top = [[[[topicsDictionary objectForKey:@"threads"] objectAtIndex:i] objectForKey:@"is_top"] boolValue];
-        
-        BOOL has_attachment = [[[[topicsDictionary objectForKey:@"threads"] objectAtIndex:i] objectForKey:@"has_attachment"] boolValue];
-        
-        
-        topic.unread = unread;
-        topic.ID = ID;
-        topic.title = title;
-        topic.author = author;
-        topic.board = board;
-        topic.time = time;
-        topic.replies = replies;
-        topic.mark = marked;
-        topic.top = top;
-        topic.hasAtt = has_attachment;
-        
-        [topTen addObject:topic];
-    }
-    return topTen;
-}
-+(NSArray *)parseReplyTopic:(NSDictionary *)topicsDictionary
-{
-    NSString * code = [topicsDictionary objectForKey:@"code"];
-    if (!code)
-    {
-        Topic * topic = [[Topic alloc] init];
-        
-        int ID = [[topicsDictionary objectForKey:@"id"] intValue];
-        int gID = [[topicsDictionary objectForKey:@"group_id"] intValue];
-        int reid = [[topicsDictionary objectForKey:@"reply_id"] intValue];
-        
-        NSString * title = [topicsDictionary objectForKey:@"title"];
-        NSString * content = [topicsDictionary objectForKey:@"content"];
-        
-        NSString * author;
-        NSURL *authFaceURL;
-        NSObject * authortest = [topicsDictionary objectForKey:@"user"];
-        if ([authortest isKindOfClass:[NSDictionary class]]) {
-            author = [[topicsDictionary objectForKey:@"user"] objectForKey:@"id"];
-            authFaceURL = [NSURL URLWithString:[[topicsDictionary objectForKey:@"user"] objectForKey:@"face_url"]];
-        }
-        else
-            author = [topicsDictionary objectForKey:@"user"];
-
-        NSString * board = [topicsDictionary objectForKey:@"board_name"];
-        
-        NSTimeInterval interval = [[topicsDictionary objectForKey:@"post_time"] doubleValue];
-        NSDate *time = [NSDate dateWithTimeIntervalSince1970:interval];
-        
-        NSString * quote = [topicsDictionary objectForKey:@"quote"];
-        NSString * quoter = [topicsDictionary objectForKey:@"quoter"];
-        
-        NSMutableArray * attArray=[[NSMutableArray alloc] init];
-        NSDictionary * attDic= [topicsDictionary objectForKey:@"attachment"];
-        NSArray * temp2 = [attDic objectForKey:@"file"];
-        NSUInteger count2 = [temp2 count];
-        for (int j=0; j < count2; j++) {
-            Attachment *attElement=[[Attachment alloc]init];
-            [attElement setAttFileName:[[temp2 objectAtIndex:j] objectForKey:@"name"]];
-            [attElement setAttSize:[[[temp2 objectAtIndex:j] objectForKey:@"size"] intValue]];
-            
-            NSMutableString * urlString = [[[temp2 objectAtIndex:j] objectForKey:@"url"] mutableCopy];
-            [urlString replaceCharactersInRange:NSMakeRange(0, 28) withString:@"http://bbs.byr.cn/att"];
-            [attElement setAttUrl:urlString];
-            
-            [attArray addObject:attElement];
-        }
-        
-        topic.attachments = attArray;
-        topic.ID = ID;
-        topic.gID = gID;
-        topic.reid = reid;
-        topic.title = title;
-        topic.content = [JsonParseEngine trimText:content];
-        topic.author = author;
-        topic.authorFaceURL = authFaceURL;
-        topic.board = board;
-        topic.time = time;
-        
-        if ([quote length] > 12) {
-            topic.quote = [quote substringToIndex:12];
-        }
-        else {
-            topic.quote = quote;
-        }
-        
-        topic.quoter =quoter;
-        return [NSArray arrayWithObject:topic];
-
-    }
-    return nil;
++ (NSArray *)parseSearchTopics:(NSDictionary *)topicsDictionary {
+    return [Topic mj_objectArrayWithKeyValuesArray:[topicsDictionary objectForKey:@"threads"]];
 }
 
-+ (NSString *)trimText:(NSString *)originalText
-{
++ (NSArray *)parseReplyTopic:(NSDictionary *)topicsDictionary {
+    Topic *topic = [Topic mj_objectWithKeyValues:topicsDictionary];
+    return @[topic];
+}
+
++ (NSString *)trimText:(NSString *)originalText {
     NSString *oldText = [originalText stringByReplacingOccurrencesOfString:@"\n--\n\n" withString:@""];
     NSString *oldText1 = [oldText stringByReplacingOccurrencesOfString:@"\n--\n" withString:@""];
     NSString *oldText2 = [oldText1 stringByReplacingOccurrencesOfString:@"\n--" withString:@""];
@@ -396,125 +195,12 @@
     return text;
 }
 
-+(NSArray *)parseSingleTopic:(NSDictionary *)topicsDictionary
-{
-    NSMutableArray * topTen;
-    NSArray * temp = [topicsDictionary objectForKey:@"article"];
-    NSUInteger count = [temp count];
-    if (count > 0) {
-        topTen = [[NSMutableArray alloc] init];
-    }
-    else
-        return nil;
-
-    for (int i=0; i<count; i++) {
-        Topic * topic = [[Topic alloc] init];
-        
-        int ID = [[[[topicsDictionary objectForKey:@"article"] objectAtIndex:i] objectForKey:@"id"] intValue];
-        int gID = [[[[topicsDictionary objectForKey:@"article"] objectAtIndex:i] objectForKey:@"group_id"] intValue];
-        int reid = [[[[topicsDictionary objectForKey:@"article"] objectAtIndex:i] objectForKey:@"reply_id"] intValue];
-        
-        NSString * title = [[[topicsDictionary objectForKey:@"article"] objectAtIndex:i] objectForKey:@"title"];
-        NSString * content = [[[topicsDictionary objectForKey:@"article"] objectAtIndex:i] objectForKey:@"content"];
-        
-        NSString * author;
-        NSURL *authFaceURL;
-        NSObject * authortest = [[[topicsDictionary objectForKey:@"article"] objectAtIndex:i] objectForKey:@"user"];
-        if ([authortest isKindOfClass:[NSDictionary class]]) {
-            author = [[[[topicsDictionary objectForKey:@"article"] objectAtIndex:i] objectForKey:@"user"] objectForKey:@"id"];
-            authFaceURL = [NSURL URLWithString:[[[[topicsDictionary objectForKey:@"article"] objectAtIndex:i] objectForKey:@"user"] objectForKey:@"face_url"]];
-        }
-        else
-            author = [[[topicsDictionary objectForKey:@"article"] objectAtIndex:i] objectForKey:@"user"];
-        
-        NSString * board = [[[topicsDictionary objectForKey:@"article"] objectAtIndex:i] objectForKey:@"board_name"];
-        
-        NSTimeInterval interval = [[[[topicsDictionary objectForKey:@"article"] objectAtIndex:i] objectForKey:@"post_time"] doubleValue];
-        NSDate *time = [NSDate dateWithTimeIntervalSince1970:interval];
-        
-        NSString * quote = [[[topicsDictionary objectForKey:@"article"] objectAtIndex:i] objectForKey:@"quote"];
-        NSString * quoter = [[[topicsDictionary objectForKey:@"article"] objectAtIndex:i] objectForKey:@"quoter"];
-
-        NSMutableArray * attArray=[[NSMutableArray alloc] init];
-        NSDictionary * attDic=[[[topicsDictionary objectForKey:@"article"] objectAtIndex: i] objectForKey:@"attachment"];
-        NSArray * temp2 = [attDic objectForKey:@"file"];
-        NSUInteger count2 = [temp2 count];
-        for (int j=0; j < count2; j++) {
-            Attachment *attElement=[[Attachment alloc]init];
-            [attElement setAttFileName:[[temp2 objectAtIndex:j] objectForKey:@"name"]];
-            [attElement setAttSize:[[[temp2 objectAtIndex:j] objectForKey:@"size"] intValue]];
-            
-            NSMutableString * urlString = [[[temp2 objectAtIndex:j] objectForKey:@"url"] mutableCopy];
-            [urlString replaceCharactersInRange:NSMakeRange(0, 28) withString:@"http://bbs.byr.cn/att"];
-            [attElement setAttUrl:urlString];
-            
-            [attArray addObject:attElement];
-        }
-        
-        topic.attachments = attArray;
-        topic.ID = ID;
-        topic.gID = gID;
-        topic.reid = reid;
-        topic.title = title;
-        topic.content = [JsonParseEngine trimText:content];
-        topic.author = author;
-        topic.authorFaceURL = authFaceURL;
-        topic.board = board;
-        topic.time = time;
-        
-        if ([quote length] > 12) {
-            topic.quote = [quote substringToIndex:12];
-        }
-        else {
-            topic.quote = quote;
-        }
-        
-        topic.quoter =quoter;
-        [topTen addObject:topic];
-    }
-    return topTen;
++ (NSArray *)parseSingleTopic:(NSDictionary *)topicsDictionary {
+    return [Topic mj_objectArrayWithKeyValuesArray:[topicsDictionary objectForKey:@"article"]];
 }
 
-
-+(User *)parseUserInfo:(NSDictionary *)loginDictionary
-{
-    NSString * code = [loginDictionary objectForKey:@"code"];
-    if (!code)
-    {
-        User * user = [[User alloc] init];
-        user.ID = [loginDictionary objectForKey:@"id"];
-        user.name = [loginDictionary objectForKey:@"user_name"];
-        NSString * avatarString = [loginDictionary objectForKey:@"face_url"];
-        if ([avatarString hasSuffix:@".png"] || [avatarString hasSuffix:@".jpeg"] || [avatarString hasSuffix:@".jpg"] || [avatarString hasSuffix:@".tiff"] || [avatarString hasSuffix:@".bmp"])
-        {
-            user.avatar = [NSURL URLWithString:[loginDictionary objectForKey:@"face_url"]];
-        }
-        else {
-            user.avatar = nil;
-        }
-
-        
-        NSTimeInterval interval = [[loginDictionary objectForKey:@"last_login_time"] doubleValue];
-        NSDate *time = [NSDate dateWithTimeIntervalSince1970:interval];
-        
-        user.lastlogin = time;
-        user.level = [loginDictionary objectForKey:@"level"];
-        user.posts = [[loginDictionary objectForKey:@"post_count"] intValue];
-        user.perform = [[loginDictionary objectForKey:@"stay_count"] intValue];
-        user.experience = [[loginDictionary objectForKey:@"stay_count"] intValue];
-        user.medals = [[loginDictionary objectForKey:@"score"] intValue];
-        user.logins = [[loginDictionary objectForKey:@"login_count"] intValue];
-        user.life = [[loginDictionary objectForKey:@"life"] intValue];
-        
-        user.gender = [loginDictionary objectForKey:@"gender"];
-        user.astro = [loginDictionary objectForKey:@"astro"];
-        user.mode = [loginDictionary objectForKey:@"mode"];
-        user.isOnline = [[loginDictionary objectForKey:@"is_online"] boolValue];
-        return user;
-    }
-    else {
-        return nil;
-    }
++ (User *)parseUserInfo:(NSDictionary *)loginDictionary {
+    return [User mj_objectWithKeyValues:loginDictionary];
 }
 
 +(NSArray *)parseAttachments:(NSDictionary *)attDic

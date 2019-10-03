@@ -14,7 +14,6 @@
 #import "ASIHTTPRequest.h"
 #import "articleViewController.h"
 #import "LoginViewController.h"
-#import "ImageBlur.m"
 
 @protocol AboutViewControllerDelegate <NSObject>
 -(void)changeLeftBack;

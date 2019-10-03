@@ -34,6 +34,15 @@
 @synthesize voteListHot;
 @synthesize voteListAll;
 
++ (MyBBS *)sharedInstance {
+    static MyBBS *_session = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _session = [[self alloc] init];
+    });
+    return _session;
+}
+
 - (id)init {
     self = [super init];
     
@@ -41,24 +50,36 @@
         notificationCount = 0;
         
         NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-        NSString * username = [defaults stringForKey:@"UserName"];
-        NSString * userid = [defaults stringForKey:@"UserID"];
-        NSString * usertoken = [defaults stringForKey:@"UserToken"];
-        NSString * userAvatar = [defaults stringForKey:@"UserAvatar"];
+        NSString *username = [defaults stringForKey:@"UserName"];
+        NSString *userid = [defaults stringForKey:@"UserID"];
+        NSString *usertoken = [defaults stringForKey:@"UserToken"];
+        NSString *userAvatar = [defaults stringForKey:@"UserAvatar"];
         
         if (username != NULL) {
             self.mySelf = [[User alloc] init];
-            mySelf.name = username;
-            mySelf.ID = userid;
-            mySelf.username = userid;
-            mySelf.password = usertoken;
+            mySelf.user_name = username;
+            mySelf.id = userid;
             
             if (userAvatar != NULL) {
-                mySelf.avatar = [NSURL URLWithString:userAvatar];
+                mySelf.face_url = [NSURL URLWithString:userAvatar];
             }
         }
     }
     return self;
+}
+
+- (NSString *)username {
+    if (_username.length == 0) {
+        return @"guest";
+    }
+    return _username;
+}
+
+- (NSString *)password {
+    if (_password.length == 0) {
+        return @"";
+    }
+    return _password;
 }
 
 - (User *)userLogin:(NSString *)user Pass:(NSString *)pass {
@@ -67,46 +88,24 @@
     if (mySelf == nil) {
         return nil;
     } else {
-        User *mySelfDetal = [BBSAPI userInfo:mySelf.ID];
+        User *mySelfDetal = [BBSAPI userInfo:mySelf.id];
         if (mySelfDetal) {
-            self.mySelf.avatar = mySelfDetal.avatar;
+            self.mySelf.face_url = mySelfDetal.face_url;
         }
         
-        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-        BOOL isGotDeviceToken = [defaults boolForKey:@"isGotDeviceToken"];
-        if (isGotDeviceToken) {
-            BOOL success = [BBSAPI addNotificationToken:mySelf.token iToken:[defaults objectForKey:@"DeviceToken"]];
-            [defaults setBool:success forKey:@"isPostDeviceToken"];
-            if (!success) {
-                return nil;
-            }
-        }
-        
-        if (self.mySelf.avatar != nil) {
-            [defaults setValue:[mySelf.avatar absoluteString] forKey:@"UserAvatar"];
-        }
-        [defaults setValue:mySelf.name forKey:@"UserName"];
-        [defaults setValue:mySelf.ID forKey:@"UserID"];
-        [defaults setValue:mySelf.password forKey:@"UserToken"];
-        [defaults setValue:mySelf.username forKey:@"UserID"];
+//        if (self.mySelf.face_url != nil) {
+//            [defaults setValue:[mySelf.face_url absoluteString] forKey:@"UserAvatar"];
+//        }
+//
+//        [defaults setValue:mySelf.name forKey:@"UserName"];
+//        [defaults setValue:mySelf.ID forKey:@"UserID"];
+//        [defaults setValue:mySelf.password forKey:@"UserToken"];
+//        [defaults setValue:mySelf.username forKey:@"UserID"];
         return mySelf;
     }   
 }
 
-- (BOOL)addPushNotificationToken {
-    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-    BOOL success = [BBSAPI addNotificationToken:mySelf.token iToken:[defaults objectForKey:@"DeviceToken"]];
-    [defaults setBool:success forKey:@"isPostDeviceToken"];
-    return success;
-}
-
 - (void)userLogout {
-    mySelf.name = nil;
-    mySelf.ID = nil;
-    mySelf.token = nil;
-    mySelf.avatar = nil;
-    mySelf.username = nil;
-    mySelf.password = nil;
     mySelf = nil;
     notificationCount = 0;
     notification = nil;

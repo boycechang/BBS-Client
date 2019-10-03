@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
-#import "CustomTableView.h"
 #import "TopTenTableViewCell.h"
 #import "SingleTopicViewController.h"
 #import "SingleMailViewController.h"
@@ -18,7 +17,7 @@
 #import "BBSAPI.h"
 @interface NotificationViewController : UIViewController<UIActionSheetDelegate>
 {
-    CustomTableView * customTableView;
+    UITableView * customTableView;
     MyBBS * myBBS;
     MBProgressHUD * HUD;
     FPActivityView* activityView;

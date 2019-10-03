@@ -41,10 +41,6 @@ CGSize  const WUEmoticonsKeyboardToolsViewActionButtonSize  = (CGSize){45,WUEmot
         
         UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithFrame:CGRectMake(WUEmoticonsKeyboardToolsViewActionButtonSize.width, 3, CGRectGetWidth(self.bounds) - WUEmoticonsKeyboardToolsViewActionButtonSize.width * 2, CGRectGetHeight(frame) - 6)];
         
-        if ([[[UIDevice currentDevice]systemVersion]floatValue] < 7.0) {
-            [segmentedControl setSegmentedControlStyle:UISegmentedControlStyleBar];
-        }
-        
         segmentedControl.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         [segmentedControl addTarget:self action:@selector(segmentedControlValueChanged:) forControlEvents:UIControlEventValueChanged];
         [self addSubview:segmentedControl];

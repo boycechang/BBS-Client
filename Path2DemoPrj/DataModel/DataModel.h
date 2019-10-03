@@ -6,11 +6,9 @@
 //  Copyright (c) 2012 Ethan. All rights reserved.
 //
 
-#import "Topic.h"
 #import "Board.h"
-#import "User.h"
+#import "Models.h"
 #import "Mail.h"
 #import "Notification.h"
-#import "Attachment.h"
 #import "Vote.h"
 #import "Memo.h"

@@ -35,7 +35,7 @@
 
 -(void)setAttachmentURL:(NSURL *)imageURL NameText:(NSString *)nameText
 {
-    [imageView setImageWithURL:imageURL];
+    [imageView sd_setImageWithURL:imageURL];
     nameLabel.text = nameText;
     
     UITapGestureRecognizer* recognizer;

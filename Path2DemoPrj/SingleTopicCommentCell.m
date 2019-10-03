@@ -7,7 +7,7 @@
 //
 
 #import "SingleTopicCommentCell.h"
-#import "Attachment.h"
+#import "Models.h"
 #import "BBSAPI.h"
 #import "AppDelegate.h"
 
@@ -215,7 +215,7 @@
     [loushu setFrame:CGRectMake(47, loushu.frame.origin.y, loushu.frame.size.width, loushu.frame.size.height)];
     
     [authorFaceImageView setHidden:NO];
-    [authorFaceImageView setImageWithURL:authorFaceURL];
+    [authorFaceImageView sd_setImageWithURL:authorFaceURL];
     
     UITapGestureRecognizer* recognizer;
     recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(userHeadTaped)];
@@ -226,7 +226,7 @@
     [authorLabel addGestureRecognizer:recognizer2];
     
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    if (appDelegate.myBBS != nil && [appDelegate.myBBS.mySelf.username isEqualToString:author]) {
+    if (appDelegate.myBBS != nil && [appDelegate.myBBS.mySelf.user_name isEqualToString:author]) {
         [editButton setHidden:NO];
     }
     else {

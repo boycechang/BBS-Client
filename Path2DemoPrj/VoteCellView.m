@@ -7,7 +7,7 @@
 //
 
 #import "VoteCellView.h"
-#import "UIImageView+WebCache.h"
+#import <UIImageView+WebCache.h>
 
 @implementation VoteCellView
 @synthesize vote;
@@ -83,7 +83,7 @@
     [userCountLabel setText:[NSString stringWithFormat:@"%i", vote.user_count]];
     
     if (vote.authorHeadUrl != nil) {
-        [authorHeadImageView setImageWithURL:vote.authorHeadUrl];
+        [authorHeadImageView sd_setImageWithURL:vote.authorHeadUrl];
         authorHeadImageView.layer.cornerRadius = 30.0f;
         authorHeadImageView.clipsToBounds = YES;
     }

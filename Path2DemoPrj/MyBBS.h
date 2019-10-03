@@ -68,13 +68,19 @@
 @property(nonatomic, strong)NSArray * voteListHot;
 @property(nonatomic, strong)NSArray * voteListAll;
 
-@property(nonatomic, strong)User * mySelf;
-@property(nonatomic, strong)Notification * notification;
-@property(nonatomic, assign)int notificationCount;
+@property(nonatomic, strong) User * mySelf;
+@property(nonatomic, strong) Notification * notification;
+@property(nonatomic, assign) int notificationCount;
+
+@property (nonatomic, strong) NSString *username;
+@property (nonatomic, strong) NSString *password;
+
++ (MyBBS *)sharedInstance;
 
 -(User *)userLogin:(NSString *)user Pass:(NSString *)pass;
 -(BOOL)addPushNotificationToken;
 -(void)userLogout;
 -(void)refreshNotification;
 -(void)clearNotification;
+
 @end

@@ -7,7 +7,7 @@
 //
 
 #import "BFNavigationBarDrawer.h"
-#import "CommonUI.h"
+
 
 #define kAnimationDuration 0.3
 

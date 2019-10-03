@@ -12,7 +12,6 @@
 @interface JsonParseEngine : NSObject
 
 +(User *)parseLogin:(NSDictionary *)loginDictionary;                       ///
-+(NSArray *)parseFriends:(NSDictionary *)friendsDictionary;
 +(NSArray *)parseMails:(NSDictionary *)friendsDictionary Type:(int)type;  ///
 +(Mail *)parseSingleMail:(NSDictionary *)friendsDictionary Type:(int)type; ///
 

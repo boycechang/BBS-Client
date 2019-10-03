@@ -7,11 +7,15 @@
 //
 
 #import "LeftViewController.h"
-#import "ImageBlur.m"
-#import "CommonUI.h"
-#import "ImageBlur.m"
+ 
 #import "HotTopicsViewController.h"
 #import "FTPagingViewController.h"
+
+@interface LeftViewController ()
+
+@property (nonatomic, strong) NSArray *icons;
+
+@end
 
 @implementation LeftViewController
 @synthesize mainTableView;
@@ -28,6 +32,7 @@
     
     tableTitles = [NSArray arrayWithObjects:@"热门", @"收藏", @"消息", @"站内信", @"版面", @"投票", @"设置", nil];
     [self changeLeftBack];
+    self.icons = @[@"flame", @"star", @"bubble.left.and.bubble.right", @"envelope", @"list.dash", @"chart.bar", @"gear", ];
     
     NSArray * array = [[NSBundle mainBundle] loadNibNamed:@"AccountInfoHeaderView" owner:self options:nil];
     self.accountInfoViewHeader = [array objectAtIndex:0];
@@ -54,6 +59,7 @@
 }
 
 #pragma mark - UITableView delegate
+
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 140.0;
 }
@@ -85,7 +91,7 @@
     UIView *bgViewIndication = [[UIView alloc] init];
     
     [bgViewIndication setFrame:CGRectMake(0, 1, 200, 43)];
-    bgViewIndication.backgroundColor = NAVBARCOLORBLUE;
+    bgViewIndication.backgroundColor = [UIColor colorNamed:@"MainTheme"];
     
     UIView *bgView = [[UIView alloc] init];
     bgView.backgroundColor = [UIColor clearColor];
@@ -101,14 +107,16 @@
     [tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:NO scrollPosition:UITableViewScrollPositionNone];
     
     cell.textLabel.text = [tableTitles objectAtIndex:indexPath.row];
+    cell.imageView.image = [UIImage systemImageNamed:[self.icons objectAtIndex:indexPath.row]];
+    cell.imageView.tintColor = [UIColor whiteColor];
 	return cell;
 }
 
 // Called after the user changes the selection.
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
 }
+
 #pragma mark - LoginViewDelegate
 
 - (void)LoginSuccess {

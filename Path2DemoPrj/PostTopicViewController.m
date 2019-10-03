@@ -102,7 +102,7 @@
         [postTitleCount setText:[NSString stringWithFormat:@"%i", [postTitle.text length]]];
         
         if (rootTopic.content != nil) {
-            [postContent setText:[NSString stringWithFormat:@"\n【 在 %@ 的大作中提到: 】\n%@", rootTopic.author, rootTopic.content.length > 30 ? [NSString stringWithFormat:@"%@...", [rootTopic.content substringToIndex:27]] : rootTopic.content]];
+            [postContent setText:[NSString stringWithFormat:@"\n【 在 %@ 的大作中提到: 】\n%@", rootTopic.user.user_name, rootTopic.content.length > 30 ? [NSString stringWithFormat:@"%@...", [rootTopic.content substringToIndex:27]] : rootTopic.content]];
         } else {
             [postContent setText:@""];
         }
@@ -131,7 +131,7 @@
                                                                                   target:nil
                                                                                   action:nil];
     
-    UIBarButtonItem *attachmentBarItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"camera64"] style:UIBarButtonItemStylePlain target:self action:@selector(operateAtt:)];
+    UIBarButtonItem *attachmentBarItem = [[UIBarButtonItem alloc] initWithImage:[UIImage systemImageNamed:@"photo"] style:UIBarButtonItemStylePlain target:self action:@selector(operateAtt:)];
     
     UIBarButtonItem *spaceBarItem2 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
@@ -216,16 +216,15 @@
     [hud hide:YES afterDelay:0.8];
 }
 
--(BOOL)post
-{
+- (BOOL)post {
     if (postType == 0) {
         return [BBSAPI postTopic:myBBS.mySelf Board:boardName Title:postTitle.text Content:[NSString stringWithFormat:@"%@", postContent.text] Reid:0];
     }
     if (postType == 1) {
-        return [BBSAPI postTopic:myBBS.mySelf Board:rootTopic.board Title:postTitle.text Content:[NSString stringWithFormat:@"%@", postContent.text] Reid:rootTopic.ID];
+        return [BBSAPI postTopic:myBBS.mySelf Board:rootTopic.board_name Title:postTitle.text Content:[NSString stringWithFormat:@"%@", postContent.text] Reid:rootTopic.id];
     }
     if (postType == 2) {
-        return [BBSAPI editTopic:myBBS.mySelf Board:rootTopic.board Title:postTitle.text Content:[NSString stringWithFormat:@"%@", postContent.text] Reid:rootTopic.ID];
+        return [BBSAPI editTopic:myBBS.mySelf Board:rootTopic.board_name Title:postTitle.text Content:[NSString stringWithFormat:@"%@", postContent.text] Reid:rootTopic.id];
     }
     return 0;
 }
@@ -259,8 +258,8 @@
     {
         UploadAttachmentsViewController * uavc = [[UploadAttachmentsViewController alloc] init];
         uavc.postType = 2;//修改贴
-        uavc.postId=rootTopic.ID;
-        uavc.board=rootTopic.board;
+        uavc.postId = rootTopic.id;
+        uavc.board = rootTopic.board_name;
         UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:uavc];
         [self presentViewController:nav animated:YES completion:nil];
     }
@@ -269,8 +268,8 @@
     {
         UploadAttachmentsViewController * uavc = [[UploadAttachmentsViewController alloc] init];
         uavc.postType = 1;//回复
-        uavc.postId=rootTopic.ID;
-        uavc.board=rootTopic.board;
+        uavc.postId = rootTopic.id;
+        uavc.board = rootTopic.board_name;
         UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:uavc];
         [self presentViewController:nav animated:YES completion:nil];
     }
