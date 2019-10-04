@@ -341,6 +341,7 @@
 		E1C5D05B2347883900453D15 /* NotificationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E1C5D05A2347883900453D15 /* NotificationCell.m */; };
 		E1C5D05E2347889D00453D15 /* NotificationHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E1C5D05D2347889D00453D15 /* NotificationHeaderCell.m */; };
 		E1C5D0612347CC4600453D15 /* BYRSession.m in Sources */ = {isa = PBXBuildFile; fileRef = E1C5D0602347CC4600453D15 /* BYRSession.m */; };
+		E1C5D0652347DEDE00453D15 /* HomeHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = E1C5D0642347DEDE00453D15 /* HomeHeadView.m */; };
 		E905990C157EF31F007EE2D2 /* MailsViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E905990A157EF31F007EE2D2 /* MailsViewCell.m */; settings = {COMPILER_FLAGS = ""; }; };
 		E905990D157EF31F007EE2D2 /* MailsViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E905990B157EF31F007EE2D2 /* MailsViewCell.xib */; };
 		E9059912157F24B9007EE2D2 /* SingleMailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E9059910157F24B9007EE2D2 /* SingleMailViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -828,6 +829,8 @@
 		E1C5D05D2347889D00453D15 /* NotificationHeaderCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NotificationHeaderCell.m; sourceTree = "<group>"; };
 		E1C5D05F2347CC4600453D15 /* BYRSession.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BYRSession.h; sourceTree = "<group>"; };
 		E1C5D0602347CC4600453D15 /* BYRSession.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BYRSession.m; sourceTree = "<group>"; };
+		E1C5D0632347DEDE00453D15 /* HomeHeadView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeHeadView.h; sourceTree = "<group>"; };
+		E1C5D0642347DEDE00453D15 /* HomeHeadView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeHeadView.m; sourceTree = "<group>"; };
 		E9059909157EF31F007EE2D2 /* MailsViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MailsViewCell.h; sourceTree = "<group>"; };
 		E905990A157EF31F007EE2D2 /* MailsViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MailsViewCell.m; sourceTree = "<group>"; };
 		E905990B157EF31F007EE2D2 /* MailsViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MailsViewCell.xib; sourceTree = "<group>"; };
@@ -1672,6 +1675,7 @@
 		CEB1257A1498D617008A4B70 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				E1C5D0622347DE8C00453D15 /* HomeTab */,
 				00A0FA3A1840FBB200CDE9AB /* OpenSourceUI */,
 				E973E5E2154BE99F004412CD /* LeftView */,
 				E973E5FE154C094A004412CD /* HomeView */,
@@ -1690,6 +1694,18 @@
 				E107B83E1D15C3750062ED98 /* UIView+FTAdditions.m */,
 			);
 			name = FTPaging;
+			sourceTree = "<group>";
+		};
+		E1C5D0622347DE8C00453D15 /* HomeTab */ = {
+			isa = PBXGroup;
+			children = (
+				E1BC83BD2345982800AFE908 /* HomeTabBarController.h */,
+				E1BC83BE2345982800AFE908 /* HomeTabBarController.m */,
+				E9FEB5C4157B39BF00801E7F /* AboutViewController */,
+				E1C5D0632347DEDE00453D15 /* HomeHeadView.h */,
+				E1C5D0642347DEDE00453D15 /* HomeHeadView.m */,
+			);
+			name = HomeTab;
 			sourceTree = "<group>";
 		};
 		E30453272844A09F4F9D583D /* Pods */ = {
@@ -1791,7 +1807,6 @@
 				003D9910193B1D5800DA5B68 /* XDAirMenu */,
 				003D9922193B433E00DA5B68 /* AccountInfoHeaderView */,
 				E95498DC157B83BE00E17239 /* LoginViewController */,
-				E9FEB5C4157B39BF00801E7F /* AboutViewController */,
 			);
 			name = LeftView;
 			sourceTree = "<group>";
@@ -1856,8 +1871,6 @@
 				E90BDC66157DA95E00AB1567 /* UserInfoViewController */,
 				E90BDC6C157DC87F00AB1567 /* PostTopicViewController */,
 				E9142DB01581247600E2F8CE /* PostMailViewController */,
-				E1BC83BD2345982800AFE908 /* HomeTabBarController.h */,
-				E1BC83BE2345982800AFE908 /* HomeTabBarController.m */,
 			);
 			name = HomeView;
 			sourceTree = "<group>";
@@ -2394,6 +2407,7 @@
 				E973E5FD154C092C004412CD /* RefreshTableFooterView.m in Sources */,
 				E14E046D23461E2600AC0EAF /* BYRNetworkManager.m in Sources */,
 				001864971942466100665DE1 /* QCSlideSwitchView.m in Sources */,
+				E1C5D0652347DEDE00453D15 /* HomeHeadView.m in Sources */,
 				005B5C38181192A400041366 /* UINavigationController+SGProgress.m in Sources */,
 				E973E602154C0A54004412CD /* TopTenViewController.m in Sources */,
 				E973E617154C0E82004412CD /* TopTenTableViewCell.m in Sources */,

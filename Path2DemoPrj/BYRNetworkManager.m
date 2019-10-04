@@ -40,10 +40,6 @@ static const NSString *AppKey = @"ff7504fa9d6a4975";
 }
 
 - (void)updateUsername:(NSString *)username password:(NSString *)password {
-    if (!username || !password) {
-        return;
-    }
-    
     [_networkManager.requestSerializer setAuthorizationHeaderFieldWithUsername:username password:password];
 }
 
@@ -53,21 +49,17 @@ parameters:(nullable NSDictionary *)parameters
    success:(nullable void (^)(NSURLSessionDataTask *task, id _Nullable responseObject))success
    failure:(nullable void (^)(NSURLSessionDataTask * _Nullable task, NSError *error))failure
 {
-    NSDictionary *params;
-    if (parameters) {
-        params = [parameters mutableCopy];
-        [params setValue:AppKey forKey:@"appkey"];
-    } else {
-        params = @{@"appkey" : AppKey};
-    }
-    
-    return [_networkManager GET:URLString parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary * _Nullable responseObject) {
+    return [_networkManager GET:[NSString stringWithFormat:@"%@?appkey=%@", URLString, AppKey] parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary * _Nullable responseObject) {
         if ([responseObject isKindOfClass:[NSDictionary class]] &&
             [[responseObject objectForKey:@"code"] length] == 0) {
             if (success) {
                 if (responseClass) {
-                    id response = [responseClass mj_objectWithKeyValues:responseObject];
-                    success(task, response);
+                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                        id response = [responseClass mj_objectWithKeyValues:responseObject];
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            success(task, response);
+                        });
+                    });
                 } else {
                     success(task, responseObject);
                 }
@@ -89,8 +81,12 @@ responseClass:(nullable Class)responseClass
             [[responseObject objectForKey:@"code"] length] == 0) {
             if (success) {
                 if (responseClass) {
-                    id response = [responseClass mj_objectWithKeyValues:responseObject];
-                    success(task, response);
+                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                        id response = [responseClass mj_objectWithKeyValues:responseObject];
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            success(task, response);
+                        });
+                    });
                 } else {
                     success(task, responseObject);
                 }

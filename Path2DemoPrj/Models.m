@@ -20,6 +20,9 @@
 @end
 
 @implementation User
+
+MJCodingImplementation
+
 @end
 
 @implementation Attachment

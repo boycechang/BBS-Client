@@ -42,7 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 
-@interface User : NSObject
+@interface User : NSObject <NSCoding>
 
 @property (nonatomic, strong) NSString *id;
 @property (nonatomic, strong) NSString *user_name;

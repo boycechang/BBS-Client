@@ -8,5 +8,6 @@ pod 'Masonry'
 pod 'SDWebImage'
 pod 'MJExtension'
 pod 'AFNetworking'
+pod 'YYCache'
 
 end

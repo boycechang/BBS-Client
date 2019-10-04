@@ -16,7 +16,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)updateUsername:(NSString *)username password:(NSString *)password;
 
-
 #pragma mark - HTTP Method
 
 - (nullable NSURLSessionDataTask *)GET:(NSString *)URLString

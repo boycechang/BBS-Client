@@ -110,7 +110,7 @@
                              @"page"  : @1,
                              @"count" : @20};
     
-    [[BYRNetworkManager sharedInstance] GET:[NSString stringWithFormat:@"/board/%@.json?", self.board.name] parameters:params responseClass:TopicResponse.class success:^(NSURLSessionDataTask * _Nonnull task, TopicResponse * _Nullable responseObject) {
+    [[BYRNetworkManager sharedInstance] GET:[NSString stringWithFormat:@"/board/%@.json", self.board.name] parameters:params responseClass:TopicResponse.class success:^(NSURLSessionDataTask * _Nonnull task, TopicResponse * _Nullable responseObject) {
         [self.topics removeAllObjects];
         [self.topics addObjectsFromArray:responseObject.topics];
         completion();
@@ -124,7 +124,7 @@
                              @"page"  : @(self.topics.count / 20 + 1),
                              @"count" : @20};
     
-    [[BYRNetworkManager sharedInstance] GET:[NSString stringWithFormat:@"/board/%@.json?", self.board.name] parameters:params responseClass:TopicResponse.class success:^(NSURLSessionDataTask * _Nonnull task, TopicResponse * _Nullable responseObject) {
+    [[BYRNetworkManager sharedInstance] GET:[NSString stringWithFormat:@"/board/%@.json", self.board.name] parameters:params responseClass:TopicResponse.class success:^(NSURLSessionDataTask * _Nonnull task, TopicResponse * _Nullable responseObject) {
         [self.topics addObjectsFromArray:responseObject.topics];
         completion();
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {

@@ -19,12 +19,14 @@ PODS:
   - SDWebImage (5.1.0):
     - SDWebImage/Core (= 5.1.0)
   - SDWebImage/Core (5.1.0)
+  - YYCache (1.0.4)
 
 DEPENDENCIES:
   - AFNetworking
   - Masonry
   - MJExtension
   - SDWebImage
+  - YYCache
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -32,13 +34,15 @@ SPEC REPOS:
     - Masonry
     - MJExtension
     - SDWebImage
+    - YYCache
 
 SPEC CHECKSUMS:
   AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   MJExtension: 6b69b3bef2864fd550ce1a184eda219e321209d2
   SDWebImage: fb387001955223213dde14bc08c8b73f371f8d8f
+  YYCache: 8105b6638f5e849296c71f331ff83891a4942952
 
-PODFILE CHECKSUM: 4601299b5de9b36d465f1ecd231e8eb0aa5ef2be
+PODFILE CHECKSUM: a082d6d61cdfd3261c690e032f6426e85c9be4e1
 
 COCOAPODS: 1.7.5
