@@ -8,14 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "MyBBS.h"
-#import "MPNotificationView.h"
 
-NSUInteger DeviceSystemMajorVersion ();
-
-@class LeftViewController;
 @class PushNotificationWindow;
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, MPNotificationViewDelegate, UIAlertViewDelegate> {
+@interface AppDelegate : UIResponder <UIApplicationDelegate, UIAlertViewDelegate> {
     MyBBS * myBBS;
     BOOL isSearching;
     NSDictionary * selectedUserInfo;
@@ -24,11 +20,8 @@ NSUInteger DeviceSystemMajorVersion ();
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) UINavigationController *navController;
 @property (strong, nonatomic) UINavigationController *leftnavController;
-@property (strong, nonatomic) LeftViewController *leftViewController;
 @property (strong, nonatomic) MyBBS * myBBS;
 @property (strong, nonatomic) NSDictionary * selectedUserInfo;
-
-- (void)refreshNotification;
 
 @end
 

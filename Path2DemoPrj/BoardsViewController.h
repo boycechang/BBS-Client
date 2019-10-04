@@ -1,30 +1,17 @@
 //
-//  AllFavViewController.h
+//  BoardsViewController.h
 //  虎踞龙蟠
 //
 //  Created by 张晓波 on 6/3/12.
 //  Copyright (c) 2012 Ethan. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import "BoardsCellView.h"
-#import "TopicsViewController.h"
-#import "DataModel.h"
-#import "WBUtil.h"
-#import "BBSAPI.h"
-#import "MyBBS.h"
+#import "BYRCollectionViewController.h"
 
+@class Board;
 
-@interface BoardsViewController : UIViewController<MBProgressHUDDelegate, UITableViewDataSource, UITableViewDelegate>
-{
-    NSArray * topTenArray;
-    UITableView * normalTableView;
-    FPActivityView* activityView;
-    
-    NSString * rootSection;
-    MyBBS * myBBS;
-}
-@property(nonatomic, strong)NSArray * topTenArray;
-@property(nonatomic, strong)NSString * rootSection;
--(IBAction)back:(id)sender;
+@interface BoardsViewController : BYRCollectionViewController
+
+@property (nonatomic, strong) Board *rootSection;
+
 @end

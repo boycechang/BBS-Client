@@ -6,7 +6,6 @@
 //  Copyright (c) 2012 Ethan. All rights reserved.
 //
 
-#import "Board.h"
 #import "Models.h"
 #import "Mail.h"
 #import "Notification.h"

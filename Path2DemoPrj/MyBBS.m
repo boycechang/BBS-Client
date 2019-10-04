@@ -68,20 +68,6 @@
     return self;
 }
 
-- (NSString *)username {
-    if (_username.length == 0) {
-        return @"guest";
-    }
-    return _username;
-}
-
-- (NSString *)password {
-    if (_password.length == 0) {
-        return @"";
-    }
-    return _password;
-}
-
 - (User *)userLogin:(NSString *)user Pass:(NSString *)pass {
     self.mySelf = [BBSAPI login:user Pass:pass];
     

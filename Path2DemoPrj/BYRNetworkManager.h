@@ -21,10 +21,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (nullable NSURLSessionDataTask *)GET:(NSString *)URLString
 parameters:(nullable NSDictionary *)parameters
-  reponseClass:(Class)reponseClass
-   success:(nullable void (^)(NSURLSessionDataTask *task, id _Nullable responseObject))success
-   failure:(nullable void (^)(NSURLSessionDataTask * _Nullable task, NSError *error))failure;
+responseClass:(nullable Class)reponseClass
+ success:(nullable void (^)(NSURLSessionDataTask *task, id _Nullable responseObject))success
+ failure:(nullable void (^)(NSURLSessionDataTask * _Nullable task, NSError *error))failure;
 
+- (nullable NSURLSessionDataTask *)POST:(NSString *)URLString
+parameters:(nullable NSDictionary *)parameters
+responseClass:(nullable Class)responseClass
+ success:(nullable void (^)(NSURLSessionDataTask *task, id _Nullable responseObject))success
+ failure:(nullable void (^)(NSURLSessionDataTask * _Nullable task, NSError *error))failure;
 
 @end
 

@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface TopicCell : UITableViewCell
 
 - (void)updateWithTopic:(Topic *)topic;
+- (void)updateWithTopic:(Topic *)topic hideBoard:(BOOL)hideBoard;
 
 @end
 

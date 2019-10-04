@@ -103,69 +103,69 @@
 
 +(NSArray *)parseBoards:(NSDictionary *)boardsDictionary
 {
-    NSString * code = [boardsDictionary objectForKey:@"code"];
-    if (!code)
-    {
-        NSMutableArray * boards = [[NSMutableArray alloc] init];
-        NSArray * temp;
-        
-        temp = [boardsDictionary objectForKey:@"section"];
-        for (int i = 0; i < [temp count]; i++) {
-            
-            if (![[[boardsDictionary objectForKey:@"section"] objectAtIndex:i] isKindOfClass:[NSDictionary class]])
-                continue;   //应对搜索
-            
-            Board * board = [[Board alloc] init];
-            NSString * name = [[[boardsDictionary objectForKey:@"section"] objectAtIndex:i] objectForKey:@"name"];
-            int section = [[[[boardsDictionary objectForKey:@"section"] objectAtIndex:i] objectForKey:@"id"] intValue];
-            NSString * description = [[[boardsDictionary objectForKey:@"section"] objectAtIndex:i] objectForKey:@"description"];
-            int users = [[[[boardsDictionary objectForKey:@"section"] objectAtIndex:i] objectForKey:@"user_online_count"] intValue];
-            int count = [[[[boardsDictionary objectForKey:@"section"] objectAtIndex:i] objectForKey:@"post_today_count"] intValue];
-            
-            board.name = name;
-            board.section = section;
-            board.leaf = NO;
-            board.description = description;
-            board.users = users;
-            board.count = count;
-            
-            [boards addObject:board];
-        }
-        
-        temp = [boardsDictionary objectForKey:@"board"];
-        for (int i = 0; i < [temp count]; i++) {
-            Board * board = [[Board alloc] init];
-            
-            NSString * name = [[[boardsDictionary objectForKey:@"board"] objectAtIndex:i] objectForKey:@"name"];
-            int section = [[[[boardsDictionary objectForKey:@"board"] objectAtIndex:i] objectForKey:@"id"] intValue];
-            NSString * description = [[[boardsDictionary objectForKey:@"board"] objectAtIndex:i] objectForKey:@"description"];
-            int users = [[[[boardsDictionary objectForKey:@"board"] objectAtIndex:i] objectForKey:@"user_online_count"] intValue];
-            int count = [[[[boardsDictionary objectForKey:@"board"] objectAtIndex:i] objectForKey:@"post_today_count"] intValue];
-            
-            board.name = name;
-            board.section = section;
-            board.leaf = YES;
-            board.description = description;
-            board.users = users;
-            board.count = count;
-            
-            [boards addObject:board];
-        }
-        
-        temp = [boardsDictionary objectForKey:@"sub_section"];
-        if ([temp count] != 0) {
-            for (int j = 0; j < [temp count]; j++) {
-                Board * board = [[Board alloc] init];
-                board.name = [[boardsDictionary objectForKey:@"sub_section"] objectAtIndex:j];
-                board.leaf = NO;
-                [boards addObject:board];
-            }
-        }
-        return boards;
-    }
-    else {
-        return nil;
-    }
+//    NSString * code = [boardsDictionary objectForKey:@"code"];
+//    if (!code)
+//    {
+//        NSMutableArray * boards = [[NSMutableArray alloc] init];
+//        NSArray * temp;
+//        
+//        temp = [boardsDictionary objectForKey:@"section"];
+//        for (int i = 0; i < [temp count]; i++) {
+//            
+//            if (![[[boardsDictionary objectForKey:@"section"] objectAtIndex:i] isKindOfClass:[NSDictionary class]])
+//                continue;   //应对搜索
+//            
+//            Board * board = [[Board alloc] init];
+//            NSString * name = [[[boardsDictionary objectForKey:@"section"] objectAtIndex:i] objectForKey:@"name"];
+//            int section = [[[[boardsDictionary objectForKey:@"section"] objectAtIndex:i] objectForKey:@"id"] intValue];
+//            NSString * description = [[[boardsDictionary objectForKey:@"section"] objectAtIndex:i] objectForKey:@"description"];
+//            int users = [[[[boardsDictionary objectForKey:@"section"] objectAtIndex:i] objectForKey:@"user_online_count"] intValue];
+//            int count = [[[[boardsDictionary objectForKey:@"section"] objectAtIndex:i] objectForKey:@"post_today_count"] intValue];
+//            
+//            board.name = name;
+//            board.section = section;
+//            board.leaf = NO;
+//            board.description = description;
+//            board.users = users;
+//            board.count = count;
+//            
+//            [boards addObject:board];
+//        }
+//        
+//        temp = [boardsDictionary objectForKey:@"board"];
+//        for (int i = 0; i < [temp count]; i++) {
+//            Board * board = [[Board alloc] init];
+//            
+//            NSString * name = [[[boardsDictionary objectForKey:@"board"] objectAtIndex:i] objectForKey:@"name"];
+//            int section = [[[[boardsDictionary objectForKey:@"board"] objectAtIndex:i] objectForKey:@"id"] intValue];
+//            NSString * description = [[[boardsDictionary objectForKey:@"board"] objectAtIndex:i] objectForKey:@"description"];
+//            int users = [[[[boardsDictionary objectForKey:@"board"] objectAtIndex:i] objectForKey:@"user_online_count"] intValue];
+//            int count = [[[[boardsDictionary objectForKey:@"board"] objectAtIndex:i] objectForKey:@"post_today_count"] intValue];
+//            
+//            board.name = name;
+//            board.section = section;
+//            board.leaf = YES;
+//            board.description = description;
+//            board.users = users;
+//            board.count = count;
+//            
+//            [boards addObject:board];
+//        }
+//        
+//        temp = [boardsDictionary objectForKey:@"sub_section"];
+//        if ([temp count] != 0) {
+//            for (int j = 0; j < [temp count]; j++) {
+//                Board * board = [[Board alloc] init];
+//                board.name = [[boardsDictionary objectForKey:@"sub_section"] objectAtIndex:j];
+//                board.leaf = NO;
+//                [boards addObject:board];
+//            }
+//        }
+//        return boards;
+//    }
+//    else {
+//        return nil;
+//    }
 }
 
 + (NSArray *)parseTopics:(NSDictionary *)topicsDictionary {

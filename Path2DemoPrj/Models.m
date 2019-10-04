@@ -8,6 +8,17 @@
 
 #import "Models.h"
 
+@implementation Pagination
+@end
+
+@implementation Board
+
++ (NSDictionary *)mj_replacedKeyFromPropertyName {
+    return @{@"board_description" : @"description"};
+}
+
+@end
+
 @implementation User
 @end
 

@@ -10,16 +10,24 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class Topic;
+@class Board, Topic, Pagination;
+
+@interface BoardResponse : NSObject
+
+@property (nonatomic, strong) NSArray <NSString *> *sub_sections;
+@property (nonatomic, strong) NSArray <Board *> *boards;
+@property (nonatomic, strong) NSArray <Board *> *sections;
+
+@end
+
 
 @interface TopicResponse : NSObject
 
+@property (nonatomic, strong) Pagination *pagination;
 @property (nonatomic, strong) NSArray <Topic *> *topics;
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *name;
 
 @end
-
-
 
 NS_ASSUME_NONNULL_END

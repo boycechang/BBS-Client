@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
-#import "TopicsViewController.h"
 #import "CustomTableView.h"
 #import "SingleTopicCell.h"
 #import "SingleTopicCommentCell.h"

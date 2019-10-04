@@ -12,6 +12,7 @@
 @interface BYRTableViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, assign) BOOL isLoadingMore;
 
 @end
 
@@ -24,12 +25,6 @@
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);
     }];
-    
-    
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
 }
 
 #pragma mark - triggle
@@ -55,17 +50,34 @@
     }];
 }
 
-- (void)loadMore {
+- (void)tableView:(UITableView *)tableView
+  willDisplayCell:(UITableViewCell *)cell
+forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (!self.enableLoadMore ||
+        self.isLoadingMore ||
+        tableView.refreshControl.isRefreshing) {
+        return;
+    }
     
+    if (indexPath.section == [tableView numberOfSections] - 1 &&
+        indexPath.row >= [tableView numberOfRowsInSection:indexPath.section] - 4) {
+    
+        self.isLoadingMore = YES;
+        [self loadMoreTriggled:^{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.isLoadingMore = NO;
+                [self.tableView reloadData];
+            });
+        }];
+    }
 }
 
 #pragma mark - getter
 
 - (UITableView *)tableView {
     if (!_tableView) {
-        _tableView = [[UITableView alloc] initWithFrame:CGRectZero];
+        _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
         _tableView.backgroundColor = [UIColor colorNamed:@"Background"];
-//        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableView.estimatedRowHeight = 70;
         _tableView.delegate = self;
         _tableView.dataSource = self;

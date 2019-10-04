@@ -1,41 +1,38 @@
 //
-//  TopicHeaderCell.m
+//  BoardHeaderCollectionReusableView.m
 //  BYR
 //
-//  Created by Boyce on 10/3/19.
+//  Created by Boyce on 10/4/19.
 //  Copyright © 2019 Ethan. All rights reserved.
 //
 
-#import "TopicHeaderCell.h"
+#import "BoardHeaderCollectionReusableView.h"
 #import <Masonry.h>
 
-@interface TopicHeaderCell ()
+@interface BoardHeaderCollectionReusableView ()
 
 @property (nonatomic, strong) UILabel *sectionNameLabel;
 
 @end
 
-@implementation TopicHeaderCell
 
-- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+@implementation BoardHeaderCollectionReusableView
+
+- (instancetype)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
     if (self) {
-        self.selectionStyle = UITableViewCellSelectionStyleNone;
         [self setupViews];
     }
     return self;
 }
 
 - (void)setupViews {
-    [self.contentView addSubview:self.sectionNameLabel];
+    [self addSubview:self.sectionNameLabel];
     [self.sectionNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.contentView).offset(15);
-        make.top.equalTo(self.contentView).offset(40);
-        make.bottom.equalTo(self.contentView).offset(-8);
+        make.bottom.equalTo(self);
+        make.left.equalTo(self).offset(15);
     }];
 }
-
-#pragma mark - public
 
 - (void)updateWithSectionName:(NSString *)secionName {
     self.sectionNameLabel.text = secionName;

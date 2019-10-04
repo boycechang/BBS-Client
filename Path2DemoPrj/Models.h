@@ -11,6 +11,37 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+
+@interface Pagination : NSObject
+
+@property (nonatomic, assign) NSInteger page_all_count; //总页数
+@property (nonatomic, assign) NSInteger page_current_count; //当前页数
+
+@property (nonatomic, assign) NSInteger item_page_count; //每页元素个数
+@property (nonatomic, assign) NSInteger item_all_count; //所有元素个数
+
+@end
+
+
+@interface Board : NSObject
+
+@property (nonatomic, strong) NSString *name; //版面英文名
+@property (nonatomic, strong) NSString *board_description; //版面中文名
+@property (nonatomic, assign) BOOL is_root; //是否为根节点
+@property (nonatomic, strong) NSString *section; //版面所在分区
+
+@property (nonatomic, assign) BOOL is_favorite;
+@property (nonatomic, assign) NSInteger post_today_count; //帖子数目
+@property (nonatomic, assign) NSInteger user_online_count; //在线用户数
+
+//分区和收藏夹额外说明
+@property (nonatomic, strong) NSString * sectionName; //分区中文名
+@property (nonatomic, strong) NSString * sectionDescription; //显示[目录]或者[上级目录]
+@property (nonatomic, strong) NSArray * sectionBoards; //分区包含的版面
+
+@end
+
+
 @interface User : NSObject
 
 @property (nonatomic, strong) NSString *id;
@@ -35,15 +66,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+
 @interface Attachment : NSObject
 
-@property(nonatomic, assign) int attId;
-@property(nonatomic, strong) NSString *attFileName;
-@property(nonatomic, assign) int attPos;
-@property(nonatomic, assign) int attSize;
-@property(nonatomic, strong) NSString *attUrl;
+@property (nonatomic, assign) int attId;
+@property (nonatomic, strong) NSString *attFileName;
+@property (nonatomic, assign) int attPos;
+@property (nonatomic, assign) int attSize;
+@property (nonatomic, strong) NSString *attUrl;
 
 @end
+
 
 @interface Topic : NSObject
 
@@ -65,8 +98,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL is_subject;
 @property (nonatomic, assign) BOOL is_top;
 @property (nonatomic, assign) BOOL is_admin;
-@property (nonatomic, assign) BOOL unread;
-@property (nonatomic, assign) NSUInteger index;
+@property (nonatomic, assign) NSUInteger position;
 
 @property (nonatomic, assign) NSUInteger reply_count;
 @property (nonatomic, strong) NSDate *last_reply_time;
@@ -75,6 +107,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) NSString *board_name;
 @property (nonatomic, strong) NSString *board_description;
+
+@property (nonatomic, assign) BOOL is_read;
+@property (nonatomic, assign) NSUInteger index;
+@property (nonatomic, assign) NSUInteger pos;
 
 @end
 

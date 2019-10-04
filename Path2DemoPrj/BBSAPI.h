@@ -18,23 +18,14 @@
 +(BOOL)isNetworkReachable;
 
 +(User *)userInfo:(NSString *)userID;  ///
-+(NSArray *)topTen;///
-+(NSArray *)sectionTopTen:(int)sectionNumber;///
 +(NSArray *)hotTopics;  ///
 
-+(NSArray *)getBoards:(User *)user Section:(NSString *)section;   ///section
-+(NSArray *)boardTopics:(NSString *)board Start:(NSInteger)start Limit:(NSInteger)limit User:(User *)user Mode:(int)mode UserOnline:(int *)userOnline PostToday:(int *)postToday PostAll:(int *)postAll; ///
-+(NSArray *)boardTopics:(NSString *)board Start:(NSInteger)start Limit:(NSInteger)limit User:(User *)user Mode:(int)mode;
 +(NSArray *)singleTopic:(NSString *)board ID:(int)ID Page:(NSInteger)page User:(User *)user;///
 +(NSArray *)replyTopic:(NSString *)board ID:(int)ID Start:(NSInteger)start User:(User *)user; ///
 +(NSArray *)searchTopics:(NSString *)key start:(NSInteger)start User:(User *)user BoardName:(NSString *)board;
 +(NSArray *)searchBoards:(NSString *)key User:(User *)user;  ///
 
-+(User *)login:(NSString *)user Pass:(NSString *)pass;   ///
-+(BOOL)addNotificationToken:(NSString *)token iToken:(NSString *)iToken;
-+(NSArray *)allFavSections:(User *)user;
-+(BOOL)addFavBoard:(User *)user BoardName:(NSString *)BoardName;
-+(BOOL)deleteFavBoard:(User *)user BoardName:(NSString *)BoardName;
++(User *)login:(NSString *)user Pass:(NSString *)pass;
 
 +(NSArray *)onlineFriends:(User *)user;
 +(NSArray *)allFriends:(User *)user;
@@ -62,10 +53,8 @@
 
 + (NSString *)dateToString:(NSDate *)date;
 
-+(NSArray *)photographyTopics:(int)start;  ///
-+(NSArray *)picturesTopics:(int)start; ///
-
 +(NSArray *)getVoteList:(User *)user Type:(NSString *)type;   ///type: me|join|list|new|hot|all
 +(Vote *)getSingleVote:(User *)user ID:(int)ID;
 +(Vote *)doVote:(User *)user ID:(int)ID VoteArray:(NSArray *)voteArray;
+
 @end

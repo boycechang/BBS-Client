@@ -15,13 +15,15 @@
 @interface TopicCell ()
 
 @property (nonatomic, strong) UILabel *topicTitleLabel;
-@property (nonatomic, strong) UILabel *boardLabel;
-@property (nonatomic, strong) UILabel *dateLabel;
-@property (nonatomic, strong) UIImageView *avatarImageView;
 
+@property (nonatomic, strong) UIImageView *avatarImageView;
 @property (nonatomic, strong) UILabel *usernameLabel;
 @property (nonatomic, strong) UIImageView *genderImageView;
-@property (nonatomic, strong) UILabel *postCountLabel;
+@property (nonatomic, strong) UILabel *dateLabel;
+
+@property (nonatomic, strong) UILabel *boardLabel;
+@property (nonatomic, strong) UIImageView *indicatorImageView1;
+@property (nonatomic, strong) UIImageView *indicatorImageView2;
 
 @end
 
@@ -30,7 +32,7 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.selectionStyle = UITableViewCellSelectionStyleGray;
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
         [self setupViews];
     }
     return self;
@@ -42,10 +44,11 @@
     [self.contentView addSubview:self.avatarImageView];
     [self.contentView addSubview:self.usernameLabel];
     [self.contentView addSubview:self.genderImageView];
-    [self.contentView addSubview:self.postCountLabel];
+    [self.contentView addSubview:self.dateLabel];
     
     [self.contentView addSubview:self.boardLabel];
-    [self.contentView addSubview:self.dateLabel];
+    [self.contentView addSubview:self.indicatorImageView1];
+    [self.contentView addSubview:self.indicatorImageView2];
     
     [self.topicTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.top.equalTo(self.contentView).offset(15);
@@ -61,53 +64,72 @@
     
     [self.usernameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.avatarImageView.mas_right).offset(5);
-        make.top.equalTo(self.topicTitleLabel.mas_bottom).offset(15);
+        make.top.equalTo(self.topicTitleLabel.mas_bottom).offset(10);
     }];
     [self.usernameLabel setContentHuggingPriority:UILayoutPriorityRequired
                                           forAxis:UILayoutConstraintAxisHorizontal];
+    [self.usernameLabel setContentHuggingPriority:UILayoutPriorityRequired
+                                          forAxis:UILayoutConstraintAxisVertical];
     
     [self.genderImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.usernameLabel.mas_right).offset(2);
-        make.centerY.equalTo(self.usernameLabel);
-        make.height.width.mas_equalTo(15);
+        make.left.equalTo(self.usernameLabel.mas_right).offset(1);
+        make.height.centerY.equalTo(self.usernameLabel);
+        make.width.equalTo(self.genderImageView.mas_height);
     }];
     
-    [self.postCountLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.dateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.genderImageView.mas_right).offset(5);
         make.centerY.equalTo(self.usernameLabel);
-        make.right.equalTo(self.contentView).offset(-15);
+    }];
+    [self.dateLabel setContentHuggingPriority:UILayoutPriorityRequired
+    forAxis:UILayoutConstraintAxisHorizontal];
+    [self.dateLabel setContentHuggingPriority:UILayoutPriorityRequired
+    forAxis:UILayoutConstraintAxisVertical];
+    
+    [self.indicatorImageView1 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.dateLabel.mas_right).offset(5);
+        make.centerY.equalTo(self.dateLabel);
+        make.height.equalTo(self.dateLabel).multipliedBy(1.2);
+        make.width.equalTo(self.indicatorImageView1.mas_height);
+    }];
+    [self.indicatorImageView2 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.indicatorImageView1.mas_right).offset(2);
+        make.centerY.equalTo(self.dateLabel);
+        make.height.equalTo(self.dateLabel).multipliedBy(1.2);
+        make.width.equalTo(self.indicatorImageView2.mas_height);
     }];
     
     [self.boardLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.avatarImageView);
-        make.top.equalTo(self.avatarImageView.mas_bottom).offset(5);
-        make.right.equalTo(self.contentView).offset(-15);
-    }];
-    
-    
-    [self.dateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.boardLabel);
-        make.top.equalTo(self.boardLabel.mas_bottom).offset(5);
-        make.right.equalTo(self.contentView).offset(-15);
+        make.top.equalTo(self.usernameLabel.mas_bottom).offset(10);
         make.bottom.equalTo(self.contentView).offset(-20);
     }];
+    [self.boardLabel setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
 }
 
 
 #pragma mark - public
 
+- (void)updateWithTopic:(Topic *)topic hideBoard:(BOOL)hideBoard {
+    [self updateWithTopic:topic];
+    self.boardLabel.text = [NSString stringWithFormat:@"%li回复", topic.reply_count];
+}
+
 - (void)updateWithTopic:(Topic *)topic {
+    self.indicatorImageView1.image = nil;
+    self.indicatorImageView2.image = nil;
+    
     self.topicTitleLabel.text = topic.title;
     
-    self.usernameLabel.text = topic.user.user_name;
-    self.postCountLabel.text = [NSString stringWithFormat:@"%li文章", topic.user.post_count];
+    self.usernameLabel.text = topic.user.user_name ?: @"匿名";
+    self.dateLabel.text = [NSString stringWithFormat:@"%@", [self getDateDesc:topic.post_time]];
     
     [self.avatarImageView sd_setImageWithURL:topic.user.face_url];
     if ([topic.user.gender isEqualToString:@"f"]) {
-        self.genderImageView.image = [UIImage systemImageNamed:@"f.circle.fill"];
+        self.genderImageView.image = [UIImage systemImageNamed:@"f.circle"];
         self.genderImageView.tintColor = [UIColor colorNamed:@"Pink"];
     } else {
-        self.genderImageView.image = [UIImage systemImageNamed:@"m.circle.fill"];
+        self.genderImageView.image = [UIImage systemImageNamed:@"m.circle"];
         self.genderImageView.tintColor = [UIColor colorNamed:@"MainTheme"];
     }
     
@@ -116,12 +138,19 @@
     }
     
     self.boardLabel.text = [NSString stringWithFormat:@"%li回复 · %@", topic.reply_count, topic.board_description];
-    self.dateLabel.text = [NSString stringWithFormat:@"%@", [self getDateDesc:topic.post_time]];
+    
+    if (topic.flag.length) {
+        self.indicatorImageView1.image = [UIImage systemImageNamed:@"suit.diamond.fill"];
+    }
+    
+    if (topic.has_attachment) {
+        UIImageView *imageView = topic.flag.length ? self.indicatorImageView2 : self.indicatorImageView1;
+        imageView.image = [UIImage systemImageNamed:@"paperclip.circle.fill"];
+    }
 }
 
 - (NSString *)getDateDesc:(NSTimeInterval)timeinterval {
     double ti = [[NSDate date] timeIntervalSince1970] - timeinterval;
-    
     if (ti < 60) {
         return @"刚刚";
     } else if (ti < 3600) {
@@ -140,7 +169,7 @@
         return lastloginstring;
     } else {
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:@"yyyy年MM月dd日"];
+        [dateFormatter setDateFormat:@"yy年MM月dd日"];
         NSString * lastloginstring = [dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:timeinterval]];
         return lastloginstring;
     }
@@ -153,7 +182,7 @@
         _topicTitleLabel = [UILabel new];
         _topicTitleLabel.numberOfLines = 0;
         _topicTitleLabel.adjustsFontForContentSizeCategory = YES;
-        _topicTitleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleTitle2];
+        _topicTitleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleTitle3];
         _topicTitleLabel.textColor = [UIColor colorNamed:@"Title3"];
     }
     return _topicTitleLabel;
@@ -177,7 +206,7 @@
         
         UIFontDescriptor *descriptor = [[UIFont preferredFontForTextStyle:UIFontTextStyleFootnote] fontDescriptor];
         UIFontDescriptor *newDescriptor = [descriptor fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold];
-        _usernameLabel.font = [UIFont fontWithDescriptor:newDescriptor size:0];;
+        _usernameLabel.font = [UIFont fontWithDescriptor:newDescriptor size:0];
     }
     return _usernameLabel;
 }
@@ -185,18 +214,19 @@
 - (UIImageView *)genderImageView {
     if (!_genderImageView) {
         _genderImageView = [UIImageView new];
+        _genderImageView.contentMode = UIViewContentModeScaleAspectFit;
     }
     return _genderImageView;
 }
 
-- (UILabel *)postCountLabel {
-    if (!_postCountLabel) {
-        _postCountLabel = [UILabel new];
-        _postCountLabel.adjustsFontForContentSizeCategory = YES;
-        _postCountLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
-        _postCountLabel.textColor = [UIColor colorNamed:@"Footnote"];
+- (UILabel *)dateLabel {
+    if (!_dateLabel) {
+        _dateLabel = [UILabel new];
+        _dateLabel.adjustsFontForContentSizeCategory = YES;
+        _dateLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
+        _dateLabel.textColor = [UIColor colorNamed:@"Footnote"];
     }
-    return _postCountLabel;
+    return _dateLabel;
 }
 
 
@@ -210,14 +240,22 @@
     return _boardLabel;
 }
 
-- (UILabel *)dateLabel {
-    if (!_dateLabel) {
-        _dateLabel = [UILabel new];
-        _dateLabel.adjustsFontForContentSizeCategory = YES;
-        _dateLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2];
-        _dateLabel.textColor = [UIColor colorNamed:@"Footnote"];
+
+- (UIImageView *)indicatorImageView1 {
+    if (!_indicatorImageView1) {
+        _indicatorImageView1 = [UIImageView new];
+        _indicatorImageView1.tintColor = [UIColor colorNamed:@"MainTheme"];
     }
-    return _dateLabel;
+    return _indicatorImageView1;
+}
+
+
+- (UIImageView *)indicatorImageView2 {
+    if (!_indicatorImageView2) {
+        _indicatorImageView2 = [UIImageView new];
+        _indicatorImageView2.tintColor = [UIColor colorNamed:@"MainTheme"];
+    }
+    return _indicatorImageView2;
 }
 
 @end

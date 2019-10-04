@@ -49,9 +49,9 @@ static const NSString *AppKey = @"ff7504fa9d6a4975";
 
 - (nullable NSURLSessionDataTask *)GET:(NSString *)URLString
 parameters:(nullable NSDictionary *)parameters
-  reponseClass:(Class)reponseClass
+  responseClass:(nullable Class)responseClass
    success:(nullable void (^)(NSURLSessionDataTask *task, id _Nullable responseObject))success
-   failure:(nullable void (^)(NSURLSessionDataTask * _Nullable task, NSError *error))failure;
+   failure:(nullable void (^)(NSURLSessionDataTask * _Nullable task, NSError *error))failure
 {
     NSDictionary *params;
     if (parameters) {
@@ -65,8 +65,35 @@ parameters:(nullable NSDictionary *)parameters
         if ([responseObject isKindOfClass:[NSDictionary class]] &&
             [[responseObject objectForKey:@"code"] length] == 0) {
             if (success) {
-                id response = [reponseClass mj_objectWithKeyValues:responseObject];
-                success(task, response);
+                if (responseClass) {
+                    id response = [responseClass mj_objectWithKeyValues:responseObject];
+                    success(task, response);
+                } else {
+                    success(task, responseObject);
+                }
+            }
+        } else if (failure) {
+            failure(task, nil);
+        }
+    } failure:failure];
+}
+
+- (nullable NSURLSessionDataTask *)POST:(NSString *)URLString
+parameters:(nullable NSDictionary *)parameters
+responseClass:(nullable Class)responseClass
+ success:(nullable void (^)(NSURLSessionDataTask *task, id _Nullable responseObject))success
+ failure:(nullable void (^)(NSURLSessionDataTask * _Nullable task, NSError *error))failure
+{
+    return [_networkManager POST:[NSString stringWithFormat:@"%@?appkey=%@", URLString, AppKey] parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary * _Nullable responseObject) {
+        if ([responseObject isKindOfClass:[NSDictionary class]] &&
+            [[responseObject objectForKey:@"code"] length] == 0) {
+            if (success) {
+                if (responseClass) {
+                    id response = [responseClass mj_objectWithKeyValues:responseObject];
+                    success(task, response);
+                } else {
+                    success(task, responseObject);
+                }
             }
         } else if (failure) {
             failure(task, nil);

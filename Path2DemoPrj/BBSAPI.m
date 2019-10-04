@@ -15,7 +15,7 @@
 #define APIADDR @"http://api.byr.cn"
 
 #define APPKEY @"ff7504fa9d6a4975"
-#define AllBoards @"Advice|Announce|BBShelp|Bet|BM_Market|BYR10|Cooperation|ForumCommittee|ID|Progress|Score|sysop|test|BYR|BYRStar|Showcase|AimBUPT|ACETeam|BuptAssociation|BUPTMSTC|BUPTStudentUnion|BUPTSTV|BuptWeekly|ChineseOrchestra|GraduateUnion|OracleClub|Orchestra|Philharmonic|Redcross|SCDA|SICA|WOWBuptGuild|BUPT|BUPTNet|BUPTPost|BYR_Bulletin|CampusCard|daonian|EID|Focus|Graduation|Library|Recommend|School|Selfsupport|StudentAffairs|StudentQuery|BUPTNU|DMDA|GraduateSch|HongFu|INTR|IPOC|IS|SA|SCS|SEE|SEM|SH|SICE|SL|SIE|SS|SPM|SSE|STE|ACM_ICPC|BBSMan_Dev|Circuit|Communications|CPP|Database|dotNET|Economics|Embedded_System|HardWare|Innovation|Java|Linux|MathModel|Matlab|ML_DM|MobileInternet|MobileTerminalAT|Notebook|OfficeTool|Paper|SearchEngine|Security|SoftDesign|Windows|WWWTechnology|Ad_Agent|Advertising|BookTrade|BUPTDiscount|Co_Buying|ComputerTrade|Group_Buying|House|House_Agent|Ticket|AimGraduate|BNU|BUPT_Internet_Club|BYRatSH|BYRatSZ|Certification|CivilServant|Consulting|Entrepreneurship|Financial|FamilyLife|GoAbroad|Home|IT|Job|JobInfo|NetResources|Overseas|ParttimeJob|PMatBUPT|StudyShare|Weather|WorkLife|Astronomy|Debate|DV|EnglishBar|Ghost|Guitar|Humanity|Japanese|KoreanWind|Music|Photo|Poetry|PsyHealthOnline|Quyi|Reading|ScienceFiction|Tshirt|Beauty|Blessing|Clothing|Constellations|DigiLife|Environment|DIYLife|Feeling|Food|Friends|Health|LostandFound|Talking|AutoMotor|BoardGame|Comic|Flash|Hero|Joke|KaraOK|KillBar|Movie|NetLiterature|Pet|Picture|Plant|RadioOnline|Requirement|SuperStar|Travel|TV|VideoCool|Athletics|Badminton|Billiards|Basketball|Chess|Cycling|Dancing|Football|GSpeed|Gymnasium|Kungfu|Rugby|Shuttlecock|Sk8|Skating|Swim|Taekwondo|Tabletennis|Tennis|Volleyball|BUPTDNF|CStrike|Diablo|FootballManager|LOL|OnlineGame|PCGame|PopKart|StarCraft|TVGame|War3RPG|WarCraft|WE|WOW|Xyq"
+//#define AllBoards @"Advice|Announce|BBShelp|Bet|BM_Market|BYR10|Cooperation|ForumCommittee|ID|Progress|Score|sysop|test|BYR|BYRStar|Showcase|AimBUPT|ACETeam|BuptAssociation|BUPTMSTC|BUPTStudentUnion|BUPTSTV|BuptWeekly|ChineseOrchestra|GraduateUnion|OracleClub|Orchestra|Philharmonic|Redcross|SCDA|SICA|WOWBuptGuild|BUPT|BUPTNet|BUPTPost|BYR_Bulletin|CampusCard|daonian|EID|Focus|Graduation|Library|Recommend|School|Selfsupport|StudentAffairs|StudentQuery|BUPTNU|DMDA|GraduateSch|HongFu|INTR|IPOC|IS|SA|SCS|SEE|SEM|SH|SICE|SL|SIE|SS|SPM|SSE|STE|ACM_ICPC|BBSMan_Dev|Circuit|Communications|CPP|Database|dotNET|Economics|Embedded_System|HardWare|Innovation|Java|Linux|MathModel|Matlab|ML_DM|MobileInternet|MobileTerminalAT|Notebook|OfficeTool|Paper|SearchEngine|Security|SoftDesign|Windows|WWWTechnology|Ad_Agent|Advertising|BookTrade|BUPTDiscount|Co_Buying|ComputerTrade|Group_Buying|House|House_Agent|Ticket|AimGraduate|BNU|BUPT_Internet_Club|BYRatSH|BYRatSZ|Certification|CivilServant|Consulting|Entrepreneurship|Financial|FamilyLife|GoAbroad|Home|IT|Job|JobInfo|NetResources|Overseas|ParttimeJob|PMatBUPT|StudyShare|Weather|WorkLife|Astronomy|Debate|DV|EnglishBar|Ghost|Guitar|Humanity|Japanese|KoreanWind|Music|Photo|Poetry|PsyHealthOnline|Quyi|Reading|ScienceFiction|Tshirt|Beauty|Blessing|Clothing|Constellations|DigiLife|Environment|DIYLife|Feeling|Food|Friends|Health|LostandFound|Talking|AutoMotor|BoardGame|Comic|Flash|Hero|Joke|KaraOK|KillBar|Movie|NetLiterature|Pet|Picture|Plant|RadioOnline|Requirement|SuperStar|Travel|TV|VideoCool|Athletics|Badminton|Billiards|Basketball|Chess|Cycling|Dancing|Football|GSpeed|Gymnasium|Kungfu|Rugby|Shuttlecock|Sk8|Skating|Swim|Taekwondo|Tabletennis|Tennis|Volleyball|BUPTDNF|CStrike|Diablo|FootballManager|LOL|OnlineGame|PCGame|PopKart|StarCraft|TVGame|War3RPG|WarCraft|WE|WOW|Xyq"
 
 
 @implementation BBSAPI
@@ -115,56 +115,6 @@
     }
 }
 
-+ (BOOL)addNotificationToken:(NSString *)token iToken:(NSString *)iToken {
-    if (![BBSAPI isNetworkReachable]) {
-        return false;
-    }
-    
-    NSMutableString * baseurl = [@"http://bbs.seu.edu.cn/api/push/add.json?" mutableCopy];
-    [baseurl appendFormat:@"token=%@",token];
-    [baseurl appendFormat:@"&iToken=%@",iToken];
-    
-    NSURL *url = [NSURL URLWithString:baseurl];
-    NSData * feedback = [NSData dataWithContentsOfURL:url];
-    if (feedback == nil) {
-        return NO;
-    }
-    NSDictionary *topTenTopics = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
-    BOOL success = [[topTenTopics objectForKey:@"success"] boolValue];
-    return success;
-}
-
-+ (NSArray *)topTen {
-    NSMutableString * baseurl = [APIADDR mutableCopy];
-    [baseurl appendString:@"/widget/topten.json"];
-    
-    AFHTTPSessionManager *manager  = [AFHTTPSessionManager manager];
-    [manager.requestSerializer setAuthorizationHeaderFieldWithUsername:@"yyjing" password:@"1989128"];
-    [manager GET:baseurl parameters:@{@"appkey" : APPKEY} progress:^(NSProgress * _Nonnull downloadProgress) {
-        
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSArray *status = [JsonParseEngine parseTopics:responseObject];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
-    }];
-}
-
-+ (NSArray *)sectionTopTen:(int)sectionNumber {
-    NSMutableString * baseurl = [APIADDR mutableCopy];
-    [baseurl appendFormat:@"/widget/section-%i.json?", sectionNumber];
-    [baseurl appendFormat:@"appkey=%@", APPKEY];
-    
-    AFHTTPSessionManager *manager  = [AFHTTPSessionManager manager];
-    [manager.requestSerializer setAuthorizationHeaderFieldWithUsername:@"yyjing" password:@"1989128"];
-    [manager GET:baseurl parameters:@{@"appkey" : APPKEY} progress:^(NSProgress * _Nonnull downloadProgress) {
-        
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSArray *status = [JsonParseEngine parseTopics:responseObject];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
-    }];
-}
-
 + (NSArray *)hotTopics {
     if(![BBSAPI isNetworkReachable]) {
         return nil;
@@ -231,91 +181,6 @@
     return nil;
 }
 
-+ (NSArray *)allFavSections:(User *)user {
-    if (![BBSAPI isNetworkReachable]) {
-        return nil;
-    }
-    
-    NSMutableString * baseurl = [APIADDR mutableCopy];
-    [baseurl appendString:@"/favorite/0.json?"];
-    [baseurl appendFormat:@"appkey=%@", APPKEY];
-    
-    NSURL *url = [NSURL URLWithString:baseurl];
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    [request setUsername:[MyBBS sharedInstance].username];
-    [request setPassword:[MyBBS sharedInstance].password];
-    [request setAllowCompressedResponse:YES];
-    [request startSynchronous];
-    NSData *feedback = [request responseData];
-    
-    if (feedback == nil) {
-        return nil;
-    }
-    NSDictionary *topTenTopics = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
-    NSArray * Status = [JsonParseEngine parseBoards:topTenTopics];
-    if (Status == nil) {
-        return nil;
-    } else {
-        return Status;
-    }
-}
-
-+ (BOOL)addFavBoard:(User *)user BoardName:(NSString *)BoardName {
-    if(![BBSAPI isNetworkReachable]) {
-        return NO;
-    }
-    
-    NSMutableString * baseurl = [APIADDR mutableCopy];
-    [baseurl appendFormat:@"/favorite/add/0.json?"];
-    [baseurl appendFormat:@"appkey=%@", APPKEY];
-    NSURL *url = [NSURL URLWithString:baseurl];
-    
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    [request setUsername:[MyBBS sharedInstance].username];
-    [request setPassword:[MyBBS sharedInstance].password];
-    [request setPostValue:BoardName forKey:@"name"];
-    [request setPostValue:@"0" forKey:@"dir"];
-    [request setAllowCompressedResponse:YES];
-    [request setRequestMethod:@"POST"];
-    [request startSynchronous];
-    
-    NSData *feedback = [request responseData];
-    
-    if (feedback == nil) {
-        return NO;
-    }
-    
-    return YES;
-}
-
-+ (BOOL)deleteFavBoard:(User *)user BoardName:(NSString *)BoardName {
-    if(![BBSAPI isNetworkReachable]) {
-        return NO;
-    }
-    
-    NSMutableString * baseurl = [APIADDR mutableCopy];
-    [baseurl appendFormat:@"/favorite/delete/0.json?"];
-    [baseurl appendFormat:@"appkey=%@", APPKEY];
-    
-    NSURL *url = [NSURL URLWithString:baseurl];
-    
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    [request setUsername:[MyBBS sharedInstance].username];
-    [request setPassword:[MyBBS sharedInstance].password];
-    [request setPostValue:BoardName forKey:@"name"];
-    [request setPostValue:@"0" forKey:@"dir"];
-    [request setAllowCompressedResponse:YES];
-    [request setRequestMethod:@"POST"];
-    [request startSynchronous];
-    
-    NSData *feedback = [request responseData];
-    
-    if (feedback == nil) {
-        return NO;
-    }
-    
-    return YES;
-}
 
 +(BOOL)isFriend:(NSString *)token ID:(NSString *)ID
 {
@@ -681,83 +546,6 @@
     BOOL reply = [BBSAPI clearNotificationForType:@"reply" User:user];
 
     return at&&reply;
-}
-
-+(NSArray *)boardTopics:(NSString *)board Start:(NSInteger)start Limit:(NSInteger)limit User:(User *)user Mode:(int)mode
-{
-    if(![BBSAPI isNetworkReachable] || start%limit != 0)
-    {
-        return nil;
-    }
-    
-    NSMutableString * baseurl = [APIADDR mutableCopy];
-    [baseurl appendFormat:@"/board/%@.json?", board];
-    [baseurl appendFormat:@"appkey=%@", APPKEY];
-    [baseurl appendFormat:@"&mode=%i", mode];
-    [baseurl appendFormat:@"&page=%i&count=%i", start/limit + 1, limit];
-    
-    NSURL *url = [NSURL URLWithString:baseurl];
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    [request setUsername:[MyBBS sharedInstance].username];
-    [request setPassword:[MyBBS sharedInstance].password];
-    [request setAllowCompressedResponse:YES];
-    [request startSynchronous];
-    NSData *feedback = [request responseData];
-    
-    if (feedback == nil) {
-        return nil;
-    }
-    NSDictionary *topTenTopics = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];    
-    NSArray * Status = [JsonParseEngine parseTopics:topTenTopics];
-    if (Status == nil) {
-        return nil;
-    }
-    else {
-        return Status;
-    }
-
-}
-
-+(NSArray *)boardTopics:(NSString *)board Start:(NSInteger)start Limit:(NSInteger)limit User:(User *)user Mode:(int)mode UserOnline:(int *)userOnline PostToday:(int *)postToday PostAll:(int *)postAll
-{
-    if(![BBSAPI isNetworkReachable] || start%limit != 0)
-    {
-        return nil;
-    }
-    
-    NSMutableString * baseurl = [APIADDR mutableCopy];
-    [baseurl appendFormat:@"/board/%@.json?", board];
-    [baseurl appendFormat:@"appkey=%@", APPKEY];
-    [baseurl appendFormat:@"&mode=%i", mode];
-    [baseurl appendFormat:@"&page=%i&count=%i", start/limit + 1, limit];
-    
-    NSURL *url = [NSURL URLWithString:baseurl];
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    [request setUsername:[MyBBS sharedInstance].username];
-    [request setPassword:[MyBBS sharedInstance].password];
-    [request setAllowCompressedResponse:YES];
-    [request startSynchronous];
-    NSData *feedback = [request responseData];
-    
-    if (feedback == nil) {
-        return nil;
-    }
-    NSDictionary *topTenTopics = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
-    
-    *userOnline = [[topTenTopics objectForKey:@"user_online_count"] intValue];
-    
-    *postToday = [[topTenTopics objectForKey:@"post_today_count"] intValue];
-    
-    *postAll = [[topTenTopics objectForKey:@"post_all_count"] intValue];
-    
-    
-    NSArray * Status = [JsonParseEngine parseTopics:topTenTopics];
-    if (Status == nil) {
-        return nil;
-    }
-    else {
-        return Status;
-    }
 }
 
 +(NSArray *)replyTopic:(NSString *)board ID:(int)ID Start:(NSInteger)start User:(User *)user
@@ -1173,37 +961,6 @@
     else {
         return Status;
     }
-}
-
-
-+(NSArray *)photographyTopics:(int)start
-{
-    NSArray * PhotographyArray = [BBSAPI boardTopics:@"Photo" Start:start Limit:10 User:nil Mode:6];
-    NSMutableArray * newAllArray = [[NSMutableArray alloc] init];
-    for (int i = 0; i < [PhotographyArray count]; i++) {
-        Topic * topic = [PhotographyArray objectAtIndex:i];
-        NSArray * array = [BBSAPI singleTopic:topic.board_name ID:topic.id];
-        if (array != nil) {
-            topic = [array objectAtIndex:0];
-            [newAllArray addObject:topic];
-        }
-    }
-    return newAllArray;
-}
-
-+ (NSArray *)picturesTopics:(int)start;
-{
-    NSArray * PicturesArray = [BBSAPI boardTopics:@"Picture" Start:start Limit:10 User:nil Mode:6];
-    NSMutableArray * newAllArray = [[NSMutableArray alloc] init];
-    for (int i = 0; i < [PicturesArray count]; i++) {
-        Topic * topic = [PicturesArray objectAtIndex:i];
-        NSArray * array = [BBSAPI singleTopic:topic.board_name ID:topic.id];
-        if (array != nil) {
-            topic = [array objectAtIndex:0];
-            [newAllArray addObject:topic];
-        }
-    }
-    return newAllArray;
 }
 
 +(NSArray *)getVoteList:(User *)user Type:(NSString *)type   ///type: me|join|list|new|hot|all

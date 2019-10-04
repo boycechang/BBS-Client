@@ -21,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface BYRTableViewController : UIViewController <BYRTableViewControllerProtocol>
 
 @property (readonly) UITableView *tableView;
+@property (nonatomic, assign) BOOL enableLoadMore;
 
 - (void)refresh;
 

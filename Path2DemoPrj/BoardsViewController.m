@@ -8,175 +8,226 @@
 
 #import "BoardsViewController.h"
 #import <Masonry.h>
-#import "AppDelegate.h"
+#import "Models.h"
+#import "TopicsViewController.h"
+#import "BYRNetworkManager.h"
+#import "BYRNetworkReponse.h"
+#import "BoardCell.h"
+#import "BoardHeaderCollectionReusableView.h"
 
-@interface BoardsViewController () {
-    UITableView *customTableView;
-}
+@interface BoardsViewController () <UIContextMenuInteractionAnimating>
+
+@property (nonatomic, strong) NSArray *favBoards;
+@property (nonatomic, strong) NSArray *boards;
+
 @end
 
 
 @implementation BoardsViewController
-@synthesize topTenArray;
-@synthesize rootSection;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor whiteColor];
     
-    if ([rootSection isEqualToString:@"0"]) {
-        self.title = @"本站站务";
-    }
-    else if ([rootSection isEqualToString:@"1"]) {
-        self.title = @"北邮校园";
-    }
-    else if ([rootSection isEqualToString:@"2"]) {
-        self.title = @"学术科技";
-    }
-    else if ([rootSection isEqualToString:@"3"]) {
-        self.title = @"信息社会";
-    }
-    else if ([rootSection isEqualToString:@"4"]) {
-        self.title = @"人文艺术";
-    }
-    else if ([rootSection isEqualToString:@"5"]) {
-        self.title = @"生活时尚";
-    }
-    else if ([rootSection isEqualToString:@"6"]) {
-        self.title = @"休闲娱乐";
-    }
-    else if ([rootSection isEqualToString:@"7"]) {
-        self.title = @"体育健身";
-    }
-    else if ([rootSection isEqualToString:@"8"]) {
-        self.title = @"游戏对战";
-    }
-    else {
-        self.title = rootSection;
-    }
+    self.flowLayout.minimumLineSpacing = 15;
+    self.flowLayout.minimumInteritemSpacing = 15;
+    self.flowLayout.estimatedItemSize = CGSizeMake(100, 100);
+    self.flowLayout.sectionInset = UIEdgeInsetsMake(15, 15, 15, 15);
     
-    if (rootSection == nil) {
-        self.title = @"版面";
-    }
+    [self.collectionView registerClass:BoardCell.class forCellWithReuseIdentifier:BoardCell.class.description];
+    [self.collectionView registerClass:BoardHeaderCollectionReusableView.class
+            forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
+                   withReuseIdentifier:BoardHeaderCollectionReusableView.class.description];
     
-    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    myBBS = appDelegate.myBBS;
-    
-    customTableView = [[UITableView alloc] init];
-    customTableView.refreshControl = [UIRefreshControl new];
-    [customTableView.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
-    [self.view addSubview:customTableView];
-    [customTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.view);
-    }];
-    customTableView.delegate = self;
-    customTableView.dataSource = self;
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        if (appDelegate.myBBS.allSections != nil && rootSection == nil) {
-            self.topTenArray = appDelegate.myBBS.allSections;
-        }
-        else {
-            self.topTenArray = [BBSAPI getBoards:appDelegate.myBBS.mySelf Section:rootSection];
-            if (rootSection == nil)
-                appDelegate.myBBS.allSections = self.topTenArray;
-        }
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [customTableView reloadData];
-        });
-    });
-}
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    customTableView = nil;
-    normalTableView = nil;
-    [activityView stop];
-    activityView = nil;
-}
-
-#pragma mark - UITableView delegate
--(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return [topTenArray count];
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return 54;
-}
-
-// Called after the user changes the selection.
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-    Board * board = [topTenArray objectAtIndex:indexPath.row];
-    if (board.leaf) {
-        TopicsViewController * topicsViewController = [[TopicsViewController alloc] init];
-        Board * b = [topTenArray objectAtIndex:indexPath.row];
-        topicsViewController.board = b;
-        [self.navigationController pushViewController:topicsViewController animated:YES];
+    if (self.rootSection == nil) {
+        self.navigationItem.title = @"版面";
+        self.flowLayout.headerReferenceSize = CGSizeMake(100, 60);
     } else {
-        BoardsViewController * boardsViewController = [[BoardsViewController alloc] init];
-        boardsViewController.rootSection = board.name;
-        [self.navigationController pushViewController:boardsViewController animated:YES];
+        self.title = self.rootSection.board_description ?: self.rootSection.name;
     }
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    BoardsCellView * cell = (BoardsCellView *)[tableView dequeueReusableCellWithIdentifier:@"BoardsCellView"];
-    if (cell == nil) {
-        //cell = [[BoardsCellView alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"BoardsCellView"];
-        
-        NSArray * array = [[NSBundle mainBundle] loadNibNamed:@"BoardsCellView" owner:self options:nil];
-        cell = [array objectAtIndex:0];
-    }
-    [cell setSelectionStyle:UITableViewCellSelectionStyleGray];
     
-    Board * b = [topTenArray objectAtIndex:indexPath.row];
-    cell.name = b.name;
-    cell.description = b.description;
-    cell.section = b.section;
-    cell.leaf = b.leaf;
-    cell.users = b.users;
-    cell.count = b.count;
+    [self refresh];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.collectionView reloadData];
+}
+
+#pragma mark - UICollectionViewDataSource & UICollectionViewDelegate
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    if (self.rootSection) {
+        return 1;
+    }
+    return 2;
+}
+
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
+    UICollectionReusableView *reusableview = nil;
     
-    if (!b.leaf) {
-        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+    if (kind == UICollectionElementKindSectionHeader) {
+        BoardHeaderCollectionReusableView *header = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:BoardHeaderCollectionReusableView.class.description forIndexPath:indexPath];
+        [header updateWithSectionName:indexPath.section == 0 ? @"我的收藏" : @"全部版面"];
+        reusableview = header;
     }
-    else{
-        [cell setAccessoryType:UITableViewCellAccessoryNone];
-    }
-	return cell;
+    
+    return reusableview;
 }
 
-#pragma -
-#pragma mark CustomtableView delegate
-- (void)refresh {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        self.topTenArray = [BBSAPI getBoards:appDelegate.myBBS.mySelf Section:rootSection];
-        if (rootSection == nil) {
-            appDelegate.myBBS.allSections = self.topTenArray;
-        }
+- (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section {
+    if (self.rootSection) {
+        return self.boards.count;
+    }
+    
+    if (section == 0) {
+        return self.favBoards.count;
+    } else {
+        return self.boards.count;
+    }
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    NSArray *boards;
+    if (!self.rootSection &&
+        indexPath.section == 0) {
+        boards = self.favBoards;
+    } else {
+        boards = self.boards;
+    }
+    
+    Board *board = [boards objectAtIndex:indexPath.row];
+    BoardCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:BoardCell.class.description forIndexPath:indexPath];
+    [cell updateWithBoard:board isMyFav:boards == self.favBoards];
+    return cell;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    [self.navigationController pushViewController:[self viewControllerForIndexPath:indexPath] animated:YES];
+}
+
+- (nullable UIContextMenuConfiguration *)collectionView:(UICollectionView *)collectionView contextMenuConfigurationForItemAtIndexPath:(NSIndexPath *)indexPath point:(CGPoint)point
+{
+    UIAction *action1 = [UIAction actionWithTitle:@"测试1" image:nil identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
         
-        [customTableView reloadData];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [customTableView.refreshControl endRefreshing];
-        });
-    });
+    }];
+    UIAction *action2 = [UIAction actionWithTitle:@"测试2" image:nil identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
+        
+    }];
+    
+    UIMenu *menu = [UIMenu menuWithTitle:@"选择" children:@[action1, action2]];
+    UIContextMenuConfiguration *config = [UIContextMenuConfiguration configurationWithIdentifier:nil previewProvider:^UIViewController * _Nullable{
+        return [self viewControllerForIndexPath:indexPath];
+    } actionProvider:^UIMenu * _Nullable(NSArray<UIMenuElement *> * _Nonnull suggestedActions) {
+        return menu;
+    }];
+    
+    return config;
 }
 
-#pragma mark - Rotation
--(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
-    return YES;
+- (void)collectionView:(UICollectionView *)collectionView willPerformPreviewActionForMenuWithConfiguration:(UIContextMenuConfiguration *)configuration animator:(id<UIContextMenuInteractionCommitAnimating>)animator
+{
+    UIViewController *vc = animator.previewViewController;
+    [animator addCompletion:^{
+        [self.navigationController pushViewController:vc animated:NO];
+    }];
 }
-- (BOOL)shouldAutorotate{
-    return YES;
+
+- (UIViewController *)viewControllerForIndexPath:(NSIndexPath *)indexPath {
+    NSArray *boards;
+    if (!self.rootSection &&
+        indexPath.section == 0) {
+        boards = self.favBoards;
+    } else {
+        boards = self.boards;
+    }
+    
+    Board *board = [boards objectAtIndex:indexPath.row];
+    
+    if (board.section) {
+        TopicsViewController *topicsViewController = [TopicsViewController new];
+        topicsViewController.board = board;
+        return topicsViewController;
+    } else {
+        BoardsViewController *boardsViewController = [[BoardsViewController alloc] init];
+        boardsViewController.rootSection = board;
+        return boardsViewController;
+    }
 }
--(NSUInteger)supportedInterfaceOrientations{
-    return UIInterfaceOrientationMaskAllButUpsideDown;
+
+#pragma mark - BYRTableViewControllerProtocol
+
+- (void)refreshTriggled:(void (^)(void))completion {
+    if (self.rootSection == nil) {
+        __block int finishedCount = 0;
+        [[BYRNetworkManager sharedInstance] GET:@"/section.json" parameters:nil responseClass:BoardResponse.class success:^(NSURLSessionDataTask * _Nonnull task, BoardResponse * _Nullable responseObject) {
+            
+            NSMutableArray *allBoards = [NSMutableArray new];
+            
+            if (responseObject.sections) {
+                [allBoards addObjectsFromArray:responseObject.sections];
+            }
+            
+            if (responseObject.sub_sections) {
+                [allBoards addObjectsFromArray:responseObject.sub_sections];
+            }
+            
+            if (responseObject.boards) {
+                [allBoards addObjectsFromArray:responseObject.boards];
+            }
+            
+            self.boards = allBoards;
+            
+            finishedCount++;
+            if (finishedCount == 2) {
+                completion();
+            }
+            
+            completion();
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            finishedCount++;
+            if (finishedCount == 2) {
+                completion();
+            }
+        }];
+        
+        [[BYRNetworkManager sharedInstance] GET:@"/favorite/0.json" parameters:nil responseClass:BoardResponse.class success:^(NSURLSessionDataTask * _Nonnull task, BoardResponse * _Nullable responseObject) {
+            self.favBoards = responseObject.boards;
+            
+            finishedCount++;
+            if (finishedCount == 2) {
+                completion();
+            }
+            
+            completion();
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            finishedCount++;
+            if (finishedCount == 2) {
+                completion();
+            }
+        }];
+        
+    } else {
+        [[BYRNetworkManager sharedInstance] GET:[NSString stringWithFormat:@"/section/%@.json", self.rootSection.name] parameters:nil responseClass:BoardResponse.class success:^(NSURLSessionDataTask * _Nonnull task, BoardResponse * _Nullable responseObject) {
+            NSMutableArray *allBoards = [NSMutableArray new];
+            
+            if (responseObject.sections) {
+                [allBoards addObjectsFromArray:responseObject.sections];
+            }
+            
+            if (responseObject.sub_sections) {
+                [allBoards addObjectsFromArray:responseObject.sub_sections];
+            }
+            
+            if (responseObject.boards) {
+                [allBoards addObjectsFromArray:responseObject.boards];
+            }
+            
+            self.boards = allBoards;
+            completion();
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            completion();
+        }];
+    }
 }
+
 @end

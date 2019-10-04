@@ -10,7 +10,6 @@
 #import <AudioToolbox/AudioToolbox.h>
 #import "DataModel.h"
 #import "BBSAPI.h"
-#import "MPNotificationView.h"
 
 @interface MyBBS : NSObject
 {

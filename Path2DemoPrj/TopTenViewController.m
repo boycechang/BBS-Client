@@ -12,7 +12,6 @@
 #import "TopicCell.h"
 #import "TopicHeaderCell.h"
 #import "BYRNetworkManager.h"
-#import "TopTenTableViewCell.h"
 #import "SingleTopicViewController.h"
 #import "DataModel.h"
 #import "WBUtil.h"
@@ -21,7 +20,6 @@
 
 @interface TopTenViewController () <UITableViewDelegate, UITableViewDataSource>
 
-@property (nonatomic, strong) UITableView *customTableView;
 @property (nonatomic, strong) NSMutableDictionary <NSString *, NSArray *> *topTenContent;
 @property (nonatomic, strong) NSDictionary <NSString *, NSString *> *topTenTitles;
 
@@ -31,9 +29,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor whiteColor];
-    self.title = @"热门";
+    self.navigationItem.title = @"热门";
     
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.tableView registerClass:TopicCell.class
            forCellReuseIdentifier:TopicCell.class.description];
     [self.tableView registerClass:TopicHeaderCell.class
@@ -110,7 +108,7 @@
 - (void)refreshTriggled:(void (^)(void))completion {
     __block int finishedCount = 0;
     
-    [[BYRNetworkManager sharedInstance] GET:@"/widget/topten.json" parameters:nil reponseClass:TopicResponse.class success:^(NSURLSessionDataTask * _Nonnull task, TopicResponse * _Nullable responseObject) {
+    [[BYRNetworkManager sharedInstance] GET:@"/widget/topten.json" parameters:nil responseClass:TopicResponse.class success:^(NSURLSessionDataTask * _Nonnull task, TopicResponse * _Nullable responseObject) {
         [self.topTenContent setValue:responseObject.topics forKey:[self keyForSection:0]];
         
         finishedCount++;
@@ -125,7 +123,7 @@
     }];
     
     for (int section = 1; section <= 10; section++) {
-        [[BYRNetworkManager sharedInstance] GET:[NSString stringWithFormat:@"/widget/section-%i.json?", section - 1] parameters:nil reponseClass:TopicResponse.class success:^(NSURLSessionDataTask * _Nonnull task, TopicResponse * _Nullable responseObject) {
+        [[BYRNetworkManager sharedInstance] GET:[NSString stringWithFormat:@"/widget/section-%i.json", section - 1] parameters:nil responseClass:TopicResponse.class success:^(NSURLSessionDataTask * _Nonnull task, TopicResponse * _Nullable responseObject) {
             [self.topTenContent setValue:responseObject.topics forKey:[self keyForSection:section]];
             
             finishedCount++;

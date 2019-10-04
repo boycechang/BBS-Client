@@ -10,7 +10,6 @@
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
 #import "CustomTableView.h"
-#import "BoardsCellView.h"
 #import "DataModel.h"
 #import "WBUtil.h"
 #import "BBSAPI.h"
