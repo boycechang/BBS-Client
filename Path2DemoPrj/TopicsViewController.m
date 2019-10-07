@@ -12,13 +12,14 @@
 #import "TopicCell.h"
 #import "TopicHeaderCell.h"
 #import "BYRNetworkManager.h"
-#import "SingleTopicViewController.h"
+#import "TopicViewController.h"
 #import "DataModel.h"
 #import "WBUtil.h"
 #import "BBSAPI.h"
 #import "Models.h"
 #import "BYRNetworkReponse.h"
 #import "BYRNetworkManager.h"
+#import "PostTopicViewController.h"
 
 @interface TopicsViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -32,6 +33,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
     self.title = self.board.board_description;
     
     self.enableLoadMore = YES;
@@ -99,8 +101,35 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     Topic *topic = [self.topics objectAtIndex:indexPath.row];
-    SingleTopicViewController * singleTopicViewController = [[SingleTopicViewController alloc] initWithRootTopic:topic];
-    [self.navigationController pushViewController:singleTopicViewController animated:YES];
+    TopicViewController *topicViewController = [TopicViewController new];
+    topicViewController.topic = topic;
+    [self.navigationController pushViewController:topicViewController animated:YES];
+}
+
+- (nullable UIContextMenuConfiguration *)tableView:(UITableView *)tableView contextMenuConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath point:(CGPoint)point {
+    
+    UIContextMenuConfiguration *config = [UIContextMenuConfiguration configurationWithIdentifier:nil previewProvider:^UIViewController * _Nullable{
+        Topic *topic = [self.topics objectAtIndex:indexPath.row];
+        TopicViewController *topicViewController = [TopicViewController new];
+        topicViewController.topic = topic;
+        return topicViewController;
+    } actionProvider:^UIMenu * _Nullable(NSArray<UIMenuElement *> * _Nonnull suggestedActions) {
+//        if (self.type == NotificationTypeMail) {
+//            Mail *mail = [self.notifications objectAtIndex:indexPath.row];
+//            UIAction *action1 = [UIAction actionWithTitle:@"回复" image:[UIImage systemImageNamed:@"arrowshape.turn.up.left"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
+//                PostMailViewController * postMailVC = [[PostMailViewController alloc] init];
+//                postMailVC.postType = 1;
+//                postMailVC.rootMail = mail;
+//                UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:postMailVC];
+//                [self presentViewController:nav animated:YES completion:nil];
+//            }];
+//            UIMenu *menu = [UIMenu menuWithTitle:nil children:@[action1]];
+//            return menu;
+//        }
+        return nil;
+    }];
+
+    return config;
 }
 
 #pragma mark - BYRTableViewControllerProtocol

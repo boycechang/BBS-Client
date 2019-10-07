@@ -12,8 +12,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NotificationViewController : BYRTableViewController
 
-
-
 @end
 
 NS_ASSUME_NONNULL_END

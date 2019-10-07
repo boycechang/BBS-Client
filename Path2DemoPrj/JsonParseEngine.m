@@ -36,27 +36,27 @@
         for (int i=0; i<count; i++) {
             Mail * mail = [[Mail alloc] init];
             
-            mail.ID = [[[[friendsDictionary objectForKey:@"mail"] objectAtIndex:i] objectForKey:@"index"] intValue];
-            mail.size = [[[[friendsDictionary objectForKey:@"mail"] objectAtIndex:i] objectForKey:@"size"] intValue];
-            mail.unread = ![[[[friendsDictionary objectForKey:@"mail"] objectAtIndex:i] objectForKey:@"is_read"] boolValue];
-            
-            NSString * author;
-            NSObject * authortest = [[[friendsDictionary objectForKey:@"mail"] objectAtIndex:i] objectForKey:@"user"];
-            if ([authortest isKindOfClass:[NSDictionary class]]) {
-                author = [[[[friendsDictionary objectForKey:@"mail"] objectAtIndex:i] objectForKey:@"user"] objectForKey:@"id"];
-            }
-            else
-                author = [[[friendsDictionary objectForKey:@"mail"] objectAtIndex:i] objectForKey:@"user"];
-            
-            
-            mail.author = author;
-            mail.title = [[[friendsDictionary objectForKey:@"mail"] objectAtIndex:i] objectForKey:@"title"];
-            
-            NSTimeInterval interval = [[[[friendsDictionary objectForKey:@"mail"] objectAtIndex:i] objectForKey:@"post_time"] doubleValue];
-            mail.time = [NSDate dateWithTimeIntervalSince1970:interval];
-            mail.type = type;
-            
-            [mails addObject:mail];
+//            mail.ID = [[[[friendsDictionary objectForKey:@"mail"] objectAtIndex:i] objectForKey:@"index"] intValue];
+//            mail.size = [[[[friendsDictionary objectForKey:@"mail"] objectAtIndex:i] objectForKey:@"size"] intValue];
+//            mail.unread = ![[[[friendsDictionary objectForKey:@"mail"] objectAtIndex:i] objectForKey:@"is_read"] boolValue];
+//            
+//            NSString * author;
+//            NSObject * authortest = [[[friendsDictionary objectForKey:@"mail"] objectAtIndex:i] objectForKey:@"user"];
+//            if ([authortest isKindOfClass:[NSDictionary class]]) {
+//                author = [[[[friendsDictionary objectForKey:@"mail"] objectAtIndex:i] objectForKey:@"user"] objectForKey:@"id"];
+//            }
+//            else
+//                author = [[[friendsDictionary objectForKey:@"mail"] objectAtIndex:i] objectForKey:@"user"];
+//            
+//            
+//            mail.author = author;
+//            mail.title = [[[friendsDictionary objectForKey:@"mail"] objectAtIndex:i] objectForKey:@"title"];
+//            
+//            NSTimeInterval interval = [[[[friendsDictionary objectForKey:@"mail"] objectAtIndex:i] objectForKey:@"post_time"] doubleValue];
+//            mail.time = [NSDate dateWithTimeIntervalSince1970:interval];
+//            mail.type = type;
+//            
+//            [mails addObject:mail];
         }
         return mails;
     }
@@ -73,26 +73,26 @@
     {
         Mail * mail = [[Mail alloc] init];
         
-        mail.ID = [[friendsDictionary objectForKey:@"index"] intValue];
-        mail.size = [[friendsDictionary objectForKey:@"size"] intValue];
-        mail.unread = ![[friendsDictionary objectForKey:@"is_read"] boolValue];
-        
-        NSString * author;
-        NSObject * authortest = [friendsDictionary objectForKey:@"user"];
-        if ([authortest isKindOfClass:[NSDictionary class]]) {
-            author = [[friendsDictionary objectForKey:@"user"] objectForKey:@"id"];
-        }
-        else
-            author = [friendsDictionary objectForKey:@"user"];
-        
-        
-        mail.author = author;
-        mail.title = [friendsDictionary objectForKey:@"title"];
-        
-        NSTimeInterval interval = [[friendsDictionary objectForKey:@"post_time"] doubleValue];
-        mail.time = [NSDate dateWithTimeIntervalSince1970:interval];
-        mail.type = type;
-        mail.content = [JsonParseEngine trimText:(NSString *)[friendsDictionary objectForKey:@"content"]];
+//        mail.ID = [[friendsDictionary objectForKey:@"index"] intValue];
+//        mail.size = [[friendsDictionary objectForKey:@"size"] intValue];
+//        mail.unread = ![[friendsDictionary objectForKey:@"is_read"] boolValue];
+//        
+//        NSString * author;
+//        NSObject * authortest = [friendsDictionary objectForKey:@"user"];
+//        if ([authortest isKindOfClass:[NSDictionary class]]) {
+//            author = [[friendsDictionary objectForKey:@"user"] objectForKey:@"id"];
+//        }
+//        else
+//            author = [friendsDictionary objectForKey:@"user"];
+//        
+//        
+//        mail.author = author;
+//        mail.title = [friendsDictionary objectForKey:@"title"];
+//        
+//        NSTimeInterval interval = [[friendsDictionary objectForKey:@"post_time"] doubleValue];
+//        mail.time = [NSDate dateWithTimeIntervalSince1970:interval];
+//        mail.type = type;
+//        mail.content = [JsonParseEngine trimText:(NSString *)[friendsDictionary objectForKey:@"content"]];
 
         return mail;
     }
@@ -209,18 +209,18 @@
     if (!code)
     {
         NSMutableArray *attArray = [[NSMutableArray alloc] init];
-        NSArray * temp = [attDic objectForKey:@"file"];
-        NSUInteger count = [temp count];
-        for (int j=0;  j<count;j++) {
-            Attachment *attElement=[[Attachment alloc]init];
-            [attElement setAttFileName:[[[attDic objectForKey:@"file"] objectAtIndex:j] objectForKey:@"name"]];
-            NSMutableString * urlString = [[[[attDic objectForKey:@"file"] objectAtIndex:j] objectForKey:@"url"] mutableCopy];
-            if (urlString.length >= 28) {
-                [urlString replaceCharactersInRange:NSMakeRange(0, 28) withString:@"http://bbs.byr.cn/att"];
-            }
-            
-            [attArray addObject:attElement];
-        }
+//        NSArray * temp = [attDic objectForKey:@"file"];
+//        NSUInteger count = [temp count];
+//        for (int j=0;  j<count;j++) {
+//            Attachment *attElement=[[Attachment alloc]init];
+//            [attElement setAttFileName:[[[attDic objectForKey:@"file"] objectAtIndex:j] objectForKey:@"name"]];
+//            NSMutableString * urlString = [[[[attDic objectForKey:@"file"] objectAtIndex:j] objectForKey:@"url"] mutableCopy];
+//            if (urlString.length >= 28) {
+//                [urlString replaceCharactersInRange:NSMakeRange(0, 28) withString:@"http://bbs.byr.cn/att"];
+//            }
+//            
+//            [attArray addObject:attElement];
+//        }
         return attArray;
     }
     else {

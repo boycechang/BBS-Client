@@ -12,7 +12,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NotificationHeaderCell : UITableViewCell
 
-- (void)updateWithSectionName:(NSString *)secionName count:(NSInteger)count;
+@property (nonatomic, copy) void (^loadMoreTapped)(void);
+
+- (void)updateWithSectionName:(NSString *)secionName
+                        total:(NSInteger)count
+                       unread:(NSInteger)unread;
 
 @end
 

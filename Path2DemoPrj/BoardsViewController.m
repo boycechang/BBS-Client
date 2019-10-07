@@ -13,9 +13,10 @@
 #import "BYRNetworkManager.h"
 #import "BYRNetworkReponse.h"
 #import "BoardCell.h"
-#import "BoardHeaderCollectionReusableView.h"
+#import "BoardHeaderView.h"
+#import "PostTopicViewController.h"
 
-@interface BoardsViewController () <UIContextMenuInteractionAnimating>
+@interface BoardsViewController ()
 
 @property (nonatomic, strong) NSArray *favBoards;
 @property (nonatomic, strong) NSArray *boards;
@@ -27,6 +28,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeAlways;
     
     self.flowLayout.minimumLineSpacing = 15;
     self.flowLayout.minimumInteritemSpacing = 15;
@@ -34,13 +36,13 @@
     self.flowLayout.sectionInset = UIEdgeInsetsMake(15, 15, 15, 15);
     
     [self.collectionView registerClass:BoardCell.class forCellWithReuseIdentifier:BoardCell.class.description];
-    [self.collectionView registerClass:BoardHeaderCollectionReusableView.class
+    [self.collectionView registerClass:BoardHeaderView.class
             forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
-                   withReuseIdentifier:BoardHeaderCollectionReusableView.class.description];
+                   withReuseIdentifier:BoardHeaderView.class.description];
     
     if (self.rootSection == nil) {
         self.navigationItem.title = @"版面";
-        self.flowLayout.headerReferenceSize = CGSizeMake(100, 60);
+        self.flowLayout.headerReferenceSize = CGSizeMake(100, 50);
     } else {
         self.title = self.rootSection.board_description ?: self.rootSection.name;
     }
@@ -66,7 +68,7 @@
     UICollectionReusableView *reusableview = nil;
     
     if (kind == UICollectionElementKindSectionHeader) {
-        BoardHeaderCollectionReusableView *header = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:BoardHeaderCollectionReusableView.class.description forIndexPath:indexPath];
+        BoardHeaderView *header = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:BoardHeaderView.class.description forIndexPath:indexPath];
         [header updateWithSectionName:indexPath.section == 0 ? @"我的收藏" : @"全部版面"];
         reusableview = header;
     }
@@ -107,29 +109,62 @@
 
 - (nullable UIContextMenuConfiguration *)collectionView:(UICollectionView *)collectionView contextMenuConfigurationForItemAtIndexPath:(NSIndexPath *)indexPath point:(CGPoint)point
 {
-    UIAction *action1 = [UIAction actionWithTitle:@"测试1" image:nil identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
-        
-    }];
-    UIAction *action2 = [UIAction actionWithTitle:@"测试2" image:nil identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
-        
-    }];
+    NSArray *boards;
+    if (!self.rootSection &&
+        indexPath.section == 0) {
+        boards = self.favBoards;
+    } else {
+        boards = self.boards;
+    }
     
-    UIMenu *menu = [UIMenu menuWithTitle:@"选择" children:@[action1, action2]];
+    Board *board = [boards objectAtIndex:indexPath.row];
+    
     UIContextMenuConfiguration *config = [UIContextMenuConfiguration configurationWithIdentifier:nil previewProvider:^UIViewController * _Nullable{
-        return [self viewControllerForIndexPath:indexPath];
+        if (board.section) {
+            TopicsViewController *topicsViewController = [TopicsViewController new];
+            topicsViewController.board = board;
+            return topicsViewController;
+        } else {
+            BoardsViewController *boardsViewController = [[BoardsViewController alloc] init];
+            boardsViewController.rootSection = board;
+            return boardsViewController;
+        }
     } actionProvider:^UIMenu * _Nullable(NSArray<UIMenuElement *> * _Nonnull suggestedActions) {
-        return menu;
+        if (board.section) {
+            UIAction *action1 = [UIAction actionWithTitle: board.is_favorite ? @"取消收藏" : @"收藏" image:board.is_favorite ? [UIImage systemImageNamed:@"star.slash.fill"] : [UIImage systemImageNamed:@"star"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
+                
+                NSString *baseurl;
+                if (board.is_favorite) {
+                    baseurl = @"/favorite/delete/0.json";
+                } else {
+                    baseurl = @"/favorite/add/0.json";
+                }
+                
+                NSDictionary *params = @{@"name" : board.name, @"dir" : @"0"};
+                
+                [[BYRNetworkManager sharedInstance] POST:baseurl parameters:params responseClass:nil success:^(NSURLSessionDataTask * _Nonnull task, id _Nullable responseObject) {
+                    board.is_favorite = !board.is_favorite;
+                } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                    
+                }];
+            }];
+            UIAction *action2 = [UIAction actionWithTitle:@"发帖" image:[UIImage systemImageNamed:@"square.and.pencil"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
+                PostTopicViewController * postTopicViewController = [[PostTopicViewController alloc] init];
+                postTopicViewController.postType = 0;
+                postTopicViewController.boardName = board.name;
+                UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:postTopicViewController];
+                nav.modalPresentationStyle = UIModalPresentationFormSheet;
+                nav.navigationBar.prefersLargeTitles = NO;
+                [self presentViewController:nav animated:YES completion:nil];
+            }];
+            
+            UIMenu *menu = [UIMenu menuWithTitle:nil children:@[action1, action2]];
+            return menu;
+        }
+        return nil;
     }];
     
     return config;
-}
-
-- (void)collectionView:(UICollectionView *)collectionView willPerformPreviewActionForMenuWithConfiguration:(UIContextMenuConfiguration *)configuration animator:(id<UIContextMenuInteractionCommitAnimating>)animator
-{
-    UIViewController *vc = animator.previewViewController;
-    [animator addCompletion:^{
-        [self.navigationController pushViewController:vc animated:NO];
-    }];
 }
 
 - (UIViewController *)viewControllerForIndexPath:(NSIndexPath *)indexPath {

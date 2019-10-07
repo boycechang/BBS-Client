@@ -7,7 +7,6 @@
 //
 
 #import "Models.h"
-#import "Mail.h"
 #import "Notification.h"
 #import "Vote.h"
 #import "Memo.h"

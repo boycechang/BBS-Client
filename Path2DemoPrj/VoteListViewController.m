@@ -38,7 +38,7 @@
     self.title = @"投票";
     
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    myBBS = appDelegate.myBBS;
+//    myBBS = appDelegate.myBBS;
     
     customTableView = [[UITableView alloc] init];
     customTableView.refreshControl = [UIRefreshControl new];
@@ -59,20 +59,20 @@
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        if (appDelegate.myBBS.voteListNew != nil) {
-            self.mailsArray0 = appDelegate.myBBS.voteListNew;
-            self.mailsArray1 = appDelegate.myBBS.voteListHot;
-            self.mailsArray2 = appDelegate.myBBS.voteListAll;
-        }
-        else {
-            self.mailsArray0 = [BBSAPI getVoteList:myBBS.mySelf Type:@"new"];
-            self.mailsArray1 = [BBSAPI getVoteList:myBBS.mySelf Type:@"hot"];
-            self.mailsArray2 = [BBSAPI getVoteList:myBBS.mySelf Type:@"all"];
-   
-            appDelegate.myBBS.voteListNew = self.mailsArray0;
-            appDelegate.myBBS.voteListHot = self.mailsArray1;
-            appDelegate.myBBS.voteListAll = self.mailsArray2;
-        }
+//        if (appDelegate.myBBS.voteListNew != nil) {
+//            self.mailsArray0 = appDelegate.myBBS.voteListNew;
+//            self.mailsArray1 = appDelegate.myBBS.voteListHot;
+//            self.mailsArray2 = appDelegate.myBBS.voteListAll;
+//        }
+//        else {
+//            self.mailsArray0 = [BBSAPI getVoteList:myBBS.mySelf Type:@"new"];
+//            self.mailsArray1 = [BBSAPI getVoteList:myBBS.mySelf Type:@"hot"];
+//            self.mailsArray2 = [BBSAPI getVoteList:myBBS.mySelf Type:@"all"];
+//   
+//            appDelegate.myBBS.voteListNew = self.mailsArray0;
+//            appDelegate.myBBS.voteListHot = self.mailsArray1;
+//            appDelegate.myBBS.voteListAll = self.mailsArray2;
+//        }
         
         dispatch_async(dispatch_get_main_queue(), ^{
             [customTableView reloadData];
@@ -163,13 +163,13 @@
 - (void)refresh {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        self.mailsArray0 = [BBSAPI getVoteList:myBBS.mySelf Type:@"new"];
-        self.mailsArray1 = [BBSAPI getVoteList:myBBS.mySelf Type:@"hot"];
-        self.mailsArray2 = [BBSAPI getVoteList:myBBS.mySelf Type:@"all"];
-            
-        appDelegate.myBBS.voteListNew = self.mailsArray0;
-        appDelegate.myBBS.voteListHot = self.mailsArray1;
-        appDelegate.myBBS.voteListAll = self.mailsArray2;
+//        self.mailsArray0 = [BBSAPI getVoteList:myBBS.mySelf Type:@"new"];
+//        self.mailsArray1 = [BBSAPI getVoteList:myBBS.mySelf Type:@"hot"];
+//        self.mailsArray2 = [BBSAPI getVoteList:myBBS.mySelf Type:@"all"];
+//            
+//        appDelegate.myBBS.voteListNew = self.mailsArray0;
+//        appDelegate.myBBS.voteListHot = self.mailsArray1;
+//        appDelegate.myBBS.voteListAll = self.mailsArray2;
         
         [customTableView reloadData];
         dispatch_async(dispatch_get_main_queue(), ^{

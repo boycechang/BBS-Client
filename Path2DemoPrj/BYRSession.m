@@ -68,6 +68,7 @@ MJCodingImplementation
             [user.id isEqualToString:userToken.id]) {
             _currentUser = user;
             _currentUserToken = userToken;
+            [[BYRNetworkManager sharedInstance] updateUsername:userToken.username password:userToken.password];
         }
     }
     return self;

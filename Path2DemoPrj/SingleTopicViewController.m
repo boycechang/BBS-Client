@@ -33,7 +33,7 @@
     [self.view setFrame:CGRectMake(0, 0, rect.size.width, rect.size.height)];
     
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    myBBS = appDelegate.myBBS;
+//    myBBS = appDelegate.myBBS;
     
     customTableView = [[CustomTableView alloc] initWithFrame:self.view.frame Delegate:self];
     activityView = [[FPActivityView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, 1)];
@@ -169,11 +169,11 @@
 {
     NSMutableArray * picArray = [[NSMutableArray alloc] init];
     for (int i = 0; i < [attachments count]; i++) {
-        NSString * attUrlString=[[[attachments objectAtIndex:i] attFileName] lowercaseString];
-        if ([attUrlString hasSuffix:@".png"] || [attUrlString hasSuffix:@".jpeg"] || [attUrlString hasSuffix:@".jpg"] || [attUrlString hasSuffix:@".tiff"] || [attUrlString hasSuffix:@".bmp"])
-        {
-            [picArray addObject:[attachments objectAtIndex:i]];
-        }
+//        NSString * attUrlString=[[[attachments objectAtIndex:i] attFileName] lowercaseString];
+//        if ([attUrlString hasSuffix:@".png"] || [attUrlString hasSuffix:@".jpeg"] || [attUrlString hasSuffix:@".jpg"] || [attUrlString hasSuffix:@".tiff"] || [attUrlString hasSuffix:@".bmp"])
+//        {
+//            [picArray addObject:[attachments objectAtIndex:i]];
+//        }
     }
     return picArray;
 }
@@ -182,15 +182,15 @@
 {
     NSMutableArray * picArray = [[NSMutableArray alloc] init];
     for (int i = 0; i < [attachments count]; i++) {
-        NSString * attUrlString=[[[attachments objectAtIndex:i] attFileName] lowercaseString];
-        if ([attUrlString hasSuffix:@".png"] || [attUrlString hasSuffix:@".jpeg"] || [attUrlString hasSuffix:@".jpg"] || [attUrlString hasSuffix:@".tiff"] || [attUrlString hasSuffix:@".bmp"])
-        {
-            //[picArray addObject:[attachments objectAtIndex:i]];
-        }
-        else
-        {
-            [picArray addObject:[attachments objectAtIndex:i]];
-        }
+//        NSString * attUrlString=[[[attachments objectAtIndex:i] attFileName] lowercaseString];
+//        if ([attUrlString hasSuffix:@".png"] || [attUrlString hasSuffix:@".jpeg"] || [attUrlString hasSuffix:@".jpg"] || [attUrlString hasSuffix:@".tiff"] || [attUrlString hasSuffix:@".bmp"])
+//        {
+//            //[picArray addObject:[attachments objectAtIndex:i]];
+//        }
+//        else
+//        {
+//            [picArray addObject:[attachments objectAtIndex:i]];
+//        }
     }
     return picArray;
 }
@@ -392,9 +392,9 @@
     
     for (int i = 0; i < [picArray count]; i++)
     {
-        Attachment * att = [picArray objectAtIndex:i];
-        DemoPhoto *photo = [[DemoPhoto alloc] initWithURL:[NSURL URLWithString:att.attUrl]];
-        [photoDataSource addObject:photo];
+//        Attachment * att = [picArray objectAtIndex:i];
+//        DemoPhoto *photo = [[DemoPhoto alloc] initWithURL:[NSURL URLWithString:att.attUrl]];
+//        [photoDataSource addObject:photo];
     }
     CXPhotoBrowser * browser = [[CXPhotoBrowser alloc] initWithPhotoArray:photoDataSource];
     [browser setInitialPageIndex:indexNum];
@@ -411,9 +411,9 @@
         
         for (int i = 0; i < [picArray count]; i++)
         {
-            Attachment * att = [picArray objectAtIndex:i];
-            DemoPhoto *photo = [[DemoPhoto alloc] initWithURL:[NSURL URLWithString:att.attUrl]];
-            [photoDataSource addObject:photo];
+//            Attachment * att = [picArray objectAtIndex:i];
+//            DemoPhoto *photo = [[DemoPhoto alloc] initWithURL:[NSURL URLWithString:att.attUrl]];
+//            [photoDataSource addObject:photo];
         }
         CXPhotoBrowser * browser = [[CXPhotoBrowser alloc] initWithPhotoArray:photoDataSource];
         [browser setInitialPageIndex:indexNum];
@@ -425,10 +425,10 @@
         NSArray * docArray = [self getDocList:topic.attachments];
         Attachment * att = [docArray objectAtIndex:indexNum];
         
-        WebViewController * webViewController = [[WebViewController alloc] initWithURL:att.attFileName AttachmentURL:[NSURL URLWithString:att.attUrl]];
-        UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:webViewController];
-
-        [self presentViewController:nav animated:YES completion:nil];
+//        WebViewController * webViewController = [[WebViewController alloc] initWithURL:att.attFileName AttachmentURL:[NSURL URLWithString:att.attUrl]];
+//        UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:webViewController];
+//
+//        [self presentViewController:nav animated:YES completion:nil];
     }
 }
 

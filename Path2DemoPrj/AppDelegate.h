@@ -11,17 +11,9 @@
 
 @class PushNotificationWindow;
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, UIAlertViewDelegate> {
-    MyBBS * myBBS;
-    BOOL isSearching;
-    NSDictionary * selectedUserInfo;
-}
+@interface AppDelegate : UIResponder <UIApplicationDelegate> {
 
-@property (strong, nonatomic) UIWindow *window;
-@property (strong, nonatomic) UINavigationController *navController;
-@property (strong, nonatomic) UINavigationController *leftnavController;
-@property (strong, nonatomic) MyBBS * myBBS;
-@property (strong, nonatomic) NSDictionary * selectedUserInfo;
+}
 
 @end
 

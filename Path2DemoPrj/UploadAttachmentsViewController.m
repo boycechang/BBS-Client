@@ -32,7 +32,7 @@
     self.title = @"添加附件";
     
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    myBBS = appDelegate.myBBS;
+//    myBBS = appDelegate.myBBS;
     
     NSArray *rightItemsArray;
     UIBarButtonItem *pickFromAlbumButton = [[UIBarButtonItem alloc] initWithTitle:@"相册" style:UIBarButtonItemStylePlain target:self action:@selector(pickImageFromAlbum:)];
@@ -127,7 +127,7 @@
 	}
     [cell setSelectionStyle:UITableViewCellSelectionStyleGray];
     
-    cell.textLabel.text=[[self.attList objectAtIndex:indexPath.row] attFileName];
+//    cell.textLabel.text=[[self.attList objectAtIndex:indexPath.row] attFileName];
     [cell.textLabel setLineBreakMode:NSLineBreakByTruncatingMiddle];
     return cell;
 }
@@ -162,27 +162,27 @@
 //预览附件
 -(void) previewAtt
 {
-    NSString * curAttUrlString=[[self.attList objectAtIndex:curRow] attUrl];
-    
-    if ([curAttUrlString hasSuffix:@".png"] || [curAttUrlString hasSuffix:@".jpg"] || [curAttUrlString hasSuffix:@".jpeg"] || [curAttUrlString hasSuffix:@".JPEG"] || [curAttUrlString hasSuffix:@".PNG"] || [curAttUrlString hasSuffix:@".JPG"] || [curAttUrlString hasSuffix:@".tiff"] || [curAttUrlString hasSuffix:@".TIFF"] || [curAttUrlString hasSuffix:@".bmp"] || [curAttUrlString hasSuffix:@".BMP"]) {
-        
-        NSMutableArray * photosArray = [[NSMutableArray alloc] init];
-        for (int i = 0; i < [self.attList count]; i++) {
-            NSString * attUrlString=[[self.attList objectAtIndex:i] attUrl];
-            if ([attUrlString hasSuffix:@".png"] || [attUrlString hasSuffix:@".jpg"] || [attUrlString hasSuffix:@".jpeg"] || [attUrlString hasSuffix:@".PNG"] || [attUrlString hasSuffix:@".JPG"] || [attUrlString hasSuffix:@".JPEG"] || [attUrlString hasSuffix:@".tiff"] || [attUrlString hasSuffix:@".TIFF"] || [attUrlString hasSuffix:@".bmp"] || [attUrlString hasSuffix:@".BMP"])
-            //[photosArray addObject:[MWPhoto photoWithURL:[NSURL URLWithString:attUrlString]]];
-                return;
-        }
-        self.photos = photosArray;
-    }
-    else if ([curAttUrlString hasSuffix:@".gif"] || [curAttUrlString hasSuffix:@".GIF"]) {
-        
-    }
-    else{
-        openString = curAttUrlString;
-        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"用Safari打开此附件" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"好",nil];
-        [alert show];
-    }
+//    NSString * curAttUrlString=[[self.attList objectAtIndex:curRow] attUrl];
+//
+//    if ([curAttUrlString hasSuffix:@".png"] || [curAttUrlString hasSuffix:@".jpg"] || [curAttUrlString hasSuffix:@".jpeg"] || [curAttUrlString hasSuffix:@".JPEG"] || [curAttUrlString hasSuffix:@".PNG"] || [curAttUrlString hasSuffix:@".JPG"] || [curAttUrlString hasSuffix:@".tiff"] || [curAttUrlString hasSuffix:@".TIFF"] || [curAttUrlString hasSuffix:@".bmp"] || [curAttUrlString hasSuffix:@".BMP"]) {
+//
+//        NSMutableArray * photosArray = [[NSMutableArray alloc] init];
+//        for (int i = 0; i < [self.attList count]; i++) {
+//            NSString * attUrlString=[[self.attList objectAtIndex:i] attUrl];
+//            if ([attUrlString hasSuffix:@".png"] || [attUrlString hasSuffix:@".jpg"] || [attUrlString hasSuffix:@".jpeg"] || [attUrlString hasSuffix:@".PNG"] || [attUrlString hasSuffix:@".JPG"] || [attUrlString hasSuffix:@".JPEG"] || [attUrlString hasSuffix:@".tiff"] || [attUrlString hasSuffix:@".TIFF"] || [attUrlString hasSuffix:@".bmp"] || [attUrlString hasSuffix:@".BMP"])
+//            //[photosArray addObject:[MWPhoto photoWithURL:[NSURL URLWithString:attUrlString]]];
+//                return;
+//        }
+//        self.photos = photosArray;
+//    }
+//    else if ([curAttUrlString hasSuffix:@".gif"] || [curAttUrlString hasSuffix:@".GIF"]) {
+//
+//    }
+//    else{
+//        openString = curAttUrlString;
+//        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"用Safari打开此附件" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"好",nil];
+//        [alert show];
+//    }
 }
 
 //处理safari打开附件
@@ -203,15 +203,15 @@
 
 -(void)doDelete
 {
-    NSString * attFileName = [[self.attList objectAtIndex:curRow] attFileName];
-
-    if (postType == 0 || postType == 1) {//新帖或者回复
-        self.attList = [BBSAPI deleteAttachmentsFromTopic:myBBS.mySelf Board:board ID:0 Name:attFileName];
-    }
-    else{
-        self.attList = [BBSAPI deleteAttachmentsFromTopic:myBBS.mySelf Board:board ID:postId Name:attFileName];
-    }
-    [attTable reloadData];
+//    NSString * attFileName = [[self.attList objectAtIndex:curRow] attFileName];
+//
+//    if (postType == 0 || postType == 1) {//新帖或者回复
+//        self.attList = [BBSAPI deleteAttachmentsFromTopic:myBBS.mySelf Board:board ID:0 Name:attFileName];
+//    }
+//    else{
+//        self.attList = [BBSAPI deleteAttachmentsFromTopic:myBBS.mySelf Board:board ID:postId Name:attFileName];
+//    }
+//    [attTable reloadData];
 }
 
 

@@ -29,9 +29,19 @@
 - (void)setupViews {
     [self.contentView addSubview:self.sectionNameLabel];
     [self.sectionNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.contentView).offset(25);
         make.left.equalTo(self.contentView).offset(15);
-        make.top.equalTo(self.contentView).offset(40);
         make.bottom.equalTo(self.contentView).offset(-8);
+    }];
+    
+    UIView *line = [UIView new];
+    line.backgroundColor = [UIColor secondarySystemFillColor];
+    [self.contentView addSubview:line];
+    [line mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.contentView).offset(15);
+        make.right.equalTo(self.contentView).offset(-15);
+        make.bottom.equalTo(self.contentView);
+        make.height.mas_equalTo(1);
     }];
 }
 
@@ -51,7 +61,6 @@
         UIFontDescriptor *descriptor = [[UIFont preferredFontForTextStyle:UIFontTextStyleTitle3] fontDescriptor];
         UIFontDescriptor *newDescriptor = [descriptor fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold];
         _sectionNameLabel.font = [UIFont fontWithDescriptor:newDescriptor size:0];
-        _sectionNameLabel.textColor = [UIColor colorNamed:@"Title3"];
     }
     return _sectionNameLabel;
 }

@@ -40,7 +40,7 @@
     self.navigationItem.rightBarButtonItem = sendButton;
     
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    myBBS = appDelegate.myBBS;
+//    myBBS = appDelegate.myBBS;
     
     if ([[[UIDevice currentDevice]systemVersion]floatValue] >= 7.0) {
         [self setAutomaticallyAdjustsScrollViewInsets:NO];
@@ -119,7 +119,7 @@
     }
     if (postType == 1) {
         self.title = @"回复邮件";
-        [postUser setText:rootMail.author];
+        [postUser setText:rootMail.user.id];
         [postUser setEnabled:NO];
         [addUserButton setEnabled:NO];
         addUserButton.backgroundColor = [UIColor lightGrayColor];
@@ -155,7 +155,7 @@
                                                                                   target:nil
                                                                                   action:nil];
     
-    UIBarButtonItem *emotionBarItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"face"] style:UIBarButtonItemStylePlain target:self action:@selector(switchToEmotionKeyboard)];
+    UIBarButtonItem *emotionBarItem = [[UIBarButtonItem alloc] initWithImage:[UIImage systemImageNamed:@"smiley"] style:UIBarButtonItemStylePlain target:self action:@selector(switchToEmotionKeyboard)];
     
     UIBarButtonItem *spaceBarItem1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
                                                                                    target:nil
@@ -249,7 +249,7 @@
         return [BBSAPI postMail:myBBS.mySelf User:postUser.text Title:postTitle.text Content:postContent.text Reid:0];
     }
     if (postType == 1) {
-        return [BBSAPI replyMail:myBBS.mySelf User:postUser.text Title:postTitle.text Content:postContent.text Type:rootMail.type ID:rootMail.ID];
+        return [BBSAPI replyMail:myBBS.mySelf User:postUser.text Title:postTitle.text Content:postContent.text Type:0 ID:rootMail.index];
     }
     if (postType == 2) {
         return [BBSAPI postMail:myBBS.mySelf User:postUser.text Title:postTitle.text Content:postContent.text Reid:0];

@@ -56,3 +56,15 @@
 }
 
 @end
+
+@implementation MailResponse
+
++ (NSDictionary *)mj_objectClassInArray {
+    return @{@"mails" : [Mail class]};
+}
+
++ (NSDictionary *)mj_replacedKeyFromPropertyName {
+    return @{@"mails" : @"mail"};
+}
+
+@end

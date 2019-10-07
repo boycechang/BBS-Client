@@ -53,12 +53,30 @@
     
 }
 
+
+#pragma mark - UICollectionViewDelegate & UICollectionViewDataSource
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    return 0;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    return nil;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView willPerformPreviewActionForMenuWithConfiguration:(UIContextMenuConfiguration *)configuration animator:(id<UIContextMenuInteractionCommitAnimating>)animator {
+    UIViewController *vc = animator.previewViewController;
+    [animator addCompletion:^{
+        [self.navigationController pushViewController:vc animated:NO];
+    }];
+}
+
 #pragma mark - getter
 
 - (UICollectionView *)collectionView {
     if (!_collectionView) {
         _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:self.flowLayout];
-        _collectionView.backgroundColor = [UIColor colorNamed:@"Background"];
+        _collectionView.backgroundColor = [UIColor systemBackgroundColor];
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
         _collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAlways;

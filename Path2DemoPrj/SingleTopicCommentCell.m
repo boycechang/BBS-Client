@@ -46,11 +46,11 @@
 {
     NSMutableArray * picArray = [[NSMutableArray alloc] init];
     for (int i = 0; i < [attachments count]; i++) {
-        NSString * attUrlString=[[[attachments objectAtIndex:i] attFileName] lowercaseString];
-        if ([attUrlString hasSuffix:@".png"] || [attUrlString hasSuffix:@".jpeg"] || [attUrlString hasSuffix:@".jpg"] || [attUrlString hasSuffix:@".tiff"] || [attUrlString hasSuffix:@".bmp"])
-        {
-            [picArray addObject:[attachments objectAtIndex:i]];
-        }
+//        NSString * attUrlString=[[[attachments objectAtIndex:i] attFileName] lowercaseString];
+//        if ([attUrlString hasSuffix:@".png"] || [attUrlString hasSuffix:@".jpeg"] || [attUrlString hasSuffix:@".jpg"] || [attUrlString hasSuffix:@".tiff"] || [attUrlString hasSuffix:@".bmp"])
+//        {
+//            [picArray addObject:[attachments objectAtIndex:i]];
+//        }
     }
     return picArray;
 }
@@ -59,15 +59,15 @@
 {
     NSMutableArray * picArray = [[NSMutableArray alloc] init];
     for (int i = 0; i < [attachments count]; i++) {
-        NSString * attUrlString=[[[attachments objectAtIndex:i] attFileName] lowercaseString];
-        if ([attUrlString hasSuffix:@".png"] || [attUrlString hasSuffix:@".jpeg"] || [attUrlString hasSuffix:@".jpg"] || [attUrlString hasSuffix:@".tiff"] || [attUrlString hasSuffix:@".bmp"])
-        {
-            //[picArray addObject:[attachments objectAtIndex:i]];
-        }
-        else
-        {
-            [picArray addObject:[attachments objectAtIndex:i]];
-        }
+//        NSString * attUrlString=[[[attachments objectAtIndex:i] attFileName] lowercaseString];
+//        if ([attUrlString hasSuffix:@".png"] || [attUrlString hasSuffix:@".jpeg"] || [attUrlString hasSuffix:@".jpg"] || [attUrlString hasSuffix:@".tiff"] || [attUrlString hasSuffix:@".bmp"])
+//        {
+//            //[picArray addObject:[attachments objectAtIndex:i]];
+//        }
+//        else
+//        {
+//            [picArray addObject:[attachments objectAtIndex:i]];
+//        }
     }
     return picArray;
 }
@@ -188,25 +188,25 @@
     
     NSArray * picArray = [self getPicList];
     for (int i = 0; i < [picArray count]; i++) {
-        Attachment * att = [picArray objectAtIndex:i];
-        ImageAttachmentView * imageAttachmentView = [[ImageAttachmentView alloc] initWithFrame:CGRectMake((self.frame.size.width - 320)/2, i*400 + contentTextView.frame.origin.y + size1.height + 10, 320, 400)];
-        [imageAttachmentView setAttachmentURL:[NSURL URLWithString:att.attUrl] NameText:att.attFileName];
-        imageAttachmentView.indexNum = i;
-        imageAttachmentView.mDelegate = self;
-        [self addSubview:imageAttachmentView];
-        [self.attachmentsViewArray addObject:imageAttachmentView];
+//        Attachment * att = [picArray objectAtIndex:i];
+//        ImageAttachmentView * imageAttachmentView = [[ImageAttachmentView alloc] initWithFrame:CGRectMake((self.frame.size.width - 320)/2, i*400 + contentTextView.frame.origin.y + size1.height + 10, 320, 400)];
+//        [imageAttachmentView setAttachmentURL:[NSURL URLWithString:att.attUrl] NameText:att.attFileName];
+//        imageAttachmentView.indexNum = i;
+//        imageAttachmentView.mDelegate = self;
+//        [self addSubview:imageAttachmentView];
+//        [self.attachmentsViewArray addObject:imageAttachmentView];
     }
     
     NSArray * docArray = [self getDocList];
     for (int i = 0; i < [docArray count]; i++) {
-        Attachment * att = [docArray objectAtIndex:i];
-        AttachmentView * attachmentView = [[AttachmentView alloc] initWithFrame:CGRectMake((self.frame.size.width - 290)/2, i*60 + [picArray count]*400 + contentTextView.frame.origin.y + size1.height + 10, 290, 50)];
-        [attachmentView setAttachment:att.attFileName NameText:att.attFileName];
-        attachmentView.isPhoto = NO;
-        attachmentView.indexNum = i;
-        attachmentView.mDelegate = self;
-        [self addSubview:attachmentView];
-        [self.attachmentsViewArray addObject:attachmentView];
+//        Attachment * att = [docArray objectAtIndex:i];
+//        AttachmentView * attachmentView = [[AttachmentView alloc] initWithFrame:CGRectMake((self.frame.size.width - 290)/2, i*60 + [picArray count]*400 + contentTextView.frame.origin.y + size1.height + 10, 290, 50)];
+//        [attachmentView setAttachment:att.attFileName NameText:att.attFileName];
+//        attachmentView.isPhoto = NO;
+//        attachmentView.indexNum = i;
+//        attachmentView.mDelegate = self;
+//        [self addSubview:attachmentView];
+//        [self.attachmentsViewArray addObject:attachmentView];
     }
     
     authorFaceImageView.layer.cornerRadius = 12;
@@ -225,13 +225,13 @@
     recognizer2 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(userHeadTaped)];
     [authorLabel addGestureRecognizer:recognizer2];
     
-    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    if (appDelegate.myBBS != nil && [appDelegate.myBBS.mySelf.user_name isEqualToString:author]) {
-        [editButton setHidden:NO];
-    }
-    else {
-        [editButton setHidden:YES];
-    }
+//    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+//    if (appDelegate.myBBS != nil && [appDelegate.myBBS.mySelf.user_name isEqualToString:author]) {
+//        [editButton setHidden:NO];
+//    }
+//    else {
+//        [editButton setHidden:YES];
+//    }
     
     [self attachLongPressHandler];
     

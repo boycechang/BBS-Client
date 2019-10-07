@@ -55,11 +55,26 @@
     }];
 }
 
+#pragma mark - actions
+
+- (IBAction)seeAllClicked:(id)sender {
+    if (self.loadMoreTapped) {
+        self.loadMoreTapped();
+    }
+}
+
 #pragma mark - public
 
-- (void)updateWithSectionName:(NSString *)secionName count:(NSInteger)count; {
+- (void)updateWithSectionName:(NSString *)secionName
+                        total:(NSInteger)count
+                       unread:(NSInteger)unread {
     self.sectionNameLabel.text = secionName;
-    self.countLabel.text = [NSString stringWithFormat:@"总数%li", count];
+    
+    if (unread != 0) {
+        self.countLabel.text = [NSString stringWithFormat:@"(%li条新)", unread];
+    } else {
+        //self.countLabel.text = [NSString stringWithFormat:@"(%li)", count];
+    }
 }
 
 #pragma mark - getter
@@ -72,7 +87,6 @@
         UIFontDescriptor *descriptor = [[UIFont preferredFontForTextStyle:UIFontTextStyleTitle3] fontDescriptor];
         UIFontDescriptor *newDescriptor = [descriptor fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold];
         _sectionNameLabel.font = [UIFont fontWithDescriptor:newDescriptor size:0];
-        _sectionNameLabel.textColor = [UIColor colorNamed:@"Title3"];
     }
     return _sectionNameLabel;
 }
@@ -82,7 +96,7 @@
         _countLabel = [UILabel new];
         _countLabel.adjustsFontForContentSizeCategory = YES;
         _countLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
-        _countLabel.textColor = [UIColor colorNamed:@"Footnote"];
+        _countLabel.textColor = [UIColor secondaryLabelColor];
     }
     return _countLabel;
 }
@@ -90,8 +104,8 @@
 - (UIView *)contentBackground {
     if (!_contentBackground) {
         _contentBackground = [UIView new];
-        _contentBackground.backgroundColor = [UIColor colorNamed:@"Background-Light"];
-        _contentBackground.layer.cornerRadius = 6.f;
+        _contentBackground.backgroundColor = [UIColor secondarySystemBackgroundColor];
+        _contentBackground.layer.cornerRadius = 10.f;
         _contentBackground.layer.masksToBounds = YES;
         _contentBackground.layer.maskedCorners = kCALayerMinXMinYCorner | kCALayerMaxXMinYCorner;
     }
@@ -102,9 +116,10 @@
     if (!_seeAllButton) {
         _seeAllButton = [UIButton new];
         [_seeAllButton setTitle:@"查看全部" forState:UIControlStateNormal];
-        [_seeAllButton setTitleColor:[UIColor colorNamed:@"MainTheme"] forState:UIControlStateNormal];
+        [_seeAllButton setTitleColor:[UIColor systemBlueColor] forState:UIControlStateNormal];
         _seeAllButton.titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCallout];
         _seeAllButton.titleLabel.adjustsFontForContentSizeCategory = YES;
+        [_seeAllButton addTarget:self action:@selector(seeAllClicked:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _seeAllButton;
 }
@@ -131,7 +146,7 @@
     [self.contentView addSubview:self.contentBackground];
     [self.contentBackground mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.contentView).insets(UIEdgeInsetsMake(0, 15, 15, 15));
-        make.height.mas_equalTo(7.5);
+        make.height.mas_equalTo(15);
     }];
 }
 
@@ -140,8 +155,8 @@
 - (UIView *)contentBackground {
     if (!_contentBackground) {
         _contentBackground = [UIView new];
-        _contentBackground.backgroundColor = [UIColor colorNamed:@"Background-Light"];
-        _contentBackground.layer.cornerRadius = 6.f;
+        _contentBackground.backgroundColor = [UIColor secondarySystemBackgroundColor];
+        _contentBackground.layer.cornerRadius = 10.f;
         _contentBackground.layer.masksToBounds = YES;
         _contentBackground.layer.maskedCorners = kCALayerMinXMaxYCorner | kCALayerMaxXMaxYCorner;
     }

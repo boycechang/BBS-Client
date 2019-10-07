@@ -33,7 +33,7 @@
 }
 
 - (void)setupViews {
-    self.contentView.backgroundColor = [UIColor colorNamed:@"Background-Light"];
+    self.contentView.backgroundColor = [UIColor secondarySystemBackgroundColor];
     self.contentView.layer.cornerRadius = 6.f;
     self.contentView.layer.masksToBounds = YES;
     
@@ -50,8 +50,8 @@
     }];
     
     [self.indicatorImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.contentView).offset(10);
-        make.right.equalTo(self.contentView.mas_right).offset(-10);
+        make.top.equalTo(self.contentView).offset(8);
+        make.right.equalTo(self.contentView.mas_right).offset(-8);
         make.width.height.mas_equalTo(15);
     }];
     
@@ -99,7 +99,7 @@
         _boardLabel.numberOfLines = 0;
         _boardLabel.adjustsFontForContentSizeCategory = YES;
         _boardLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2];
-        _boardLabel.textColor = [UIColor colorNamed:@"Footnote"];
+        _boardLabel.textColor = [UIColor secondaryLabelColor];
     }
     return _boardLabel;
 }
@@ -110,7 +110,6 @@
         _boardDescriptionLabel.numberOfLines = 0;
         _boardDescriptionLabel.adjustsFontForContentSizeCategory = YES;
         _boardDescriptionLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
-        _boardDescriptionLabel.textColor = [UIColor colorNamed:@"Title3"];
     }
     return _boardDescriptionLabel;
 }
@@ -119,7 +118,7 @@
     if (!_folderImageView) {
         _folderImageView = [UIImageView new];
         _folderImageView.image = [UIImage systemImageNamed:@"folder"];
-        _folderImageView.tintColor = [UIColor colorNamed:@"MainTheme"];
+        _folderImageView.tintColor = [UIColor systemBlueColor];
     }
     return _folderImageView;
 }
@@ -134,7 +133,7 @@
         UIFont *scaledCaption2 = [caption2 fontWithSize:caption2.pointSize * 0.9];
         _dateLabel.font = scaledCaption2;
         
-        _dateLabel.textColor = [UIColor colorNamed:@"Footnote"];
+        _dateLabel.textColor = [UIColor secondaryLabelColor];
     }
     return _dateLabel;
 }
@@ -143,7 +142,7 @@
     if (!_indicatorImageView) {
         _indicatorImageView = [UIImageView new];
         _indicatorImageView.image = [UIImage systemImageNamed:@"star.fill"];
-        _indicatorImageView.tintColor = [UIColor colorNamed:@"MainTheme"];
+        _indicatorImageView.tintColor = [UIColor systemBlueColor];
     }
     return _indicatorImageView;
 }

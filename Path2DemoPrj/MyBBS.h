@@ -44,25 +44,6 @@
     int notificationCount;
 }
 @property(nonatomic, strong)NSArray * allSections;
-
-@property(nonatomic, strong)NSArray * hotTopics;
-@property(nonatomic, strong)NSArray * hotBoards;
-@property(nonatomic, strong)NSArray * photographyArray;
-@property(nonatomic, strong)NSArray * picturesArray;
-@property(nonatomic, strong)NSArray * newsArray;
-@property(nonatomic, strong)NSArray * actionsArray;
-
-@property(nonatomic, strong)NSArray * mapNewsArray;
-@property(nonatomic, strong)NSArray * mapAVObjectArray;
-@property(nonatomic, strong)NSArray * mapPointArray;
-
-@property(nonatomic, strong)NSArray * myFavorites;
-@property(nonatomic, strong)NSArray * myOnlineFriends;
-@property(nonatomic, strong)NSArray * myAllFriends;
-@property(nonatomic, strong)NSArray * myMails0;
-@property(nonatomic, strong)NSArray * myMails1;
-@property(nonatomic, strong)NSArray * myMails2;
-
 @property(nonatomic, strong)NSArray * voteListNew;
 @property(nonatomic, strong)NSArray * voteListHot;
 @property(nonatomic, strong)NSArray * voteListAll;
@@ -76,7 +57,6 @@
 
 + (MyBBS *)sharedInstance;
 
--(User *)userLogin:(NSString *)user Pass:(NSString *)pass;
 -(BOOL)addPushNotificationToken;
 -(void)userLogout;
 -(void)refreshNotification;

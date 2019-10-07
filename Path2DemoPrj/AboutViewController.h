@@ -13,7 +13,6 @@
 #import "UserInfoViewController.h"
 #import "ASIHTTPRequest.h"
 #import "articleViewController.h"
-#import "LoginViewController.h"
 
 @protocol AboutViewControllerDelegate <NSObject>
 -(void)changeLeftBack;

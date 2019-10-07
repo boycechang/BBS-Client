@@ -18,7 +18,6 @@
 - (id)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
 		self.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        self.backgroundColor = [UIColor colorNamed:@"Background"];
         
         UIImageView * logoImageView = [[UIImageView alloc] initWithFrame:CGRectMake(frame.size.width/2 - 25, frame.size.height - 75.0f, 50, 50)];
         [logoImageView setImage:[UIImage imageNamed:@"RefreshIcon"]];

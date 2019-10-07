@@ -12,7 +12,7 @@
 #import "TopicCell.h"
 #import "TopicHeaderCell.h"
 #import "BYRNetworkManager.h"
-#import "SingleTopicViewController.h"
+#import "TopicViewController.h"
 #import "DataModel.h"
 #import "WBUtil.h"
 #import "BBSAPI.h"
@@ -29,6 +29,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeAlways;
     self.navigationItem.title = @"热门";
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -96,11 +97,45 @@
         return;
     }
     
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     NSArray *topics = [self.topTenContent objectForKey:[self keyForSection:section]];
     Topic *topic = [topics objectAtIndex:row];
-    SingleTopicViewController * singleTopicViewController = [[SingleTopicViewController alloc] initWithRootTopic:topic];
-    [self.navigationController pushViewController:singleTopicViewController animated:YES];
+    TopicViewController *topicViewController = [TopicViewController new];
+    topicViewController.topic = topic;
+    [self.navigationController pushViewController:topicViewController animated:YES];
+}
+
+- (nullable UIContextMenuConfiguration *)tableView:(UITableView *)tableView contextMenuConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath point:(CGPoint)point {
+    
+    UIContextMenuConfiguration *config = [UIContextMenuConfiguration configurationWithIdentifier:nil previewProvider:^UIViewController * _Nullable{
+        NSInteger section = indexPath.section;
+        NSInteger row = indexPath.row - 1;
+        if (row == -1) {
+            return nil;
+        }
+        
+        NSArray *topics = [self.topTenContent objectForKey:[self keyForSection:section]];
+        Topic *topic = [topics objectAtIndex:row];
+        TopicViewController *topicViewController = [TopicViewController new];
+        topicViewController.topic = topic;
+        
+        return topicViewController;
+    } actionProvider:^UIMenu * _Nullable(NSArray<UIMenuElement *> * _Nonnull suggestedActions) {
+//        if (self.type == NotificationTypeMail) {
+//            Mail *mail = [self.notifications objectAtIndex:indexPath.row];
+//            UIAction *action1 = [UIAction actionWithTitle:@"回复" image:[UIImage systemImageNamed:@"arrowshape.turn.up.left"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
+//                PostMailViewController * postMailVC = [[PostMailViewController alloc] init];
+//                postMailVC.postType = 1;
+//                postMailVC.rootMail = mail;
+//                UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:postMailVC];
+//                [self presentViewController:nav animated:YES completion:nil];
+//            }];
+//            UIMenu *menu = [UIMenu menuWithTitle:nil children:@[action1]];
+//            return menu;
+//        }
+        return nil;
+    }];
+
+    return config;
 }
 
 #pragma mark - BYRTableViewControllerProtocol

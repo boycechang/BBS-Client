@@ -26,4 +26,5 @@
 
 +(NSArray *)parseVoteList:(NSDictionary *)votesDictionary;        ///
 +(Vote *)parseSingleVote:(NSDictionary *)voteDictionary;        ///
+
 @end

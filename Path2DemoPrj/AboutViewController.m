@@ -11,6 +11,7 @@
 #include <sys/types.h>
 #include <sys/sysctl.h>
 #import <SDImageCache.h>
+#import "BYRSession.h"
 
 @implementation AboutViewController
 @synthesize mDelegate;
@@ -28,15 +29,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
+    
     CGRect rect = [[UIScreen mainScreen] bounds];
     [self.view setFrame:CGRectMake(0, 0, rect.size.width, rect.size.height)];
     
     [settingTableView setFrame:CGRectMake(0, 0, rect.size.width, rect.size.height)];
     self.title = @"设置";
     
-    self.navigationController.navigationBar.barTintColor = [UIColor lightGrayColor];
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+//    self.navigationController.navigationBar.barTintColor = [UIColor lightGrayColor];
+//    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+//    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
 }
 
 #pragma mark - Table view data source
@@ -77,16 +80,16 @@
             switch (indexPath.row) {
                 case 0:
                 {
-                    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-                    cell.textLabel.text = @"当前用户";
-                    if (appDelegate.myBBS.mySelf.id != nil) {
-                        cell.detailTextLabel.text = appDelegate.myBBS.mySelf.id;
-                        [cell setAccessoryType:UITableViewCellAccessoryNone];
-                    }
-                    else{
-                        cell.detailTextLabel.text = @"未登录";
-                        [cell setAccessoryType:UITableViewCellAccessoryNone];
-                    }
+//                    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+//                    cell.textLabel.text = @"当前用户";
+//                    if (appDelegate.myBBS.mySelf.id != nil) {
+//                        cell.detailTextLabel.text = appDelegate.myBBS.mySelf.id;
+//                        [cell setAccessoryType:UITableViewCellAccessoryNone];
+//                    }
+//                    else{
+//                        cell.detailTextLabel.text = @"未登录";
+//                        [cell setAccessoryType:UITableViewCellAccessoryNone];
+//                    }
                     break;
                 }
                 case 1:
@@ -174,25 +177,25 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    if (indexPath.section == 0 && indexPath.row == 0 && appDelegate.myBBS.mySelf.id != nil) {
-        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-
-        UserInfoViewController * userInfoViewController;
-        userInfoViewController = [[UserInfoViewController alloc] initWithNibName:@"UserInfoViewController" bundle:nil];
-        userInfoViewController.userString = appDelegate.myBBS.mySelf.id;
-        [self presentPopupViewController:userInfoViewController animationType:MJPopupViewAnimationSlideTopBottom];
-    }
+//    if (indexPath.section == 0 && indexPath.row == 0 && appDelegate.myBBS.mySelf.id != nil) {
+//        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+//
+//        UserInfoViewController * userInfoViewController;
+//        userInfoViewController = [[UserInfoViewController alloc] initWithNibName:@"UserInfoViewController" bundle:nil];
+//        userInfoViewController.userString = appDelegate.myBBS.mySelf.id;
+//        [self presentPopupViewController:userInfoViewController animationType:MJPopupViewAnimationSlideTopBottom];
+//    }
     
-    if (indexPath.section == 0 && indexPath.row == 0 && appDelegate.myBBS.mySelf.id == nil) {
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        hud.mode = MBProgressHUDModeText;
-        hud.labelText = @"请先登录";
-        hud.margin = 30.f;
-        hud.yOffset = 0.f;
-        hud.removeFromSuperViewOnHide = YES;
-        [hud hide:YES afterDelay:0.8];
-        [tableView reloadData];
-    }
+//    if (indexPath.section == 0 && indexPath.row == 0 && appDelegate.myBBS.mySelf.id == nil) {
+//        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+//        hud.mode = MBProgressHUDModeText;
+//        hud.labelText = @"请先登录";
+//        hud.margin = 30.f;
+//        hud.yOffset = 0.f;
+//        hud.removeFromSuperViewOnHide = YES;
+//        [hud hide:YES afterDelay:0.8];
+//        [tableView reloadData];
+//    }
     
     if (indexPath.section == 0 && indexPath.row == 1) {
 //        [self pickImageFromAlbum:nil];
@@ -254,11 +257,9 @@
     [actionSheet showInView:self.view]; //show from our table view (pops up in the middle of the table)
 }
 
-- (void)actionSheet:(UIActionSheet*)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if(buttonIndex == 0)
-    {
-        [mDelegate logout];
+- (void)actionSheet:(UIActionSheet*)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 0) {
+        [[BYRSession sharedInstance] logOut];
         [self dismissViewControllerAnimated:YES completion:nil];
     }
 }

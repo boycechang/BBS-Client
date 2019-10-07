@@ -14,6 +14,56 @@
 #import "BYRSession.h"
 #import "HomeHeadView.h"
 #import "AboutViewController.h"
+#import "LoginViewController.h"
+#import <BlocksKit.h>
+
+@interface HomeViewController ()
+
+@property (nonatomic, strong) HomeTabBarController *homeVC;
+@property (nonatomic, strong) LoginViewController *loginVC;
+
+@end
+
+
+@implementation HomeViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    [[BYRSession sharedInstance] bk_addObserverForKeyPath:@"currentUser" options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew task:^(id obj, NSDictionary *change) {
+        [self changeRootVC];
+    }];
+}
+
+
+- (void)changeRootVC {
+    // 移除
+    if (self.childViewControllers.firstObject) {
+        UIViewController *currentVC = self.childViewControllers.firstObject;
+        [currentVC willMoveToParentViewController:nil];
+        [currentVC.view removeFromSuperview];
+        [currentVC removeFromParentViewController];
+    }
+    
+    // 添加
+    BOOL isLogin = [BYRSession sharedInstance].currentUser ? YES : NO;
+    if (isLogin) {
+        self.homeVC = [HomeTabBarController new];
+        [self addChildViewController:self.homeVC];
+        self.homeVC.view.frame = self.view.frame;
+        [self.view addSubview:self.homeVC.view];
+        [self.homeVC willMoveToParentViewController:self];
+    } else {
+        self.loginVC = [LoginViewController new];
+        UINavigationController *loginNav = [[UINavigationController alloc] initWithRootViewController:self.loginVC];
+        [self addChildViewController:loginNav];
+        loginNav.view.frame = self.view.frame;
+        [self.view addSubview:loginNav.view];
+        [loginNav willMoveToParentViewController:self];
+    }
+}
+
+@end
 
 @interface HomeTabBarControllerAnimatedTransitioning : NSObject <UIViewControllerAnimatedTransitioning>
 
@@ -45,24 +95,22 @@
 
 
 @interface HomeTabBarController () <UITabBarControllerDelegate>
-
 @end
 
 @implementation HomeTabBarController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor systemBackgroundColor];
     
 //    self.delegate = self;
-    
     TopTenViewController *topTen = [TopTenViewController new];
     topTen.tabBarItem = [[UITabBarItem alloc] initWithTitle:nil image:[UIImage systemImageNamed:@"flame"] selectedImage:[UIImage systemImageNamed:@"flame.fill"]];
     topTen.navigationItem.leftBarButtonItem = [self generateHeadItem];
     UINavigationController *topTenNav = [[UINavigationController alloc] initWithRootViewController:topTen];
     
-    
     BoardsViewController *boards = [BoardsViewController new];
-    boards.tabBarItem = [[UITabBarItem alloc] initWithTitle:nil image:[UIImage systemImageNamed:@"square.stack.3d.down.right"] selectedImage:[UIImage systemImageNamed:@"square.stack.3d.down.right.fill"]];
+    boards.tabBarItem = [[UITabBarItem alloc] initWithTitle:nil image:[UIImage systemImageNamed:@"square.stack"] selectedImage:[UIImage systemImageNamed:@"square.stack.fill"]];
     boards.navigationItem.leftBarButtonItem = [self generateHeadItem];
     UINavigationController *boardsNav = [[UINavigationController alloc] initWithRootViewController:boards];
     
@@ -71,7 +119,7 @@
     notification.navigationItem.leftBarButtonItem = [self generateHeadItem];
     UINavigationController *notificationNav = [[UINavigationController alloc] initWithRootViewController:notification];
     
-    self.tabBar.tintColor = [UIColor colorNamed:@"MainTheme"];
+    self.tabBar.tintColor = [UIColor systemBlueColor];
     self.viewControllers = @[topTenNav, boardsNav, notificationNav];
 }
 

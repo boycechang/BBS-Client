@@ -69,11 +69,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface Attachment : NSObject
 
-@property (nonatomic, assign) int attId;
-@property (nonatomic, strong) NSString *attFileName;
-@property (nonatomic, assign) int attPos;
-@property (nonatomic, assign) int attSize;
-@property (nonatomic, strong) NSString *attUrl;
+@property (nonatomic, strong) NSString *name;
+@property (nonatomic, strong) NSString *size;
+@property (nonatomic, strong) NSString *thumbnail_small;
+@property (nonatomic, strong) NSString *thumbnail_middle;
+@property (nonatomic, strong) NSString *url;
 
 @end
 
@@ -108,10 +108,39 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *board_name;
 @property (nonatomic, strong) NSString *board_description;
 
+
+// 提醒
 @property (nonatomic, assign) BOOL is_read;
 @property (nonatomic, assign) NSUInteger index;
 @property (nonatomic, assign) NSUInteger pos;
+@property (nonatomic, assign) NSTimeInterval time;
+
+
+@property (nonatomic, strong) NSAttributedString *attributedContentCache;
 
 @end
+
+
+
+@interface Mail : NSObject
+
+@property (nonatomic, strong) NSString *index;
+@property (nonatomic, strong) User *user;
+
+@property (nonatomic, strong) NSString *title;
+@property (nonatomic, strong) NSString *content;
+
+@property (nonatomic, assign) NSTimeInterval post_time;
+
+@property (nonatomic, assign) BOOL is_read;
+
+@property (nonatomic, assign) BOOL has_attachment;
+@property (nonatomic, strong) NSArray <Attachment *> *attachments;
+
+@end
+
+
+
+
 
 NS_ASSUME_NONNULL_END

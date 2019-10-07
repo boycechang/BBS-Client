@@ -72,15 +72,33 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     }
 }
 
+#pragma mark - UITableViewDelegate & UITableViewDataSource
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 0;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return nil;
+}
+
+- (void)tableView:(UITableView *)tableView willPerformPreviewActionForMenuWithConfiguration:(UIContextMenuConfiguration *)configuration animator:(id<UIContextMenuInteractionCommitAnimating>)animator {
+    UIViewController *vc = animator.previewViewController;
+    [animator addCompletion:^{
+        [self.navigationController pushViewController:vc animated:NO];
+    }];
+}
+
 #pragma mark - getter
 
 - (UITableView *)tableView {
     if (!_tableView) {
         _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
-        _tableView.backgroundColor = [UIColor colorNamed:@"Background"];
+        _tableView.backgroundColor = [UIColor systemBackgroundColor];
         _tableView.estimatedRowHeight = 70;
         _tableView.delegate = self;
         _tableView.dataSource = self;
+        _tableView.tableFooterView = [UIView new];
         _tableView.refreshControl = [UIRefreshControl new];
         [_tableView.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
     }

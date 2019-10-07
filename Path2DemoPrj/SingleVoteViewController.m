@@ -24,34 +24,34 @@
 
 -(void)refresh
 {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        
-        Vote *cache = [BBSAPI getSingleVote:appDelegate.myBBS.mySelf ID:rootVote.vid];
-        if (cache != nil) {
-            self.rootVote = cache;
-        }
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            if (rootVote.voted != nil) {
-                [voteButton setTitle:@"已投票"];
-            }
-            else if (rootVote.type == 0)
-            {
-                [voteButton setTitle:@"投票 (单选)"];
-            }
-            else {
-                [voteButton setTitle:[NSString stringWithFormat:@"投票 (可选%i项)", rootVote.limit]];
-            }
-            
-            if (rootVote.is_end || rootVote.is_deleted || rootVote.voted != nil) {
-                [voteButton setEnabled:NO];
-            }
-            
-            [optionsTableView reloadData];
-        });
-    });
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+//        
+//        Vote *cache = [BBSAPI getSingleVote:appDelegate.myBBS.mySelf ID:rootVote.vid];
+//        if (cache != nil) {
+//            self.rootVote = cache;
+//        }
+//        
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            
+//            if (rootVote.voted != nil) {
+//                [voteButton setTitle:@"已投票"];
+//            }
+//            else if (rootVote.type == 0)
+//            {
+//                [voteButton setTitle:@"投票 (单选)"];
+//            }
+//            else {
+//                [voteButton setTitle:[NSString stringWithFormat:@"投票 (可选%i项)", rootVote.limit]];
+//            }
+//            
+//            if (rootVote.is_end || rootVote.is_deleted || rootVote.voted != nil) {
+//                [voteButton setEnabled:NO];
+//            }
+//            
+//            [optionsTableView reloadData];
+//        });
+//    });
 
 }
 
@@ -73,7 +73,7 @@
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        self.rootVote = [BBSAPI getSingleVote:appDelegate.myBBS.mySelf ID:rootVote.vid];
+//        self.rootVote = [BBSAPI getSingleVote:appDelegate.myBBS.mySelf ID:rootVote.vid];
         
         dispatch_async(dispatch_get_main_queue(), ^{
             
@@ -241,16 +241,16 @@
 -(IBAction)vote:(id)sender
 {
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    if (appDelegate.myBBS.mySelf == nil) {
-        hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        hud.mode = MBProgressHUDModeText;
-        hud.labelText = @"请先登录";
-        hud.margin = 30.f;
-        hud.yOffset = 0.f;
-        hud.removeFromSuperViewOnHide = YES;
-        [hud hide:YES afterDelay:1];
-        return;
-    }
+//    if (appDelegate.myBBS.mySelf == nil) {
+//        hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+//        hud.mode = MBProgressHUDModeText;
+//        hud.labelText = @"请先登录";
+//        hud.margin = 30.f;
+//        hud.yOffset = 0.f;
+//        hud.removeFromSuperViewOnHide = YES;
+//        [hud hide:YES afterDelay:1];
+//        return;
+//    }
     
     if (myVoted == nil || [myVoted count] == 0) {
         hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -271,7 +271,7 @@
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             
             AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-            backVote = [BBSAPI doVote:appDelegate.myBBS.mySelf ID:rootVote.vid VoteArray:myVoted];
+//            backVote = [BBSAPI doVote:appDelegate.myBBS.mySelf ID:rootVote.vid VoteArray:myVoted];
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 

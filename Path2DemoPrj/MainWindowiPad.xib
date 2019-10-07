@@ -29,7 +29,6 @@
                 <userLayoutGuide location="518" affinity="minY"/>
                 <userLayoutGuide location="518" affinity="minY"/>
             </userGuides>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="rootViewController" destination="20" id="lhV-2I-dNM"/>

@@ -34,7 +34,6 @@ static const NSString *AppKey = @"ff7504fa9d6a4975";
     self = [super init];
     if (self) {
         _networkManager  = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:@"http://api.byr.cn"]];
-        [_networkManager.requestSerializer setAuthorizationHeaderFieldWithUsername:@"yyjing" password:@"1989128"];
     }
     return self;
 }

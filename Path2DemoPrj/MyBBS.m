@@ -10,23 +10,6 @@
 
 @implementation MyBBS
 @synthesize allSections;
-@synthesize hotTopics;
-@synthesize hotBoards;
-@synthesize photographyArray;
-@synthesize picturesArray;
-@synthesize newsArray;
-@synthesize actionsArray;
-
-@synthesize mapNewsArray;
-@synthesize mapAVObjectArray;
-@synthesize mapPointArray;
-
-@synthesize myFavorites;
-@synthesize myOnlineFriends;
-@synthesize myAllFriends;
-@synthesize myMails0;
-@synthesize myMails1;
-@synthesize myMails2;
 @synthesize mySelf;
 @synthesize notification;
 @synthesize notificationCount;
@@ -66,29 +49,6 @@
         }
     }
     return self;
-}
-
-- (User *)userLogin:(NSString *)user Pass:(NSString *)pass {
-    self.mySelf = [BBSAPI login:user Pass:pass];
-    
-    if (mySelf == nil) {
-        return nil;
-    } else {
-        User *mySelfDetal = [BBSAPI userInfo:mySelf.id];
-        if (mySelfDetal) {
-            self.mySelf.face_url = mySelfDetal.face_url;
-        }
-        
-//        if (self.mySelf.face_url != nil) {
-//            [defaults setValue:[mySelf.face_url absoluteString] forKey:@"UserAvatar"];
-//        }
-//
-//        [defaults setValue:mySelf.name forKey:@"UserName"];
-//        [defaults setValue:mySelf.ID forKey:@"UserID"];
-//        [defaults setValue:mySelf.password forKey:@"UserToken"];
-//        [defaults setValue:mySelf.username forKey:@"UserID"];
-        return mySelf;
-    }   
 }
 
 - (void)userLogout {

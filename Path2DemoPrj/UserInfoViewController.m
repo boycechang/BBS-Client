@@ -35,7 +35,7 @@
     [astro setText:[NSString stringWithFormat:@"%@", [user.astro isEqualToString:@""]?@"未知":user.astro]];
     
     [ID setText:[NSString stringWithFormat:@"%@ %@", user.id, genderString]];
-    [name setText:[NSString stringWithFormat:@"%@", user.user_name]];
+    [name setText:[NSString stringWithFormat:@"%@", user.id]];
     [role setText:[NSString stringWithFormat:@"%i", user.life]];
     [posts setText:[NSString stringWithFormat:@"%i", user.post_count]];
     [medals setText:[NSString stringWithFormat:@"%i", user.life]];
@@ -90,55 +90,55 @@
     [sentMailButton setEnabled:NO];
     
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    myBBS = appDelegate.myBBS;
+//    myBBS = appDelegate.myBBS;
     
     activityView = [[FPActivityView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 1)];
     [activityView start];
     [self.view addSubview:activityView];
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        self.user = [BBSAPI userInfo:userString];
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (myBBS.mySelf.id != nil && [myBBS.mySelf.id isEqualToString:userString]) {
-                if (myBBS.mySelf.face_url == nil) {
-                    User *mySelfDetal = [BBSAPI userInfo:myBBS.mySelf.id];
-                    if (mySelfDetal) {
-                        myBBS.mySelf.face_url = mySelfDetal.face_url;
-                    }
-                    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-                    if (myBBS.mySelf.face_url != nil) {
-                        [defaults setValue:[myBBS.mySelf.face_url absoluteString] forKey:@"UserAvatar"];
-                    }
-                }
-            } else if (myBBS.mySelf){
-                [sentMailButton setEnabled:YES];
-            } else if (myBBS.mySelf.id != nil && ![myBBS.mySelf.id isEqualToString:userString]){
-                [sentMailButton setEnabled:YES];
-                [addFriendButton setEnabled:YES];
-            }
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        self.user = [BBSAPI userInfo:userString];
+//        
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            if (myBBS.mySelf.id != nil && [myBBS.mySelf.id isEqualToString:userString]) {
+//                if (myBBS.mySelf.face_url == nil) {
+//                    User *mySelfDetal = [BBSAPI userInfo:myBBS.mySelf.id];
+//                    if (mySelfDetal) {
+//                        myBBS.mySelf.face_url = mySelfDetal.face_url;
+//                    }
+//                    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+//                    if (myBBS.mySelf.face_url != nil) {
+//                        [defaults setValue:[myBBS.mySelf.face_url absoluteString] forKey:@"UserAvatar"];
+//                    }
+//                }
+//            } else if (myBBS.mySelf){
+//                [sentMailButton setEnabled:YES];
+//            } else if (myBBS.mySelf.id != nil && ![myBBS.mySelf.id isEqualToString:userString]){
+//                [sentMailButton setEnabled:YES];
+//                [addFriendButton setEnabled:YES];
+//            }
             
-            UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAvatar:)];
-            tap.numberOfTapsRequired = 1;
-            [avatar addGestureRecognizer:tap];
-            
-            UITapGestureRecognizer * tap2 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAvatar:)];
-            tap2.numberOfTapsRequired = 1;
-            [avatarBack addGestureRecognizer:tap2];
-            
-            [avatar sd_setImageWithURL:user.face_url];
-            avatar.layer.cornerRadius = 50.0f;
-            avatar.clipsToBounds = YES;
-            
-            [self refreshView];
-            [activityView stop];
-            activityView = nil;
-        });
-    });
+//            UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAvatar:)];
+//            tap.numberOfTapsRequired = 1;
+//            [avatar addGestureRecognizer:tap];
+//
+//            UITapGestureRecognizer * tap2 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAvatar:)];
+//            tap2.numberOfTapsRequired = 1;
+//            [avatarBack addGestureRecognizer:tap2];
+//
+//            [avatar sd_setImageWithURL:user.face_url];
+//            avatar.layer.cornerRadius = 50.0f;
+//            avatar.clipsToBounds = YES;
+//
+//            [self refreshView];
+//            [activityView stop];
+//            activityView = nil;
+//        });
+//    });
     
-    if ([[[UIDevice currentDevice]systemVersion]floatValue] >= 7.0) {
-        [self registerEffectForView:self.view depth:20];
-    }
+//    if ([[[UIDevice currentDevice]systemVersion]floatValue] >= 7.0) {
+//        [self registerEffectForView:self.view depth:20];
+//    }
 }
 
 -(void)dealloc

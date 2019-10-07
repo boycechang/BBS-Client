@@ -10,11 +10,14 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class Topic;
+@class Topic, Mail;
 
 @interface NotificationCell : UITableViewCell
 
 - (void)updateWithTopic:(Topic *)topic;
+- (void)updateWithMail:(Mail *)mail;
+
+- (void)showPlainStyle:(BOOL)plainStyle;
 
 @end
 

@@ -81,7 +81,7 @@
     [self.view addSubview:postScrollView];
     
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    myBBS = appDelegate.myBBS;
+//    myBBS = appDelegate.myBBS;
 
     if (postType == 0) {
         self.title = @"发新帖子";
@@ -102,7 +102,7 @@
         [postTitleCount setText:[NSString stringWithFormat:@"%i", [postTitle.text length]]];
         
         if (rootTopic.content != nil) {
-            [postContent setText:[NSString stringWithFormat:@"\n【 在 %@ 的大作中提到: 】\n%@", rootTopic.user.user_name, rootTopic.content.length > 30 ? [NSString stringWithFormat:@"%@...", [rootTopic.content substringToIndex:27]] : rootTopic.content]];
+            [postContent setText:[NSString stringWithFormat:@"\n【 在 %@ 的大作中提到: 】\n%@", rootTopic.user.id, rootTopic.content.length > 30 ? [NSString stringWithFormat:@"%@...", [rootTopic.content substringToIndex:27]] : rootTopic.content]];
         } else {
             [postContent setText:@""];
         }
@@ -125,7 +125,7 @@
                                                                                   target:nil
                                                                                   action:nil];
     
-    UIBarButtonItem *emotionBarItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"face"] style:UIBarButtonItemStylePlain target:self action:@selector(switchToEmotionKeyboard)];
+    UIBarButtonItem *emotionBarItem = [[UIBarButtonItem alloc] initWithImage:[UIImage systemImageNamed:@"smiley"] style:UIBarButtonItemStylePlain target:self action:@selector(switchToEmotionKeyboard)];
     
     UIBarButtonItem *spaceBarItem1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
                                                                                   target:nil

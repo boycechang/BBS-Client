@@ -55,6 +55,7 @@
         _headImageView.layer.cornerRadius = 15.f;
         _headImageView.layer.masksToBounds = YES;
         _headImageView.userInteractionEnabled = YES;
+        _headImageView.contentMode = UIViewContentModeScaleAspectFill;
         
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(headClick:)];
         [_headImageView addGestureRecognizer:tap];

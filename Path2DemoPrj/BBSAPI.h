@@ -18,30 +18,18 @@
 +(BOOL)isNetworkReachable;
 
 +(User *)userInfo:(NSString *)userID;  ///
-+(NSArray *)hotTopics;  ///
 
 +(NSArray *)singleTopic:(NSString *)board ID:(int)ID Page:(NSInteger)page User:(User *)user;///
 +(NSArray *)replyTopic:(NSString *)board ID:(int)ID Start:(NSInteger)start User:(User *)user; ///
+
 +(NSArray *)searchTopics:(NSString *)key start:(NSInteger)start User:(User *)user BoardName:(NSString *)board;
 +(NSArray *)searchBoards:(NSString *)key User:(User *)user;  ///
 
-+(User *)login:(NSString *)user Pass:(NSString *)pass;
-
-+(NSArray *)onlineFriends:(User *)user;
-+(NSArray *)allFriends:(User *)user;
-+(BOOL)deletFriend:(User *)user ID:(NSString *)ID;
-+(BOOL)addFriend:(User *)user ID:(NSString *)ID;
-+(BOOL)isFriend:(User *)user ID:(NSString *)ID;
-
-+(NSArray *)getMails:(User *)user Type:(int)type Start:(int)start;   ///
-+(Mail *)getSingleMail:(User *)user Type:(int)type ID:(int)ID;       ///
-+(BOOL)deleteSingleMail:(User *)user Type:(int)type ID:(int)ID;      ///
 +(BOOL)postMail:(User *)myself User:(NSString *)user Title:(NSString *)title Content:(NSString *)content Reid:(int)reid;
 +(BOOL)replyMail:(User *)myself User:(NSString *)user Title:(NSString *)title Content:(NSString *)content Type:(int)type ID:(int)ID;
 
-+(NSArray *)getNotification:(User *)user Type:(NSString *)type Start:(NSInteger)start Limit:(NSInteger)limit;    ///
 +(Notification *)getAllNotificationCount:(User *)user;    ///
-+(BOOL )deleteNotification:(User *)user Type:(NSString *)type ID:(int)ID; ///
++(BOOL)deleteNotification:(User *)user Type:(NSString *)type ID:(int)ID; ///
 +(BOOL)clearNotification:(User *)user;            ///
 
 +(BOOL)postTopic:(User *)user Board:(NSString *)board Title:(NSString *)title Content:(NSString *)content Reid:(int)reid;
@@ -52,6 +40,10 @@
 +(NSArray* )deleteAttachmentsFromTopic:(User *)user Board:(NSString *)board ID:(int)ID Name:(NSString *)name; ///
 
 + (NSString *)dateToString:(NSDate *)date;
+
+
+
+
 
 +(NSArray *)getVoteList:(User *)user Type:(NSString *)type;   ///type: me|join|list|new|hot|all
 +(Vote *)getSingleVote:(User *)user ID:(int)ID;

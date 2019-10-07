@@ -10,8 +10,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface HomeTabBarController : UITabBarController
+@interface HomeViewController : UIViewController
+@end
 
+@interface HomeTabBarController : UITabBarController
 @end
 
 NS_ASSUME_NONNULL_END

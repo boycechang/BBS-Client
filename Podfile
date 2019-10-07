@@ -9,5 +9,10 @@ pod 'SDWebImage'
 pod 'MJExtension'
 pod 'AFNetworking'
 pod 'YYCache'
+pod 'YYText'
+pod 'BlocksKit'
+pod 'BBCodeString'
+
+pod 'MBProgressHUD'
 
 end
