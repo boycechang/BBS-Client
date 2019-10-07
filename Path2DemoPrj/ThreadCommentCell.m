@@ -57,12 +57,12 @@
         make.left.equalTo(self.headImageView.mas_right).offset(8);
     }];
     [self.boardLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.usernameLabel.mas_bottom).offset(3);
+        make.top.equalTo(self.usernameLabel.mas_bottom).offset(2);
         make.left.equalTo(self.usernameLabel);
     }];
     
     [self.contentTextView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.headImageView.mas_bottom).offset(15);
+        make.top.equalTo(self.boardLabel.mas_bottom).offset(15);
         make.left.equalTo(self.contentView).offset(15);
         make.right.equalTo(self.contentView).offset(-15);
         make.bottom.equalTo(self.contentView).offset(-15);

@@ -10,9 +10,17 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@protocol BYRBBCodeToYYConverterActionDelegate <NSObject>
+
+- (void)BBCodeDidClickURL:(NSString *)url;
+
+@end
+
 @class Attachment;
 
 @interface BYRBBCodeToYYConverter : NSObject
+
+@property (nonatomic, weak) id <BYRBBCodeToYYConverterActionDelegate> actionDelegate;
 
 + (instancetype)sharedInstance;
 

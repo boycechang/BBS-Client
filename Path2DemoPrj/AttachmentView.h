@@ -8,22 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol AttachmentViewDelegate <NSObject>
-
--(void)attachmentViewTaped:(BOOL)isPhoto IndexNum:(int)indexNum;
-
-@end
+@class Attachment;
 
 @interface AttachmentView : UIView
-{
-    UIView * typeView;
-    UILabel * typeLabel;
-    UILabel * nameLabel;
-}
-@property(nonatomic, assign)BOOL isPhoto;
-@property(nonatomic, assign)int indexNum;
-@property(nonatomic, assign)id mDelegate;
 
--(void)setAttachment:(NSString *)typeText NameText:(NSString *)nameText;
+- (void)updateWithAttachment:(Attachment *)attachment;
 
 @end

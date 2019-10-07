@@ -12,8 +12,10 @@
 #import "ThreadCommentCell.h"
 #import "BYRNetworkReponse.h"
 #import "BYRNetworkManager.h"
+#import "BYRBBCodeToYYConverter.h"
+#import <SafariServices/SafariServices.h>
 
-@interface TopicViewController ()
+@interface TopicViewController () <BYRBBCodeToYYConverterActionDelegate>
 
 @property (nonatomic, strong) Pagination *pagination;
 @property (nonatomic, strong) NSMutableArray <Topic *> *topics;
@@ -25,6 +27,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
+    
+    [BYRBBCodeToYYConverter sharedInstance].actionDelegate = self;
     
     [self.tableView registerClass:ThreadCell.class
            forCellReuseIdentifier:ThreadCell.class.description];
@@ -96,6 +100,7 @@
     if (indexPath.row == 0) {
         ThreadCell *cell = (ThreadCell *)[tableView dequeueReusableCellWithIdentifier:ThreadCell.class.description];
         Topic *topic = [self.topics objectAtIndex:indexPath.row];
+        cell.frame = self.view.frame;
         [cell updateWithTopic:topic];
         return cell;
     } else {
@@ -145,9 +150,15 @@
         topic.attributedContentCache = nil;
     }
     
-    for (ThreadCell *cell in [self.tableView visibleCells]) {
-        [cell refreshContent];
-    }
+    [self.tableView reloadData];
+}
+
+#pragma mark - BYRBBCodeToYYConverterActionDelegate
+
+- (void)BBCodeDidClickURL:(NSString *)url {
+    SFSafariViewController *safari = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:url]];
+    safari.modalPresentationStyle = UIModalPresentationPageSheet;
+    [self presentViewController:safari animated:YES completion:nil];
 }
 
 @end

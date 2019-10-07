@@ -91,7 +91,7 @@
 
 - (void)updateWithTopic:(Topic *)topic hideBoard:(BOOL)hideBoard {
     [self updateWithTopic:topic];
-    self.boardLabel.text = [NSString stringWithFormat:@"%li回复 · %@", topic.reply_count, [NSString stringWithFormat:@"%@", [BYRUtil dateDescriptionFromTimestamp:topic.post_time]]];
+    self.boardLabel.text = [NSString stringWithFormat:@"%li回复 · %@", topic.reply_count - 1, [NSString stringWithFormat:@"%@", [BYRUtil dateDescriptionFromTimestamp:topic.post_time]]];
 }
 
 - (void)updateWithTopic:(Topic *)topic {

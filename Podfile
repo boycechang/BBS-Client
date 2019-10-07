@@ -12,7 +12,8 @@ pod 'YYCache'
 pod 'YYText'
 pod 'BlocksKit'
 pod 'BBCodeString'
-
 pod 'MBProgressHUD'
+
+pod 'FLEX', '~> 3.0', :configurations => ['Debug']
 
 end

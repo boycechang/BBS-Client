@@ -54,6 +54,8 @@
         make.left.top.equalTo(self.contentView).offset(15);
         make.right.equalTo(self.contentView).offset(-15);
     }];
+    [self.topicTitleLabel setContentHuggingPriority:UILayoutPriorityRequired
+                                            forAxis:UILayoutConstraintAxisVertical];
     
     [self.headImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.topicTitleLabel.mas_bottom).offset(15);
@@ -70,7 +72,7 @@
     }];
     
     [self.contentTextView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.headImageView.mas_bottom).offset(15);
+        make.top.equalTo(self.boardLabel.mas_bottom).offset(15);
         make.left.equalTo(self.contentView).offset(15);
         make.right.equalTo(self.contentView).offset(-15);
     }];
@@ -88,24 +90,17 @@
 
 #pragma mark - public
 
-- (void)refreshContent {
-    if (!self.topic.attributedContentCache) {
-        NSAttributedString *richText = [[BYRBBCodeToYYConverter sharedInstance] parseBBCode:self.topic.content attachemtns:self.topic.attachments containerWidth:self.frame.size.width - 30];
-        self.topic.attributedContentCache = richText;
-    }
-    self.contentTextView.preferredMaxLayoutWidth = self.frame.size.width - 30;
-    self.contentTextView.attributedText = self.topic.attributedContentCache;
-}
-
 - (void)updateWithTopic:(Topic *)topic {
     self.topic = topic;
     
-    if (!topic.attributedContentCache) {
-        NSAttributedString *richText = [[BYRBBCodeToYYConverter sharedInstance] parseBBCode:topic.content attachemtns:topic.attachments containerWidth:self.frame.size.width - 30];
-        topic.attributedContentCache = richText;
+    CGFloat contentWidth = self.safeAreaLayoutGuide.layoutFrame.size.width - 30;
+
+    if (!self.topic.attributedContentCache) {
+        NSAttributedString *richText = [[BYRBBCodeToYYConverter sharedInstance] parseBBCode:self.topic.content attachemtns:self.topic.attachments containerWidth:contentWidth];
+        self.topic.attributedContentCache = richText;
     }
-    self.contentTextView.preferredMaxLayoutWidth = self.frame.size.width - 30;
-    self.contentTextView.attributedText = topic.attributedContentCache;
+    self.contentTextView.preferredMaxLayoutWidth = contentWidth;
+    self.contentTextView.attributedText = self.topic.attributedContentCache;
     
     self.topicTitleLabel.text = topic.title;
     [self.headImageView sd_setImageWithURL:topic.user.face_url];
@@ -113,10 +108,10 @@
     
     self.boardLabel.text = [NSString stringWithFormat:@"%@ · %@", @"楼主" ,[BYRUtil fullDateDescriptionFromTimestamp:topic.post_time]];
     
-    if (topic.reply_count == 0) {
+    if (topic.reply_count - 1 == 0) {
         self.replyCountLabel.text = @"没有回复";
     } else {
-        self.replyCountLabel.text = [NSString stringWithFormat:@"全部 %li 条回复", topic.reply_count];
+        self.replyCountLabel.text = [NSString stringWithFormat:@"%li 条回复", topic.reply_count - 1];
     }
 }
 

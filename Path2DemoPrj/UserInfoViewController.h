@@ -11,7 +11,6 @@
 #import <MessageUI/MessageUI.h>
 #import "CustomTableView.h"
 #import "PostMailViewController.h"
-#import "SingleTopicCell.h"
 #import "DataModel.h"
 #import "WBUtil.h"
 #import "BBSAPI.h"
