@@ -22,6 +22,11 @@
 @property (nonatomic, strong) NSMutableSet *usedAttachments;
 @property (nonatomic, strong) NSParagraphStyle *paragraphStyle;
 
+@property (nonatomic, strong) YYTextHighlight *yyLinkHeight;
+
+@property (nonatomic, strong) NSDictionary *normalTextAttributs;
+@property (nonatomic, strong) NSDictionary *quoteTextAttributs;
+
 @end
 
 @implementation BYRBBCodeToYYConverter
@@ -38,10 +43,50 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
+        _usedAttachments = [NSMutableSet new];
+        
         NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
         paragraphStyle.lineSpacing = 4;
         _paragraphStyle = paragraphStyle;
-        _usedAttachments = [NSMutableSet new];
+        _normalTextAttributs = @{NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleBody],
+                 NSForegroundColorAttributeName : [UIColor labelColor],
+                 NSParagraphStyleAttributeName : self.paragraphStyle,
+        };
+        
+        NSMutableParagraphStyle *quoteParagraphStyle = [NSMutableParagraphStyle new];
+        quoteParagraphStyle.lineSpacing = 2;
+        _quoteTextAttributs = @{NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote],
+                 NSForegroundColorAttributeName : [UIColor secondaryLabelColor],
+                 NSParagraphStyleAttributeName : quoteParagraphStyle,
+        };
+        
+        YYTextBorder *highlightBorder = [YYTextBorder new];
+        highlightBorder.fillColor = [UIColor systemFillColor];
+        
+        YYTextHighlight *highlight = [YYTextHighlight new];
+        [highlight setBackgroundBorder:highlightBorder];
+        
+        __weak typeof (self) wself = self;
+        highlight.tapAction = ^(UIView *containerView, NSAttributedString *text, NSRange range, CGRect rect) {
+            NSDictionary *attributes = [[text attributedSubstringFromRange:range] yy_attributes];
+            NSString *urlString = [attributes objectForKey:NSLinkAttributeName];
+            
+            if (![urlString containsString:@":"]) {
+                if ([urlString containsString:@"@"]) {
+                    urlString = [NSString stringWithFormat:@"mailto:%@", urlString];
+                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlString] options:@{} completionHandler:nil];
+                    return;
+                } else if (![urlString hasPrefix:@"http"]) {
+                    urlString = [NSString stringWithFormat:@"http://%@", urlString];
+                }
+            }
+            
+            if ([wself.actionDelegate respondsToSelector:@selector(BBCodeDidClickURL:)]) {
+                [wself.actionDelegate BBCodeDidClickURL:urlString];
+            }
+        };
+        
+        self.yyLinkHeight = highlight;
     }
     return self;
 }
@@ -107,6 +152,29 @@
             [attachText yy_setTextHighlight:highlight range:attachText.yy_rangeOfAll];            
             [codeString.attributedString appendAttributedString:attachText];
         }
+    }
+    
+    // 处理链接
+    NSDataDetector *detector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink error:nil];
+    NSArray <NSTextCheckingResult *> *results = [detector matchesInString:codeString.attributedString.string options:NSMatchingReportCompletion range:NSMakeRange(0, codeString.attributedString.string.length)];
+    
+    for (NSTextCheckingResult *result in results) {
+        [codeString.attributedString yy_setTextHighlight:self.yyLinkHeight range:result.range];
+        [codeString.attributedString yy_setColor:[UIColor systemBlueColor] range:result.range];
+        [codeString.attributedString yy_setLink:[codeString.attributedString.string substringWithRange:result.range] range:result.range];
+    }
+    
+    // 处理引用
+    NSRegularExpression *expression = [NSRegularExpression regularExpressionWithPattern:@"【 在.*的(?:大作|邮件)中提到: 】.*\\s*" options:NSRegularExpressionCaseInsensitive error:nil];
+    results = [expression matchesInString:codeString.attributedString.string options:NSMatchingReportCompletion range:NSMakeRange(0, codeString.attributedString.string.length)];
+    for (NSTextCheckingResult *result in results) {
+        [codeString.attributedString addAttributes:self.quoteTextAttributs range:result.range];
+    }
+    
+    expression = [NSRegularExpression regularExpressionWithPattern:@":.*\\s*" options:NSRegularExpressionCaseInsensitive error:nil];
+    results = [expression matchesInString:codeString.attributedString.string options:NSMatchingReportCompletion range:NSMakeRange(0, codeString.attributedString.string.length)];
+    for (NSTextCheckingResult *result in results) {
+        [codeString.attributedString addAttributes:self.quoteTextAttributs range:result.range];
     }
     
     return codeString.attributedString;
@@ -192,32 +260,53 @@
 
 /** Returns the whitelist of the BBCode tags your code supports. **/
 - (NSArray *)getSupportedTags {
-    return @[@"b", @"i", @"u", @"size", @"color", @"face", @"url", @"img", @"upload"];
+    return @[@"b", @"i", @"u", @"size", @"B", @"I", @"U", @"SIZE",
+             @"color", @"face", @"COLOR", @"FACE",
+             @"url", @"img", @"URL", @"IMG",
+             @"upload", @"UPLOAD"];
 }
 
 /** Returns the attributes for the part of NSAttributedString which will present the given BBCode element.  **/
 - (NSDictionary *)getAttributesForElement:(BBElement *)element {
-    if ([element.tag isEqualToString:@"b"]) {
+    if ([[element.tag lowercaseString] isEqualToString:@"b"]) {
         UIFontDescriptor *descriptor = [[UIFont preferredFontForTextStyle:UIFontTextStyleBody] fontDescriptor];
         UIFontDescriptor *newDescriptor = [descriptor fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold];
         return @{NSFontAttributeName : [UIFont fontWithDescriptor:newDescriptor size:0],
                  NSForegroundColorAttributeName : [UIColor labelColor],
                  NSParagraphStyleAttributeName : self.paragraphStyle,
         };
-    } else if ([element.tag isEqualToString:@"i"]) {
+    } else if ([[element.tag lowercaseString] isEqualToString:@"i"]) {
         UIFontDescriptor *descriptor = [[UIFont preferredFontForTextStyle:UIFontTextStyleBody] fontDescriptor];
         UIFontDescriptor *newDescriptor = [descriptor fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitItalic];
         return @{NSFontAttributeName : [UIFont fontWithDescriptor:newDescriptor size:0],
                  NSForegroundColorAttributeName : [UIColor labelColor],
                  NSParagraphStyleAttributeName : self.paragraphStyle,
         };
-    } else if ([element.tag isEqualToString:@"u"]) {
+    } else if ([[element.tag lowercaseString] isEqualToString:@"u"]) {
         return @{NSUnderlineStyleAttributeName : @(NSUnderlineStyleSingle),
                  NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleBody],
                  NSForegroundColorAttributeName : [UIColor labelColor],
                  NSParagraphStyleAttributeName : self.paragraphStyle,
            };
-    } else if ([element.tag containsString:@"url"]) {
+    } else if ([[element.tag lowercaseString] containsString:@"size="]) {
+        NSInteger size = [[element.tag substringFromIndex:5] integerValue];
+        
+        if (size >= 4 && size <= 6) {
+            return @{
+                  NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleTitle2],
+                  NSForegroundColorAttributeName : [UIColor labelColor],
+                  NSParagraphStyleAttributeName : self.paragraphStyle,
+            };
+        } else if (size > 6) {
+            return @{
+                  NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleTitle3],
+                  NSForegroundColorAttributeName : [UIColor labelColor],
+                  NSParagraphStyleAttributeName : self.paragraphStyle,
+            };
+        } else {
+            return self.normalTextAttributs;
+        }
+    } else if ([[element.tag lowercaseString] containsString:@"url="]) {
         NSString *url = [element.tag substringFromIndex:4];
         
         YYTextBorder *highlightBorder = [YYTextBorder new];
@@ -242,10 +331,7 @@
                  NSParagraphStyleAttributeName : self.paragraphStyle,
         };
     } else {
-        return @{NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleBody],
-                 NSForegroundColorAttributeName : [UIColor labelColor],
-                 NSParagraphStyleAttributeName : self.paragraphStyle,
-        };
+        return self.normalTextAttributs;
     }
     
     return nil;

@@ -86,6 +86,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *content;
+
 @property (nonatomic, strong) NSString *flag;
 
 @property (nonatomic, assign) NSTimeInterval post_time;

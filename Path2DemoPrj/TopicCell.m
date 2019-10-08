@@ -122,7 +122,7 @@
         _topicTitleLabel = [UILabel new];
         _topicTitleLabel.numberOfLines = 0;
         _topicTitleLabel.adjustsFontForContentSizeCategory = YES;
-        _topicTitleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleTitle3];
+        _topicTitleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
     }
     return _topicTitleLabel;
 }

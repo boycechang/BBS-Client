@@ -8,9 +8,11 @@
 
 #import "Models.h"
 #import "NSString+BYRTool.h"
+#import <BlocksKit.h>
+
+static const NSString *kQuoteRegex = @"在.*的(?:大作|邮件)中提到";
 
 @implementation Pagination
-
 @end
 
 
@@ -65,17 +67,22 @@ MJCodingImplementation
 - (id)mj_newValueFromOldValue:(id)oldValue property:(MJProperty *)property {
     if ([property.name isEqualToString:@"content"]) {
         NSString *content = oldValue;
-        if ([content hasSuffix:@"\n--\n\n"]) {
-            content = [[content substringToIndex:content.length - 5] trimedWhitespaceString];
-        }
         content = [content trimedWhitespaceString];
+        if ([content hasSuffix:@"--"]) {
+            content = [[content substringToIndex:content.length - 2] trimedWhitespaceString];
+        }
         return content;
     }
 
     return oldValue;
 }
 
+- (void)setContent:(NSString *)content {
+    _content = content;
+}
+
 @end
+
 
 @implementation Mail
 
