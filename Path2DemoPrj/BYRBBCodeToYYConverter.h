@@ -10,10 +10,22 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class Attachment;
+
+@interface BYRImageAttachmentModel : NSObject
+
+@property (nonatomic, strong) Attachment *attachment;
+@property (nonatomic, strong) UIImageView *imageView;
+@property (nonatomic, strong) NSAttributedString *attachmentText;
+@property (nonatomic, strong) NSArray <BYRImageAttachmentModel *> *allSortedAttachments;
+
+@end
+
+
 @protocol BYRBBCodeToYYConverterActionDelegate <NSObject>
 
 - (void)BBCodeDidClickURL:(NSString *)url;
-- (void)BBCodeDidClickAttachmentImage:(NSArray *)attachments index:(NSInteger)indx sourceView:(UIView *)view;
+- (void)BBCodeDidClickAttachment:(BYRImageAttachmentModel *)attachmentModel;
 
 @end
 

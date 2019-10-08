@@ -13,17 +13,22 @@
 #import <UIImageView+WebCache.h>
 #import "Models.h"
 #import "AttachmentView.h"
+#import "BYREmotionParser.h"
+#import "BYRContentParser.h"
+
+@implementation BYRImageAttachmentModel
+@end
 
 @interface BYRBBCodeToYYConverter () <BBCodeParserDelegate, BBCodeStringDelegate>
 
 @property (nonatomic, assign) CGFloat containerWidth;
+
 @property (nonatomic, strong) NSArray *currentAttachments;
+@property (nonatomic, strong) NSMutableArray *usedAttachments;
+@property (nonatomic, strong) NSMutableArray *sotedAttachmentModels;
 
-@property (nonatomic, strong) NSMutableSet *usedAttachments;
 @property (nonatomic, strong) NSParagraphStyle *paragraphStyle;
-
-@property (nonatomic, strong) YYTextHighlight *yyLinkHeight;
-
+@property (nonatomic, strong) YYTextHighlight *yyLinkHighlight;
 @property (nonatomic, strong) NSDictionary *normalTextAttributs;
 @property (nonatomic, strong) NSDictionary *quoteTextAttributs;
 
@@ -43,22 +48,8 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _usedAttachments = [NSMutableSet new];
-        
-        NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
-        paragraphStyle.lineSpacing = 4;
-        _paragraphStyle = paragraphStyle;
-        _normalTextAttributs = @{NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleBody],
-                 NSForegroundColorAttributeName : [UIColor labelColor],
-                 NSParagraphStyleAttributeName : self.paragraphStyle,
-        };
-        
-        NSMutableParagraphStyle *quoteParagraphStyle = [NSMutableParagraphStyle new];
-        quoteParagraphStyle.lineSpacing = 2;
-        _quoteTextAttributs = @{NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote],
-                 NSForegroundColorAttributeName : [UIColor secondaryLabelColor],
-                 NSParagraphStyleAttributeName : quoteParagraphStyle,
-        };
+        _usedAttachments = [NSMutableArray new];
+        _sotedAttachmentModels = [NSMutableArray new];
         
         YYTextBorder *highlightBorder = [YYTextBorder new];
         highlightBorder.fillColor = [UIColor systemFillColor];
@@ -86,7 +77,7 @@
             }
         };
         
-        self.yyLinkHeight = highlight;
+        self.yyLinkHighlight = highlight;
     }
     return self;
 }
@@ -96,8 +87,27 @@
                      containerWidth:(CGFloat)containerWidth;
 {
     [self.usedAttachments removeAllObjects];
+    [self.sotedAttachmentModels removeAllObjects];
+    
     self.currentAttachments = attachments;
     self.containerWidth = containerWidth;
+    
+    NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
+    paragraphStyle.lineSpacing = 4;
+    _paragraphStyle = paragraphStyle;
+    _normalTextAttributs = @{NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleBody],
+             NSForegroundColorAttributeName : [UIColor labelColor],
+             NSParagraphStyleAttributeName : self.paragraphStyle,
+    };
+    
+    NSMutableParagraphStyle *quoteParagraphStyle = [NSMutableParagraphStyle new];
+    quoteParagraphStyle.lineSpacing = 2;
+    quoteParagraphStyle.headIndent = 20.f;
+    quoteParagraphStyle.firstLineHeadIndent = 20.f;
+    _quoteTextAttributs = @{NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote],
+             NSForegroundColorAttributeName : [UIColor secondaryLabelColor],
+             NSParagraphStyleAttributeName : quoteParagraphStyle,
+    };
     
     BBCodeString *codeString = [[BBCodeString alloc] initWithBBCode:code andLayoutProvider:self];
     
@@ -106,27 +116,9 @@
         if (att.thumbnail_middle.length) {
             if (![self.usedAttachments containsObject:att]) {
                 // 处理图片附件，未处理过的追加到末尾
-                UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.containerWidth, 260)];
-                imageView.contentMode = UIViewContentModeScaleAspectFill;
-                imageView.layer.cornerRadius = 10;
-                imageView.layer.masksToBounds = YES;
-                imageView.layer.borderColor = [UIColor separatorColor].CGColor;
-                imageView.layer.borderWidth = 0.5;
-                
-                [imageView sd_setImageWithURL:[NSURL URLWithString:att.url]];
-                NSMutableAttributedString *attachText = [NSMutableAttributedString yy_attachmentStringWithContent:imageView contentMode:UIViewContentModeCenter attachmentSize:imageView.frame.size alignToFont:[UIFont preferredFontForTextStyle:UIFontTextStyleBody] alignment:YYTextVerticalAlignmentTop];
-                
-                YYTextHighlight *highlight = [YYTextHighlight new];
-                __weak typeof (self) wself = self;
-                NSArray *attachments = self.currentAttachments;
-                highlight.tapAction = ^(UIView *containerView, NSAttributedString *text, NSRange range, CGRect rect) {
-                    if ([wself.actionDelegate respondsToSelector:@selector(BBCodeDidClickAttachmentImage:index:sourceView:)]) {
-                        [wself.actionDelegate BBCodeDidClickAttachmentImage:attachments index:[attachments indexOfObject:att] sourceView:imageView];
-                    }
-                };
-                [attachText yy_setTextHighlight:highlight range:attachText.yy_rangeOfAll];
-                
-                [codeString.attributedString appendAttributedString:attachText];
+                BYRImageAttachmentModel *model = [self generateImageAttachmentModel:att];
+                [self.sotedAttachmentModels addObject:model];
+                [codeString.attributedString appendAttributedString:model.attachmentText];
             }
         } else {
             //处理非图片附件
@@ -154,46 +146,57 @@
         }
     }
     
-    // 处理链接
-    NSDataDetector *detector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink error:nil];
-    NSArray <NSTextCheckingResult *> *results = [detector matchesInString:codeString.attributedString.string options:NSMatchingReportCompletion range:NSMakeRange(0, codeString.attributedString.string.length)];
-    
-    for (NSTextCheckingResult *result in results) {
-        [codeString.attributedString yy_setTextHighlight:self.yyLinkHeight range:result.range];
-        [codeString.attributedString yy_setColor:[UIColor systemBlueColor] range:result.range];
-        [codeString.attributedString yy_setLink:[codeString.attributedString.string substringWithRange:result.range] range:result.range];
+    for (BYRImageAttachmentModel *attModel in self.sotedAttachmentModels) {
+        attModel.allSortedAttachments = [self.sotedAttachmentModels copy];
     }
     
-    // 处理引用
-    NSRegularExpression *expression = [NSRegularExpression regularExpressionWithPattern:@"【 在.*的(?:大作|邮件)中提到: 】.*\\s*" options:NSRegularExpressionCaseInsensitive error:nil];
-    results = [expression matchesInString:codeString.attributedString.string options:NSMatchingReportCompletion range:NSMakeRange(0, codeString.attributedString.string.length)];
-    for (NSTextCheckingResult *result in results) {
-        [codeString.attributedString addAttributes:self.quoteTextAttributs range:result.range];
-    }
+    [[BYRContentParser sharedInstance] parseLink:codeString.attributedString highlight:self.yyLinkHighlight];
     
-    expression = [NSRegularExpression regularExpressionWithPattern:@":.*\\s*" options:NSRegularExpressionCaseInsensitive error:nil];
-    results = [expression matchesInString:codeString.attributedString.string options:NSMatchingReportCompletion range:NSMakeRange(0, codeString.attributedString.string.length)];
-    for (NSTextCheckingResult *result in results) {
-        [codeString.attributedString addAttributes:self.quoteTextAttributs range:result.range];
-    }
+    [[BYRContentParser sharedInstance] parseQuote:codeString.attributedString attributes:self.quoteTextAttributs];
+    
+    [[BYREmotionParser sharedInstance] parseText:codeString.attributedString selectedRange:nil];
     
     return codeString.attributedString;
 }
 
 
+#pragma mark - action
+
+- (void)imageAttachmentCicked:(BYRImageAttachmentModel *)imageAttachmentModel {
+    if ([self.actionDelegate respondsToSelector:@selector(BBCodeDidClickAttachment:)]) {
+        [self.actionDelegate BBCodeDidClickAttachment:imageAttachmentModel];
+    }
+}
+
 #pragma mark - private
 
-- (NSMutableAttributedString *)generateImageAttachment:(NSString *)url {
+- (BYRImageAttachmentModel *)generateImageAttachmentModel:(Attachment *)attachment {
+    BYRImageAttachmentModel *model = [BYRImageAttachmentModel new];
+    model.attachment = attachment;
+    model.imageView = [self generateImageViewWithURL:attachment.url];
+    
+    __weak typeof (self) wself = self;
+    NSMutableAttributedString *attachText = [NSMutableAttributedString yy_attachmentStringWithContent:model.imageView contentMode:UIViewContentModeCenter attachmentSize:model.imageView.frame.size alignToFont:[UIFont preferredFontForTextStyle:UIFontTextStyleBody] alignment:YYTextVerticalAlignmentTop];
+    
+    YYTextHighlight *highlight = [YYTextHighlight new];
+    highlight.tapAction = ^(UIView *containerView, NSAttributedString *text, NSRange range, CGRect rect) {
+        [wself imageAttachmentCicked:model];
+    };
+    [attachText yy_setTextHighlight:highlight range:attachText.yy_rangeOfAll];
+    
+    model.attachmentText = attachText;
+    return model;
+}
+
+- (UIImageView *)generateImageViewWithURL:(NSString *)url {
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.containerWidth, 260)];
     imageView.contentMode = UIViewContentModeScaleAspectFill;
     imageView.layer.cornerRadius = 10;
     imageView.layer.masksToBounds = YES;
     imageView.layer.borderColor = [UIColor separatorColor].CGColor;
     imageView.layer.borderWidth = 0.5;
-    
     [imageView sd_setImageWithURL:[NSURL URLWithString:url]];
-    NSMutableAttributedString *attachText = [NSMutableAttributedString yy_attachmentStringWithContent:imageView contentMode:UIViewContentModeCenter attachmentSize:imageView.frame.size alignToFont:[UIFont preferredFontForTextStyle:UIFontTextStyleBody] alignment:YYTextVerticalAlignmentTop];
-    return attachText;
+    return imageView;
 }
 
 #pragma mark - BBCodeStringDelegate
@@ -207,40 +210,18 @@
             return nil;
         }
         
-        [self.usedAttachments addObject:att];
+        if (![self.usedAttachments containsObject:att]) {
+            [self.usedAttachments addObject:att];
+        }
         
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.containerWidth, 260)];
-        imageView.contentMode = UIViewContentModeScaleAspectFill;
-        imageView.layer.cornerRadius = 10;
-        imageView.layer.masksToBounds = YES;
-        imageView.layer.borderColor = [UIColor separatorColor].CGColor;
-        imageView.layer.borderWidth = 0.5;
-        
-        [imageView sd_setImageWithURL:[NSURL URLWithString:att.url]];
-        NSMutableAttributedString *attachText = [NSMutableAttributedString yy_attachmentStringWithContent:imageView contentMode:UIViewContentModeCenter attachmentSize:imageView.frame.size alignToFont:[UIFont preferredFontForTextStyle:UIFontTextStyleBody] alignment:YYTextVerticalAlignmentTop];
-        
-        YYTextHighlight *highlight = [YYTextHighlight new];
-        __weak typeof (self) wself = self;
-        NSArray *attachments = self.currentAttachments;
-        highlight.tapAction = ^(UIView *containerView, NSAttributedString *text, NSRange range, CGRect rect) {
-            if ([wself.actionDelegate respondsToSelector:@selector(BBCodeDidClickAttachmentImage:index:sourceView:)]) {
-                [wself.actionDelegate BBCodeDidClickAttachmentImage:attachments index:[attachments indexOfObject:att] sourceView:imageView];
-            }
-        };
-        [attachText yy_setTextHighlight:highlight range:attachText.yy_rangeOfAll];
-        
-        return attachText;
+        BYRImageAttachmentModel *model = [self generateImageAttachmentModel:att];
+        [self.sotedAttachmentModels addObject:model];
+        return model.attachmentText;
     } else if ([element.tag containsString:@"img="]) {
         NSString *url = [element.tag substringFromIndex:4];
         
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.containerWidth, 260)];
-        imageView.contentMode = UIViewContentModeScaleAspectFill;
-        imageView.layer.cornerRadius = 10;
-        imageView.layer.masksToBounds = YES;
-        imageView.layer.borderColor = [UIColor separatorColor].CGColor;
-        imageView.layer.borderWidth = 0.5;
+        UIImageView *imageView = [self generateImageViewWithURL:url];
         
-        [imageView sd_setImageWithURL:[NSURL URLWithString:url]];
         NSMutableAttributedString *attachText = [NSMutableAttributedString yy_attachmentStringWithContent:imageView contentMode:UIViewContentModeCenter attachmentSize:imageView.frame.size alignToFont:[UIFont preferredFontForTextStyle:UIFontTextStyleBody] alignment:YYTextVerticalAlignmentTop];
         
         YYTextHighlight *highlight = [YYTextHighlight new];

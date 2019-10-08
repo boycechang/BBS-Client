@@ -294,6 +294,7 @@
 		E107B8401D15C3750062ED98 /* FTScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = E107B83C1D15C3750062ED98 /* FTScrollView.m */; };
 		E107B8411D15C3750062ED98 /* UIView+FTAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = E107B83E1D15C3750062ED98 /* UIView+FTAdditions.m */; };
 		E11067412346E57900C7F5CC /* BYRCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E11067402346E57900C7F5CC /* BYRCollectionViewController.m */; };
+		E1309DE3234CEC8500833BB3 /* BYREmotionParser.m in Sources */ = {isa = PBXBuildFile; fileRef = E1309DE2234CEC8500833BB3 /* BYREmotionParser.m */; };
 		E13416482345E02A00A6C408 /* Models.m in Sources */ = {isa = PBXBuildFile; fileRef = E13416472345E02A00A6C408 /* Models.m */; };
 		E144EB3123498E91000818BF /* BYRUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = E144EB3023498E91000818BF /* BYRUtil.m */; };
 		E144EB3423499613000818BF /* NotificationListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E144EB3323499613000818BF /* NotificationListViewController.m */; };
@@ -302,6 +303,7 @@
 		E144EB40234A215C000818BF /* MailHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E144EB3F234A215C000818BF /* MailHeaderCell.m */; };
 		E144EB43234A2B38000818BF /* NSString+BYRTool.m in Sources */ = {isa = PBXBuildFile; fileRef = E144EB42234A2B38000818BF /* NSString+BYRTool.m */; };
 		E144EB48234B4A9E000818BF /* ThreadCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E144EB47234B4A9E000818BF /* ThreadCommentCell.m */; };
+		E147DFDC234CEFD900772239 /* BYRContentParser.m in Sources */ = {isa = PBXBuildFile; fileRef = E147DFDB234CEFD900772239 /* BYRContentParser.m */; };
 		E14E046D23461E2600AC0EAF /* BYRNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E14E046C23461E2600AC0EAF /* BYRNetworkManager.m */; };
 		E14E0470234624DE00AC0EAF /* BYRTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E14E046F234624DE00AC0EAF /* BYRTableViewController.m */; };
 		E14E047323462E4B00AC0EAF /* BYRNetworkReponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E14E047223462E4B00AC0EAF /* BYRNetworkReponse.m */; };
@@ -709,6 +711,8 @@
 		E107B83E1D15C3750062ED98 /* UIView+FTAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+FTAdditions.m"; sourceTree = "<group>"; };
 		E110673F2346E57900C7F5CC /* BYRCollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BYRCollectionViewController.h; sourceTree = "<group>"; };
 		E11067402346E57900C7F5CC /* BYRCollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BYRCollectionViewController.m; sourceTree = "<group>"; };
+		E1309DE1234CEC8500833BB3 /* BYREmotionParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BYREmotionParser.h; sourceTree = "<group>"; };
+		E1309DE2234CEC8500833BB3 /* BYREmotionParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BYREmotionParser.m; sourceTree = "<group>"; };
 		E13416462345E02A00A6C408 /* Models.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Models.h; sourceTree = "<group>"; };
 		E13416472345E02A00A6C408 /* Models.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Models.m; sourceTree = "<group>"; };
 		E140EAF223449EBC008D7D9A /* 北邮人.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "北邮人.entitlements"; sourceTree = "<group>"; };
@@ -726,6 +730,8 @@
 		E144EB42234A2B38000818BF /* NSString+BYRTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+BYRTool.m"; sourceTree = "<group>"; };
 		E144EB46234B4A9E000818BF /* ThreadCommentCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ThreadCommentCell.h; sourceTree = "<group>"; };
 		E144EB47234B4A9E000818BF /* ThreadCommentCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ThreadCommentCell.m; sourceTree = "<group>"; };
+		E147DFDA234CEFD900772239 /* BYRContentParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BYRContentParser.h; sourceTree = "<group>"; };
+		E147DFDB234CEFD900772239 /* BYRContentParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BYRContentParser.m; sourceTree = "<group>"; };
 		E14E046B23461E2600AC0EAF /* BYRNetworkManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BYRNetworkManager.h; sourceTree = "<group>"; };
 		E14E046C23461E2600AC0EAF /* BYRNetworkManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BYRNetworkManager.m; sourceTree = "<group>"; };
 		E14E046E234624DE00AC0EAF /* BYRTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BYRTableViewController.h; sourceTree = "<group>"; };
@@ -1684,6 +1690,10 @@
 				00D71E5617BE333E008460E1 /* AttachmentView.m */,
 				E1B3D73F2348BDBD00977139 /* TopicViewController.h */,
 				E1B3D7402348BDBD00977139 /* TopicViewController.m */,
+				E1309DE1234CEC8500833BB3 /* BYREmotionParser.h */,
+				E1309DE2234CEC8500833BB3 /* BYREmotionParser.m */,
+				E147DFDA234CEFD900772239 /* BYRContentParser.h */,
+				E147DFDB234CEFD900772239 /* BYRContentParser.m */,
 			);
 			name = Topics;
 			sourceTree = "<group>";
@@ -2176,7 +2186,9 @@
 				3EA69A2B16C527D800045198 /* ASIDataDecompressor.m in Sources */,
 				3EA69A2C16C527D800045198 /* ASIDownloadCache.m in Sources */,
 				00057589182698A200060E69 /* WUDemoKeyboardBuilder.m in Sources */,
+				E147DFDC234CEFD900772239 /* BYRContentParser.m in Sources */,
 				E14E047323462E4B00AC0EAF /* BYRNetworkReponse.m in Sources */,
+				E1309DE3234CEC8500833BB3 /* BYREmotionParser.m in Sources */,
 				E11067412346E57900C7F5CC /* BYRCollectionViewController.m in Sources */,
 				3EA69A2D16C527D800045198 /* ASIFormDataRequest.m in Sources */,
 				3EA69A2E16C527D800045198 /* ASIHTTPRequest.m in Sources */,

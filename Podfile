@@ -14,5 +14,6 @@ pod 'BlocksKit'
 pod 'BBCodeString'
 pod 'MBProgressHUD'
 pod 'KSPhotoBrowser'
+pod 'YYImage'
 
 end

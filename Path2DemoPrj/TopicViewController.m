@@ -163,20 +163,12 @@
     [self presentViewController:safari animated:YES completion:nil];
 }
 
-- (void)BBCodeDidClickAttachmentImage:(NSArray *)attachments index:(NSInteger)indx sourceView:(UIView *)view {
-    Attachment *currentAtt = [attachments objectAtIndex:indx];
-    NSArray *picArray = [attachments bk_select:^BOOL(Attachment *att) {
-        return att.thumbnail_middle.length != 0;
+- (void)BBCodeDidClickAttachment:(BYRImageAttachmentModel *)attachmentModel {
+    NSArray <KSPhotoItem *>* items = [attachmentModel.allSortedAttachments bk_map:^id(BYRImageAttachmentModel *attModel) {
+        return [[KSPhotoItem alloc] initWithSourceView:attModel.imageView imageUrl:[NSURL URLWithString:attModel.attachment.url]];
     }];
     
-    NSArray <KSPhotoItem *>* items = [picArray bk_map:^id(Attachment *att) {
-        if (currentAtt == att) {
-            return [[KSPhotoItem alloc] initWithSourceView:view imageUrl:[NSURL URLWithString:att.url]];
-        }
-        return [[KSPhotoItem alloc] initWithSourceView:nil imageUrl:[NSURL URLWithString:att.url]];
-    }];
-    
-    KSPhotoBrowser *browser = [KSPhotoBrowser browserWithPhotoItems:items selectedIndex:[picArray indexOfObject:currentAtt]];
+    KSPhotoBrowser *browser = [KSPhotoBrowser browserWithPhotoItems:items selectedIndex:[attachmentModel.allSortedAttachments indexOfObject:attachmentModel]];
     browser.dismissalStyle = KSPhotoBrowserInteractiveDismissalStyleScale;
     browser.backgroundStyle = KSPhotoBrowserBackgroundStyleBlur;
     [browser showFromViewController:self];

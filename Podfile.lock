@@ -41,6 +41,9 @@ PODS:
     - SDWebImage/Core (= 5.1.0)
   - SDWebImage/Core (5.1.0)
   - YYCache (1.0.4)
+  - YYImage (1.0.4):
+    - YYImage/Core (= 1.0.4)
+  - YYImage/Core (1.0.4)
   - YYText (1.0.7)
 
 DEPENDENCIES:
@@ -53,6 +56,7 @@ DEPENDENCIES:
   - MJExtension
   - SDWebImage
   - YYCache
+  - YYImage
   - YYText
 
 SPEC REPOS:
@@ -67,6 +71,7 @@ SPEC REPOS:
     - MJExtension
     - SDWebImage
     - YYCache
+    - YYImage
     - YYText
 
 SPEC CHECKSUMS:
@@ -80,8 +85,9 @@ SPEC CHECKSUMS:
   MJExtension: 6b69b3bef2864fd550ce1a184eda219e321209d2
   SDWebImage: fb387001955223213dde14bc08c8b73f371f8d8f
   YYCache: 8105b6638f5e849296c71f331ff83891a4942952
+  YYImage: 1e1b62a9997399593e4b9c4ecfbbabbf1d3f3b54
   YYText: 5c461d709e24d55a182d1441c41dc639a18a4849
 
-PODFILE CHECKSUM: 6f47909f37a22f178456dc445fae1c414526ba16
+PODFILE CHECKSUM: 0bbc7b5cb492e5d252c7739d63b8a62a7a764c17
 
 COCOAPODS: 1.7.5
