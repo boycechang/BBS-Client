@@ -61,7 +61,26 @@
         if (att.thumbnail_middle.length) {
             if (![self.usedAttachments containsObject:att]) {
                 // 处理图片附件，未处理过的追加到末尾
-                NSAttributedString *attachText = [self generateImageAttachment:att.url];
+                UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.containerWidth, 260)];
+                imageView.contentMode = UIViewContentModeScaleAspectFill;
+                imageView.layer.cornerRadius = 10;
+                imageView.layer.masksToBounds = YES;
+                imageView.layer.borderColor = [UIColor separatorColor].CGColor;
+                imageView.layer.borderWidth = 0.5;
+                
+                [imageView sd_setImageWithURL:[NSURL URLWithString:att.url]];
+                NSMutableAttributedString *attachText = [NSMutableAttributedString yy_attachmentStringWithContent:imageView contentMode:UIViewContentModeCenter attachmentSize:imageView.frame.size alignToFont:[UIFont preferredFontForTextStyle:UIFontTextStyleBody] alignment:YYTextVerticalAlignmentTop];
+                
+                YYTextHighlight *highlight = [YYTextHighlight new];
+                __weak typeof (self) wself = self;
+                NSArray *attachments = self.currentAttachments;
+                highlight.tapAction = ^(UIView *containerView, NSAttributedString *text, NSRange range, CGRect rect) {
+                    if ([wself.actionDelegate respondsToSelector:@selector(BBCodeDidClickAttachmentImage:index:sourceView:)]) {
+                        [wself.actionDelegate BBCodeDidClickAttachmentImage:attachments index:[attachments indexOfObject:att] sourceView:imageView];
+                    }
+                };
+                [attachText yy_setTextHighlight:highlight range:attachText.yy_rangeOfAll];
+                
                 [codeString.attributedString appendAttributedString:attachText];
             }
         } else {
@@ -96,7 +115,7 @@
 
 #pragma mark - private
 
-- (NSAttributedString *)generateImageAttachment:(NSString *)url {
+- (NSMutableAttributedString *)generateImageAttachment:(NSString *)url {
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.containerWidth, 260)];
     imageView.contentMode = UIViewContentModeScaleAspectFill;
     imageView.layer.cornerRadius = 10;
@@ -121,10 +140,51 @@
         }
         
         [self.usedAttachments addObject:att];
-        return [self generateImageAttachment:att.url];
+        
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.containerWidth, 260)];
+        imageView.contentMode = UIViewContentModeScaleAspectFill;
+        imageView.layer.cornerRadius = 10;
+        imageView.layer.masksToBounds = YES;
+        imageView.layer.borderColor = [UIColor separatorColor].CGColor;
+        imageView.layer.borderWidth = 0.5;
+        
+        [imageView sd_setImageWithURL:[NSURL URLWithString:att.url]];
+        NSMutableAttributedString *attachText = [NSMutableAttributedString yy_attachmentStringWithContent:imageView contentMode:UIViewContentModeCenter attachmentSize:imageView.frame.size alignToFont:[UIFont preferredFontForTextStyle:UIFontTextStyleBody] alignment:YYTextVerticalAlignmentTop];
+        
+        YYTextHighlight *highlight = [YYTextHighlight new];
+        __weak typeof (self) wself = self;
+        NSArray *attachments = self.currentAttachments;
+        highlight.tapAction = ^(UIView *containerView, NSAttributedString *text, NSRange range, CGRect rect) {
+            if ([wself.actionDelegate respondsToSelector:@selector(BBCodeDidClickAttachmentImage:index:sourceView:)]) {
+                [wself.actionDelegate BBCodeDidClickAttachmentImage:attachments index:[attachments indexOfObject:att] sourceView:imageView];
+            }
+        };
+        [attachText yy_setTextHighlight:highlight range:attachText.yy_rangeOfAll];
+        
+        return attachText;
     } else if ([element.tag containsString:@"img="]) {
         NSString *url = [element.tag substringFromIndex:4];
-        return [self generateImageAttachment:url];
+        
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.containerWidth, 260)];
+        imageView.contentMode = UIViewContentModeScaleAspectFill;
+        imageView.layer.cornerRadius = 10;
+        imageView.layer.masksToBounds = YES;
+        imageView.layer.borderColor = [UIColor separatorColor].CGColor;
+        imageView.layer.borderWidth = 0.5;
+        
+        [imageView sd_setImageWithURL:[NSURL URLWithString:url]];
+        NSMutableAttributedString *attachText = [NSMutableAttributedString yy_attachmentStringWithContent:imageView contentMode:UIViewContentModeCenter attachmentSize:imageView.frame.size alignToFont:[UIFont preferredFontForTextStyle:UIFontTextStyleBody] alignment:YYTextVerticalAlignmentTop];
+        
+        YYTextHighlight *highlight = [YYTextHighlight new];
+        __weak typeof (self) wself = self;
+        highlight.tapAction = ^(UIView *containerView, NSAttributedString *text, NSRange range, CGRect rect) {
+            if ([wself.actionDelegate respondsToSelector:@selector(BBCodeDidClickURL:)]) {
+                [wself.actionDelegate BBCodeDidClickURL:url];
+            }
+        };
+        [attachText yy_setTextHighlight:highlight range:attachText.yy_rangeOfAll];
+        
+        return attachText;
     }
     
     return nil;

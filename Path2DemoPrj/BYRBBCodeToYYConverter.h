@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol BYRBBCodeToYYConverterActionDelegate <NSObject>
 
 - (void)BBCodeDidClickURL:(NSString *)url;
+- (void)BBCodeDidClickAttachmentImage:(NSArray *)attachments index:(NSInteger)indx sourceView:(UIView *)view;
 
 @end
 
