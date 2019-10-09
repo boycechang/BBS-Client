@@ -10,10 +10,13 @@
 #import <Masonry.h>
 #import "Models.h"
 #import "NSString+BYRTool.h"
+#import <YYText.h>
+#import "BYRBBCodeToYYConverter.h"
+#import "BYRUtil.h"
 
 @interface MailContentCell ()
 
-@property (nonatomic, strong) UILabel *contentLabel;
+@property (nonatomic, strong) YYLabel *contentLabel;
 
 @end
 
@@ -37,18 +40,25 @@
 
 #pragma mark - public
 
-- (void)updateWithMail:(Mail *)mail {
+- (void)updateWithMail:(Mail *)mail
+converter:(BYRBBCodeToYYConverter *)converter {
     NSString *trimedContent = [mail.content trimedWhitespaceString];
-    self.contentLabel.text = trimedContent;
+    
+    CGFloat contentWidth = self.safeAreaLayoutGuide.layoutFrame.size.width - 30;
+    if (!mail.attributedContentCache) {
+        NSAttributedString *richText = [converter parseBBCode:trimedContent attachemtns:nil containerWidth:contentWidth];
+        mail.attributedContentCache = richText;
+    }
+    self.contentLabel.preferredMaxLayoutWidth = contentWidth;
+    self.contentLabel.attributedText = mail.attributedContentCache;
 }
 
 #pragma mark - getter
 
-- (UILabel *)contentLabel {
+- (YYLabel *)contentLabel {
     if (!_contentLabel) {
-        _contentLabel = [UILabel new];
+        _contentLabel = [YYLabel new];
         _contentLabel.numberOfLines = 0;
-        _contentLabel.adjustsFontForContentSizeCategory = YES;
         _contentLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
     }
     return _contentLabel;

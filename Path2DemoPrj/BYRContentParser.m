@@ -8,6 +8,9 @@
 
 #import "BYRContentParser.h"
 #import <YYText.h>
+#import "NSString+BYRTool.h"
+
+NSString *const BYRContentParserQuoteAttributedName = @"BYRCPQuoteAttributedName";
 
 @implementation BYRContentParser
 
@@ -42,6 +45,25 @@
     for (NSTextCheckingResult *result in results) {
         [text addAttributes:attributes range:result.range];
     }
+    
+    YYTextBorder *border = [YYTextBorder new];
+    border.lineStyle = YYTextLineStyleSingle;
+    border.fillColor = [UIColor tertiarySystemFillColor];
+    border.insets = UIEdgeInsetsMake(-3, 0, 0, 0);
+    border.cornerRadius = 2;
+    border.strokeWidth = YYTextCGFloatFromPixel(2);
+    
+//    __block NSRange finedRange = NSMakeRange(0, 0);
+    [text enumerateAttribute:BYRContentParserQuoteAttributedName inRange:NSMakeRange(0, text.length) options:kNilOptions usingBlock:^(id  _Nullable value, NSRange range, BOOL * _Nonnull stop) {
+        if (value) {
+//            finedRange = range;
+            [text yy_setTextBlockBorder:border.copy range:range];
+        }
+    }];
+    
+//    if (finedRange.length != 0) {
+//        [text replaceCharactersInRange:finedRange withAttributedString:[[[NSMutableAttributedString alloc] initWithAttributedString:[text attributedSubstringFromRange:finedRange]] trimedWhitespaceString]];
+//    }
 }
 
 - (void)parseLink:(NSMutableAttributedString *)text highlight:(YYTextHighlight *)highlight {

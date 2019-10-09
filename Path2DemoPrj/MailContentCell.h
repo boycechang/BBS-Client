@@ -10,11 +10,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class Mail;
+@class Mail, BYRBBCodeToYYConverter;
 
 @interface MailContentCell : UITableViewCell
 
-- (void)updateWithMail:(Mail *)mail;
+- (void)updateWithMail:(Mail *)mail
+             converter:(BYRBBCodeToYYConverter *)converter;
 
 @end
 

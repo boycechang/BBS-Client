@@ -13,8 +13,13 @@
 #import "BYRNetworkReponse.h"
 #import "Models.h"
 #import "PostMailViewController.h"
+#import "BYRBBCodeToYYConverter.h"
+#import <SafariServices/SafariServices.h>
+#import <BlocksKit.h>
+#import "KSPhotoBrowser.h"
 
 @interface MailViewController ()
+@property (nonatomic, strong) BYRBBCodeToYYConverter *converter;
 @end
 
 @implementation MailViewController
@@ -24,6 +29,9 @@
     self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
     UIBarButtonItem *replyButton = [[UIBarButtonItem alloc] initWithImage:[UIImage systemImageNamed:@"arrowshape.turn.up.left"] style:UIBarButtonItemStylePlain target:self action:@selector(reply:)];
     self.navigationItem.rightBarButtonItem = replyButton;
+    
+    self.converter = [BYRBBCodeToYYConverter new];
+    self.converter.actionDelegate = self;
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.tableView registerClass:MailHeaderCell.class
@@ -57,10 +65,9 @@
     }
     
     MailContentCell *cell = [self.tableView dequeueReusableCellWithIdentifier:MailContentCell.class.description forIndexPath:indexPath];
-    [cell updateWithMail:self.mail];
+    [cell updateWithMail:self.mail converter:self.converter];
     return cell;
 }
-
 
 #pragma mark - BYRTableViewControllerProtocol
 
@@ -71,6 +78,32 @@
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         completion();
     }];
+}
+
+#pragma mark - Trait Collection
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    self.mail.attributedContentCache = nil;
+    [self.tableView reloadData];
+}
+
+#pragma mark - BYRBBCodeToYYConverterActionDelegate
+
+- (void)BBCodeDidClickURL:(NSString *)url {
+    SFSafariViewController *safari = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:url]];
+    safari.modalPresentationStyle = UIModalPresentationPageSheet;
+    [self presentViewController:safari animated:YES completion:nil];
+}
+
+- (void)BBCodeDidClickAttachment:(BYRImageAttachmentModel *)attachmentModel {
+    NSArray <KSPhotoItem *>* items = [attachmentModel.allSortedAttachments bk_map:^id(BYRImageAttachmentModel *attModel) {
+        return [[KSPhotoItem alloc] initWithSourceView:attModel.imageView imageUrl:[NSURL URLWithString:attModel.attachment.url]];
+    }];
+    
+    KSPhotoBrowser *browser = [KSPhotoBrowser browserWithPhotoItems:items selectedIndex:[attachmentModel.allSortedAttachments indexOfObject:attachmentModel]];
+    browser.dismissalStyle = KSPhotoBrowserInteractiveDismissalStyleScale;
+    browser.backgroundStyle = KSPhotoBrowserBackgroundStyleBlur;
+    [browser showFromViewController:self];
 }
 
 @end

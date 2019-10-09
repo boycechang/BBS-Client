@@ -15,3 +15,20 @@
 }
 
 @end
+
+
+@implementation NSMutableAttributedString (BYRTool)
+
+- (NSMutableAttributedString *)trimedWhitespaceString {
+    NSCharacterSet *set = [[NSCharacterSet whitespaceAndNewlineCharacterSet] invertedSet];
+    
+    NSRange range = [self.string rangeOfCharacterFromSet:set];
+    NSInteger loc = range.length > 0 ? range.location : 0;
+    
+    range = [self.string rangeOfCharacterFromSet:set options:NSBackwardsSearch];
+    NSInteger len = (range.length > 0 ? NSMaxRange(range) : self.string.length) - loc;
+    
+    return [[NSMutableAttributedString alloc] initWithAttributedString:[self attributedSubstringFromRange:NSMakeRange(loc, len)]];
+}
+
+@end

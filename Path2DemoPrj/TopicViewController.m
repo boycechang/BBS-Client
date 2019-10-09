@@ -21,6 +21,7 @@
 
 @property (nonatomic, strong) Pagination *pagination;
 @property (nonatomic, strong) NSMutableArray <Topic *> *topics;
+@property (nonatomic, strong) BYRBBCodeToYYConverter *converter;
 
 @end
 
@@ -30,8 +31,8 @@
     [super viewDidLoad];
     self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
     
-    [BYRBBCodeToYYConverter sharedInstance].actionDelegate = self;
-    
+    self.converter = [BYRBBCodeToYYConverter new];
+    self.converter.actionDelegate = self;
     [self.tableView registerClass:ThreadCell.class
            forCellReuseIdentifier:ThreadCell.class.description];
     [self.tableView registerClass:ThreadCommentCell.class
@@ -103,12 +104,12 @@
         ThreadCell *cell = (ThreadCell *)[tableView dequeueReusableCellWithIdentifier:ThreadCell.class.description];
         Topic *topic = [self.topics objectAtIndex:indexPath.row];
         cell.frame = self.view.frame;
-        [cell updateWithTopic:topic];
+        [cell updateWithTopic:topic converter:self.converter];
         return cell;
     } else {
         ThreadCommentCell *cell = (ThreadCommentCell *)[tableView dequeueReusableCellWithIdentifier:ThreadCommentCell.class.description];
         Topic *topic = [self.topics objectAtIndex:indexPath.row];
-        [cell updateWithTopic:topic position:indexPath.row];
+        [cell updateWithTopic:topic position:indexPath.row converter:self.converter];
         return cell;
     }
 }

@@ -116,7 +116,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) NSUInteger pos;
 @property (nonatomic, assign) NSTimeInterval time;
 
-
+// 富文本解析缓存
 @property (nonatomic, strong) NSAttributedString *attributedContentCache;
 
 @end
@@ -137,6 +137,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, assign) BOOL has_attachment;
 @property (nonatomic, strong) NSArray <Attachment *> *attachments;
+
+// 富文本解析缓存
+@property (nonatomic, strong) NSAttributedString *attributedContentCache;
 
 @end
 

@@ -10,6 +10,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+UIKIT_EXTERN NSString *const BYRContentParserQuoteAttributedName;
+
 @class YYTextHighlight;
 
 @interface BYRContentParser : NSObject

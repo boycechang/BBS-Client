@@ -71,9 +71,9 @@
     self.sectionNameLabel.text = secionName;
     
     if (unread != 0) {
-        self.countLabel.text = [NSString stringWithFormat:@"(%li条新)", unread];
+        self.countLabel.text = [NSString stringWithFormat:@"(%li条未读)", unread];
     } else {
-        //self.countLabel.text = [NSString stringWithFormat:@"(%li)", count];
+        self.countLabel.text = nil;
     }
 }
 

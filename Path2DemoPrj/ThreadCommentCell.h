@@ -10,12 +10,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class Topic;
+@class Topic, BYRBBCodeToYYConverter;
 
 @interface ThreadCommentCell : UITableViewCell
 
-- (void)updateWithTopic:(Topic *)topic position:(NSInteger)position;
-- (void)refreshContent;
+- (void)updateWithTopic:(Topic *)topic
+               position:(NSInteger)position
+              converter:(BYRBBCodeToYYConverter *)converter;
 
 @end
 

@@ -35,8 +35,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, weak) id <BYRBBCodeToYYConverterActionDelegate> actionDelegate;
 
-+ (instancetype)sharedInstance;
-
 - (NSAttributedString *)parseBBCode:(NSString *)code
                         attachemtns:(NSArray <Attachment *> *)attachments
                      containerWidth:(CGFloat)containerWidth;

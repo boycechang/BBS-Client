@@ -30,20 +30,10 @@
 @property (nonatomic, strong) NSParagraphStyle *paragraphStyle;
 @property (nonatomic, strong) YYTextHighlight *yyLinkHighlight;
 @property (nonatomic, strong) NSDictionary *normalTextAttributs;
-@property (nonatomic, strong) NSDictionary *quoteTextAttributs;
 
 @end
 
 @implementation BYRBBCodeToYYConverter
-
-+ (instancetype)sharedInstance {
-    static BYRBBCodeToYYConverter *_instance = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        _instance = [[self alloc] init];
-    });
-    return _instance;
-}
 
 - (instancetype)init {
     self = [super init];
@@ -100,15 +90,6 @@
              NSParagraphStyleAttributeName : self.paragraphStyle,
     };
     
-    NSMutableParagraphStyle *quoteParagraphStyle = [NSMutableParagraphStyle new];
-    quoteParagraphStyle.lineSpacing = 2;
-    quoteParagraphStyle.headIndent = 20.f;
-    quoteParagraphStyle.firstLineHeadIndent = 20.f;
-    _quoteTextAttributs = @{NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote],
-             NSForegroundColorAttributeName : [UIColor secondaryLabelColor],
-             NSParagraphStyleAttributeName : quoteParagraphStyle,
-    };
-    
     BBCodeString *codeString = [[BBCodeString alloc] initWithBBCode:code andLayoutProvider:self];
     
     // 补充剩余的attachment
@@ -150,10 +131,29 @@
         attModel.allSortedAttachments = [self.sotedAttachmentModels copy];
     }
     
+    
+    // parse link
     [[BYRContentParser sharedInstance] parseLink:codeString.attributedString highlight:self.yyLinkHighlight];
     
-    [[BYRContentParser sharedInstance] parseQuote:codeString.attributedString attributes:self.quoteTextAttributs];
     
+    // parse quote
+    NSMutableParagraphStyle *quoteParagraphStyle = [NSMutableParagraphStyle new];
+    quoteParagraphStyle.lineSpacing = 2;
+    quoteParagraphStyle.headIndent = 5;
+    quoteParagraphStyle.tailIndent = -5;
+    quoteParagraphStyle.firstLineHeadIndent = 5;
+    quoteParagraphStyle.paragraphSpacingBefore = 5;
+    NSDictionary *quoteTextAttributs = @{
+        NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote],
+        NSForegroundColorAttributeName : [UIColor secondaryLabelColor],
+        NSParagraphStyleAttributeName : quoteParagraphStyle,
+        BYRContentParserQuoteAttributedName : @1
+    };
+    
+    [[BYRContentParser sharedInstance] parseQuote:codeString.attributedString attributes:quoteTextAttributs];
+    
+    
+    // parse emoji
     [[BYREmotionParser sharedInstance] parseText:codeString.attributedString selectedRange:nil];
     
     return codeString.attributedString;
@@ -205,6 +205,10 @@
 - (NSAttributedString *)getAttributedTextForElement:(BBElement *)element {
     if ([element.tag containsString:@"upload="]) {
         NSInteger index = [[element.tag substringFromIndex:7] integerValue];
+        if (index >= self.currentAttachments.count) {
+            return nil;
+        }
+        
         Attachment *att = [self.currentAttachments objectAtIndex:index - 1];
         if (!att.thumbnail_middle.length) {
             return nil;

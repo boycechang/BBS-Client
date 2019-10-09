@@ -55,7 +55,7 @@
     }];
     
     [self.indicatorView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.headImageView).offset(3);
+        make.centerY.equalTo(self.headImageView);
         make.right.equalTo(self.headImageView.mas_left).offset(-3);
         make.width.height.mas_equalTo(7);
     }];
@@ -166,7 +166,7 @@
 - (UIView *)indicatorView {
     if (!_indicatorView) {
         _indicatorView = [UIView new];
-        _indicatorView.backgroundColor = [UIColor systemBlueColor];
+        _indicatorView.backgroundColor = [UIColor systemRedColor];
         _indicatorView.layer.cornerRadius = 3.5;
         _indicatorView.layer.masksToBounds = YES;
     }

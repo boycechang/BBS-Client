@@ -16,4 +16,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+
+@interface NSMutableAttributedString (BYRTool)
+
+- (NSMutableAttributedString *)trimedWhitespaceString;
+
+@end
+
 NS_ASSUME_NONNULL_END

@@ -71,24 +71,16 @@
     [self.contentTextView setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
 }
 
-
 #pragma mark - public
 
-- (void)refreshContent {
-    if (!self.topic.attributedContentCache) {
-        NSAttributedString *richText = [[BYRBBCodeToYYConverter sharedInstance] parseBBCode:self.topic.content attachemtns:self.topic.attachments containerWidth:self.frame.size.width - 30];
-        self.topic.attributedContentCache = richText;
-    }
-    self.contentTextView.preferredMaxLayoutWidth = self.frame.size.width - 30;
-    self.contentTextView.attributedText = self.topic.attributedContentCache;
-}
-
-- (void)updateWithTopic:(Topic *)topic position:(NSInteger)position {
+- (void)updateWithTopic:(Topic *)topic
+               position:(NSInteger)position
+              converter:(BYRBBCodeToYYConverter *)converter {
     self.position = position;
     self.topic = topic;
     
     if (!topic.attributedContentCache) {
-        NSAttributedString *richText = [[BYRBBCodeToYYConverter sharedInstance] parseBBCode:topic.content attachemtns:topic.attachments containerWidth:self.frame.size.width - 30];
+        NSAttributedString *richText = [converter parseBBCode:topic.content attachemtns:topic.attachments containerWidth:self.frame.size.width - 30];
         topic.attributedContentCache = richText;
     }
     self.contentTextView.preferredMaxLayoutWidth = self.frame.size.width - 30;

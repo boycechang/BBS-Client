@@ -90,13 +90,14 @@
 
 #pragma mark - public
 
-- (void)updateWithTopic:(Topic *)topic {
+- (void)updateWithTopic:(Topic *)topic
+              converter:(BYRBBCodeToYYConverter *)converter {
     self.topic = topic;
     
     CGFloat contentWidth = self.safeAreaLayoutGuide.layoutFrame.size.width - 30;
 
     if (!self.topic.attributedContentCache) {
-        NSAttributedString *richText = [[BYRBBCodeToYYConverter sharedInstance] parseBBCode:self.topic.content attachemtns:self.topic.attachments containerWidth:contentWidth];
+        NSAttributedString *richText = [converter parseBBCode:self.topic.content attachemtns:self.topic.attachments containerWidth:contentWidth];
         self.topic.attributedContentCache = richText;
     }
     self.contentTextView.preferredMaxLayoutWidth = contentWidth;
