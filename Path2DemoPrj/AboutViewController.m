@@ -217,7 +217,6 @@
     if(indexPath.section == 2 && indexPath.row == 0){
         [[SDImageCache sharedImageCache] clearMemory];
         [[SDImageCache sharedImageCache] clearDiskOnCompletion:nil];
-        [ASIHTTPRequest clearSession];
         [[NSURLCache sharedURLCache] removeAllCachedResponses];
         
         imageCache = 0;

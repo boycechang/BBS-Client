@@ -11,7 +11,6 @@
 #include <AudioToolbox/AudioToolbox.h>
 #import "AppDelegate.h"
 #import "UserInfoViewController.h"
-#import "ASIHTTPRequest.h"
 #import "articleViewController.h"
 
 @protocol AboutViewControllerDelegate <NSObject>

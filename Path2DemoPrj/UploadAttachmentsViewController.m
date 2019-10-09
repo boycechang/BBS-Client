@@ -70,10 +70,10 @@
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         if (postType==0 || postType==1) {//新帖或回复
-            self.attList = [BBSAPI getAttachmentsFromTopic:myBBS.mySelf Board:board ID:0];
+//            self.attList = [BBSAPI getAttachmentsFromTopic:myBBS.mySelf Board:board ID:0];
         }
         else {  //修改
-            self.attList = [BBSAPI getAttachmentsFromTopic:myBBS.mySelf Board:board ID:postId];
+//            self.attList = [BBSAPI getAttachmentsFromTopic:myBBS.mySelf Board:board ID:postId];
         }
         
         [attTable reloadData];

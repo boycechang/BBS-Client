@@ -7,14 +7,12 @@
 //
 
 #import "BBSAPI.h"
-#import "Reachability.h"
-#import "ASIHTTPRequest.h"
 #import "AppDelegate.h"
 #import <AFNetworking.h>
 
 #define APIADDR @"http://api.byr.cn"
-
 #define APPKEY @"ff7504fa9d6a4975"
+
 //#define AllBoards @"Advice|Announce|BBShelp|Bet|BM_Market|BYR10|Cooperation|ForumCommittee|ID|Progress|Score|sysop|test|BYR|BYRStar|Showcase|AimBUPT|ACETeam|BuptAssociation|BUPTMSTC|BUPTStudentUnion|BUPTSTV|BuptWeekly|ChineseOrchestra|GraduateUnion|OracleClub|Orchestra|Philharmonic|Redcross|SCDA|SICA|WOWBuptGuild|BUPT|BUPTNet|BUPTPost|BYR_Bulletin|CampusCard|daonian|EID|Focus|Graduation|Library|Recommend|School|Selfsupport|StudentAffairs|StudentQuery|BUPTNU|DMDA|GraduateSch|HongFu|INTR|IPOC|IS|SA|SCS|SEE|SEM|SH|SICE|SL|SIE|SS|SPM|SSE|STE|ACM_ICPC|BBSMan_Dev|Circuit|Communications|CPP|Database|dotNET|Economics|Embedded_System|HardWare|Innovation|Java|Linux|MathModel|Matlab|ML_DM|MobileInternet|MobileTerminalAT|Notebook|OfficeTool|Paper|SearchEngine|Security|SoftDesign|Windows|WWWTechnology|Ad_Agent|Advertising|BookTrade|BUPTDiscount|Co_Buying|ComputerTrade|Group_Buying|House|House_Agent|Ticket|AimGraduate|BNU|BUPT_Internet_Club|BYRatSH|BYRatSZ|Certification|CivilServant|Consulting|Entrepreneurship|Financial|FamilyLife|GoAbroad|Home|IT|Job|JobInfo|NetResources|Overseas|ParttimeJob|PMatBUPT|StudyShare|Weather|WorkLife|Astronomy|Debate|DV|EnglishBar|Ghost|Guitar|Humanity|Japanese|KoreanWind|Music|Photo|Poetry|PsyHealthOnline|Quyi|Reading|ScienceFiction|Tshirt|Beauty|Blessing|Clothing|Constellations|DigiLife|Environment|DIYLife|Feeling|Food|Friends|Health|LostandFound|Talking|AutoMotor|BoardGame|Comic|Flash|Hero|Joke|KaraOK|KillBar|Movie|NetLiterature|Pet|Picture|Plant|RadioOnline|Requirement|SuperStar|Travel|TV|VideoCool|Athletics|Badminton|Billiards|Basketball|Chess|Cycling|Dancing|Football|GSpeed|Gymnasium|Kungfu|Rugby|Shuttlecock|Sk8|Skating|Swim|Taekwondo|Tabletennis|Tennis|Volleyball|BUPTDNF|CStrike|Diablo|FootballManager|LOL|OnlineGame|PCGame|PopKart|StarCraft|TVGame|War3RPG|WarCraft|WE|WOW|Xyq"
 
 
@@ -33,23 +31,24 @@
     [baseurl appendFormat:@"&title1=%@", [key URLEncodedString]];
     
     NSURL *url = [NSURL URLWithString:baseurl];
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    [request setUsername:[MyBBS sharedInstance].username];
-    [request setPassword:[MyBBS sharedInstance].password];
-    [request setAllowCompressedResponse:YES];
-    [request startSynchronous];
-    NSData *feedback = [request responseData];
-    if (feedback == nil) {
-        return nil;
-    }
-    
-    NSDictionary *topTenTopics = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
-    NSArray * Status = [JsonParseEngine parseSearchTopics:topTenTopics];
-    if (Status == nil) {
-        return nil;
-    } else {
-        return Status;
-    }
+//    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+//    [request setUsername:[MyBBS sharedInstance].username];
+//    [request setPassword:[MyBBS sharedInstance].password];
+//    [request setAllowCompressedResponse:YES];
+//    [request startSynchronous];
+//    NSData *feedback = [request responseData];
+//    if (feedback == nil) {
+//        return nil;
+//    }
+//
+//    NSDictionary *topTenTopics = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
+//    NSArray * Status = [JsonParseEngine parseSearchTopics:topTenTopics];
+//    if (Status == nil) {
+//        return nil;
+//    } else {
+//        return Status;
+//    }
+    return nil;
 }
 
 + (NSArray *)searchBoards:(NSString *)key User:(User *)user {
@@ -62,61 +61,26 @@
     [baseurl appendFormat:@"appkey=%@", APPKEY];
     [baseurl appendFormat:@"&board=%@", [key URLEncodedString]];
     
-    NSURL *url = [NSURL URLWithString:baseurl];
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    [request setUsername:[MyBBS sharedInstance].username];
-[request setUsername:[MyBBS sharedInstance].username];
-        [request setPassword:[MyBBS sharedInstance].password];
-    [request setAllowCompressedResponse:YES];
-    [request startSynchronous];
-    
-    NSData *feedback = [request responseData];
-    if (feedback == nil) {
-        return nil;
-    }
-    NSDictionary *topTenTopics = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
-    
-    NSArray * Status = [JsonParseEngine parseBoards:topTenTopics];
-    if (Status == nil) {
-        return nil;
-    } else {
-        return Status;
-    }
-}
-
-
-+ (NSArray *)getBoards:(User *)user Section:(NSString *)section {
-    if (![BBSAPI isNetworkReachable]) {
-        return nil;
-    }
-    
-    NSMutableString * baseurl = [APIADDR mutableCopy];
-    if (section == nil) {
-        [baseurl appendString:@"/section.json?"];
-    } else {
-        [baseurl appendFormat:@"/section/%@.json?", section];
-    }
-    [baseurl appendFormat:@"appkey=%@", APPKEY];
-    
-    NSURL *url = [NSURL URLWithString:baseurl];
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    [request setUsername:[MyBBS sharedInstance].username];
-    [request setPassword:[MyBBS sharedInstance].password];
-    [request setAllowCompressedResponse:YES];
-    [request startSynchronous];
-    
-    NSData *feedback = [request responseData];
-    if (feedback == nil) {
-        return nil;
-    }
-    
-    NSDictionary *topTenTopics = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
-    NSArray * Status = [JsonParseEngine parseBoards:topTenTopics];
-    if (Status == nil) {
-        return nil;
-    } else {
-        return Status;
-    }
+//    NSURL *url = [NSURL URLWithString:baseurl];
+//    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+//    [request setUsername:[MyBBS sharedInstance].username];
+//[request setUsername:[MyBBS sharedInstance].username];
+//        [request setPassword:[MyBBS sharedInstance].password];
+//    [request setAllowCompressedResponse:YES];
+//    [request startSynchronous];
+//
+//    NSData *feedback = [request responseData];
+//    if (feedback == nil) {
+//        return nil;
+//    }
+//    NSDictionary *topTenTopics = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
+//
+//    NSArray * Status = [JsonParseEngine parseBoards:topTenTopics];
+//    if (Status == nil) {
+//        return nil;
+//    } else {
+//        return Status;
+//    }
     return nil;
 }
 
@@ -127,32 +91,32 @@
         return false;
     }
     
-    NSMutableString * baseurl = [APIADDR mutableCopy];
-    [baseurl appendFormat:@"/mail/send.json?"];
-    [baseurl appendFormat:@"appkey=%@", APPKEY];
-    
-    NSURL *url = [NSURL URLWithString:baseurl];
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    [request setUsername:[MyBBS sharedInstance].username];
-    [request setPassword:[MyBBS sharedInstance].password];
-    [request setAllowCompressedResponse:YES];
-    [request setRequestMethod:@"POST"];
-
-    [request setPostValue:user forKey:@"id"];
-    [request setPostValue:[title URLEncodedString] forKey:@"title"];
-    [request setPostValue:[content URLEncodedString] forKey:@"content"];
-    [request setPostValue:@"1" forKey:@"backup"];
-    [request startSynchronous];
-    
-    NSData *feedback = [request responseData];
-    if (feedback == nil) {
-        return NO;
-    }
-    NSDictionary *topTenTopics = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
-    BOOL success = [[topTenTopics objectForKey:@"status"] boolValue];
-    if (success) {
-        return YES;
-    }
+//    NSMutableString * baseurl = [APIADDR mutableCopy];
+//    [baseurl appendFormat:@"/mail/send.json?"];
+//    [baseurl appendFormat:@"appkey=%@", APPKEY];
+//
+//    NSURL *url = [NSURL URLWithString:baseurl];
+//    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+//    [request setUsername:[MyBBS sharedInstance].username];
+//    [request setPassword:[MyBBS sharedInstance].password];
+//    [request setAllowCompressedResponse:YES];
+//    [request setRequestMethod:@"POST"];
+//
+//    [request setPostValue:user forKey:@"id"];
+//    [request setPostValue:[title URLEncodedString] forKey:@"title"];
+//    [request setPostValue:[content URLEncodedString] forKey:@"content"];
+//    [request setPostValue:@"1" forKey:@"backup"];
+//    [request startSynchronous];
+//
+//    NSData *feedback = [request responseData];
+//    if (feedback == nil) {
+//        return NO;
+//    }
+//    NSDictionary *topTenTopics = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
+//    BOOL success = [[topTenTopics objectForKey:@"status"] boolValue];
+//    if (success) {
+//        return YES;
+//    }
     return NO;
 }
 +(BOOL)replyMail:(User *)myself User:(NSString *)user Title:(NSString *)title Content:(NSString *)content Type:(int)type ID:(int)ID
@@ -178,65 +142,33 @@
     }
     
     
-    NSMutableString * baseurl = [APIADDR mutableCopy];
-    [baseurl appendFormat:@"/mail/%@/reply/%i.json?", typeString, ID];
-    [baseurl appendFormat:@"appkey=%@", APPKEY];
-    
-    NSURL *url = [NSURL URLWithString:baseurl];
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    [request setUsername:[MyBBS sharedInstance].username];
-    [request setPassword:[MyBBS sharedInstance].password];
-    [request setAllowCompressedResponse:YES];
-    [request setRequestMethod:@"POST"];
-    
-    [request setPostValue:user forKey:@"id"];
-    [request setPostValue:[title URLEncodedString] forKey:@"title"];
-    [request setPostValue:[content URLEncodedString] forKey:@"content"];
-    [request setPostValue:@"1" forKey:@"backup"];
-    [request startSynchronous];
-    
-    NSData *feedback = [request responseData];
-    if (feedback == nil) {
-        return NO;
-    }
-    NSDictionary *topTenTopics = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
-    NSString * code = [topTenTopics objectForKey:@"code"];
-    if (!code)
-        return YES;
+//    NSMutableString * baseurl = [APIADDR mutableCopy];
+//    [baseurl appendFormat:@"/mail/%@/reply/%i.json?", typeString, ID];
+//    [baseurl appendFormat:@"appkey=%@", APPKEY];
+//
+//    NSURL *url = [NSURL URLWithString:baseurl];
+//    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+//    [request setUsername:[MyBBS sharedInstance].username];
+//    [request setPassword:[MyBBS sharedInstance].password];
+//    [request setAllowCompressedResponse:YES];
+//    [request setRequestMethod:@"POST"];
+//
+//    [request setPostValue:user forKey:@"id"];
+//    [request setPostValue:[title URLEncodedString] forKey:@"title"];
+//    [request setPostValue:[content URLEncodedString] forKey:@"content"];
+//    [request setPostValue:@"1" forKey:@"backup"];
+//    [request startSynchronous];
+//
+//    NSData *feedback = [request responseData];
+//    if (feedback == nil) {
+//        return NO;
+//    }
+//    NSDictionary *topTenTopics = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
+//    NSString * code = [topTenTopics objectForKey:@"code"];
+//    if (!code)
+//        return YES;
 
     return NO;
-}
-
-+(int)getNotificationCount:(User *)user Type:(NSString *)type
-{
-    NSMutableString * baseurl = [APIADDR mutableCopy];
-    [baseurl appendFormat:@"/refer/%@/info.json?", type];
-    [baseurl appendFormat:@"appkey=%@", APPKEY];
-    
-    NSURL *url = [NSURL URLWithString:baseurl];
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    [request setUsername:[MyBBS sharedInstance].username];
-    [request setPassword:[MyBBS sharedInstance].password];
-    [request setAllowCompressedResponse:YES];
-    [request startSynchronous];
-    NSData *feedback = [request responseData];
-    
-    if (feedback == nil) {
-        return 0;
-    }
-    NSDictionary *topTenTopics = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
-    
-    return [[topTenTopics objectForKey:@"new_count"] intValue];
-}
-
-+(Notification *)getAllNotificationCount:(User *)user
-{
-    int at = [BBSAPI getNotificationCount:user Type:@"at"];
-    int reply = [BBSAPI getNotificationCount:user Type:@"reply"];
-    Notification *notification = [[Notification alloc] init];
-    notification.atCount = at;
-    notification.replyCount = reply;
-    return notification;
 }
 
 +(BOOL)deleteNotification:(User *)user Type:(NSString *)type ID:(int)ID
@@ -245,16 +177,17 @@
     [baseurl appendFormat:@"/refer/%@/setRead/%i.json?", type, ID];
     [baseurl appendFormat:@"appkey=%@", APPKEY];
     
-    NSURL *url = [NSURL URLWithString:baseurl];
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    [request setUsername:[MyBBS sharedInstance].username];
-    [request setPassword:[MyBBS sharedInstance].password];
-    [request setAllowCompressedResponse:YES];
-    [request setRequestMethod:@"POST"];
-    [request startSynchronous];
-    NSData *feedback = [request responseData];
-    NSDictionary *topTenTopics = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
-    return [[topTenTopics objectForKey:@"status"] boolValue];
+//    NSURL *url = [NSURL URLWithString:baseurl];
+//    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+//    [request setUsername:[MyBBS sharedInstance].username];
+//    [request setPassword:[MyBBS sharedInstance].password];
+//    [request setAllowCompressedResponse:YES];
+//    [request setRequestMethod:@"POST"];
+//    [request startSynchronous];
+//    NSData *feedback = [request responseData];
+//    NSDictionary *topTenTopics = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
+//    return [[topTenTopics objectForKey:@"status"] boolValue];
+    return NO;
 }
 
 +(BOOL)clearNotificationForType:(NSString *)type User:(User *)user
@@ -263,17 +196,18 @@
     [baseurl appendFormat:@"/refer/%@/setRead.json?", type];
     [baseurl appendFormat:@"appkey=%@", APPKEY];
     
-    NSURL *url = [NSURL URLWithString:baseurl];
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    [request setUsername:[MyBBS sharedInstance].username];
-    [request setPassword:[MyBBS sharedInstance].password];
-    [request setAllowCompressedResponse:YES];
-    [request setRequestMethod:@"POST"];
-    [request startSynchronous];
-    NSData *feedback = [request responseData];
-
-    NSDictionary *topTenTopics = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
-    return [[topTenTopics objectForKey:@"status"] boolValue];
+//    NSURL *url = [NSURL URLWithString:baseurl];
+//    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+//    [request setUsername:[MyBBS sharedInstance].username];
+//    [request setPassword:[MyBBS sharedInstance].password];
+//    [request setAllowCompressedResponse:YES];
+//    [request setRequestMethod:@"POST"];
+//    [request startSynchronous];
+//    NSData *feedback = [request responseData];
+//
+//    NSDictionary *topTenTopics = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
+//    return [[topTenTopics objectForKey:@"status"] boolValue];
+    return NO;
 }
 
 +(BOOL)clearNotification:(User *)user
@@ -295,25 +229,27 @@
     [baseurl appendFormat:@"/article/%@/%i.json?", board, ID];
     [baseurl appendFormat:@"appkey=%@", APPKEY];
     
-    NSURL *url = [NSURL URLWithString:baseurl];
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    [request setUsername:[MyBBS sharedInstance].username];
-    [request setPassword:[MyBBS sharedInstance].password];
-    [request setAllowCompressedResponse:YES];
-    [request startSynchronous];
-    NSData *feedback = [request responseData];
-
-    if (feedback == nil) {
-        return nil;
-    }
-    NSDictionary *singleTopic = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
-    NSArray * Status = [JsonParseEngine parseReplyTopic:singleTopic];
-    if (Status == nil) {
-        return nil;
-    }
-    else {
-        return Status;
-    }
+//    NSURL *url = [NSURL URLWithString:baseurl];
+//    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+//    [request setUsername:[MyBBS sharedInstance].username];
+//    [request setPassword:[MyBBS sharedInstance].password];
+//    [request setAllowCompressedResponse:YES];
+//    [request startSynchronous];
+//    NSData *feedback = [request responseData];
+//
+//    if (feedback == nil) {
+//        return nil;
+//    }
+//    NSDictionary *singleTopic = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
+//    NSArray * Status = [JsonParseEngine parseReplyTopic:singleTopic];
+//    if (Status == nil) {
+//        return nil;
+//    }
+//    else {
+//        return Status;
+//    }
+    
+    return nil;
 }
 
 
@@ -324,30 +260,32 @@
         return nil;
     }
     
-    NSMutableString * baseurl = [APIADDR mutableCopy];
-    [baseurl appendFormat:@"/threads/%@/%i.json?", board, ID];
-    [baseurl appendFormat:@"appkey=%@", APPKEY];
-    [baseurl appendFormat:@"&page=%i&count=20", page];
-
-    NSURL *url = [NSURL URLWithString:baseurl];
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    [request setUsername:[MyBBS sharedInstance].username];
-    [request setPassword:[MyBBS sharedInstance].password];
-    [request setAllowCompressedResponse:YES];
-    [request startSynchronous];
-    NSData *feedback = [request responseData];
+//    NSMutableString * baseurl = [APIADDR mutableCopy];
+//    [baseurl appendFormat:@"/threads/%@/%i.json?", board, ID];
+//    [baseurl appendFormat:@"appkey=%@", APPKEY];
+//    [baseurl appendFormat:@"&page=%i&count=20", page];
+//
+//    NSURL *url = [NSURL URLWithString:baseurl];
+//    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+//    [request setUsername:[MyBBS sharedInstance].username];
+//    [request setPassword:[MyBBS sharedInstance].password];
+//    [request setAllowCompressedResponse:YES];
+//    [request startSynchronous];
+//    NSData *feedback = [request responseData];
+//
+//    if (feedback == nil) {
+//        return nil;
+//    }
+//    NSDictionary *singleTopic = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
+//    NSArray * Status = [JsonParseEngine parseSingleTopic:singleTopic];
+//    if (Status == nil) {
+//        return nil;
+//    }
+//    else {
+//        return Status;
+//    }
     
-    if (feedback == nil) {
-        return nil;
-    }
-    NSDictionary *singleTopic = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
-    NSArray * Status = [JsonParseEngine parseSingleTopic:singleTopic];
-    if (Status == nil) {
-        return nil;
-    }
-    else {
-        return Status;
-    }
+    return nil;
 }
 
 
@@ -356,30 +294,32 @@
         return nil;
     }
     
-    NSMutableString * baseurl = [APIADDR mutableCopy];
-    [baseurl appendFormat:@"/user/query/%@.json?", userID];
-    [baseurl appendFormat:@"appkey=%@", APPKEY];
+//    NSMutableString * baseurl = [APIADDR mutableCopy];
+//    [baseurl appendFormat:@"/user/query/%@.json?", userID];
+//    [baseurl appendFormat:@"appkey=%@", APPKEY];
+//
+//    NSURL *url = [NSURL URLWithString:baseurl];
+//    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+//    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+//        [request setUsername:[MyBBS sharedInstance].username];
+//        [request setPassword:[MyBBS sharedInstance].password];
+//
+//    [request setAllowCompressedResponse:YES];
+//    [request startSynchronous];
+//    NSData *feedback = [request responseData];
+//
+//    if (feedback == nil) {
+//        return nil;
+//    }
+//    NSDictionary *userInfo = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
+//    User * Status = [JsonParseEngine parseUserInfo:userInfo];
+//    if (Status == nil) {
+//        return nil;
+//    } else {
+//        return Status;
+//    }
     
-    NSURL *url = [NSURL URLWithString:baseurl];
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        [request setUsername:[MyBBS sharedInstance].username];
-        [request setPassword:[MyBBS sharedInstance].password];
-    
-    [request setAllowCompressedResponse:YES];
-    [request startSynchronous];
-    NSData *feedback = [request responseData];
-
-    if (feedback == nil) {
-        return nil;
-    }
-    NSDictionary *userInfo = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
-    User * Status = [JsonParseEngine parseUserInfo:userInfo];
-    if (Status == nil) {
-        return nil;
-    } else {
-        return Status;
-    }
+    return nil;
 }
 
 
@@ -393,26 +333,26 @@
     [baseurl appendFormat:@"/article/%@/update/%i.json?", board, reid];
     [baseurl appendFormat:@"appkey=%@", APPKEY];
     
-    NSURL *url = [NSURL URLWithString:baseurl];
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    [request setUsername:[MyBBS sharedInstance].username];
-[request setUsername:[MyBBS sharedInstance].username];
-        [request setPassword:[MyBBS sharedInstance].password];
-    [request setAllowCompressedResponse:YES];
-    [request setRequestMethod:@"POST"];
-    [request setPostValue:[NSString stringWithFormat:@"%i", reid] forKey:@"reid"];
-    [request setPostValue:[title URLEncodedString] forKey:@"title"];
-    [request setPostValue:[content URLEncodedString] forKey:@"content"];
-    [request startSynchronous];
-    
-    NSData *feedback = [request responseData];
-    if (feedback == nil) {
-        return NO;
-    }
-    NSDictionary *topTenTopics = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
-    NSString * code = [topTenTopics objectForKey:@"code"];
-    if (!code)
-        return YES;
+//    NSURL *url = [NSURL URLWithString:baseurl];
+//    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+//    [request setUsername:[MyBBS sharedInstance].username];
+//[request setUsername:[MyBBS sharedInstance].username];
+//        [request setPassword:[MyBBS sharedInstance].password];
+//    [request setAllowCompressedResponse:YES];
+//    [request setRequestMethod:@"POST"];
+//    [request setPostValue:[NSString stringWithFormat:@"%i", reid] forKey:@"reid"];
+//    [request setPostValue:[title URLEncodedString] forKey:@"title"];
+//    [request setPostValue:[content URLEncodedString] forKey:@"content"];
+//    [request startSynchronous];
+//
+//    NSData *feedback = [request responseData];
+//    if (feedback == nil) {
+//        return NO;
+//    }
+//    NSDictionary *topTenTopics = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
+//    NSString * code = [topTenTopics objectForKey:@"code"];
+//    if (!code)
+//        return YES;
     
     return NO;
 }
@@ -428,34 +368,34 @@
     [baseurl appendFormat:@"/article/%@/post.json?", board];
     [baseurl appendFormat:@"appkey=%@", APPKEY];
     
-    NSURL *url = [NSURL URLWithString:baseurl];
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    if (user == nil) {
-        [request setUsername:@"guest"];
-        [request setPassword:@""];
-    }
-    else {
-        [request setUsername:[MyBBS sharedInstance].username];
-        [request setPassword:[MyBBS sharedInstance].password];
-    }
-    [request setAllowCompressedResponse:YES];
-    [request setRequestMethod:@"POST"];
-    
-    if (reid != 0) {
-        [request setPostValue:[NSString stringWithFormat:@"%i", reid] forKey:@"reid"];
-    }
-    [request setPostValue:[title URLEncodedString] forKey:@"title"];
-    [request setPostValue:[content URLEncodedString] forKey:@"content"];
-    [request startSynchronous];
-    
-    NSData *feedback = [request responseData];
-    if (feedback == nil) {
-        return NO;
-    }
-    NSDictionary *topTenTopics = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
-    NSString * code = [topTenTopics objectForKey:@"code"];
-    if (!code)
-        return YES;
+//    NSURL *url = [NSURL URLWithString:baseurl];
+//    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+//    if (user == nil) {
+//        [request setUsername:@"guest"];
+//        [request setPassword:@""];
+//    }
+//    else {
+//        [request setUsername:[MyBBS sharedInstance].username];
+//        [request setPassword:[MyBBS sharedInstance].password];
+//    }
+//    [request setAllowCompressedResponse:YES];
+//    [request setRequestMethod:@"POST"];
+//
+//    if (reid != 0) {
+//        [request setPostValue:[NSString stringWithFormat:@"%i", reid] forKey:@"reid"];
+//    }
+//    [request setPostValue:[title URLEncodedString] forKey:@"title"];
+//    [request setPostValue:[content URLEncodedString] forKey:@"content"];
+//    [request startSynchronous];
+//
+//    NSData *feedback = [request responseData];
+//    if (feedback == nil) {
+//        return NO;
+//    }
+//    NSDictionary *topTenTopics = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
+//    NSString * code = [topTenTopics objectForKey:@"code"];
+//    if (!code)
+//        return YES;
     
     return NO;
 }
@@ -468,40 +408,40 @@
         return nil;
     }
     
-    NSMutableString * baseurl = [APIADDR mutableCopy];
-    if (ID != 0) {
-        [baseurl appendFormat:@"/attachment/%@/add/%i.json?", board, ID];
-    }
-    else {
-        [baseurl appendFormat:@"/attachment/%@/add.json?", board];
-    }
-
-    [baseurl appendFormat:@"appkey=%@", APPKEY];
-    
-    NSURL *url = [NSURL URLWithString:baseurl];
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    
-    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        [request setUsername:[MyBBS sharedInstance].username];
-        [request setPassword:[MyBBS sharedInstance].password];
-    
-    [request setAllowCompressedResponse:YES];
-    [request setRequestMethod:@"POST"];
-    NSData *data =UIImageJPEGRepresentation(image, 0.5);
-    [request addData:data withFileName:imageName andContentType:@"image/jpeg" forKey:@"file"];
-    [request startSynchronous];
-    
-    NSData *feedback = [request responseData];
-    if (feedback == nil) {
-        return nil;
-    }
-    NSDictionary *attDic = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
-    NSArray *attArray=[JsonParseEngine parseAttachments:attDic];
-    if (attArray!=nil) {
-        return attArray;
-    } else {
-        return nil;
-    }
+//    NSMutableString * baseurl = [APIADDR mutableCopy];
+//    if (ID != 0) {
+//        [baseurl appendFormat:@"/attachment/%@/add/%i.json?", board, ID];
+//    }
+//    else {
+//        [baseurl appendFormat:@"/attachment/%@/add.json?", board];
+//    }
+//
+//    [baseurl appendFormat:@"appkey=%@", APPKEY];
+//
+//    NSURL *url = [NSURL URLWithString:baseurl];
+//    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+//
+//    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+//        [request setUsername:[MyBBS sharedInstance].username];
+//        [request setPassword:[MyBBS sharedInstance].password];
+//
+//    [request setAllowCompressedResponse:YES];
+//    [request setRequestMethod:@"POST"];
+//    NSData *data =UIImageJPEGRepresentation(image, 0.5);
+//    [request addData:data withFileName:imageName andContentType:@"image/jpeg" forKey:@"file"];
+//    [request startSynchronous];
+//
+//    NSData *feedback = [request responseData];
+//    if (feedback == nil) {
+//        return nil;
+//    }
+//    NSDictionary *attDic = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
+//    NSArray *attArray=[JsonParseEngine parseAttachments:attDic];
+//    if (attArray!=nil) {
+//        return attArray;
+//    } else {
+//        return nil;
+//    }
 }
 
 
@@ -524,28 +464,28 @@
     
     [baseurl appendFormat:@"appkey=%@", APPKEY];
     
-    NSURL *url = [NSURL URLWithString:baseurl];
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    [request setUsername:[MyBBS sharedInstance].username];
-[request setUsername:[MyBBS sharedInstance].username];
-        [request setPassword:[MyBBS sharedInstance].password];
-    [request setAllowCompressedResponse:YES];
-    [request setRequestMethod:@"POST"];
-    [request setPostValue:[name URLEncodedString] forKey:@"name"];
-    [request startSynchronous];
-    
-    NSData *feedback = [request responseData];
-    if (feedback == nil) {
-        return nil;
-    }
-    
-    NSDictionary *attDic = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
-    NSArray *attArray=[JsonParseEngine parseAttachments:attDic];
-    if (attArray!=nil) {
-        return attArray;
-    } else {
-        return nil;
-    }
+//    NSURL *url = [NSURL URLWithString:baseurl];
+//    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+//    [request setUsername:[MyBBS sharedInstance].username];
+//[request setUsername:[MyBBS sharedInstance].username];
+//        [request setPassword:[MyBBS sharedInstance].password];
+//    [request setAllowCompressedResponse:YES];
+//    [request setRequestMethod:@"POST"];
+//    [request setPostValue:[name URLEncodedString] forKey:@"name"];
+//    [request startSynchronous];
+//
+//    NSData *feedback = [request responseData];
+//    if (feedback == nil) {
+//        return nil;
+//    }
+//
+//    NSDictionary *attDic = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
+//    NSArray *attArray=[JsonParseEngine parseAttachments:attDic];
+//    if (attArray!=nil) {
+//        return attArray;
+//    } else {
+//        return nil;
+//    }
 }
 
 + (NSArray* )getAttachmentsFromTopic:(User *)user Board:(NSString *)board ID:(int)ID
@@ -554,35 +494,35 @@
         return nil;
     }
     
-    NSMutableString * baseurl = [APIADDR mutableCopy];
-    if (ID != 0) {
-        [baseurl appendFormat:@"/attachment/%@/%i.json?", board, ID];
-    } else {
-       [baseurl appendFormat:@"/attachment/%@.json?", board];
-    }
-
-    [baseurl appendFormat:@"appkey=%@", APPKEY];
-    
-    NSURL *url = [NSURL URLWithString:baseurl];
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    [request setUsername:[MyBBS sharedInstance].username];
-[request setUsername:[MyBBS sharedInstance].username];
-        [request setPassword:[MyBBS sharedInstance].password];
-    [request setAllowCompressedResponse:YES];
-    [request setRequestMethod:@"GET"];
-    [request startSynchronous];
-    
-    NSData *feedback = [request responseData];
-    if (feedback == nil) {
-        return nil;
-    }
-    NSDictionary *attDic = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
-    NSArray *attArray=[JsonParseEngine parseAttachments:attDic];
-    if (attArray!=nil) {
-        return attArray;
-    } else {
-        return nil;
-    }
+//    NSMutableString * baseurl = [APIADDR mutableCopy];
+//    if (ID != 0) {
+//        [baseurl appendFormat:@"/attachment/%@/%i.json?", board, ID];
+//    } else {
+//       [baseurl appendFormat:@"/attachment/%@.json?", board];
+//    }
+//
+//    [baseurl appendFormat:@"appkey=%@", APPKEY];
+//
+//    NSURL *url = [NSURL URLWithString:baseurl];
+//    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+//    [request setUsername:[MyBBS sharedInstance].username];
+//[request setUsername:[MyBBS sharedInstance].username];
+//        [request setPassword:[MyBBS sharedInstance].password];
+//    [request setAllowCompressedResponse:YES];
+//    [request setRequestMethod:@"GET"];
+//    [request startSynchronous];
+//
+//    NSData *feedback = [request responseData];
+//    if (feedback == nil) {
+//        return nil;
+//    }
+//    NSDictionary *attDic = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
+//    NSArray *attArray=[JsonParseEngine parseAttachments:attDic];
+//    if (attArray!=nil) {
+//        return attArray;
+//    } else {
+//        return nil;
+//    }
 }
 
 +(BOOL)isNetworkReachable{
@@ -678,25 +618,25 @@
     [baseurl appendFormat:@"appkey=%@", APPKEY];
     [baseurl appendFormat:@"&page=1&count=1"];
     
-    NSURL *url = [NSURL URLWithString:baseurl];
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    [request setUsername:[MyBBS sharedInstance].username];
-    [request setPassword:[MyBBS sharedInstance].password];
-    [request setAllowCompressedResponse:YES];
-    [request startSynchronous];
-    NSData *feedback = [request responseData];
-
-    if (feedback == nil) {
-        return nil;
-    }
-    NSDictionary *singleTopic = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
-    NSArray * Status = [JsonParseEngine parseSingleTopic:singleTopic];
-    if (Status == nil) {
-        return nil;
-    }
-    else {
-        return Status;
-    }
+//    NSURL *url = [NSURL URLWithString:baseurl];
+//    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+//    [request setUsername:[MyBBS sharedInstance].username];
+//    [request setPassword:[MyBBS sharedInstance].password];
+//    [request setAllowCompressedResponse:YES];
+//    [request startSynchronous];
+//    NSData *feedback = [request responseData];
+//
+//    if (feedback == nil) {
+//        return nil;
+//    }
+//    NSDictionary *singleTopic = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
+//    NSArray * Status = [JsonParseEngine parseSingleTopic:singleTopic];
+//    if (Status == nil) {
+//        return nil;
+//    }
+//    else {
+//        return Status;
+//    }
 }
 
 +(NSArray *)getVoteList:(User *)user Type:(NSString *)type   ///type: me|join|list|new|hot|all
@@ -709,26 +649,26 @@
     [baseurl appendFormat:@"/vote/category/%@.json?", type];
     [baseurl appendFormat:@"appkey=%@", APPKEY];
     
-    NSURL *url = [NSURL URLWithString:baseurl];
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    [request setUsername:[MyBBS sharedInstance].username];
-    [request setPassword:[MyBBS sharedInstance].password];
-    [request setAllowCompressedResponse:YES];
-    [request startSynchronous];
-    
-    NSData *feedback = [request responseData];
-    
-    if (feedback == nil) {
-        return nil;
-    }
-    
-    NSDictionary *singleTopic = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
-    NSArray * Status = [JsonParseEngine parseVoteList:singleTopic];
-    if (Status == nil) {
-        return nil;
-    } else {
-        return Status;
-    }
+//    NSURL *url = [NSURL URLWithString:baseurl];
+//    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+//    [request setUsername:[MyBBS sharedInstance].username];
+//    [request setPassword:[MyBBS sharedInstance].password];
+//    [request setAllowCompressedResponse:YES];
+//    [request startSynchronous];
+//
+//    NSData *feedback = [request responseData];
+//
+//    if (feedback == nil) {
+//        return nil;
+//    }
+//
+//    NSDictionary *singleTopic = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
+//    NSArray * Status = [JsonParseEngine parseVoteList:singleTopic];
+//    if (Status == nil) {
+//        return nil;
+//    } else {
+//        return Status;
+//    }
 }
 
 
@@ -741,25 +681,25 @@
     [baseurl appendFormat:@"/vote/%i.json?", ID];
     [baseurl appendFormat:@"appkey=%@", APPKEY];
     
-    NSURL *url = [NSURL URLWithString:baseurl];
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    [request setUsername:[MyBBS sharedInstance].username];
-    [request setPassword:[MyBBS sharedInstance].password];
-    [request setAllowCompressedResponse:YES];
-    [request startSynchronous];
-    NSData *feedback = [request responseData];
-    
-    if (feedback == nil) {
-        return nil;
-    }
-    NSDictionary *singleVote = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
-    Vote *vote = [JsonParseEngine parseSingleVote:singleVote];
-    if (vote == nil) {
-        return nil;
-    }
-    else {
-        return vote;
-    }
+//    NSURL *url = [NSURL URLWithString:baseurl];
+//    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+//    [request setUsername:[MyBBS sharedInstance].username];
+//    [request setPassword:[MyBBS sharedInstance].password];
+//    [request setAllowCompressedResponse:YES];
+//    [request startSynchronous];
+//    NSData *feedback = [request responseData];
+//
+//    if (feedback == nil) {
+//        return nil;
+//    }
+//    NSDictionary *singleVote = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
+//    Vote *vote = [JsonParseEngine parseSingleVote:singleVote];
+//    if (vote == nil) {
+//        return nil;
+//    }
+//    else {
+//        return vote;
+//    }
 }
 
 +(Vote *)doVote:(User *)user ID:(int)ID VoteArray:(NSArray *)voteArray
@@ -773,40 +713,36 @@
     [baseurl appendFormat:@"/vote/%i.json?", ID];
     [baseurl appendFormat:@"appkey=%@", APPKEY];
     
-    NSURL *url = [NSURL URLWithString:baseurl];
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    [request setUsername:[MyBBS sharedInstance].username];
-    [request setPassword:[MyBBS sharedInstance].password];
-    [request setAllowCompressedResponse:YES];
-    [request setRequestMethod:@"POST"];
-    
-    if ([voteArray count] == 1) {
-        NSString *vote = [voteArray objectAtIndex:0];
-        [request setPostValue:[vote URLEncodedString] forKey:@"vote"];
-    }
-    else if ([voteArray count] > 1){
-        for (NSString *vote in voteArray)
-            [request addPostValue:vote forKey:@"vote[]"];
-    }
-    
-    [request startSynchronous];
-    NSData *feedback = [request responseData];
-    
-    if (feedback == nil) {
-        return nil;
-    }
-    NSDictionary *singleVote = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
-    Vote *returnVote = [JsonParseEngine parseSingleVote:singleVote];
-    if (returnVote == nil) {
-        return nil;
-    }
-    else {
-        return returnVote;
-    }
+//    NSURL *url = [NSURL URLWithString:baseurl];
+//    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+//    [request setUsername:[MyBBS sharedInstance].username];
+//    [request setPassword:[MyBBS sharedInstance].password];
+//    [request setAllowCompressedResponse:YES];
+//    [request setRequestMethod:@"POST"];
+//
+//    if ([voteArray count] == 1) {
+//        NSString *vote = [voteArray objectAtIndex:0];
+//        [request setPostValue:[vote URLEncodedString] forKey:@"vote"];
+//    }
+//    else if ([voteArray count] > 1){
+//        for (NSString *vote in voteArray)
+//            [request addPostValue:vote forKey:@"vote[]"];
+//    }
+//
+//    [request startSynchronous];
+//    NSData *feedback = [request responseData];
+//
+//    if (feedback == nil) {
+//        return nil;
+//    }
+//    NSDictionary *singleVote = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
+//    Vote *returnVote = [JsonParseEngine parseSingleVote:singleVote];
+//    if (returnVote == nil) {
+//        return nil;
+//    }
+//    else {
+//        return returnVote;
+//    }
 }
+
 @end
-
-
-
-
-
