@@ -52,11 +52,6 @@
 		00ED5F8217C649DD000843DD /* MainWindowiPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 00ED5F8117C649DD000843DD /* MainWindowiPad.xib */; };
 		00F213AD17C1D7D70001EFD0 /* UIViewController+MJPopupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F213AB17C1D7D70001EFD0 /* UIViewController+MJPopupViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		00F213B117C1F6E70001EFD0 /* CustomNoFooterViewSectionHeaderTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F213B017C1F6E70001EFD0 /* CustomNoFooterViewSectionHeaderTableView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		00F4B69D1823AACF00C6331A /* TQRichTextBaseRun.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F4B6941823AACF00C6331A /* TQRichTextBaseRun.m */; };
-		00F4B69E1823AACF00C6331A /* TQRichTextURLRun.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F4B6961823AACF00C6331A /* TQRichTextURLRun.m */; };
-		00F4B69F1823AACF00C6331A /* TQRichTextImageRun.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F4B6981823AACF00C6331A /* TQRichTextImageRun.m */; };
-		00F4B6A01823AACF00C6331A /* TQRichTextEmojiRun.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F4B69A1823AACF00C6331A /* TQRichTextEmojiRun.m */; };
-		00F4B6A11823AACF00C6331A /* TQRichTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F4B69C1823AACF00C6331A /* TQRichTextView.m */; };
 		00F4B7711823D66E00C6331A /* [emc0].gif in Resources */ = {isa = PBXBuildFile; fileRef = 00F4B6A71823D66D00C6331A /* [emc0].gif */; };
 		00F4B7721823D66E00C6331A /* [emc10].gif in Resources */ = {isa = PBXBuildFile; fileRef = 00F4B6A81823D66D00C6331A /* [emc10].gif */; };
 		00F4B7731823D66E00C6331A /* [emc11].gif in Resources */ = {isa = PBXBuildFile; fileRef = 00F4B6A91823D66D00C6331A /* [emc11].gif */; };
@@ -257,7 +252,6 @@
 		00F4B8361823D66E00C6331A /* [ema8].gif in Resources */ = {isa = PBXBuildFile; fileRef = 00F4B76F1823D66E00C6331A /* [ema8].gif */; };
 		00F4B8371823D66E00C6331A /* [ema9].gif in Resources */ = {isa = PBXBuildFile; fileRef = 00F4B7701823D66E00C6331A /* [ema9].gif */; };
 		0290B2FD183E46690097EC60 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0290B2FC183E46690097EC60 /* CoreTelephony.framework */; };
-		07A74536D64BCC26E9FCA3AF /* libPods-BYR.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 51D4C59485C3D0814233C08D /* libPods-BYR.a */; };
 		264FEC9514A0EA0B001C15B3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB125691498D519008A4B70 /* main.m */; settings = {COMPILER_FLAGS = ""; }; };
 		264FEC9614A0EA0B001C15B3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB1256D1498D519008A4B70 /* AppDelegate.m */; settings = {COMPILER_FLAGS = ""; }; };
 		264FEC9D14A0EA0B001C15B3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEB1255D1498D519008A4B70 /* UIKit.framework */; };
@@ -281,6 +275,7 @@
 		E144EB43234A2B38000818BF /* NSString+BYRTool.m in Sources */ = {isa = PBXBuildFile; fileRef = E144EB42234A2B38000818BF /* NSString+BYRTool.m */; };
 		E144EB48234B4A9E000818BF /* ThreadCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E144EB47234B4A9E000818BF /* ThreadCommentCell.m */; };
 		E147DFDC234CEFD900772239 /* BYRContentParser.m in Sources */ = {isa = PBXBuildFile; fileRef = E147DFDB234CEFD900772239 /* BYRContentParser.m */; };
+		E14DEF10235077C90053C582 /* MarkDownParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14DEF0F235077C90053C582 /* MarkDownParser.swift */; };
 		E14E046D23461E2600AC0EAF /* BYRNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E14E046C23461E2600AC0EAF /* BYRNetworkManager.m */; };
 		E14E0470234624DE00AC0EAF /* BYRTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E14E046F234624DE00AC0EAF /* BYRTableViewController.m */; };
 		E14E047323462E4B00AC0EAF /* BYRNetworkReponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E14E047223462E4B00AC0EAF /* BYRNetworkReponse.m */; };
@@ -303,6 +298,7 @@
 		E1C5D05E2347889D00453D15 /* NotificationHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E1C5D05D2347889D00453D15 /* NotificationHeaderCell.m */; };
 		E1C5D0612347CC4600453D15 /* BYRSession.m in Sources */ = {isa = PBXBuildFile; fileRef = E1C5D0602347CC4600453D15 /* BYRSession.m */; };
 		E1C5D0652347DEDE00453D15 /* HomeHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = E1C5D0642347DEDE00453D15 /* HomeHeadView.m */; };
+		E1D1F63B234F9E6E008C7138 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = E1D1F63A234F9E6E008C7138 /* README.md */; };
 		E90BDC65157DA07600AB1567 /* CustomNoFooterWithDeleteTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = E90BDC64157DA07600AB1567 /* CustomNoFooterWithDeleteTableView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E90BDC6A157DA98700AB1567 /* UserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E90BDC68157DA98700AB1567 /* UserInfoViewController.m */; settings = {COMPILER_FLAGS = ""; }; };
 		E90BDC6B157DA98700AB1567 /* UserInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E90BDC69157DA98700AB1567 /* UserInfoViewController.xib */; };
@@ -330,6 +326,7 @@
 		E9E9AA03154B0418005D65E5 /* JsonParseEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = E9E9AA02154B0417005D65E5 /* JsonParseEngine.m */; settings = {COMPILER_FLAGS = ""; }; };
 		E9FEB5C8157B39D800801E7F /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FEB5C6157B39D800801E7F /* AboutViewController.m */; settings = {COMPILER_FLAGS = ""; }; };
 		E9FEB5C9157B39D800801E7F /* AboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9FEB5C7157B39D800801E7F /* AboutViewController.xib */; };
+		EBDAF4F0563D4AB6332492F2 /* Pods_BYR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F07F6CFEC8D97202880117A2 /* Pods_BYR.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -402,16 +399,6 @@
 		00F213AB17C1D7D70001EFD0 /* UIViewController+MJPopupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+MJPopupViewController.m"; sourceTree = "<group>"; };
 		00F213AF17C1F6E70001EFD0 /* CustomNoFooterViewSectionHeaderTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomNoFooterViewSectionHeaderTableView.h; sourceTree = "<group>"; };
 		00F213B017C1F6E70001EFD0 /* CustomNoFooterViewSectionHeaderTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomNoFooterViewSectionHeaderTableView.m; sourceTree = "<group>"; };
-		00F4B6931823AACF00C6331A /* TQRichTextBaseRun.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TQRichTextBaseRun.h; sourceTree = "<group>"; };
-		00F4B6941823AACF00C6331A /* TQRichTextBaseRun.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TQRichTextBaseRun.m; sourceTree = "<group>"; };
-		00F4B6951823AACF00C6331A /* TQRichTextURLRun.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TQRichTextURLRun.h; sourceTree = "<group>"; };
-		00F4B6961823AACF00C6331A /* TQRichTextURLRun.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TQRichTextURLRun.m; sourceTree = "<group>"; };
-		00F4B6971823AACF00C6331A /* TQRichTextImageRun.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TQRichTextImageRun.h; sourceTree = "<group>"; };
-		00F4B6981823AACF00C6331A /* TQRichTextImageRun.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TQRichTextImageRun.m; sourceTree = "<group>"; };
-		00F4B6991823AACF00C6331A /* TQRichTextEmojiRun.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TQRichTextEmojiRun.h; sourceTree = "<group>"; };
-		00F4B69A1823AACF00C6331A /* TQRichTextEmojiRun.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TQRichTextEmojiRun.m; sourceTree = "<group>"; };
-		00F4B69B1823AACF00C6331A /* TQRichTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TQRichTextView.h; sourceTree = "<group>"; };
-		00F4B69C1823AACF00C6331A /* TQRichTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TQRichTextView.m; sourceTree = "<group>"; };
 		00F4B6A71823D66D00C6331A /* [emc0].gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "[emc0].gif"; sourceTree = "<group>"; };
 		00F4B6A81823D66D00C6331A /* [emc10].gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "[emc10].gif"; sourceTree = "<group>"; };
 		00F4B6A91823D66D00C6331A /* [emc11].gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "[emc11].gif"; sourceTree = "<group>"; };
@@ -613,12 +600,11 @@
 		00F4B7701823D66E00C6331A /* [ema9].gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "[ema9].gif"; sourceTree = "<group>"; };
 		0290B2FC183E46690097EC60 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		2264895FB16CB13590BE7506 /* Pods-BYR.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BYR.release.xcconfig"; path = "Target Support Files/Pods-BYR/Pods-BYR.release.xcconfig"; sourceTree = "<group>"; };
-		264FECB014A0EA0B001C15B3 /* 北邮人.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "北邮人.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		264FECB014A0EA0B001C15B3 /* BYR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BYR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		264FECE914A18427001C15B3 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		3EA69A5616C5340400045198 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		3EDA685D16BE5CF600137E99 /* UploadAttachmentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadAttachmentsViewController.h; sourceTree = "<group>"; };
 		3EDA685E16BE5CF600137E99 /* UploadAttachmentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UploadAttachmentsViewController.m; sourceTree = "<group>"; };
-		51D4C59485C3D0814233C08D /* libPods-BYR.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BYR.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6FFD9D45CA1A19C5E6F7B6C3 /* Pods-BYR.adhoc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BYR.adhoc.xcconfig"; path = "Target Support Files/Pods-BYR/Pods-BYR.adhoc.xcconfig"; sourceTree = "<group>"; };
 		CEB1255D1498D519008A4B70 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		CEB1255F1498D519008A4B70 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -656,6 +642,8 @@
 		E144EB47234B4A9E000818BF /* ThreadCommentCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ThreadCommentCell.m; sourceTree = "<group>"; };
 		E147DFDA234CEFD900772239 /* BYRContentParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BYRContentParser.h; sourceTree = "<group>"; };
 		E147DFDB234CEFD900772239 /* BYRContentParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BYRContentParser.m; sourceTree = "<group>"; };
+		E14DEF0F235077C90053C582 /* MarkDownParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkDownParser.swift; sourceTree = "<group>"; };
+		E14DEF11235078EB0053C582 /* BYR-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BYR-Bridging-Header.h"; sourceTree = "<group>"; };
 		E14E046B23461E2600AC0EAF /* BYRNetworkManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BYRNetworkManager.h; sourceTree = "<group>"; };
 		E14E046C23461E2600AC0EAF /* BYRNetworkManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BYRNetworkManager.m; sourceTree = "<group>"; };
 		E14E046E234624DE00AC0EAF /* BYRTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BYRTableViewController.h; sourceTree = "<group>"; };
@@ -685,9 +673,6 @@
 		E1B3D7402348BDBD00977139 /* TopicViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TopicViewController.m; sourceTree = "<group>"; };
 		E1B3D7422348C94400977139 /* ThreadCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ThreadCell.h; sourceTree = "<group>"; };
 		E1B3D7432348C94400977139 /* ThreadCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ThreadCell.m; sourceTree = "<group>"; };
-		E1B890D61D15D83B0039B5C8 /* libz.1.2.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.2.5.tbd; path = usr/lib/libz.1.2.5.tbd; sourceTree = SDKROOT; };
-		E1B890D81D15D84C0039B5C8 /* libz.1.1.3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.1.3.tbd; path = usr/lib/libz.1.1.3.tbd; sourceTree = SDKROOT; };
-		E1B890DA1D15D8720039B5C8 /* libxml2.2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.2.tbd; path = usr/lib/libxml2.2.tbd; sourceTree = SDKROOT; };
 		E1BC83BA234589D100AFE908 /* TopicCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TopicCell.h; sourceTree = "<group>"; };
 		E1BC83BB234589D100AFE908 /* TopicCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TopicCell.m; sourceTree = "<group>"; };
 		E1BC83BD2345982800AFE908 /* HomeTabBarController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeTabBarController.h; sourceTree = "<group>"; };
@@ -702,6 +687,7 @@
 		E1C5D0602347CC4600453D15 /* BYRSession.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BYRSession.m; sourceTree = "<group>"; };
 		E1C5D0632347DEDE00453D15 /* HomeHeadView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeHeadView.h; sourceTree = "<group>"; };
 		E1C5D0642347DEDE00453D15 /* HomeHeadView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeHeadView.m; sourceTree = "<group>"; };
+		E1D1F63A234F9E6E008C7138 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		E90BDC63157DA07500AB1567 /* CustomNoFooterWithDeleteTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomNoFooterWithDeleteTableView.h; sourceTree = "<group>"; };
 		E90BDC64157DA07600AB1567 /* CustomNoFooterWithDeleteTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomNoFooterWithDeleteTableView.m; sourceTree = "<group>"; };
 		E90BDC67157DA98700AB1567 /* UserInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoViewController.h; sourceTree = "<group>"; };
@@ -755,6 +741,7 @@
 		E9FEB5C6157B39D800801E7F /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
 		E9FEB5C7157B39D800801E7F /* AboutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutViewController.xib; sourceTree = "<group>"; };
 		F0348750DC68A20B80124052 /* Pods-BYR.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BYR.debug.xcconfig"; path = "Target Support Files/Pods-BYR/Pods-BYR.debug.xcconfig"; sourceTree = "<group>"; };
+		F07F6CFEC8D97202880117A2 /* Pods_BYR.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BYR.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -772,7 +759,7 @@
 				264FEC9D14A0EA0B001C15B3 /* UIKit.framework in Frameworks */,
 				264FEC9E14A0EA0B001C15B3 /* Foundation.framework in Frameworks */,
 				264FEC9F14A0EA0B001C15B3 /* CoreGraphics.framework in Frameworks */,
-				07A74536D64BCC26E9FCA3AF /* libPods-BYR.a in Frameworks */,
+				EBDAF4F0563D4AB6332492F2 /* Pods_BYR.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -932,7 +919,6 @@
 				E107B8381D15C3660062ED98 /* FTPaging */,
 				0038D58417BC0404002CC5ED /* FPActivityView */,
 				000575821826988600060E69 /* MyEmotionKeyboard */,
-				00F4B6921823AAC400C6331A /* TQRichTextView */,
 				005B5C351811929300041366 /* UINavigationController+SGProgress */,
 				00F213A717C1D7C40001EFD0 /* MJPopupView */,
 				E973E5F3154C08EA004412CD /* CustomTableView */,
@@ -958,23 +944,6 @@
 				00F213AB17C1D7D70001EFD0 /* UIViewController+MJPopupViewController.m */,
 			);
 			name = MJPopupView;
-			sourceTree = "<group>";
-		};
-		00F4B6921823AAC400C6331A /* TQRichTextView */ = {
-			isa = PBXGroup;
-			children = (
-				00F4B6931823AACF00C6331A /* TQRichTextBaseRun.h */,
-				00F4B6941823AACF00C6331A /* TQRichTextBaseRun.m */,
-				00F4B6951823AACF00C6331A /* TQRichTextURLRun.h */,
-				00F4B6961823AACF00C6331A /* TQRichTextURLRun.m */,
-				00F4B6971823AACF00C6331A /* TQRichTextImageRun.h */,
-				00F4B6981823AACF00C6331A /* TQRichTextImageRun.m */,
-				00F4B6991823AACF00C6331A /* TQRichTextEmojiRun.h */,
-				00F4B69A1823AACF00C6331A /* TQRichTextEmojiRun.m */,
-				00F4B69B1823AACF00C6331A /* TQRichTextView.h */,
-				00F4B69C1823AACF00C6331A /* TQRichTextView.m */,
-			);
-			name = TQRichTextView;
 			sourceTree = "<group>";
 		};
 		00F4B6A61823D66D00C6331A /* emc */ = {
@@ -1220,6 +1189,8 @@
 		CEB1254E1498D519008A4B70 = {
 			isa = PBXGroup;
 			children = (
+				E14DEF11235078EB0053C582 /* BYR-Bridging-Header.h */,
+				E14DEF0F235077C90053C582 /* MarkDownParser.swift */,
 				E140EAF223449EBC008D7D9A /* 北邮人.entitlements */,
 				003D9953193B726200DA5B68 /* Images.xcassets */,
 				CEB125631498D519008A4B70 /* BYR */,
@@ -1233,7 +1204,7 @@
 		CEB1255A1498D519008A4B70 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				264FECB014A0EA0B001C15B3 /* 北邮人.app */,
+				264FECB014A0EA0B001C15B3 /* BYR.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1241,9 +1212,6 @@
 		CEB1255C1498D519008A4B70 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				E1B890DA1D15D8720039B5C8 /* libxml2.2.tbd */,
-				E1B890D81D15D84C0039B5C8 /* libz.1.1.3.tbd */,
-				E1B890D61D15D83B0039B5C8 /* libz.1.2.5.tbd */,
 				006A75B3193D06EE00CE3809 /* CoreLocation.framework */,
 				0290B2FC183E46690097EC60 /* CoreTelephony.framework */,
 				005A69AA1826025D003E4397 /* AVFoundation.framework */,
@@ -1254,7 +1222,7 @@
 				CEB1255D1498D519008A4B70 /* UIKit.framework */,
 				CEB1255F1498D519008A4B70 /* Foundation.framework */,
 				CEB125611498D519008A4B70 /* CoreGraphics.framework */,
-				51D4C59485C3D0814233C08D /* libPods-BYR.a */,
+				F07F6CFEC8D97202880117A2 /* Pods_BYR.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1524,6 +1492,7 @@
 			children = (
 				E152EB2E23490B7C0032B979 /* BYRBBCodeToYYConverter.h */,
 				E152EB2F23490B7C0032B979 /* BYRBBCodeToYYConverter.m */,
+				E1D1F63A234F9E6E008C7138 /* README.md */,
 				E1BC83BA234589D100AFE908 /* TopicCell.h */,
 				E1BC83BB234589D100AFE908 /* TopicCell.m */,
 				E18B03FF2347233A00092480 /* TopicsViewController.h */,
@@ -1615,7 +1584,7 @@
 				264FEC9414A0EA0B001C15B3 /* Sources */,
 				264FEC9C14A0EA0B001C15B3 /* Frameworks */,
 				264FECA014A0EA0B001C15B3 /* Resources */,
-				2D75D4BEDBC7A76C0A09B883 /* [CP] Copy Pods Resources */,
+				73CE262A4C39E3D559451220 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1623,7 +1592,7 @@
 			);
 			name = BYR;
 			productName = Path2DemoPrj;
-			productReference = 264FECB014A0EA0B001C15B3 /* 北邮人.app */;
+			productReference = 264FECB014A0EA0B001C15B3 /* BYR.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -1637,6 +1606,7 @@
 				TargetAttributes = {
 					264FEC9314A0EA0B001C15B3 = {
 						DevelopmentTeam = UXQ4US7LL6;
+						LastSwiftMigration = 1100;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.InterAppAudio = {
@@ -1743,6 +1713,7 @@
 				00F4B8341823D66E00C6331A /* [ema6].gif in Resources */,
 				00F4B7A11823D66E00C6331A /* [emc53].gif in Resources */,
 				00F4B7FD1823D66E00C6331A /* [em61].gif in Resources */,
+				E1D1F63B234F9E6E008C7138 /* README.md in Resources */,
 				00F4B7AA1823D66E00C6331A /* [emc8].gif in Resources */,
 				00F4B7BE1823D66E00C6331A /* [emb3].gif in Resources */,
 				00F4B7961823D66E00C6331A /* [emc43].gif in Resources */,
@@ -1904,22 +1875,46 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		2D75D4BEDBC7A76C0A09B883 /* [CP] Copy Pods Resources */ = {
+		73CE262A4C39E3D559451220 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-BYR/Pods-BYR-resources.sh",
-				"${PODS_CONFIGURATION_BUILD_DIR}/BBCodeString/BBCodeString.bundle",
+				"${PODS_ROOT}/Target Support Files/Pods-BYR/Pods-BYR-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
+				"${BUILT_PRODUCTS_DIR}/BBCodeParser/BBCodeParser.framework",
+				"${BUILT_PRODUCTS_DIR}/BBCodeString/BBCodeString.framework",
+				"${BUILT_PRODUCTS_DIR}/BlocksKit/BlocksKit.framework",
+				"${BUILT_PRODUCTS_DIR}/Down/Down.framework",
+				"${BUILT_PRODUCTS_DIR}/KSPhotoBrowser/KSPhotoBrowser.framework",
+				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/MJExtension/MJExtension.framework",
+				"${BUILT_PRODUCTS_DIR}/Masonry/Masonry.framework",
+				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
+				"${BUILT_PRODUCTS_DIR}/YYCache/YYCache.framework",
+				"${BUILT_PRODUCTS_DIR}/YYImage/YYImage.framework",
+				"${BUILT_PRODUCTS_DIR}/YYText/YYText.framework",
 			);
-			name = "[CP] Copy Pods Resources";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/BBCodeString.bundle",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BBCodeParser.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BBCodeString.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BlocksKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Down.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KSPhotoBrowser.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MBProgressHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MJExtension.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Masonry.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YYCache.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YYImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YYText.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BYR/Pods-BYR-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BYR/Pods-BYR-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F0845587D85124A9E07EFD4D /* [CP] Check Pods Manifest.lock */ = {
@@ -1952,7 +1947,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				264FEC9514A0EA0B001C15B3 /* main.m in Sources */,
-				00F4B6A11823AACF00C6331A /* TQRichTextView.m in Sources */,
 				264FEC9614A0EA0B001C15B3 /* AppDelegate.m in Sources */,
 				007AB947193D0B2400CC2F3F /* Memo.m in Sources */,
 				E1B3D7362348358800977139 /* LoginViewController.m in Sources */,
@@ -1973,6 +1967,7 @@
 				0005757E1826988100060E69 /* WUEmoticonsKeyboardKeyItemGroup.m in Sources */,
 				E973E5FD154C092C004412CD /* RefreshTableFooterView.m in Sources */,
 				E14E046D23461E2600AC0EAF /* BYRNetworkManager.m in Sources */,
+				E14DEF10235077C90053C582 /* MarkDownParser.swift in Sources */,
 				E1C5D0652347DEDE00453D15 /* HomeHeadView.m in Sources */,
 				005B5C38181192A400041366 /* UINavigationController+SGProgress.m in Sources */,
 				E144EB40234A215C000818BF /* MailHeaderCell.m in Sources */,
@@ -1992,7 +1987,6 @@
 				E14E0476234638AB00AC0EAF /* TopicHeaderCell.m in Sources */,
 				E90BDC70157DC8A000AB1567 /* PostTopicViewController.m in Sources */,
 				0005757B1826988100060E69 /* WUEmoticonsKeyboard.m in Sources */,
-				00F4B69E1823AACF00C6331A /* TQRichTextURLRun.m in Sources */,
 				E144EB48234B4A9E000818BF /* ThreadCommentCell.m in Sources */,
 				E1BC83BF2345982800AFE908 /* HomeTabBarController.m in Sources */,
 				0005757D1826988100060E69 /* WUEmoticonsKeyboardKeyItem.m in Sources */,
@@ -2015,11 +2009,9 @@
 				0005758B182698A200060E69 /* WUDemoKeyboardPressedCellPopupView.m in Sources */,
 				E1C5D05E2347889D00453D15 /* NotificationHeaderCell.m in Sources */,
 				E13416482345E02A00A6C408 /* Models.m in Sources */,
-				00F4B69F1823AACF00C6331A /* TQRichTextImageRun.m in Sources */,
 				E107B8411D15C3750062ED98 /* UIView+FTAdditions.m in Sources */,
 				0085E5051821F3BE0059D454 /* VoteListViewController.m in Sources */,
 				0085E51D182237D50059D454 /* UIColor+RGBValues.m in Sources */,
-				00F4B69D1823AACF00C6331A /* TQRichTextBaseRun.m in Sources */,
 				E1C5D0612347CC4600453D15 /* BYRSession.m in Sources */,
 				E1B3D73923484E3E00977139 /* LoginInfoView.m in Sources */,
 				000575811826988100060E69 /* WUEmoticonsKeyboardToolsView.m in Sources */,
@@ -2029,7 +2021,6 @@
 				E144EB37234A1962000818BF /* MailViewController.m in Sources */,
 				0038D58817BC0413002CC5ED /* FPActivityView.m in Sources */,
 				00F213AD17C1D7D70001EFD0 /* UIViewController+MJPopupViewController.m in Sources */,
-				00F4B6A01823AACF00C6331A /* TQRichTextEmojiRun.m in Sources */,
 				E99B9D7C16D1D2EB00FC0A88 /* articleViewController.m in Sources */,
 				0085E5011821ECB50059D454 /* Vote.m in Sources */,
 				E1B3D73E234860BF00977139 /* ProtocolViewController.m in Sources */,
@@ -2105,7 +2096,8 @@
 				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = UXQ4US7LL6;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2135,6 +2127,7 @@
 				);
 				INFOPLIST_FILE = Path2DemoPrj/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\\\\\\\\\\\\\\\"$(SRCROOT)/../../Library/Developer/Xcode/DerivedData/虎踞龙蟠-hkwvhgwuofcdxrbxojgmynpswkaq/Build/Products/Debug-iphoneos\\\\\\\\\\\\\\\"",
@@ -2149,11 +2142,13 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = BYR;
-				PRODUCT_NAME = "北邮人";
+				PRODUCT_NAME = BYR;
 				PROVISIONING_PROFILE = Automatic;
 				"PROVISIONING_PROFILE[sdk=*]" = Automatic;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTS_MACCATALYST = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "BYR-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)\" \"$(SRCROOT)/Path2DemoPrj/SDWebImage/SDWebImage\" .. $(SDKROOT)/Path2DemoPrj/ShareSDK_v2.6.0";
 				WRAPPER_EXTENSION = app;
@@ -2174,7 +2169,8 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = UXQ4US7LL6;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2204,6 +2200,7 @@
 				);
 				INFOPLIST_FILE = Path2DemoPrj/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\\\\\\\\\\\\\\\"$(SRCROOT)/../../Library/Developer/Xcode/DerivedData/虎踞龙蟠-hkwvhgwuofcdxrbxojgmynpswkaq/Build/Products/Debug-iphoneos\\\\\\\\\\\\\\\"",
@@ -2218,12 +2215,15 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = BYR;
-				PRODUCT_NAME = "北邮人";
+				PRODUCT_NAME = BYR;
 				PROVISIONING_PROFILE = Automatic;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = Automatic;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"SDKROOT[arch=*]" = iphoneos;
 				SUPPORTS_MACCATALYST = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "BYR-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)\" \"$(SRCROOT)/Path2DemoPrj/SDWebImage/SDWebImage\" .. $(SDKROOT)/Path2DemoPrj/ShareSDK_v2.6.0";
 				WRAPPER_EXTENSION = app;
@@ -2245,7 +2245,8 @@
 				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = UXQ4US7LL6;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2275,6 +2276,7 @@
 				);
 				INFOPLIST_FILE = Path2DemoPrj/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\\\\\\\\\\\\\\\"$(SRCROOT)/../../Library/Developer/Xcode/DerivedData/虎踞龙蟠-hkwvhgwuofcdxrbxojgmynpswkaq/Build/Products/Debug-iphoneos\\\\\\\\\\\\\\\"",
@@ -2289,11 +2291,13 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = BYR;
-				PRODUCT_NAME = "北邮人";
+				PRODUCT_NAME = BYR;
 				PROVISIONING_PROFILE = Automatic;
 				"PROVISIONING_PROFILE[sdk=*]" = Automatic;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTS_MACCATALYST = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "BYR-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)\" \"$(SRCROOT)/Path2DemoPrj/SDWebImage/SDWebImage\" .. $(SDKROOT)/Path2DemoPrj/ShareSDK_v2.6.0";
 				WRAPPER_EXTENSION = app;

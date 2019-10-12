@@ -159,6 +159,10 @@
 #pragma mark - BYRBBCodeToYYConverterActionDelegate
 
 - (void)BBCodeDidClickURL:(NSString *)url {
+    if (![url hasPrefix:@"http"]) {
+        return;
+    }
+    
     SFSafariViewController *safari = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:url]];
     safari.modalPresentationStyle = UIModalPresentationPageSheet;
     [self presentViewController:safari animated:YES completion:nil];

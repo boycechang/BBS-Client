@@ -15,11 +15,15 @@
 #import "AttachmentView.h"
 #import "BYREmotionParser.h"
 #import "BYRContentParser.h"
+#import <Down-Swift.h>
+#import "BYR-Bridging-Header.h"
+#import <BYR-Swift.h>
+#import <MJExtension.h>
 
 @implementation BYRImageAttachmentModel
 @end
 
-@interface BYRBBCodeToYYConverter () <BBCodeParserDelegate, BBCodeStringDelegate>
+@interface BYRBBCodeToYYConverter () <BBCodeParserDelegate, BBCodeStringDelegate, Styler>
 
 @property (nonatomic, assign) CGFloat containerWidth;
 
@@ -131,10 +135,8 @@
         attModel.allSortedAttachments = [self.sotedAttachmentModels copy];
     }
     
-    
     // parse link
     [[BYRContentParser sharedInstance] parseLink:codeString.attributedString highlight:self.yyLinkHighlight];
-    
     
     // parse quote
     NSMutableParagraphStyle *quoteParagraphStyle = [NSMutableParagraphStyle new];
@@ -149,9 +151,7 @@
         NSParagraphStyleAttributeName : quoteParagraphStyle,
         BYRContentParserQuoteAttributedName : @1
     };
-    
     [[BYRContentParser sharedInstance] parseQuote:codeString.attributedString attributes:quoteTextAttributs];
-    
     
     // parse emoji
     [[BYREmotionParser sharedInstance] parseText:codeString.attributedString selectedRange:nil];
@@ -203,7 +203,7 @@
 
 /** Returns the attributed text which will be displayed for the given BBCode element. **/
 - (NSAttributedString *)getAttributedTextForElement:(BBElement *)element {
-    if ([element.tag containsString:@"upload="]) {
+    if ([[element.tag lowercaseString] containsString:@"upload="]) {
         NSInteger index = [[element.tag substringFromIndex:7] integerValue];
         if (index >= self.currentAttachments.count) {
             return nil;
@@ -221,7 +221,7 @@
         BYRImageAttachmentModel *model = [self generateImageAttachmentModel:att];
         [self.sotedAttachmentModels addObject:model];
         return model.attachmentText;
-    } else if ([element.tag containsString:@"img="]) {
+    } else if ([[element.tag lowercaseString] containsString:@"img="]) {
         NSString *url = [element.tag substringFromIndex:4];
         
         UIImageView *imageView = [self generateImageViewWithURL:url];
@@ -238,6 +238,10 @@
         [attachText yy_setTextHighlight:highlight range:attachText.yy_rangeOfAll];
         
         return attachText;
+    } else if ([[element.tag lowercaseString] containsString:@"md"]) {
+        MarkDownParser *parser = [[MarkDownParser alloc] initWithString:element.format];
+        NSAttributedString *attachText = [parser parseWithStyler:self];
+        return attachText;
     }
     
     return nil;
@@ -248,7 +252,16 @@
     return @[@"b", @"i", @"u", @"size", @"B", @"I", @"U", @"SIZE",
              @"color", @"face", @"COLOR", @"FACE",
              @"url", @"img", @"URL", @"IMG",
-             @"upload", @"UPLOAD"];
+             @"upload", @"UPLOAD",
+             @"md", @"MD"];
+}
+
+- (UIColor *)colorFromHexString:(NSString *)hexString {
+    unsigned rgbValue = 0;
+    NSScanner *scanner = [NSScanner scannerWithString:hexString];
+    [scanner setScanLocation:1]; // bypass '#' character
+    [scanner scanHexInt:&rgbValue];
+    return [UIColor colorWithRed:((rgbValue & 0xFF0000) >> 16)/255.0 green:((rgbValue & 0xFF00) >> 8)/255.0 blue:(rgbValue & 0xFF)/255.0 alpha:1.0];
 }
 
 /** Returns the attributes for the part of NSAttributedString which will present the given BBCode element.  **/
@@ -278,19 +291,27 @@
         
         if (size >= 4 && size <= 6) {
             return @{
-                  NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleTitle2],
+                  NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleTitle3],
                   NSForegroundColorAttributeName : [UIColor labelColor],
                   NSParagraphStyleAttributeName : self.paragraphStyle,
             };
         } else if (size > 6) {
             return @{
-                  NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleTitle3],
+                  NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleTitle2],
                   NSForegroundColorAttributeName : [UIColor labelColor],
                   NSParagraphStyleAttributeName : self.paragraphStyle,
             };
         } else {
             return self.normalTextAttributs;
         }
+    } else if ([[element.tag lowercaseString] containsString:@"color="]) {
+        NSString *hexString = [element.tag substringFromIndex:6];
+        UIColor *color = [self colorFromHexString:hexString];
+        return @{
+              NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleTitle3],
+              NSForegroundColorAttributeName : color ?: [UIColor labelColor],
+              NSParagraphStyleAttributeName : self.paragraphStyle,
+        };
     } else if ([[element.tag lowercaseString] containsString:@"url="]) {
         NSString *url = [element.tag substringFromIndex:4];
         
@@ -315,11 +336,190 @@
                  NSUnderlineStyleAttributeName : @(NSUnderlineStyleSingle),
                  NSParagraphStyleAttributeName : self.paragraphStyle,
         };
-    } else {
-        return self.normalTextAttributs;
+    } else if ([[element.tag lowercaseString] containsString:@"md"]) {
+        return nil;
     }
     
-    return nil;
+    return self.normalTextAttributs;
 }
+
+
+#pragma mark - Styler
+
+- (void)styleWithBlockQuote:(NSMutableAttributedString * _Nonnull)str {
+    
+}
+
+- (void)styleWithCode:(NSMutableAttributedString * _Nonnull)str {
+    YYTextBorder *codeBorder = [YYTextBorder new];
+    codeBorder.lineStyle = YYTextLineStyleSingle;
+    codeBorder.fillColor = [UIColor tertiarySystemFillColor];
+    codeBorder.insets = UIEdgeInsetsMake(0, -3, 0, -3);
+    codeBorder.cornerRadius = 2;
+    codeBorder.strokeWidth = YYTextCGFloatFromPixel(2);
+    
+    NSMutableParagraphStyle *codeParagraph = [NSMutableParagraphStyle new];
+    codeParagraph.lineSpacing = 2;
+    codeParagraph.headIndent = 5;
+    codeParagraph.tailIndent = -5;
+    codeParagraph.firstLineHeadIndent = 5;
+    codeParagraph.paragraphSpacingBefore = 5;
+    
+    NSDictionary *att = @{NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleCallout],
+             NSForegroundColorAttributeName : [UIColor secondaryLabelColor],
+             NSParagraphStyleAttributeName : codeParagraph,
+                          YYTextBorderAttributeName : codeBorder
+    };
+    
+    [str addAttributes:att range:NSMakeRange(0, str.length)];
+}
+
+- (void)styleWithCodeBlock:(NSMutableAttributedString * _Nonnull)str fenceInfo:(NSString * _Nullable)fenceInfo {
+    YYTextBorder *codeBorder = [YYTextBorder new];
+    codeBorder.lineStyle = YYTextLineStyleSingle;
+    codeBorder.fillColor = [UIColor tertiarySystemFillColor];
+    codeBorder.insets = UIEdgeInsetsMake(-3, -3, -3, -3);
+    codeBorder.cornerRadius = 6;
+    codeBorder.strokeWidth = YYTextCGFloatFromPixel(2);
+    
+    NSMutableParagraphStyle *codeParagraph = [NSMutableParagraphStyle new];
+    codeParagraph.lineSpacing = 2;
+    codeParagraph.headIndent = 5;
+    codeParagraph.tailIndent = -5;
+    codeParagraph.firstLineHeadIndent = 5;
+    codeParagraph.paragraphSpacingBefore = 5;
+    NSDictionary *att = @{NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleCallout],
+             NSForegroundColorAttributeName : [UIColor secondaryLabelColor],
+             NSParagraphStyleAttributeName : codeParagraph,
+                          YYTextBlockBorderAttributeName : codeBorder
+    };
+    
+    [str addAttributes:att range:NSMakeRange(0, str.length)];
+}
+
+- (void)styleWithCustomBlock:(NSMutableAttributedString * _Nonnull)str {
+    
+}
+
+- (void)styleWithCustomInline:(NSMutableAttributedString * _Nonnull)str {
+    
+}
+
+- (void)styleWithDocument:(NSMutableAttributedString * _Nonnull)str {
+    
+}
+
+- (void)styleWithEmphasis:(NSMutableAttributedString * _Nonnull)str {
+    UIFontDescriptor *descriptor = [[UIFont preferredFontForTextStyle:UIFontTextStyleBody] fontDescriptor];
+    UIFontDescriptor *newDescriptor = [descriptor fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitItalic];
+    NSDictionary *att = @{NSFontAttributeName : [UIFont fontWithDescriptor:newDescriptor size:0],
+             NSForegroundColorAttributeName : [UIColor labelColor],
+             NSParagraphStyleAttributeName : self.paragraphStyle,
+    };
+    
+    [str addAttributes:att range:NSMakeRange(0, str.length)];
+}
+
+- (void)styleWithHeading:(NSMutableAttributedString * _Nonnull)str level:(NSInteger)level {
+    CGFloat scale = 1.f + (1.f / (CGFloat)level);
+    UIFontDescriptor *descriptor = [[UIFont preferredFontForTextStyle:UIFontTextStyleBody] fontDescriptor];
+    UIFontDescriptor *newDescriptor = [descriptor fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold];
+    NSDictionary *att = @{NSFontAttributeName : [UIFont fontWithDescriptor:newDescriptor size:descriptor.pointSize * scale],
+             NSForegroundColorAttributeName : [UIColor labelColor],
+             NSParagraphStyleAttributeName : self.paragraphStyle,
+    };
+    
+    [str addAttributes:att range:NSMakeRange(0, str.length)];
+}
+
+- (void)styleWithHtmlBlock:(NSMutableAttributedString * _Nonnull)str {
+    
+}
+
+- (void)styleWithHtmlInline:(NSMutableAttributedString * _Nonnull)str {
+    
+}
+
+- (void)styleWithImage:(NSMutableAttributedString * _Nonnull)str title:(NSString * _Nullable)title url:(NSString * _Nullable)url {
+    UIImageView *imageView = [self generateImageViewWithURL:url];
+    
+    NSMutableAttributedString *attachText = [NSMutableAttributedString yy_attachmentStringWithContent:imageView contentMode:UIViewContentModeCenter attachmentSize:imageView.frame.size alignToFont:[UIFont preferredFontForTextStyle:UIFontTextStyleBody] alignment:YYTextVerticalAlignmentTop];
+    
+    YYTextHighlight *highlight = [YYTextHighlight new];
+    __weak typeof (self) wself = self;
+    highlight.tapAction = ^(UIView *containerView, NSAttributedString *text, NSRange range, CGRect rect) {
+        if ([wself.actionDelegate respondsToSelector:@selector(BBCodeDidClickURL:)]) {
+            [wself.actionDelegate BBCodeDidClickURL:url];
+        }
+    };
+    [attachText yy_setTextHighlight:highlight range:attachText.yy_rangeOfAll];
+    
+    return [str replaceCharactersInRange:NSMakeRange(0, str.length) withAttributedString:attachText];
+}
+
+- (void)styleWithItem:(NSMutableAttributedString * _Nonnull)str {
+    
+}
+
+- (void)styleWithLineBreak:(NSMutableAttributedString * _Nonnull)str {
+    
+}
+
+- (void)styleWithLink:(NSMutableAttributedString * _Nonnull)str title:(NSString * _Nullable)title url:(NSString * _Nullable)url {
+    YYTextBorder *highlightBorder = [YYTextBorder new];
+    highlightBorder.strokeWidth = 0;
+    highlightBorder.strokeColor = nil;
+    highlightBorder.fillColor = [UIColor systemFillColor];
+    
+    YYTextHighlight *highlight = [YYTextHighlight new];
+    [highlight setBackgroundBorder:highlightBorder];
+    
+    __weak typeof (self) wself = self;
+    highlight.tapAction = ^(UIView *containerView, NSAttributedString *text, NSRange range, CGRect rect) {
+        if ([wself.actionDelegate respondsToSelector:@selector(BBCodeDidClickURL:)]) {
+            [wself.actionDelegate BBCodeDidClickURL:url];
+        }
+    };
+    
+    [str addAttributes:@{YYTextHighlightAttributeName : highlight,
+             NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleBody],
+             NSForegroundColorAttributeName : [UIColor systemBlueColor],
+             NSUnderlineStyleAttributeName : @(NSUnderlineStyleSingle),
+             NSParagraphStyleAttributeName : self.paragraphStyle,
+    } range:NSMakeRange(0, str.length)];
+}
+
+- (void)styleWithList:(NSMutableAttributedString * _Nonnull)str {
+    
+}
+
+- (void)styleWithParagraph:(NSMutableAttributedString * _Nonnull)str {
+    
+}
+
+- (void)styleWithSoftBreak:(NSMutableAttributedString * _Nonnull)str {
+    
+}
+
+- (void)styleWithStrong:(NSMutableAttributedString * _Nonnull)str {
+    UIFontDescriptor *descriptor = [[UIFont preferredFontForTextStyle:UIFontTextStyleBody] fontDescriptor];
+    UIFontDescriptor *newDescriptor = [descriptor fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold];
+    NSDictionary *att = @{NSFontAttributeName : [UIFont fontWithDescriptor:newDescriptor size:0],
+             NSForegroundColorAttributeName : [UIColor labelColor],
+             NSParagraphStyleAttributeName : self.paragraphStyle,
+    };
+    
+    [str addAttributes:att range:NSMakeRange(0, str.length)];
+}
+
+- (void)styleWithText:(NSMutableAttributedString * _Nonnull)str {
+    [str addAttributes:self.normalTextAttributs range:NSMakeRange(0, str.length)];
+}
+
+- (void)styleWithThematicBreak:(NSMutableAttributedString * _Nonnull)str {
+    
+}
+
+@synthesize listPrefixAttributes;
 
 @end

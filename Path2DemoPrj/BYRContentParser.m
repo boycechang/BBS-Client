@@ -7,7 +7,7 @@
 //
 
 #import "BYRContentParser.h"
-#import <YYText.h>
+#import <YYText/YYText.h>
 #import "NSString+BYRTool.h"
 
 NSString *const BYRContentParserQuoteAttributedName = @"BYRCPQuoteAttributedName";
@@ -21,14 +21,6 @@ NSString *const BYRContentParserQuoteAttributedName = @"BYRCPQuoteAttributedName
         _instance = [[self alloc] init];
     });
     return _instance;
-}
-
-- (instancetype)init {
-    self = [super init];
-    if (self) {
-        
-    }
-    return self;
 }
 
 - (void)parseQuote:(NSMutableAttributedString *)text attributes:(NSDictionary *)attributes {
@@ -53,17 +45,11 @@ NSString *const BYRContentParserQuoteAttributedName = @"BYRCPQuoteAttributedName
     border.cornerRadius = 2;
     border.strokeWidth = YYTextCGFloatFromPixel(2);
     
-//    __block NSRange finedRange = NSMakeRange(0, 0);
     [text enumerateAttribute:BYRContentParserQuoteAttributedName inRange:NSMakeRange(0, text.length) options:kNilOptions usingBlock:^(id  _Nullable value, NSRange range, BOOL * _Nonnull stop) {
         if (value) {
-//            finedRange = range;
             [text yy_setTextBlockBorder:border.copy range:range];
         }
     }];
-    
-//    if (finedRange.length != 0) {
-//        [text replaceCharactersInRange:finedRange withAttributedString:[[[NSMutableAttributedString alloc] initWithAttributedString:[text attributedSubstringFromRange:finedRange]] trimedWhitespaceString]];
-//    }
 }
 
 - (void)parseLink:(NSMutableAttributedString *)text highlight:(YYTextHighlight *)highlight {

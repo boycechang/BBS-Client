@@ -7,7 +7,7 @@
 //
 
 #import "BYREmotionParser.h"
-#import <YYImage.h>
+#import <YYImage/YYImage.h>
 
 @implementation BYREmotionParser
 
