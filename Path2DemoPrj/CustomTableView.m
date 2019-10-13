@@ -14,8 +14,7 @@
 @synthesize mRefreshTableHeaderView;
 @synthesize mRefreshTableFooterView;
 
-- (id)initWithFrame:(CGRect)frame Delegate:(id)delegate
-{
+- (id)initWithFrame:(CGRect)frame Delegate:(id)delegate {
     mDelegate = delegate;
     self = [super initWithFrame:frame];
     if (self) 
@@ -46,23 +45,21 @@
     }
     return self;
 }
--(void)removeFooterView
-{
+
+- (void)removeFooterView {
     [mRefreshTableFooterView removeFromSuperview];
 }
--(void)dealloc
-{
+
+- (void)dealloc {
+    [super dealloc];
     [mRefreshTableHeaderView release];
     [mRefreshTableFooterView release];
     [mTableView release];
-    
-    [super dealloc];
 }
 
 /**************************  tableview Delegate ***************************/
 
--(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if([mDelegate respondsToSelector:@selector(tableView:numberOfRowsInSection:)])
         mTableViewCellNum = [mDelegate tableView:tableView numberOfRowsInSection:section];
     else
@@ -73,16 +70,14 @@
     return mTableViewCellNum;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if([mDelegate respondsToSelector:@selector(tableView:cellForRowAtIndexPath:)])
         return [mDelegate tableView:tableView cellForRowAtIndexPath:indexPath];
     else
         return nil;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath   
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     static CGFloat height = 0.0;
     if([mDelegate respondsToSelector:@selector(tableView:heightForRowAtIndexPath:)])
         height = [mDelegate tableView:tableView heightForRowAtIndexPath:indexPath];
@@ -99,88 +94,74 @@
     return height;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if([mDelegate respondsToSelector:@selector(tableView:didSelectRowAtIndexPath:)])
         [mDelegate tableView:tableView didSelectRowAtIndexPath:indexPath];
     else
         return;
 }
 
--(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if([mDelegate respondsToSelector:@selector(tableView:didDeselectRowAtIndexPath:)])
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ([mDelegate respondsToSelector:@selector(tableView:didDeselectRowAtIndexPath:)]) {
         [mDelegate tableView:tableView didDeselectRowAtIndexPath:indexPath];
-    else
-        return;
+    }
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     mContentOffset = scrollView.contentOffset.y;
-    
     [mRefreshTableHeaderView refreshScrollViewDidScroll:scrollView];
     [mRefreshTableFooterView refreshScrollViewDidScroll:scrollView];
 }
 
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-{
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
     [mRefreshTableHeaderView refreshScrollViewDidEndDragging:scrollView];
     [mRefreshTableFooterView refreshScrollViewDidEndDragging:scrollView];
 }
 
-
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    if([mDelegate respondsToSelector:@selector(scrollViewDidScroll:)]) {
+    if ([mDelegate respondsToSelector:@selector(scrollViewDidScroll:)]) {
         [mDelegate scrollViewDidScroll:scrollView];
     }
 }
 
 
 /**************************  refreshHeaderView Delegate ***************************/
-- (void)refreshTableHeaderDidTriggerRefresh:(RefreshTableHeaderView*)view
-{
+- (void)refreshTableHeaderDidTriggerRefresh:(RefreshTableHeaderView *)view {
     isHeaderDataLoading = YES;
-    if([mDelegate respondsToSelector:@selector(refreshTableHeaderDidTriggerRefresh:)])
-    {
+    if ([mDelegate respondsToSelector:@selector(refreshTableHeaderDidTriggerRefresh:)]) {
         [mDelegate refreshTableHeaderDidTriggerRefresh:(RefreshTableHeaderView *)mTableView];
     }
 }
 
-- (BOOL)refreshTableHeaderDataSourceIsLoading:(RefreshTableHeaderView*)view
-{
+- (BOOL)refreshTableHeaderDataSourceIsLoading:(RefreshTableHeaderView *)view {
     return isHeaderDataLoading || isFooterDataLoading;
 }
 
-- (NSDate*)refreshTableHeaderDataSourceLastUpdated:(RefreshTableHeaderView*)view
-{
+- (NSDate*)refreshTableHeaderDataSourceLastUpdated:(RefreshTableHeaderView *)view {
     return [NSDate date];
 }
 
 /**************************  refreshFooterView Delegate ***************************/
-- (void)refreshTableFooterDidTriggerRefresh:(RefreshTableFooterView*)view
-{
+- (void)refreshTableFooterDidTriggerRefresh:(RefreshTableFooterView *)view {
     isFooterDataLoading = YES;
     if([mDelegate respondsToSelector:@selector(refreshTableFooterDidTriggerRefresh:)])
         [mDelegate refreshTableFooterDidTriggerRefresh:(RefreshTableFooterView *)mTableView];
 }
 
-- (BOOL)refreshTableFooterDataSourceIsLoading:(RefreshTableFooterView*)view
-{
+- (BOOL)refreshTableFooterDataSourceIsLoading:(RefreshTableFooterView *)view {
     return isFooterDataLoading || isHeaderDataLoading;
 }
 
-- (NSDate*)refreshTableFooterDataSourceLastUpdated:(RefreshTableFooterView*)view
-{
+- (NSDate*)refreshTableFooterDataSourceLastUpdated:(RefreshTableFooterView *)view {
     return [NSDate date];
 }
 
 /**************************   Data refresh method ****************************/
--(void)reloadData
-{
+- (void)reloadData {
     [mTableView reloadData];
     [mRefreshTableHeaderView refreshScrollViewDataSourceDidFinishedLoading:mTableView];
     [mRefreshTableFooterView refreshScrollViewDataSourceDidFinishedLoading:mTableView];
@@ -188,8 +169,7 @@
     isFooterDataLoading = NO;
 }
 
--(void)insertRowsAtIndexPaths:(NSArray *)indexPaths withRowAnimation:(UITableViewRowAnimation)animation
-{
+- (void)insertRowsAtIndexPaths:(NSArray *)indexPaths withRowAnimation:(UITableViewRowAnimation)animation {
     [mRefreshTableHeaderView refreshScrollViewDataSourceDidFinishedLoading:mTableView];
     [mRefreshTableFooterView refreshScrollViewDataSourceDidFinishedLoading:mTableView];
     isHeaderDataLoading = NO;
@@ -197,13 +177,11 @@
     [mTableView insertRowsAtIndexPaths:indexPaths withRowAnimation:animation];
 }
 
--(NSIndexPath *)indexPathForCell:(UITableViewCell *)tableViewCell
-{
+- (NSIndexPath *)indexPathForCell:(UITableViewCell *)tableViewCell {
     return [mTableView indexPathForCell:tableViewCell];
 }
 
--(void)setCustomTableViewTag:(NSInteger)tag
-{
+- (void)setCustomTableViewTag:(NSInteger)tag {
     [self setTag:tag];
     [mTableView setTag:tag];
 }

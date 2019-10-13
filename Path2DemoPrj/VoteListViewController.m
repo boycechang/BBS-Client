@@ -37,9 +37,6 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"投票";
     
-    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-//    myBBS = appDelegate.myBBS;
-    
     customTableView = [[UITableView alloc] init];
     customTableView.refreshControl = [UIRefreshControl new];
     [customTableView.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
@@ -59,6 +56,7 @@
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        
 //        if (appDelegate.myBBS.voteListNew != nil) {
 //            self.mailsArray0 = appDelegate.myBBS.voteListNew;
 //            self.mailsArray1 = appDelegate.myBBS.voteListHot;

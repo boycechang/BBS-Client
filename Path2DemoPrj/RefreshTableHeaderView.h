@@ -14,7 +14,6 @@ typedef enum{
 @protocol RefreshTableHeaderViewDelegate;
 
 @interface RefreshTableHeaderView : UIView {
-	
 	id __unsafe_unretained _delegate;
 	PullRefreshState _state;
     
@@ -33,9 +32,13 @@ typedef enum{
 
 @end
 
+
 @protocol RefreshTableHeaderViewDelegate
-- (void)refreshTableHeaderDidTriggerRefresh:(RefreshTableHeaderView*)view;
-- (BOOL)refreshTableHeaderDataSourceIsLoading:(RefreshTableHeaderView*)view;
+
+- (void)refreshTableHeaderDidTriggerRefresh:(RefreshTableHeaderView *)view;
+- (BOOL)refreshTableHeaderDataSourceIsLoading:(RefreshTableHeaderView *)view;
+
 @optional
-- (NSDate*)refreshTableHeaderDataSourceLastUpdated:(RefreshTableHeaderView*)view;
+- (NSDate *)refreshTableHeaderDataSourceLastUpdated:(RefreshTableHeaderView *)view;
+
 @end

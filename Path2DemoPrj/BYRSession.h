@@ -18,7 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)sharedInstance;
 
-- (void)logInWithUsername:(NSString *)username password:(NSString *)password
+- (void)logInWithUsername:(NSString *)username
+                 password:(NSString *)password
                completion:(nullable void (^)(BOOL success, NSError *error))completion;
 
 - (void)logOut;

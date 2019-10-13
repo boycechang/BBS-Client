@@ -23,9 +23,10 @@
 
 #import "FPActivityView.h"
 #import "AppDelegate.h"
+
 @interface FPActivityView ()
 
-@property(strong)UIImageView* activityImageView;
+@property (strong) UIImageView *activityImageView;
 
 @end
 
@@ -33,8 +34,7 @@
 @implementation FPActivityView
 @synthesize activityImageView;
 
-- (id)initWithFrame:(CGRect)frame
-{
+- (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         int barWidth = self.frame.size.width/3;
@@ -45,7 +45,7 @@
     return self;
 }
 
--(void)start {
+- (void)start {
     [activityImageView.layer removeAllAnimations];
     
     int barWidth = self.frame.size.width/3;
@@ -79,11 +79,9 @@
      ];
 }
 
--(void)stop {
+- (void)stop {
     [activityImageView.layer removeAllAnimations];
     [activityImageView removeFromSuperview];
 }
-
-
 
 @end

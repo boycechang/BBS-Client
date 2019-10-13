@@ -74,7 +74,8 @@ MJCodingImplementation
     return self;
 }
 
-- (void)logInWithUsername:(NSString *)username password:(NSString *)password
+- (void)logInWithUsername:(NSString *)username
+                 password:(NSString *)password
                completion:(nullable void (^)(BOOL success, NSError *error))completion {
     [[BYRNetworkManager sharedInstance] updateUsername:username password:password];
     

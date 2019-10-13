@@ -51,7 +51,6 @@
 		00D71E5717BE333E008460E1 /* AttachmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D71E5617BE333E008460E1 /* AttachmentView.m */; };
 		00ED5F8217C649DD000843DD /* MainWindowiPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 00ED5F8117C649DD000843DD /* MainWindowiPad.xib */; };
 		00F213AD17C1D7D70001EFD0 /* UIViewController+MJPopupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F213AB17C1D7D70001EFD0 /* UIViewController+MJPopupViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		00F213B117C1F6E70001EFD0 /* CustomNoFooterViewSectionHeaderTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F213B017C1F6E70001EFD0 /* CustomNoFooterViewSectionHeaderTableView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		00F4B7711823D66E00C6331A /* [emc0].gif in Resources */ = {isa = PBXBuildFile; fileRef = 00F4B6A71823D66D00C6331A /* [emc0].gif */; };
 		00F4B7721823D66E00C6331A /* [emc10].gif in Resources */ = {isa = PBXBuildFile; fileRef = 00F4B6A81823D66D00C6331A /* [emc10].gif */; };
 		00F4B7731823D66E00C6331A /* [emc11].gif in Resources */ = {isa = PBXBuildFile; fileRef = 00F4B6A91823D66D00C6331A /* [emc11].gif */; };
@@ -295,19 +294,16 @@
 		E1C5D05E2347889D00453D15 /* NotificationHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E1C5D05D2347889D00453D15 /* NotificationHeaderCell.m */; };
 		E1C5D0612347CC4600453D15 /* BYRSession.m in Sources */ = {isa = PBXBuildFile; fileRef = E1C5D0602347CC4600453D15 /* BYRSession.m */; };
 		E1C5D0652347DEDE00453D15 /* HomeHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = E1C5D0642347DEDE00453D15 /* HomeHeadView.m */; };
-		E90BDC65157DA07600AB1567 /* CustomNoFooterWithDeleteTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = E90BDC64157DA07600AB1567 /* CustomNoFooterWithDeleteTableView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E90BDC6A157DA98700AB1567 /* UserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E90BDC68157DA98700AB1567 /* UserInfoViewController.m */; settings = {COMPILER_FLAGS = ""; }; };
 		E90BDC6B157DA98700AB1567 /* UserInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E90BDC69157DA98700AB1567 /* UserInfoViewController.xib */; };
 		E90BDC70157DC8A000AB1567 /* PostTopicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E90BDC6E157DC8A000AB1567 /* PostTopicViewController.m */; settings = {COMPILER_FLAGS = ""; }; };
 		E9142DB4158124A600E2F8CE /* PostMailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E9142DB2158124A600E2F8CE /* PostMailViewController.m */; settings = {COMPILER_FLAGS = ""; }; };
 		E91D85891578E77400FBDE75 /* BoardsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E91D85871578E77400FBDE75 /* BoardsViewController.m */; settings = {COMPILER_FLAGS = ""; }; };
 		E93DE82715805FBE00D763D2 /* Notification.m in Sources */ = {isa = PBXBuildFile; fileRef = E93DE82615805FBE00D763D2 /* Notification.m */; settings = {COMPILER_FLAGS = ""; }; };
-		E93DE83215806D7300D763D2 /* CustomTableWithDeleteView.m in Sources */ = {isa = PBXBuildFile; fileRef = E93DE83115806D7300D763D2 /* CustomTableWithDeleteView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E973E5F6154C0908004412CD /* CustomTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = E973E5F5154C0908004412CD /* CustomTableView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E973E5FC154C092C004412CD /* RefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = E973E5F9154C092C004412CD /* RefreshTableHeaderView.m */; settings = {COMPILER_FLAGS = ""; }; };
 		E973E5FD154C092C004412CD /* RefreshTableFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = E973E5FB154C092C004412CD /* RefreshTableFooterView.m */; settings = {COMPILER_FLAGS = ""; }; };
 		E973E602154C0A54004412CD /* TopTenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E973E600154C0A54004412CD /* TopTenViewController.m */; settings = {COMPILER_FLAGS = ""; }; };
-		E973E648154C4D14004412CD /* CustomNoFooterTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = E973E646154C4D13004412CD /* CustomNoFooterTableView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E9956132157B51BE00DCFCAD /* MyBBS.m in Sources */ = {isa = PBXBuildFile; fileRef = E9956131157B51BE00DCFCAD /* MyBBS.m */; settings = {COMPILER_FLAGS = ""; }; };
 		E99B9D7C16D1D2EB00FC0A88 /* articleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E99B9D7B16D1D2EB00FC0A88 /* articleViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E99B9D8116D1D2F500FC0A88 /* FTCoreTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = E99B9D7E16D1D2F500FC0A88 /* FTCoreTextView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -393,8 +389,6 @@
 		00ED5F8117C649DD000843DD /* MainWindowiPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWindowiPad.xib; sourceTree = "<group>"; };
 		00F213AA17C1D7D70001EFD0 /* UIViewController+MJPopupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+MJPopupViewController.h"; sourceTree = "<group>"; };
 		00F213AB17C1D7D70001EFD0 /* UIViewController+MJPopupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+MJPopupViewController.m"; sourceTree = "<group>"; };
-		00F213AF17C1F6E70001EFD0 /* CustomNoFooterViewSectionHeaderTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomNoFooterViewSectionHeaderTableView.h; sourceTree = "<group>"; };
-		00F213B017C1F6E70001EFD0 /* CustomNoFooterViewSectionHeaderTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomNoFooterViewSectionHeaderTableView.m; sourceTree = "<group>"; };
 		00F4B6A71823D66D00C6331A /* [emc0].gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "[emc0].gif"; sourceTree = "<group>"; };
 		00F4B6A81823D66D00C6331A /* [emc10].gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "[emc10].gif"; sourceTree = "<group>"; };
 		00F4B6A91823D66D00C6331A /* [emc11].gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "[emc11].gif"; sourceTree = "<group>"; };
@@ -677,8 +671,6 @@
 		E1C5D0602347CC4600453D15 /* BYRSession.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BYRSession.m; sourceTree = "<group>"; };
 		E1C5D0632347DEDE00453D15 /* HomeHeadView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeHeadView.h; sourceTree = "<group>"; };
 		E1C5D0642347DEDE00453D15 /* HomeHeadView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeHeadView.m; sourceTree = "<group>"; };
-		E90BDC63157DA07500AB1567 /* CustomNoFooterWithDeleteTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomNoFooterWithDeleteTableView.h; sourceTree = "<group>"; };
-		E90BDC64157DA07600AB1567 /* CustomNoFooterWithDeleteTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomNoFooterWithDeleteTableView.m; sourceTree = "<group>"; };
 		E90BDC67157DA98700AB1567 /* UserInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoViewController.h; sourceTree = "<group>"; };
 		E90BDC68157DA98700AB1567 /* UserInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoViewController.m; sourceTree = "<group>"; };
 		E90BDC69157DA98700AB1567 /* UserInfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserInfoViewController.xib; sourceTree = "<group>"; };
@@ -690,8 +682,6 @@
 		E91D85871578E77400FBDE75 /* BoardsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BoardsViewController.m; sourceTree = "<group>"; };
 		E93DE82515805FBE00D763D2 /* Notification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Notification.h; sourceTree = "<group>"; };
 		E93DE82615805FBE00D763D2 /* Notification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Notification.m; sourceTree = "<group>"; };
-		E93DE83015806D7300D763D2 /* CustomTableWithDeleteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTableWithDeleteView.h; sourceTree = "<group>"; };
-		E93DE83115806D7300D763D2 /* CustomTableWithDeleteView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTableWithDeleteView.m; sourceTree = "<group>"; };
 		E96967A616C177C100524ACB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E973E5E8154BEB7B004412CD /* DataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DataModel.h; path = DataModel/DataModel.h; sourceTree = "<group>"; };
 		E973E5F4154C0908004412CD /* CustomTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTableView.h; sourceTree = "<group>"; };
@@ -702,8 +692,6 @@
 		E973E5FB154C092C004412CD /* RefreshTableFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RefreshTableFooterView.m; sourceTree = "<group>"; };
 		E973E5FF154C0A54004412CD /* TopTenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopTenViewController.h; sourceTree = "<group>"; };
 		E973E600154C0A54004412CD /* TopTenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopTenViewController.m; sourceTree = "<group>"; };
-		E973E646154C4D13004412CD /* CustomNoFooterTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomNoFooterTableView.m; sourceTree = "<group>"; };
-		E973E647154C4D14004412CD /* CustomNoFooterTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomNoFooterTableView.h; sourceTree = "<group>"; };
 		E9956130157B51BE00DCFCAD /* MyBBS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyBBS.h; sourceTree = "<group>"; };
 		E9956131157B51BE00DCFCAD /* MyBBS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyBBS.m; sourceTree = "<group>"; };
 		E99B9D7A16D1D2EB00FC0A88 /* articleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = articleViewController.h; sourceTree = "<group>"; };
@@ -1400,30 +1388,14 @@
 		E973E5F3154C08EA004412CD /* CustomTableView */ = {
 			isa = PBXGroup;
 			children = (
-				00F213AF17C1F6E70001EFD0 /* CustomNoFooterViewSectionHeaderTableView.h */,
-				00F213B017C1F6E70001EFD0 /* CustomNoFooterViewSectionHeaderTableView.m */,
-				E90BDC63157DA07500AB1567 /* CustomNoFooterWithDeleteTableView.h */,
-				E90BDC64157DA07600AB1567 /* CustomNoFooterWithDeleteTableView.m */,
-				E973E647154C4D14004412CD /* CustomNoFooterTableView.h */,
-				E973E646154C4D13004412CD /* CustomNoFooterTableView.m */,
-				E93DE83015806D7300D763D2 /* CustomTableWithDeleteView.h */,
-				E93DE83115806D7300D763D2 /* CustomTableWithDeleteView.m */,
 				E973E5F4154C0908004412CD /* CustomTableView.h */,
 				E973E5F5154C0908004412CD /* CustomTableView.m */,
-				E973E5F7154C090D004412CD /* RefreshView */,
-			);
-			name = CustomTableView;
-			sourceTree = "<group>";
-		};
-		E973E5F7154C090D004412CD /* RefreshView */ = {
-			isa = PBXGroup;
-			children = (
 				E973E5F8154C092C004412CD /* RefreshTableHeaderView.h */,
 				E973E5F9154C092C004412CD /* RefreshTableHeaderView.m */,
 				E973E5FA154C092C004412CD /* RefreshTableFooterView.h */,
 				E973E5FB154C092C004412CD /* RefreshTableFooterView.m */,
 			);
-			name = RefreshView;
+			name = CustomTableView;
 			sourceTree = "<group>";
 		};
 		E99B9D7816D1D29A00FC0A88 /* CoreTextView */ = {
@@ -1945,17 +1917,14 @@
 				005B5C38181192A400041366 /* UINavigationController+SGProgress.m in Sources */,
 				E144EB40234A215C000818BF /* MailHeaderCell.m in Sources */,
 				E973E602154C0A54004412CD /* TopTenViewController.m in Sources */,
-				E973E648154C4D14004412CD /* CustomNoFooterTableView.m in Sources */,
 				E91D85891578E77400FBDE75 /* BoardsViewController.m in Sources */,
 				E1B3D7442348C94400977139 /* ThreadCell.m in Sources */,
 				E9FEB5C8157B39D800801E7F /* AboutViewController.m in Sources */,
 				E9956132157B51BE00DCFCAD /* MyBBS.m in Sources */,
-				00F213B117C1F6E70001EFD0 /* CustomNoFooterViewSectionHeaderTableView.m in Sources */,
 				000575801826988100060E69 /* WUEmoticonsKeyboardKeysPageFlowLayout.m in Sources */,
 				0085E510182223120059D454 /* SingleVoteViewController.m in Sources */,
 				E1BC83BC234589D100AFE908 /* TopicCell.m in Sources */,
 				0085E50B1821F4260059D454 /* VoteCellView.m in Sources */,
-				E90BDC65157DA07600AB1567 /* CustomNoFooterWithDeleteTableView.m in Sources */,
 				E90BDC6A157DA98700AB1567 /* UserInfoViewController.m in Sources */,
 				E14E0476234638AB00AC0EAF /* TopicHeaderCell.m in Sources */,
 				E90BDC70157DC8A000AB1567 /* PostTopicViewController.m in Sources */,
@@ -1965,7 +1934,6 @@
 				0005757D1826988100060E69 /* WUEmoticonsKeyboardKeyItem.m in Sources */,
 				E144EB43234A2B38000818BF /* NSString+BYRTool.m in Sources */,
 				E93DE82715805FBE00D763D2 /* Notification.m in Sources */,
-				E93DE83215806D7300D763D2 /* CustomTableWithDeleteView.m in Sources */,
 				E9142DB4158124A600E2F8CE /* PostMailViewController.m in Sources */,
 				3EDA686016BE5CF600137E99 /* UploadAttachmentsViewController.m in Sources */,
 				0005758A182698A200060E69 /* WUDemoKeyboardTextKeyCell.m in Sources */,
