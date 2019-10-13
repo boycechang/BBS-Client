@@ -7,7 +7,6 @@
 //
 
 #import "TopTenViewController.h"
-#import "FTPagingViewController.h"
 #import <Masonry.h>
 #import "TopicCell.h"
 #import "TopicHeaderCell.h"

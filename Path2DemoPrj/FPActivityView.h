@@ -27,7 +27,7 @@
 
 - (id)initWithFrame:(CGRect)frame;
 
--(void)start;
--(void)stop;
+- (void)start;
+- (void)stop;
 
 @end

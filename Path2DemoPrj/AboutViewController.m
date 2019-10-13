@@ -148,9 +148,9 @@
                     }
                     else {
                         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                            imageCache = [[SDImageCache sharedImageCache] totalDiskSize] / 1024.0 / 1024.0;
+                            self->imageCache = [[SDImageCache sharedImageCache] totalDiskSize] / 1024.0 / 1024.0;
                             dispatch_async(dispatch_get_main_queue(), ^{
-                                cell.detailTextLabel.text = [NSString stringWithFormat:@"%0.2f M", imageCache];
+                                cell.detailTextLabel.text = [NSString stringWithFormat:@"%0.2f M", self->imageCache];
                             });
                         });
                     }

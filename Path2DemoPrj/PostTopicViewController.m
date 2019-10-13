@@ -15,16 +15,15 @@
 @synthesize mDelegate;
 @synthesize keyboardToolbar;
 
-- (id)init
-{
+- (id)init {
     self = [super init];
     if (self) {
+        
     }
     return self;
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     CGRect rect = [[UIScreen mainScreen] bounds];
     [self.view setFrame:CGRectMake(0, 0, self.view.frame.size.width, rect.size.height)];
@@ -42,14 +41,7 @@
     self.navigationItem.rightBarButtonItem = sendButton;
     
     
-    if ([[[UIDevice currentDevice]systemVersion]floatValue] >= 7.0) {
-        [self setAutomaticallyAdjustsScrollViewInsets:NO];
-        postScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height - 64)];
-    }
-    else {
-        postScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 64)];
-    }
-
+    postScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height - 64)];
     postScrollView.contentSize = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height - 64 + 1);
     postScrollView.delegate = self;
     
@@ -80,15 +72,12 @@
     [postScrollView addSubview:postContent];
     [self.view addSubview:postScrollView];
     
-    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-//    myBBS = appDelegate.myBBS;
-
     if (postType == 0) {
         self.title = @"发新帖子";
         [postTitle setText:@""];
         [postTitle becomeFirstResponder];
         [postContent setText:@""];
-        [postTitleCount setText:[NSString stringWithFormat:@"%i", [postTitle.text length]]];
+        [postTitleCount setText:[NSString stringWithFormat:@"%lu", (unsigned long)[postTitle.text length]]];
         [self.navigationItem.rightBarButtonItem setEnabled:NO];
     }
     if (postType == 1) {
@@ -99,7 +88,7 @@
         else {
             [postTitle setText:[NSString stringWithFormat:@"Re: %@", rootTopic.title]];
         }
-        [postTitleCount setText:[NSString stringWithFormat:@"%i", [postTitle.text length]]];
+        [postTitleCount setText:[NSString stringWithFormat:@"%lu", (unsigned long)[postTitle.text length]]];
         
         if (rootTopic.content != nil) {
             [postContent setText:[NSString stringWithFormat:@"\n【 在 %@ 的大作中提到: 】\n%@", rootTopic.user.id, rootTopic.content.length > 30 ? [NSString stringWithFormat:@"%@...", [rootTopic.content substringToIndex:27]] : rootTopic.content]];
@@ -115,7 +104,7 @@
         [postTitle setText:rootTopic.title];
         [postContent becomeFirstResponder];
         [postContent setText:rootTopic.content];
-        [postTitleCount setText:[NSString stringWithFormat:@"%i", [postTitle.text length]]];
+        [postTitleCount setText:[NSString stringWithFormat:@"%lu", (unsigned long)[postTitle.text length]]];
         [self.navigationItem.rightBarButtonItem setEnabled:YES];
     }
     
@@ -159,14 +148,12 @@
     [postContent resignFirstResponder];
 }
 
--(void)cancel
-{
+- (void)cancel {
     [self.view endEditing:YES];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
--(void)send
-{
+- (void)send {
     [postTitle resignFirstResponder];
     [postContent resignFirstResponder];
     
@@ -174,8 +161,7 @@
     [NSThread detachNewThreadSelector:@selector(firstTimeLoad) toTarget:self withObject:nil];
 }
 
--(void)didAddUser:(NSString *)userID
-{
+- (void)didAddUser:(NSString *)userID {
     NSMutableString * string = [postContent.text mutableCopy];
     [string appendString:@"@"];
     [string appendString:userID];
@@ -183,13 +169,12 @@
     [postContent setText:string];
     [postContent becomeFirstResponder];
 }
--(void)dismissAddUserView
-{
+
+- (void)dismissAddUserView {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
--(void)firstTimeLoad
-{
+- (void)firstTimeLoad {
     if([self post]) {
         [self performSelectorOnMainThread:@selector(sendSuccess) withObject:nil waitUntilDone:NO];
     }
@@ -198,14 +183,12 @@
     }
 }
 
--(void)sendSuccess
-{
+- (void)sendSuccess {
     [self.navigationController finishSGProgress];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
--(void)sendFailed
-{
+- (void)sendFailed {
     [self.navigationController finishSGProgress];
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.mode = MBProgressHUDModeText;
@@ -232,8 +215,7 @@
 
 #pragma mark -
 #pragma mark textViewDelegate
--(void)inputTitle
-{
+- (void)inputTitle {
     int count = [postTitle.text length];
     [postTitleCount setText:[NSString stringWithFormat:@"%i",count]];
     if (count == 0) {
@@ -244,28 +226,21 @@
     }
 }
 
--(IBAction)operateAtt:(id)sender
-{
+- (IBAction)operateAtt:(id)sender {
     if (postType == 0) {
         UploadAttachmentsViewController * uavc = [[UploadAttachmentsViewController alloc] init];
         uavc.postType = 0;//新帖
         uavc.board = boardName;
         UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:uavc];
         [self presentViewController:nav animated:YES completion:nil];
-    }
-    
-    else if(postType == 2)
-    {
+    } else if(postType == 2) {
         UploadAttachmentsViewController * uavc = [[UploadAttachmentsViewController alloc] init];
         uavc.postType = 2;//修改贴
         uavc.postId = rootTopic.id;
         uavc.board = rootTopic.board_name;
         UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:uavc];
         [self presentViewController:nav animated:YES completion:nil];
-    }
-    
-    else
-    {
+    } else {
         UploadAttachmentsViewController * uavc = [[UploadAttachmentsViewController alloc] init];
         uavc.postType = 1;//回复
         uavc.postId = rootTopic.id;
@@ -309,9 +284,7 @@
     
     if (postContent.contentSize.height < self.view.frame.size.height - 64 - 35) {
         [postContent setFrame:CGRectMake(5, 35, self.view.frame.size.width - 10, self.view.frame.size.height - 64 - 35)];
-    }
-    else
-    {
+    } else {
         [postContent setFrame:CGRectMake(5, 35, self.view.frame.size.width - 10, postContent.contentSize.height)];
         [postScrollView setContentSize:CGSizeMake(postScrollView.contentSize.width, postContent.contentSize.height + 35)];
     }
@@ -333,18 +306,6 @@
     postContent.inputAccessoryView = nil;
     
     [postContent becomeFirstResponder];
-}
-
-
-#pragma mark - Rotation
--(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
-    return YES;
-}
-- (BOOL)shouldAutorotate{
-    return YES;
-}
--(NSUInteger)supportedInterfaceOrientations{
-    return UIInterfaceOrientationMaskAllButUpsideDown;
 }
 
 @end

@@ -16,8 +16,7 @@
 
 @implementation WUDemoKeyboardPressedCellPopupView
 
-- (id)initWithFrame:(CGRect)frame
-{
+- (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         UIImage *popupBackground = [UIImage imageNamed:@"keyboard_popup"];

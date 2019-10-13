@@ -7,7 +7,6 @@
 //
 
 #import "TopicsViewController.h"
-#import "FTPagingViewController.h"
 #import <Masonry.h>
 #import "TopicCell.h"
 #import "TopicHeaderCell.h"
@@ -85,8 +84,7 @@
     [self presentViewController:nav animated:YES completion:nil];
 }
 
-#pragma mark -
-#pragma mark tableViewDelegate
+#pragma mark - UITableViewDelegate & UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self.topics count];

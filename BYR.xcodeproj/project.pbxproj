@@ -261,9 +261,6 @@
 		264FECEA14A18427001C15B3 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 264FECE914A18427001C15B3 /* QuartzCore.framework */; };
 		3EA69A5716C5340400045198 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EA69A5616C5340400045198 /* CFNetwork.framework */; };
 		3EDA686016BE5CF600137E99 /* UploadAttachmentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EDA685E16BE5CF600137E99 /* UploadAttachmentsViewController.m */; };
-		E107B83F1D15C3750062ED98 /* FTPagingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E107B83A1D15C3750062ED98 /* FTPagingViewController.m */; };
-		E107B8401D15C3750062ED98 /* FTScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = E107B83C1D15C3750062ED98 /* FTScrollView.m */; };
-		E107B8411D15C3750062ED98 /* UIView+FTAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = E107B83E1D15C3750062ED98 /* UIView+FTAdditions.m */; };
 		E11067412346E57900C7F5CC /* BYRCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E11067402346E57900C7F5CC /* BYRCollectionViewController.m */; };
 		E1309DE3234CEC8500833BB3 /* BYREmotionParser.m in Sources */ = {isa = PBXBuildFile; fileRef = E1309DE2234CEC8500833BB3 /* BYREmotionParser.m */; };
 		E13416482345E02A00A6C408 /* Models.m in Sources */ = {isa = PBXBuildFile; fileRef = E13416472345E02A00A6C408 /* Models.m */; };
@@ -298,7 +295,6 @@
 		E1C5D05E2347889D00453D15 /* NotificationHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E1C5D05D2347889D00453D15 /* NotificationHeaderCell.m */; };
 		E1C5D0612347CC4600453D15 /* BYRSession.m in Sources */ = {isa = PBXBuildFile; fileRef = E1C5D0602347CC4600453D15 /* BYRSession.m */; };
 		E1C5D0652347DEDE00453D15 /* HomeHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = E1C5D0642347DEDE00453D15 /* HomeHeadView.m */; };
-		E1D1F63B234F9E6E008C7138 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = E1D1F63A234F9E6E008C7138 /* README.md */; };
 		E90BDC65157DA07600AB1567 /* CustomNoFooterWithDeleteTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = E90BDC64157DA07600AB1567 /* CustomNoFooterWithDeleteTableView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E90BDC6A157DA98700AB1567 /* UserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E90BDC68157DA98700AB1567 /* UserInfoViewController.m */; settings = {COMPILER_FLAGS = ""; }; };
 		E90BDC6B157DA98700AB1567 /* UserInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E90BDC69157DA98700AB1567 /* UserInfoViewController.xib */; };
@@ -613,12 +609,6 @@
 		CEB1256C1498D519008A4B70 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		CEB1256D1498D519008A4B70 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		CEB1257C1498D6BF008A4B70 /* MainWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
-		E107B8391D15C3750062ED98 /* FTPagingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTPagingViewController.h; sourceTree = "<group>"; };
-		E107B83A1D15C3750062ED98 /* FTPagingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTPagingViewController.m; sourceTree = "<group>"; };
-		E107B83B1D15C3750062ED98 /* FTScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTScrollView.h; sourceTree = "<group>"; };
-		E107B83C1D15C3750062ED98 /* FTScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTScrollView.m; sourceTree = "<group>"; };
-		E107B83D1D15C3750062ED98 /* UIView+FTAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+FTAdditions.h"; sourceTree = "<group>"; };
-		E107B83E1D15C3750062ED98 /* UIView+FTAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+FTAdditions.m"; sourceTree = "<group>"; };
 		E110673F2346E57900C7F5CC /* BYRCollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BYRCollectionViewController.h; sourceTree = "<group>"; };
 		E11067402346E57900C7F5CC /* BYRCollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BYRCollectionViewController.m; sourceTree = "<group>"; };
 		E1309DE1234CEC8500833BB3 /* BYREmotionParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BYREmotionParser.h; sourceTree = "<group>"; };
@@ -687,7 +677,6 @@
 		E1C5D0602347CC4600453D15 /* BYRSession.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BYRSession.m; sourceTree = "<group>"; };
 		E1C5D0632347DEDE00453D15 /* HomeHeadView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeHeadView.h; sourceTree = "<group>"; };
 		E1C5D0642347DEDE00453D15 /* HomeHeadView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeHeadView.m; sourceTree = "<group>"; };
-		E1D1F63A234F9E6E008C7138 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		E90BDC63157DA07500AB1567 /* CustomNoFooterWithDeleteTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomNoFooterWithDeleteTableView.h; sourceTree = "<group>"; };
 		E90BDC64157DA07600AB1567 /* CustomNoFooterWithDeleteTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomNoFooterWithDeleteTableView.m; sourceTree = "<group>"; };
 		E90BDC67157DA98700AB1567 /* UserInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoViewController.h; sourceTree = "<group>"; };
@@ -916,7 +905,6 @@
 		00A0FA3A1840FBB200CDE9AB /* OpenSourceUI */ = {
 			isa = PBXGroup;
 			children = (
-				E107B8381D15C3660062ED98 /* FTPaging */,
 				0038D58417BC0404002CC5ED /* FPActivityView */,
 				000575821826988600060E69 /* MyEmotionKeyboard */,
 				005B5C351811929300041366 /* UINavigationController+SGProgress */,
@@ -1266,19 +1254,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		E107B8381D15C3660062ED98 /* FTPaging */ = {
-			isa = PBXGroup;
-			children = (
-				E107B8391D15C3750062ED98 /* FTPagingViewController.h */,
-				E107B83A1D15C3750062ED98 /* FTPagingViewController.m */,
-				E107B83B1D15C3750062ED98 /* FTScrollView.h */,
-				E107B83C1D15C3750062ED98 /* FTScrollView.m */,
-				E107B83D1D15C3750062ED98 /* UIView+FTAdditions.h */,
-				E107B83E1D15C3750062ED98 /* UIView+FTAdditions.m */,
-			);
-			name = FTPaging;
-			sourceTree = "<group>";
-		};
 		E144EB44234A2C0D000818BF /* Network */ = {
 			isa = PBXGroup;
 			children = (
@@ -1492,7 +1467,6 @@
 			children = (
 				E152EB2E23490B7C0032B979 /* BYRBBCodeToYYConverter.h */,
 				E152EB2F23490B7C0032B979 /* BYRBBCodeToYYConverter.m */,
-				E1D1F63A234F9E6E008C7138 /* README.md */,
 				E1BC83BA234589D100AFE908 /* TopicCell.h */,
 				E1BC83BB234589D100AFE908 /* TopicCell.m */,
 				E18B03FF2347233A00092480 /* TopicsViewController.h */,
@@ -1713,7 +1687,6 @@
 				00F4B8341823D66E00C6331A /* [ema6].gif in Resources */,
 				00F4B7A11823D66E00C6331A /* [emc53].gif in Resources */,
 				00F4B7FD1823D66E00C6331A /* [em61].gif in Resources */,
-				E1D1F63B234F9E6E008C7138 /* README.md in Resources */,
 				00F4B7AA1823D66E00C6331A /* [emc8].gif in Resources */,
 				00F4B7BE1823D66E00C6331A /* [emb3].gif in Resources */,
 				00F4B7961823D66E00C6331A /* [emc43].gif in Resources */,
@@ -1992,11 +1965,9 @@
 				0005757D1826988100060E69 /* WUEmoticonsKeyboardKeyItem.m in Sources */,
 				E144EB43234A2B38000818BF /* NSString+BYRTool.m in Sources */,
 				E93DE82715805FBE00D763D2 /* Notification.m in Sources */,
-				E107B83F1D15C3750062ED98 /* FTPagingViewController.m in Sources */,
 				E93DE83215806D7300D763D2 /* CustomTableWithDeleteView.m in Sources */,
 				E9142DB4158124A600E2F8CE /* PostMailViewController.m in Sources */,
 				3EDA686016BE5CF600137E99 /* UploadAttachmentsViewController.m in Sources */,
-				E107B8401D15C3750062ED98 /* FTScrollView.m in Sources */,
 				0005758A182698A200060E69 /* WUDemoKeyboardTextKeyCell.m in Sources */,
 				E18B03FE2347140900092480 /* BoardHeaderView.m in Sources */,
 				00057589182698A200060E69 /* WUDemoKeyboardBuilder.m in Sources */,
@@ -2009,7 +1980,6 @@
 				0005758B182698A200060E69 /* WUDemoKeyboardPressedCellPopupView.m in Sources */,
 				E1C5D05E2347889D00453D15 /* NotificationHeaderCell.m in Sources */,
 				E13416482345E02A00A6C408 /* Models.m in Sources */,
-				E107B8411D15C3750062ED98 /* UIView+FTAdditions.m in Sources */,
 				0085E5051821F3BE0059D454 /* VoteListViewController.m in Sources */,
 				0085E51D182237D50059D454 /* UIColor+RGBValues.m in Sources */,
 				E1C5D0612347CC4600453D15 /* BYRSession.m in Sources */,
@@ -2128,16 +2098,7 @@
 				INFOPLIST_FILE = Path2DemoPrj/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\\\\\\\\\\\\\\\"$(SRCROOT)/../../Library/Developer/Xcode/DerivedData/虎踞龙蟠-hkwvhgwuofcdxrbxojgmynpswkaq/Build/Products/Debug-iphoneos\\\\\\\\\\\\\\\"",
-					/Users/charles_wong_alpha/Desktop/JIAYOU/Path2DemoPrj/UMSocial_Sdk_3.1/frameworks/Wechat,
-					/Users/charles_wong_alpha/Desktop/JIAYOU/Path2DemoPrj/UMSocial_Sdk_3.1,
-					/Users/charles_wong_alpha/Desktop/JIAYOU/Path2DemoPrj/ShareSDK_v2.6.0/Extend/SinaWeiboSDK,
-					/Users/charles_wong_alpha/Desktop/JIAYOU/Path2DemoPrj/ShareSDK_v2.6.0/Extend/TencentWeiboSDK,
-					/Users/a/Desktop/JIAYOU/Path2DemoPrj/ShareSDK_v2.6.0/Extend/SinaWeiboSDK,
-					/Users/a/Desktop/JIAYOU/Path2DemoPrj/ShareSDK_v2.6.0/Extend/TencentWeiboSDK,
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MARKETING_VERSION = 3.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "$(inherited)";
@@ -2174,21 +2135,9 @@
 				DEVELOPMENT_TEAM = UXQ4US7LL6;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"$(SRCROOT)/Path2DemoPrj/MWPhotoBrowser/Classes\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"",
 					"$(SRCROOT)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(SRCROOT)/Path2DemoPrj/UMSocial_Sdk_3.1/frameworks/TencentOpenAPI",
-					"$(SRCROOT)/Path2DemoPrj/ShareSDK_v2.6.0/Connection",
-					"$(SRCROOT)/Path2DemoPrj/ShareSDK_v2.6.0/Core",
-					"$(SRCROOT)/Path2DemoPrj/ShareSDK_v2.6.0/Extend/RenRenSDK",
-					"$(SRCROOT)/Path2DemoPrj/ShareSDK_v2.6.0",
-					"$(SRCROOT)/Path2DemoPrj/ShareSDK_v2.6.0/UI",
-					/Users/a/Desktop/JIAYOU/Path2DemoPrj/ShareSDK_v2.6.0/Connection,
-					/Users/a/Desktop/JIAYOU/Path2DemoPrj/ShareSDK_v2.6.0/Core,
-					/Users/a/Desktop/JIAYOU/Path2DemoPrj/ShareSDK_v2.6.0/Extend/RenRenSDK,
-					/Users/a/Desktop/JIAYOU/Path2DemoPrj/ShareSDK_v2.6.0,
-					/Users/a/Desktop/JIAYOU/Path2DemoPrj/ShareSDK_v2.6.0/UI,
 					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2201,16 +2150,7 @@
 				INFOPLIST_FILE = Path2DemoPrj/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\\\\\\\\\\\\\\\"$(SRCROOT)/../../Library/Developer/Xcode/DerivedData/虎踞龙蟠-hkwvhgwuofcdxrbxojgmynpswkaq/Build/Products/Debug-iphoneos\\\\\\\\\\\\\\\"",
-					/Users/charles_wong_alpha/Desktop/JIAYOU/Path2DemoPrj/UMSocial_Sdk_3.1/frameworks/Wechat,
-					/Users/charles_wong_alpha/Desktop/JIAYOU/Path2DemoPrj/UMSocial_Sdk_3.1,
-					/Users/charles_wong_alpha/Desktop/JIAYOU/Path2DemoPrj/ShareSDK_v2.6.0/Extend/SinaWeiboSDK,
-					/Users/charles_wong_alpha/Desktop/JIAYOU/Path2DemoPrj/ShareSDK_v2.6.0/Extend/TencentWeiboSDK,
-					/Users/a/Desktop/JIAYOU/Path2DemoPrj/ShareSDK_v2.6.0/Extend/SinaWeiboSDK,
-					/Users/a/Desktop/JIAYOU/Path2DemoPrj/ShareSDK_v2.6.0/Extend/TencentWeiboSDK,
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MARKETING_VERSION = 3.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "$(inherited)";
@@ -2250,21 +2190,9 @@
 				DEVELOPMENT_TEAM = UXQ4US7LL6;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"$(SRCROOT)/Path2DemoPrj/MWPhotoBrowser/Classes\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"",
 					"$(SRCROOT)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(SRCROOT)/Path2DemoPrj/UMSocial_Sdk_3.1/frameworks/TencentOpenAPI",
-					"$(SRCROOT)/Path2DemoPrj/ShareSDK_v2.6.0/Connection",
-					"$(SRCROOT)/Path2DemoPrj/ShareSDK_v2.6.0/Core",
-					"$(SRCROOT)/Path2DemoPrj/ShareSDK_v2.6.0/Extend/RenRenSDK",
-					"$(SRCROOT)/Path2DemoPrj/ShareSDK_v2.6.0",
-					"$(SRCROOT)/Path2DemoPrj/ShareSDK_v2.6.0/UI",
-					/Users/a/Desktop/JIAYOU/Path2DemoPrj/ShareSDK_v2.6.0/Connection,
-					/Users/a/Desktop/JIAYOU/Path2DemoPrj/ShareSDK_v2.6.0/Core,
-					/Users/a/Desktop/JIAYOU/Path2DemoPrj/ShareSDK_v2.6.0/Extend/RenRenSDK,
-					/Users/a/Desktop/JIAYOU/Path2DemoPrj/ShareSDK_v2.6.0,
-					/Users/a/Desktop/JIAYOU/Path2DemoPrj/ShareSDK_v2.6.0/UI,
 					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2277,16 +2205,7 @@
 				INFOPLIST_FILE = Path2DemoPrj/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\\\\\\\\\\\\\\\"$(SRCROOT)/../../Library/Developer/Xcode/DerivedData/虎踞龙蟠-hkwvhgwuofcdxrbxojgmynpswkaq/Build/Products/Debug-iphoneos\\\\\\\\\\\\\\\"",
-					/Users/charles_wong_alpha/Desktop/JIAYOU/Path2DemoPrj/UMSocial_Sdk_3.1/frameworks/Wechat,
-					/Users/charles_wong_alpha/Desktop/JIAYOU/Path2DemoPrj/UMSocial_Sdk_3.1,
-					/Users/charles_wong_alpha/Desktop/JIAYOU/Path2DemoPrj/ShareSDK_v2.6.0/Extend/SinaWeiboSDK,
-					/Users/charles_wong_alpha/Desktop/JIAYOU/Path2DemoPrj/ShareSDK_v2.6.0/Extend/TencentWeiboSDK,
-					/Users/a/Desktop/JIAYOU/Path2DemoPrj/ShareSDK_v2.6.0/Extend/SinaWeiboSDK,
-					/Users/a/Desktop/JIAYOU/Path2DemoPrj/ShareSDK_v2.6.0/Extend/TencentWeiboSDK,
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MARKETING_VERSION = 3.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "$(inherited)";

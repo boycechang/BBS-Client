@@ -30,7 +30,7 @@
     [baseurl appendFormat:@"&count=50&page=%i", start/50 + 1];
     [baseurl appendFormat:@"&title1=%@", [key URLEncodedString]];
     
-    NSURL *url = [NSURL URLWithString:baseurl];
+//    NSURL *url = [NSURL URLWithString:baseurl];
 //    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
 //    [request setUsername:[MyBBS sharedInstance].username];
 //    [request setPassword:[MyBBS sharedInstance].password];
