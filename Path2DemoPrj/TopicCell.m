@@ -86,7 +86,6 @@
     }];
 }
 
-
 #pragma mark - public
 
 - (void)updateWithTopic:(Topic *)topic hideBoard:(BOOL)hideBoard {

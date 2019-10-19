@@ -48,6 +48,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *user_name;
 @property (nonatomic, strong) NSString *gender;
 @property (nonatomic, strong) NSString *astro;
+@property (nonatomic, strong) NSString *level;
 @property (nonatomic, strong) NSString *home_page;
 @property (nonatomic, strong) NSURL *face_url;
 

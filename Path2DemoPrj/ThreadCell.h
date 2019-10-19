@@ -10,12 +10,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class Topic, BYRBBCodeToYYConverter;
+@class Topic, User, BYRBBCodeToYYConverter;
 
 @interface ThreadCell : UITableViewCell
 
-- (void)updateWithTopic:(Topic *)topic
-              converter:(BYRBBCodeToYYConverter *)converter;
+@property (nonatomic, copy) void (^userTapped)(User *user);
+
+- (void)updateWithTopic:(Topic *)topic converter:(BYRBBCodeToYYConverter *)converter;
 
 @end
 

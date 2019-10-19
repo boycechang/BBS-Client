@@ -13,6 +13,7 @@
 #import "Models.h"
 #import "MailViewController.h"
 #import "PostMailViewController.h"
+#import "TopicViewController.h"
 
 @interface NotificationListViewController () <UITableViewDelegate>
 
@@ -78,7 +79,13 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (self.type == NotificationTypeMail) {
+    if (self.type == NotificationTypeReply ||
+        self.type == NotificationTypeAt) {
+        Topic *topic = [self.notifications objectAtIndex:indexPath.row];
+        TopicViewController *topicVC = [TopicViewController new];
+        topicVC.topic = topic;
+        [self.navigationController pushViewController:topicVC animated:YES];
+    } else if (self.type == NotificationTypeMail) {
         Mail *mail = [self.notifications objectAtIndex:indexPath.row];
         MailViewController *mailVC = [MailViewController new];
         mailVC.mail = mail;
@@ -87,18 +94,14 @@
 }
 
 - (nullable UIContextMenuConfiguration *)tableView:(UITableView *)tableView contextMenuConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath point:(CGPoint)point {
-    if (self.type != NotificationTypeMail) {
-        return nil;
-    }
-    
-    if (self.type == NotificationTypeMail) {
-        Mail *mail = [self.notifications objectAtIndex:indexPath.row];
-        MailViewController *mailVC = [MailViewController new];
-        mailVC.mail = mail;
-    }
-    
     UIContextMenuConfiguration *config = [UIContextMenuConfiguration configurationWithIdentifier:nil previewProvider:^UIViewController * _Nullable{
-        if (self.type == NotificationTypeMail) {
+        if (self.type == NotificationTypeReply ||
+            self.type == NotificationTypeAt) {
+            Topic *topic = [self.notifications objectAtIndex:indexPath.row];
+            TopicViewController *topicVC = [TopicViewController new];
+            topicVC.topic = topic;
+            return topicVC;
+        } else if (self.type == NotificationTypeMail) {
             Mail *mail = [self.notifications objectAtIndex:indexPath.row];
             MailViewController *mailVC = [MailViewController new];
             mailVC.mail = mail;

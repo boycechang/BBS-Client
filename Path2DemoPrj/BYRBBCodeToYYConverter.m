@@ -16,7 +16,6 @@
 #import "BYREmotionParser.h"
 #import "BYRContentParser.h"
 #import <Down-Swift.h>
-#import "BYR-Bridging-Header.h"
 #import <BYR-Swift.h>
 #import <MJExtension.h>
 

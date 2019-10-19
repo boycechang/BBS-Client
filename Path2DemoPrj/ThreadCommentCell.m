@@ -92,6 +92,24 @@
     self.boardLabel.text = [NSString stringWithFormat:@"%@ · %@", [NSString stringWithFormat:@"%li楼", position] ,[BYRUtil fullDateDescriptionFromTimestamp:topic.post_time]];
 }
 
+- (void)showHighlightAnimation {
+    [UIView animateWithDuration:0.5 animations:^{
+        self.contentView.backgroundColor = [[UIColor systemYellowColor] colorWithAlphaComponent:0.1];
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:0.3 delay:0.5 options:kNilOptions animations:^{
+            self.contentView.backgroundColor = [UIColor systemBackgroundColor];
+        } completion:^(BOOL finished) {
+            
+        }];
+    }];
+}
+
+- (IBAction)headImageViewClicked:(id)sender {
+    if (self.userTapped) {
+        self.userTapped(self.topic.user);
+    }
+}
+
 #pragma mark - getter
 
 - (UIImageView *)headImageView {
@@ -102,6 +120,10 @@
         _headImageView.layer.borderColor = [UIColor separatorColor].CGColor;
         _headImageView.layer.borderWidth = 0.5;
         _headImageView.contentMode = UIViewContentModeScaleAspectFill;
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(headImageViewClicked:)];
+        [_headImageView addGestureRecognizer:tap];
+        _headImageView.userInteractionEnabled = YES;
     }
     return _headImageView;
 }

@@ -116,6 +116,12 @@
     }
 }
 
+- (IBAction)headImageViewClicked:(id)sender {
+    if (self.userTapped) {
+        self.userTapped(self.topic.user);
+    }
+}
+
 #pragma mark - getter
 
 - (UILabel *)topicTitleLabel {
@@ -136,6 +142,10 @@
         _headImageView.layer.borderColor = [UIColor separatorColor].CGColor;
         _headImageView.layer.borderWidth = 0.5;
         _headImageView.contentMode = UIViewContentModeScaleAspectFill;
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(headImageViewClicked:)];
+        [_headImageView addGestureRecognizer:tap];
+        _headImageView.userInteractionEnabled = YES;
     }
     return _headImageView;
 }

@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class Topic;
+@class Topic, User;
 
 @interface TopicCell : UITableViewCell
 

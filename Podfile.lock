@@ -32,6 +32,7 @@ PODS:
   - BlocksKit/UIKit (2.2.5):
     - BlocksKit/Core
     - BlocksKit/DynamicDelegate
+  - BulletinBoard (4.0.0)
   - Down (0.8.6)
   - KSPhotoBrowser (0.3.0):
     - SDWebImage (~> 5.0)
@@ -51,6 +52,7 @@ DEPENDENCIES:
   - AFNetworking
   - BBCodeString
   - BlocksKit
+  - BulletinBoard
   - Down
   - KSPhotoBrowser
   - Masonry
@@ -67,6 +69,7 @@ SPEC REPOS:
     - BBCodeParser
     - BBCodeString
     - BlocksKit
+    - BulletinBoard
     - Down
     - KSPhotoBrowser
     - Masonry
@@ -82,6 +85,7 @@ SPEC CHECKSUMS:
   BBCodeParser: 5c78c6a75d8eae5a4cff8cdb77375bffee5df490
   BBCodeString: 99b9be81dbbb9f9dad8515a5f10d14b255b5cb2c
   BlocksKit: 7f422b971407001178d181a43b99014ea2591fe6
+  BulletinBoard: 2e312814ff70f3af364a6dda3857a801f6d2adb6
   Down: 3c758f2388fa739663023f400e742a988fa1e21d
   KSPhotoBrowser: 556fc4c4880e04a87b5990ab13cdc08d8478d40e
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
@@ -92,6 +96,6 @@ SPEC CHECKSUMS:
   YYImage: 1e1b62a9997399593e4b9c4ecfbbabbf1d3f3b54
   YYText: 5c461d709e24d55a182d1441c41dc639a18a4849
 
-PODFILE CHECKSUM: ef19a77abf89111e5d53fe371601fd136fa5653c
+PODFILE CHECKSUM: 582fa1653679d65b9267060a611dd4b70a47f95e
 
 COCOAPODS: 1.7.5

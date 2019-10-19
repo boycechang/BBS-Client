@@ -117,7 +117,7 @@
         _seeAllButton = [UIButton new];
         [_seeAllButton setTitle:@"查看全部" forState:UIControlStateNormal];
         [_seeAllButton setTitleColor:[UIColor systemBlueColor] forState:UIControlStateNormal];
-        _seeAllButton.titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCallout];
+        _seeAllButton.titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
         _seeAllButton.titleLabel.adjustsFontForContentSizeCategory = YES;
         [_seeAllButton addTarget:self action:@selector(seeAllClicked:) forControlEvents:UIControlEventTouchUpInside];
     }

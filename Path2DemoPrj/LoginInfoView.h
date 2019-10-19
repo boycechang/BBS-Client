@@ -12,6 +12,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface LoginInfoView : UIView
 
+@property (nonatomic, readonly) UITextField *usernameField;
+@property (nonatomic, readonly) UITextField *passwordField;
+
 @property (nonatomic, copy) void (^infoTapped)(void);
 @property (nonatomic, copy) void (^loginTapped)(NSString *username, NSString *password);
 @property (nonatomic, copy) void (^tokenChanged)(NSString *username, NSString *password);

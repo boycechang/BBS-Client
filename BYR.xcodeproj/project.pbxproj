@@ -261,6 +261,7 @@
 		3EA69A5716C5340400045198 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EA69A5616C5340400045198 /* CFNetwork.framework */; };
 		3EDA686016BE5CF600137E99 /* UploadAttachmentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EDA685E16BE5CF600137E99 /* UploadAttachmentsViewController.m */; };
 		E11067412346E57900C7F5CC /* BYRCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E11067402346E57900C7F5CC /* BYRCollectionViewController.m */; };
+		E112D158235327EB00C8BBE8 /* ComposeToolView.m in Sources */ = {isa = PBXBuildFile; fileRef = E112D157235327EB00C8BBE8 /* ComposeToolView.m */; };
 		E1309DE3234CEC8500833BB3 /* BYREmotionParser.m in Sources */ = {isa = PBXBuildFile; fileRef = E1309DE2234CEC8500833BB3 /* BYREmotionParser.m */; };
 		E13416482345E02A00A6C408 /* Models.m in Sources */ = {isa = PBXBuildFile; fileRef = E13416472345E02A00A6C408 /* Models.m */; };
 		E144EB3123498E91000818BF /* BYRUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = E144EB3023498E91000818BF /* BYRUtil.m */; };
@@ -277,10 +278,14 @@
 		E14E047323462E4B00AC0EAF /* BYRNetworkReponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E14E047223462E4B00AC0EAF /* BYRNetworkReponse.m */; };
 		E14E0476234638AB00AC0EAF /* TopicHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E14E0475234638AB00AC0EAF /* TopicHeaderCell.m */; };
 		E152EB3023490B7C0032B979 /* BYRBBCodeToYYConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = E152EB2F23490B7C0032B979 /* BYRBBCodeToYYConverter.m */; };
+		E162F1E52353349A007EED48 /* ComposeContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = E162F1E42353349A007EED48 /* ComposeContentView.m */; };
 		E17E294E2344C11C004A0237 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E17E294D2344C11C004A0237 /* LaunchScreen.xib */; };
+		E189853C235B1BF600FB44D8 /* BLTNUserItem.m in Sources */ = {isa = PBXBuildFile; fileRef = E189853B235B1BF600FB44D8 /* BLTNUserItem.m */; };
 		E18B03FB2346EB4D00092480 /* BoardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E18B03FA2346EB4D00092480 /* BoardCell.m */; };
 		E18B03FE2347140900092480 /* BoardHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = E18B03FD2347140900092480 /* BoardHeaderView.m */; };
 		E18B04012347233A00092480 /* TopicsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E18B04002347233A00092480 /* TopicsViewController.m */; };
+		E198EAE92358B7B60050B482 /* TopicPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = E198EAE82358B7B60050B482 /* TopicPageView.m */; };
+		E1B2E1F82352F4F500DB0969 /* ComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E1B2E1F72352F4F500DB0969 /* ComposeViewController.m */; };
 		E1B3D7362348358800977139 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E1B3D7352348358800977139 /* LoginViewController.m */; };
 		E1B3D73923484E3E00977139 /* LoginInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = E1B3D73823484E3E00977139 /* LoginInfoView.m */; };
 		E1B3D73B23485FF100977139 /* protocol.html in Resources */ = {isa = PBXBuildFile; fileRef = E1B3D73A23485FF100977139 /* protocol.html */; };
@@ -605,6 +610,8 @@
 		CEB1257C1498D6BF008A4B70 /* MainWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
 		E110673F2346E57900C7F5CC /* BYRCollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BYRCollectionViewController.h; sourceTree = "<group>"; };
 		E11067402346E57900C7F5CC /* BYRCollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BYRCollectionViewController.m; sourceTree = "<group>"; };
+		E112D156235327EB00C8BBE8 /* ComposeToolView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ComposeToolView.h; sourceTree = "<group>"; };
+		E112D157235327EB00C8BBE8 /* ComposeToolView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ComposeToolView.m; sourceTree = "<group>"; };
 		E1309DE1234CEC8500833BB3 /* BYREmotionParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BYREmotionParser.h; sourceTree = "<group>"; };
 		E1309DE2234CEC8500833BB3 /* BYREmotionParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BYREmotionParser.m; sourceTree = "<group>"; };
 		E13416462345E02A00A6C408 /* Models.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Models.h; sourceTree = "<group>"; };
@@ -626,7 +633,7 @@
 		E144EB47234B4A9E000818BF /* ThreadCommentCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ThreadCommentCell.m; sourceTree = "<group>"; };
 		E147DFDA234CEFD900772239 /* BYRContentParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BYRContentParser.h; sourceTree = "<group>"; };
 		E147DFDB234CEFD900772239 /* BYRContentParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BYRContentParser.m; sourceTree = "<group>"; };
-		E14DEF0F235077C90053C582 /* MarkDownParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkDownParser.swift; sourceTree = "<group>"; };
+		E14DEF0F235077C90053C582 /* MarkDownParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MarkDownParser.swift; path = ../MarkDownParser.swift; sourceTree = "<group>"; };
 		E14DEF11235078EB0053C582 /* BYR-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BYR-Bridging-Header.h"; sourceTree = "<group>"; };
 		E14E046B23461E2600AC0EAF /* BYRNetworkManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BYRNetworkManager.h; sourceTree = "<group>"; };
 		E14E046C23461E2600AC0EAF /* BYRNetworkManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BYRNetworkManager.m; sourceTree = "<group>"; };
@@ -638,7 +645,11 @@
 		E14E0475234638AB00AC0EAF /* TopicHeaderCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TopicHeaderCell.m; sourceTree = "<group>"; };
 		E152EB2E23490B7C0032B979 /* BYRBBCodeToYYConverter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BYRBBCodeToYYConverter.h; sourceTree = "<group>"; };
 		E152EB2F23490B7C0032B979 /* BYRBBCodeToYYConverter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BYRBBCodeToYYConverter.m; sourceTree = "<group>"; };
+		E162F1E32353349A007EED48 /* ComposeContentView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ComposeContentView.h; sourceTree = "<group>"; };
+		E162F1E42353349A007EED48 /* ComposeContentView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ComposeContentView.m; sourceTree = "<group>"; };
 		E17E294D2344C11C004A0237 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
+		E189853A235B1BF600FB44D8 /* BLTNUserItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLTNUserItem.h; sourceTree = "<group>"; };
+		E189853B235B1BF600FB44D8 /* BLTNUserItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLTNUserItem.m; sourceTree = "<group>"; };
 		E18B03F92346EB4D00092480 /* BoardCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BoardCell.h; sourceTree = "<group>"; };
 		E18B03FA2346EB4D00092480 /* BoardCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BoardCell.m; sourceTree = "<group>"; };
 		E18B03FC2347140900092480 /* BoardHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BoardHeaderView.h; sourceTree = "<group>"; };
@@ -646,6 +657,10 @@
 		E18B03FF2347233A00092480 /* TopicsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TopicsViewController.h; sourceTree = "<group>"; };
 		E18B04002347233A00092480 /* TopicsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TopicsViewController.m; sourceTree = "<group>"; };
 		E196FE68234517EA00F6BB67 /* Byr-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Byr-Prefix.pch"; sourceTree = "<group>"; };
+		E198EAE72358B7B60050B482 /* TopicPageView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TopicPageView.h; sourceTree = "<group>"; };
+		E198EAE82358B7B60050B482 /* TopicPageView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TopicPageView.m; sourceTree = "<group>"; };
+		E1B2E1F62352F4F500DB0969 /* ComposeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ComposeViewController.h; sourceTree = "<group>"; };
+		E1B2E1F72352F4F500DB0969 /* ComposeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ComposeViewController.m; sourceTree = "<group>"; };
 		E1B3D7342348358800977139 /* LoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		E1B3D7352348358800977139 /* LoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		E1B3D73723484E3E00977139 /* LoginInfoView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginInfoView.h; sourceTree = "<group>"; };
@@ -1166,7 +1181,6 @@
 			isa = PBXGroup;
 			children = (
 				E14DEF11235078EB0053C582 /* BYR-Bridging-Header.h */,
-				E14DEF0F235077C90053C582 /* MarkDownParser.swift */,
 				E140EAF223449EBC008D7D9A /* 北邮人.entitlements */,
 				003D9953193B726200DA5B68 /* Images.xcassets */,
 				CEB125631498D519008A4B70 /* BYR */,
@@ -1219,6 +1233,7 @@
 				E91D85841578E74A00FBDE75 /* Boards */,
 				003D9913193B27F900DA5B68 /* Notification */,
 				E9E9A9F3154AFF9D005D65E5 /* Topics */,
+				E1B2E1F52352F3A000DB0969 /* Compose */,
 				0085E5021821F3AA0059D454 /* VoteListViewController */,
 				E90BDC66157DA95E00AB1567 /* UserInfoViewController */,
 				E90BDC6C157DC87F00AB1567 /* PostTopicViewController */,
@@ -1251,6 +1266,60 @@
 				E14E046C23461E2600AC0EAF /* BYRNetworkManager.m */,
 			);
 			name = Network;
+			sourceTree = "<group>";
+		};
+		E14F9D9B2352F98F00DEBDB4 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E112D156235327EB00C8BBE8 /* ComposeToolView.h */,
+				E112D157235327EB00C8BBE8 /* ComposeToolView.m */,
+				E162F1E32353349A007EED48 /* ComposeContentView.h */,
+				E162F1E42353349A007EED48 /* ComposeContentView.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		E198EAE52358B7840050B482 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E1BC83BA234589D100AFE908 /* TopicCell.h */,
+				E1BC83BB234589D100AFE908 /* TopicCell.m */,
+				E1B3D7422348C94400977139 /* ThreadCell.h */,
+				E1B3D7432348C94400977139 /* ThreadCell.m */,
+				E144EB46234B4A9E000818BF /* ThreadCommentCell.h */,
+				E144EB47234B4A9E000818BF /* ThreadCommentCell.m */,
+				00D71E5517BE333E008460E1 /* AttachmentView.h */,
+				00D71E5617BE333E008460E1 /* AttachmentView.m */,
+				E198EAE72358B7B60050B482 /* TopicPageView.h */,
+				E198EAE82358B7B60050B482 /* TopicPageView.m */,
+				E189853A235B1BF600FB44D8 /* BLTNUserItem.h */,
+				E189853B235B1BF600FB44D8 /* BLTNUserItem.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		E198EAE62358B7930050B482 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				E14DEF0F235077C90053C582 /* MarkDownParser.swift */,
+				E152EB2E23490B7C0032B979 /* BYRBBCodeToYYConverter.h */,
+				E152EB2F23490B7C0032B979 /* BYRBBCodeToYYConverter.m */,
+				E1309DE1234CEC8500833BB3 /* BYREmotionParser.h */,
+				E1309DE2234CEC8500833BB3 /* BYREmotionParser.m */,
+				E147DFDA234CEFD900772239 /* BYRContentParser.h */,
+				E147DFDB234CEFD900772239 /* BYRContentParser.m */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
+		E1B2E1F52352F3A000DB0969 /* Compose */ = {
+			isa = PBXGroup;
+			children = (
+				E14F9D9B2352F98F00DEBDB4 /* Views */,
+				E1B2E1F62352F4F500DB0969 /* ComposeViewController.h */,
+				E1B2E1F72352F4F500DB0969 /* ComposeViewController.m */,
+			);
+			name = Compose;
 			sourceTree = "<group>";
 		};
 		E1B3D730234834F000977139 /* BaseViewController */ = {
@@ -1437,24 +1506,12 @@
 		E9E9A9F3154AFF9D005D65E5 /* Topics */ = {
 			isa = PBXGroup;
 			children = (
-				E152EB2E23490B7C0032B979 /* BYRBBCodeToYYConverter.h */,
-				E152EB2F23490B7C0032B979 /* BYRBBCodeToYYConverter.m */,
-				E1BC83BA234589D100AFE908 /* TopicCell.h */,
-				E1BC83BB234589D100AFE908 /* TopicCell.m */,
+				E198EAE62358B7930050B482 /* Utils */,
+				E198EAE52358B7840050B482 /* Views */,
 				E18B03FF2347233A00092480 /* TopicsViewController.h */,
 				E18B04002347233A00092480 /* TopicsViewController.m */,
-				E1B3D7422348C94400977139 /* ThreadCell.h */,
-				E1B3D7432348C94400977139 /* ThreadCell.m */,
-				E144EB46234B4A9E000818BF /* ThreadCommentCell.h */,
-				E144EB47234B4A9E000818BF /* ThreadCommentCell.m */,
-				00D71E5517BE333E008460E1 /* AttachmentView.h */,
-				00D71E5617BE333E008460E1 /* AttachmentView.m */,
 				E1B3D73F2348BDBD00977139 /* TopicViewController.h */,
 				E1B3D7402348BDBD00977139 /* TopicViewController.m */,
-				E1309DE1234CEC8500833BB3 /* BYREmotionParser.h */,
-				E1309DE2234CEC8500833BB3 /* BYREmotionParser.m */,
-				E147DFDA234CEFD900772239 /* BYRContentParser.h */,
-				E147DFDB234CEFD900772239 /* BYRContentParser.m */,
 			);
 			name = Topics;
 			sourceTree = "<group>";
@@ -1831,6 +1888,7 @@
 				"${BUILT_PRODUCTS_DIR}/BBCodeParser/BBCodeParser.framework",
 				"${BUILT_PRODUCTS_DIR}/BBCodeString/BBCodeString.framework",
 				"${BUILT_PRODUCTS_DIR}/BlocksKit/BlocksKit.framework",
+				"${BUILT_PRODUCTS_DIR}/BulletinBoard/BLTNBoard.framework",
 				"${BUILT_PRODUCTS_DIR}/Down/Down.framework",
 				"${BUILT_PRODUCTS_DIR}/KSPhotoBrowser/KSPhotoBrowser.framework",
 				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
@@ -1847,6 +1905,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BBCodeParser.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BBCodeString.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BlocksKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BLTNBoard.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Down.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KSPhotoBrowser.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MBProgressHUD.framework",
@@ -1908,11 +1967,13 @@
 				E1B3D7412348BDBD00977139 /* TopicViewController.m in Sources */,
 				E14E0470234624DE00AC0EAF /* BYRTableViewController.m in Sources */,
 				0005757C1826988100060E69 /* WUEmoticonsKeyboardKeyCell.m in Sources */,
+				E198EAE92358B7B60050B482 /* TopicPageView.m in Sources */,
 				E973E5FC154C092C004412CD /* RefreshTableHeaderView.m in Sources */,
 				0005757E1826988100060E69 /* WUEmoticonsKeyboardKeyItemGroup.m in Sources */,
 				E973E5FD154C092C004412CD /* RefreshTableFooterView.m in Sources */,
 				E14E046D23461E2600AC0EAF /* BYRNetworkManager.m in Sources */,
 				E14DEF10235077C90053C582 /* MarkDownParser.swift in Sources */,
+				E162F1E52353349A007EED48 /* ComposeContentView.m in Sources */,
 				E1C5D0652347DEDE00453D15 /* HomeHeadView.m in Sources */,
 				005B5C38181192A400041366 /* UINavigationController+SGProgress.m in Sources */,
 				E144EB40234A215C000818BF /* MailHeaderCell.m in Sources */,
@@ -1940,6 +2001,7 @@
 				E18B03FE2347140900092480 /* BoardHeaderView.m in Sources */,
 				00057589182698A200060E69 /* WUDemoKeyboardBuilder.m in Sources */,
 				E147DFDC234CEFD900772239 /* BYRContentParser.m in Sources */,
+				E189853C235B1BF600FB44D8 /* BLTNUserItem.m in Sources */,
 				E14E047323462E4B00AC0EAF /* BYRNetworkReponse.m in Sources */,
 				E1309DE3234CEC8500833BB3 /* BYREmotionParser.m in Sources */,
 				E11067412346E57900C7F5CC /* BYRCollectionViewController.m in Sources */,
@@ -1956,6 +2018,7 @@
 				0085E5171822294A0059D454 /* OptionCellView.m in Sources */,
 				E1C5D0582347856900453D15 /* NotificationViewController.m in Sources */,
 				00D71E5717BE333E008460E1 /* AttachmentView.m in Sources */,
+				E112D158235327EB00C8BBE8 /* ComposeToolView.m in Sources */,
 				E144EB37234A1962000818BF /* MailViewController.m in Sources */,
 				0038D58817BC0413002CC5ED /* FPActivityView.m in Sources */,
 				00F213AD17C1D7D70001EFD0 /* UIViewController+MJPopupViewController.m in Sources */,
@@ -1965,6 +2028,7 @@
 				0005757F1826988100060E69 /* WUEmoticonsKeyboardKeyItemGroupView.m in Sources */,
 				E99B9D8116D1D2F500FC0A88 /* FTCoreTextView.m in Sources */,
 				E152EB3023490B7C0032B979 /* BYRBBCodeToYYConverter.m in Sources */,
+				E1B2E1F82352F4F500DB0969 /* ComposeViewController.m in Sources */,
 				E144EB3123498E91000818BF /* BYRUtil.m in Sources */,
 				E99B9D8216D1D2F500FC0A88 /* FTCoreTextStyle.m in Sources */,
 			);
@@ -2034,7 +2098,7 @@
 				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 12;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = UXQ4US7LL6;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2098,7 +2162,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 12;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = UXQ4US7LL6;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2153,7 +2217,7 @@
 				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 12;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = UXQ4US7LL6;
 				FRAMEWORK_SEARCH_PATHS = (

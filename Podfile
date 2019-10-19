@@ -18,5 +18,6 @@ pod 'MBProgressHUD'
 pod 'KSPhotoBrowser'
 pod 'YYImage'
 pod 'Down'
+pod 'BulletinBoard'
 
 end

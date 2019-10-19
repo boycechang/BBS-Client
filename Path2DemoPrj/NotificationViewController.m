@@ -17,6 +17,7 @@
 #import "NotificationListViewController.h"
 #import "MailViewController.h"
 #import "PostMailViewController.h"
+#import "TopicViewController.h"
 
 @interface NotificationViewController ()
 
@@ -160,7 +161,17 @@
     NSInteger section = indexPath.section;
     NSInteger row = indexPath.row - 1;
     
-    if (section == 2) {
+    if (section == 0) {
+        Topic *topic = [self.replys objectAtIndex:row];
+        TopicViewController *topicVC = [TopicViewController new];
+        topicVC.topic = topic;
+        [self.navigationController pushViewController:topicVC animated:YES];
+    } else if (section == 1) {
+        Topic *topic = [self.ats objectAtIndex:row];
+        TopicViewController *topicVC = [TopicViewController new];
+        topicVC.topic = topic;
+        [self.navigationController pushViewController:topicVC animated:YES];
+    } else if (section == 2) {
         Mail *mail = [self.mails objectAtIndex:row];
         MailViewController *mailVC = [MailViewController new];
         mailVC.mail = mail;
@@ -172,12 +183,18 @@
     NSInteger section = indexPath.section;
     NSInteger row = indexPath.row - 1;
     
-    if (section == 0 || section == 1) {
-        return nil;
-    }
-    
     UIContextMenuConfiguration *config = [UIContextMenuConfiguration configurationWithIdentifier:nil previewProvider:^UIViewController * _Nullable{
-        if (section == 2) {
+        if (section == 0) {
+            Topic *topic = [self.replys objectAtIndex:row];
+            TopicViewController *topicVC = [TopicViewController new];
+            topicVC.topic = topic;
+            return topicVC;
+        } else if (section == 1) {
+            Topic *topic = [self.ats objectAtIndex:row];
+            TopicViewController *topicVC = [TopicViewController new];
+            topicVC.topic = topic;
+            return topicVC;
+        } else if (section == 2) {
             Mail *mail = [self.mails objectAtIndex:row];
             MailViewController *mailVC = [MailViewController new];
             mailVC.mail = mail;
