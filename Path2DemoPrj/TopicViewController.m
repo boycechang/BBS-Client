@@ -61,6 +61,11 @@
     self.composeButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self action:@selector(compose:)];
     self.navigationItem.rightBarButtonItems = @[self.composeButtonItem];
     
+    //消息的关联topic被删除后，pos为-1
+    if (self.topic.pos < 0) {
+        self.topic.pos = 0;
+    }
+    
     NSInteger initialSection = self.topic.pos / 20;
     [self loadSection:initialSection completion:^{
         [self.tableView reloadData];
@@ -331,7 +336,8 @@
         _pageView.pageSelected = ^(NSInteger page) {
             [wself loadSection:page - 1 completion:^{
                 [wself.tableView reloadData];
-                if ([self.tableView numberOfRowsInSection:page - 1] > 0) {
+                if ([wself.tableView numberOfRowsInSection:page - 1] > 0) {
+                    [wself.pageView updateWithCurrent:page total:wself.pagination.page_all_count];
                     dispatch_async(dispatch_get_main_queue(), ^{
                         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:page - 1];
                         [wself.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];

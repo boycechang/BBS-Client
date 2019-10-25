@@ -18,6 +18,7 @@
 #import "MailViewController.h"
 #import "PostMailViewController.h"
 #import "TopicViewController.h"
+#import <MBProgressHUD/MBProgressHUD.h>
 
 @interface NotificationViewController ()
 
@@ -161,16 +162,20 @@
     NSInteger section = indexPath.section;
     NSInteger row = indexPath.row - 1;
     
-    if (section == 0) {
-        Topic *topic = [self.replys objectAtIndex:row];
-        TopicViewController *topicVC = [TopicViewController new];
-        topicVC.topic = topic;
-        [self.navigationController pushViewController:topicVC animated:YES];
-    } else if (section == 1) {
-        Topic *topic = [self.ats objectAtIndex:row];
-        TopicViewController *topicVC = [TopicViewController new];
-        topicVC.topic = topic;
-        [self.navigationController pushViewController:topicVC animated:YES];
+    if (section == 0 || section == 1) {
+        Topic *topic = section == 0 ? [self.replys objectAtIndex:row] : [self.ats objectAtIndex:row];
+        
+        if (topic.pos == -1) {
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            hud.mode = MBProgressHUDModeText;
+            hud.label.text = @"内容已被删除";
+            hud.removeFromSuperViewOnHide = YES;
+            [hud hideAnimated:YES afterDelay:1];
+        } else {
+            TopicViewController *topicVC = [TopicViewController new];
+            topicVC.topic = topic;
+            [self.navigationController pushViewController:topicVC animated:YES];
+        }
     } else if (section == 2) {
         Mail *mail = [self.mails objectAtIndex:row];
         MailViewController *mailVC = [MailViewController new];

@@ -60,10 +60,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL is_register;
 @property (nonatomic, assign) BOOL is_follow;
 
-@property (nonatomic, assign) NSUInteger life;
-@property (nonatomic, assign) NSUInteger score;
-@property (nonatomic, assign) NSUInteger follow_num;
-@property (nonatomic, assign) NSUInteger post_count;
+@property (nonatomic, assign) NSInteger life;
+@property (nonatomic, assign) NSInteger score;
+@property (nonatomic, assign) NSInteger follow_num;
+@property (nonatomic, assign) NSInteger post_count;
 
 @end
 
@@ -102,7 +102,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL is_admin;
 @property (nonatomic, assign) NSUInteger position;
 
-@property (nonatomic, assign) NSUInteger reply_count;
+@property (nonatomic, assign) NSInteger reply_count;
 @property (nonatomic, strong) NSDate *last_reply_time;
 @property (nonatomic, strong) NSString *last_reply_user_id;
 @property (nonatomic, strong) NSString *reply_id;
@@ -113,8 +113,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 // 提醒
 @property (nonatomic, assign) BOOL is_read;
-@property (nonatomic, assign) NSUInteger index;
-@property (nonatomic, assign) NSUInteger pos;
+@property (nonatomic, assign) NSInteger index;
+@property (nonatomic, assign) NSInteger pos;
 @property (nonatomic, assign) NSTimeInterval time;
 
 // 富文本解析缓存
