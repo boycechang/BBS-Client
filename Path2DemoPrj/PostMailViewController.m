@@ -29,6 +29,7 @@
     [self.view setFrame:CGRectMake(0, 0, rect.size.width, rect.size.height)];
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
+    self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
     self.navigationController.navigationBar.barTintColor = [UIColor lightGrayColor];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
@@ -38,9 +39,6 @@
     
     self.navigationItem.leftBarButtonItem = cancelButton;
     self.navigationItem.rightBarButtonItem = sendButton;
-    
-    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-//    myBBS = appDelegate.myBBS;
     
     if ([[[UIDevice currentDevice]systemVersion]floatValue] >= 7.0) {
         [self setAutomaticallyAdjustsScrollViewInsets:NO];
@@ -325,17 +323,6 @@
     postContent.inputAccessoryView = nil;
     
     [postContent becomeFirstResponder];
-}
-
-#pragma mark - Rotation
--(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
-    return YES;
-}
-- (BOOL)shouldAutorotate{
-    return YES;
-}
--(NSUInteger)supportedInterfaceOrientations{
-    return UIInterfaceOrientationMaskAllButUpsideDown;
 }
 
 @end

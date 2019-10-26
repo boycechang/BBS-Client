@@ -16,9 +16,6 @@
 
 +(BOOL)isNetworkReachable;
 
-+(User *)userInfo:(NSString *)userID;  ///
-
-+(NSArray *)singleTopic:(NSString *)board ID:(int)ID Page:(NSInteger)page User:(User *)user;///
 +(NSArray *)replyTopic:(NSString *)board ID:(int)ID Start:(NSInteger)start User:(User *)user; ///
 
 +(NSArray *)searchTopics:(NSString *)key start:(NSInteger)start User:(User *)user BoardName:(NSString *)board;
@@ -26,10 +23,6 @@
 
 +(BOOL)postMail:(User *)myself User:(NSString *)user Title:(NSString *)title Content:(NSString *)content Reid:(int)reid;
 +(BOOL)replyMail:(User *)myself User:(NSString *)user Title:(NSString *)title Content:(NSString *)content Type:(int)type ID:(int)ID;
-
-+(Notification *)getAllNotificationCount:(User *)user;    ///
-+(BOOL)deleteNotification:(User *)user Type:(NSString *)type ID:(int)ID; ///
-+(BOOL)clearNotification:(User *)user;            ///
 
 +(BOOL)postTopic:(User *)user Board:(NSString *)board Title:(NSString *)title Content:(NSString *)content Reid:(int)reid;
 +(BOOL)editTopic:(User *)user Board:(NSString *)board Title:(NSString *)title Content:(NSString *)content Reid:(int)reid;

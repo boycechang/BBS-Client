@@ -171,53 +171,6 @@
     return NO;
 }
 
-+(BOOL)deleteNotification:(User *)user Type:(NSString *)type ID:(int)ID
-{
-    NSMutableString * baseurl = [APIADDR mutableCopy];
-    [baseurl appendFormat:@"/refer/%@/setRead/%i.json?", type, ID];
-    [baseurl appendFormat:@"appkey=%@", APPKEY];
-    
-//    NSURL *url = [NSURL URLWithString:baseurl];
-//    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-//    [request setUsername:[MyBBS sharedInstance].username];
-//    [request setPassword:[MyBBS sharedInstance].password];
-//    [request setAllowCompressedResponse:YES];
-//    [request setRequestMethod:@"POST"];
-//    [request startSynchronous];
-//    NSData *feedback = [request responseData];
-//    NSDictionary *topTenTopics = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
-//    return [[topTenTopics objectForKey:@"status"] boolValue];
-    return NO;
-}
-
-+(BOOL)clearNotificationForType:(NSString *)type User:(User *)user
-{
-    NSMutableString * baseurl = [APIADDR mutableCopy];
-    [baseurl appendFormat:@"/refer/%@/setRead.json?", type];
-    [baseurl appendFormat:@"appkey=%@", APPKEY];
-    
-//    NSURL *url = [NSURL URLWithString:baseurl];
-//    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-//    [request setUsername:[MyBBS sharedInstance].username];
-//    [request setPassword:[MyBBS sharedInstance].password];
-//    [request setAllowCompressedResponse:YES];
-//    [request setRequestMethod:@"POST"];
-//    [request startSynchronous];
-//    NSData *feedback = [request responseData];
-//
-//    NSDictionary *topTenTopics = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
-//    return [[topTenTopics objectForKey:@"status"] boolValue];
-    return NO;
-}
-
-+(BOOL)clearNotification:(User *)user
-{
-    BOOL at = [BBSAPI clearNotificationForType:@"at" User:user];
-    BOOL reply = [BBSAPI clearNotificationForType:@"reply" User:user];
-
-    return at&&reply;
-}
-
 +(NSArray *)replyTopic:(NSString *)board ID:(int)ID Start:(NSInteger)start User:(User *)user
 {
     if(![BBSAPI isNetworkReachable])
@@ -246,76 +199,6 @@
 //        return nil;
 //    }
 //    else {
-//        return Status;
-//    }
-    
-    return nil;
-}
-
-
-+(NSArray *)singleTopic:(NSString *)board ID:(int)ID Page:(NSInteger)page User:(User *)user
-{
-    if(![BBSAPI isNetworkReachable])
-    {
-        return nil;
-    }
-    
-//    NSMutableString * baseurl = [APIADDR mutableCopy];
-//    [baseurl appendFormat:@"/threads/%@/%i.json?", board, ID];
-//    [baseurl appendFormat:@"appkey=%@", APPKEY];
-//    [baseurl appendFormat:@"&page=%i&count=20", page];
-//
-//    NSURL *url = [NSURL URLWithString:baseurl];
-//    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-//    [request setUsername:[MyBBS sharedInstance].username];
-//    [request setPassword:[MyBBS sharedInstance].password];
-//    [request setAllowCompressedResponse:YES];
-//    [request startSynchronous];
-//    NSData *feedback = [request responseData];
-//
-//    if (feedback == nil) {
-//        return nil;
-//    }
-//    NSDictionary *singleTopic = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
-//    NSArray * Status = [JsonParseEngine parseSingleTopic:singleTopic];
-//    if (Status == nil) {
-//        return nil;
-//    }
-//    else {
-//        return Status;
-//    }
-    
-    return nil;
-}
-
-
-+ (User *)userInfo:(NSString *)userID {
-    if (![BBSAPI isNetworkReachable]) {
-        return nil;
-    }
-    
-//    NSMutableString * baseurl = [APIADDR mutableCopy];
-//    [baseurl appendFormat:@"/user/query/%@.json?", userID];
-//    [baseurl appendFormat:@"appkey=%@", APPKEY];
-//
-//    NSURL *url = [NSURL URLWithString:baseurl];
-//    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-//    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-//        [request setUsername:[MyBBS sharedInstance].username];
-//        [request setPassword:[MyBBS sharedInstance].password];
-//
-//    [request setAllowCompressedResponse:YES];
-//    [request startSynchronous];
-//    NSData *feedback = [request responseData];
-//
-//    if (feedback == nil) {
-//        return nil;
-//    }
-//    NSDictionary *userInfo = [NSJSONSerialization JSONObjectWithData:feedback options:kNilOptions error:nil];
-//    User * Status = [JsonParseEngine parseUserInfo:userInfo];
-//    if (Status == nil) {
-//        return nil;
-//    } else {
 //        return Status;
 //    }
     

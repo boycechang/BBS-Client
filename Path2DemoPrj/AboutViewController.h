@@ -10,7 +10,6 @@
 #import <MessageUI/MFMailComposeViewController.h>
 #include <AudioToolbox/AudioToolbox.h>
 #import "AppDelegate.h"
-#import "UserInfoViewController.h"
 #import "articleViewController.h"
 
 @protocol AboutViewControllerDelegate <NSObject>

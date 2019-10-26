@@ -63,7 +63,6 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NotificationCell *cell = [self.tableView dequeueReusableCellWithIdentifier:NotificationCell.class.description forIndexPath:indexPath];
-    
     if (self.type == NotificationTypeReply ||
         self.type == NotificationTypeAt) {
         Topic *topic = [self.notifications objectAtIndex:indexPath.row];
@@ -85,6 +84,8 @@
         TopicViewController *topicVC = [TopicViewController new];
         topicVC.topic = topic;
         [self.navigationController pushViewController:topicVC animated:YES];
+        
+        [self deleteNotification:topic];
     } else if (self.type == NotificationTypeMail) {
         Mail *mail = [self.notifications objectAtIndex:indexPath.row];
         MailViewController *mailVC = [MailViewController new];
@@ -100,6 +101,9 @@
             Topic *topic = [self.notifications objectAtIndex:indexPath.row];
             TopicViewController *topicVC = [TopicViewController new];
             topicVC.topic = topic;
+            
+            [self deleteNotification:topic];
+            
             return topicVC;
         } else if (self.type == NotificationTypeMail) {
             Mail *mail = [self.notifications objectAtIndex:indexPath.row];
@@ -190,6 +194,18 @@
         default:
             break;
     }
+}
+
+
+#pragma mark - API
+
+- (void)deleteNotification:(Topic *)topic {
+    topic.is_read = YES;
+    [[BYRNetworkManager sharedInstance] POST:[NSString stringWithFormat:@"/refer/%@/setRead/%li.json", self.type ==  NotificationTypeReply ? @"reply" : @"at", topic.index] parameters:nil responseClass:nil success:^(NSURLSessionDataTask * _Nonnull task, id _Nullable responseObject) {
+        [self.tableView reloadData];
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+
+    }];
 }
 
 @end

@@ -49,7 +49,6 @@ NSString * const KSAKeyboardFrameDidChangeNotification = @"KSAKeyboardFrameDidCh
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor blueColor];
         [self setupViews];
     }
     return self;
@@ -104,7 +103,7 @@ NSString * const KSAKeyboardFrameDidChangeNotification = @"KSAKeyboardFrameDidCh
         _countLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         _countLabel.textAlignment = NSTextAlignmentRight;
         _countLabel.text = @"20";
-        _countLabel.hidden = YES;
+//        _countLabel.hidden = YES;
     }
     return _countLabel;
 }
@@ -116,8 +115,8 @@ NSString * const KSAKeyboardFrameDidChangeNotification = @"KSAKeyboardFrameDidCh
         _contentTextView.alwaysBounceVertical = YES;
         _contentTextView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
         _contentTextView.inputAccessoryView = [KSAObservingInputAccessoryView new];
-        _contentTextView.backgroundColor = [UIColor redColor];
     }
     return _contentTextView;
 }
+
 @end

@@ -117,8 +117,8 @@
 }
 
 - (IBAction)headImageViewClicked:(id)sender {
-    if (self.userTapped) {
-        self.userTapped(self.topic.user);
+    if (self.cellUserTapped) {
+        self.cellUserTapped(self.topic);
     }
 }
 

@@ -20,17 +20,6 @@
         WUEmoticonsKeyboard *keyboard = [WUEmoticonsKeyboard keyboard];
         
         //Icon keys
-        NSMutableArray *emStringArray = [[NSMutableArray alloc] init];
-        for (int i = 1; i <= 73; i++) {
-            WUEmoticonsKeyboardKeyItem *loveKey = [[WUEmoticonsKeyboardKeyItem alloc] init];
-            loveKey.image = [UIImage imageNamed:[NSString stringWithFormat:@"[em%i].gif", i]];
-            loveKey.textToInput = [NSString stringWithFormat:@"[em%i]", i];
-            [emStringArray addObject:loveKey];
-        }
-        WUEmoticonsKeyboardKeyItemGroup *emGroup = [[WUEmoticonsKeyboardKeyItemGroup alloc] init];
-        emGroup.keyItems = emStringArray;
-        emGroup.title = @"经典";
-        
         NSMutableArray *emaStringArray = [[NSMutableArray alloc] init];
         for (int i = 0; i <= 41; i++) {
             WUEmoticonsKeyboardKeyItem *loveKey = [[WUEmoticonsKeyboardKeyItem alloc] init];
@@ -64,46 +53,13 @@
         emcGroup.keyItems = emcStringArray;
         emcGroup.title = @"洋葱头";
         
-        //Text keys
-        NSArray *textKeys = [NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"EmotionTextKeys" ofType:@"plist"]];
-        
-        NSMutableArray *textKeyItems = [NSMutableArray array];
-        for (NSString *text in textKeys) {
-            WUEmoticonsKeyboardKeyItem *keyItem = [[WUEmoticonsKeyboardKeyItem alloc] init];
-            keyItem.title = text;
-            keyItem.textToInput = text;
-            [textKeyItems addObject:keyItem];
-        }
-        
-        //Text key group
-        WUEmoticonsKeyboardKeysPageFlowLayout *textIconsLayout = [[WUEmoticonsKeyboardKeysPageFlowLayout alloc] init];
-        textIconsLayout.itemSize = CGSizeMake(80, 142/3.0);
-        textIconsLayout.itemSpacing = 0;
-        textIconsLayout.lineSpacing = 0;
-        textIconsLayout.pageContentInsets = UIEdgeInsetsMake(0,0,0,0);
-        
-        WUEmoticonsKeyboardKeyItemGroup *textIconsGroup = [[WUEmoticonsKeyboardKeyItemGroup alloc] init];
-        textIconsGroup.keyItems = textKeyItems;
-        textIconsGroup.keyItemsLayout = textIconsLayout;
-        textIconsGroup.keyItemCellClass = WUDemoKeyboardTextKeyCell.class;
-        textIconsGroup.title = @"文字";
-        
         //Set keyItemGroups
-        keyboard.keyItemGroups = @[emGroup, emaGroup, embGroup, emcGroup, textIconsGroup];
+        keyboard.keyItemGroups = @[emaGroup, embGroup, emcGroup];
         
         //Setup cell popup view
         [keyboard setKeyItemGroupPressedKeyCellChangedBlock:^(WUEmoticonsKeyboardKeyItemGroup *keyItemGroup, WUEmoticonsKeyboardKeyCell *fromCell, WUEmoticonsKeyboardKeyCell *toCell) {
             [WUDemoKeyboardBuilder sharedEmotionsKeyboardKeyItemGroup:keyItemGroup pressedKeyCellChangedFromCell:fromCell toCell:toCell];
         }];
-        
-
-        //Keyboard appearance
-        
-        //Custom text icons scroll background
-        UIView *textGridBackgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [textIconsLayout collectionViewContentSize].width, [textIconsLayout collectionViewContentSize].height)];
-        textGridBackgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        textGridBackgroundView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"keyboard_grid_bg"]];
-        [textIconsLayout.collectionView addSubview:textGridBackgroundView];
         
         //Custom utility keys
         [keyboard setImage:[UIImage imageNamed:@"keyboard_switch"] forButton:WUEmoticonsKeyboardButtonKeyboardSwitch state:UIControlStateNormal];
@@ -113,17 +69,6 @@
         
         //Keyboard background
         [keyboard setBackgroundImage:[[UIImage imageNamed:@"keyboard_bg"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 1, 0, 1)]];
-        //[keyboard setBackgroundColor:[UIColor lightGrayColor]];
-        
-        [[UISegmentedControl appearanceWhenContainedIn:[WUEmoticonsKeyboard class], nil] setTintColor:[UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1]];
-         
-        //SegmentedControl
-        /*
-        [[UISegmentedControl appearanceWhenContainedIn:[WUEmoticonsKeyboard class], nil] setBackgroundImage:[[UIImage imageNamed:@"keyboard_segment_normal"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 10, 0, 10)] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-        [[UISegmentedControl appearanceWhenContainedIn:[WUEmoticonsKeyboard class], nil] setBackgroundImage:[[UIImage imageNamed:@"keyboard_segment_selected"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 10, 0, 10)] forState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
-        [[UISegmentedControl appearanceWhenContainedIn:[WUEmoticonsKeyboard class], nil] setDividerImage:[UIImage imageNamed:@"keyboard_segment_normal_selected"] forLeftSegmentState:UIControlStateNormal rightSegmentState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
-        [[UISegmentedControl appearanceWhenContainedIn:[WUEmoticonsKeyboard class], nil] setDividerImage:[UIImage imageNamed:@"keyboard_segment_selected_normal"] forLeftSegmentState:UIControlStateSelected rightSegmentState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-        */
         
         _sharedEmoticonsKeyboard = keyboard;
     });

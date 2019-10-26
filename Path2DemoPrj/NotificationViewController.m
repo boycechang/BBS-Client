@@ -34,6 +34,8 @@
 
 @property (nonatomic, assign) NSInteger mailsTotal;
 
+@property (nonatomic, strong) UIBarButtonItem *clearButton;
+
 @end
 
 @implementation NotificationViewController
@@ -50,6 +52,8 @@
     [super viewDidLoad];
     self.navigationItem.title = @"消息";
     self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeAlways;
+    
+    self.clearButton = [[UIBarButtonItem alloc] initWithTitle:@"全部标为已读" style:UIBarButtonItemStylePlain target:self action:@selector(clearAllNotifications:)];
     
     self.tableView.showsVerticalScrollIndicator = NO;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -68,28 +72,25 @@
 - (void)refreshNotificationCount {
     [[BYRNetworkManager sharedInstance] GET:@"/refer/reply/info.json" parameters:nil responseClass:nil success:^(NSURLSessionDataTask * _Nonnull task, id _Nullable responseObject) {
         self.replysNewCount = [[responseObject objectForKey:@"new_count"] intValue];
+        [self updateNotificationCountDisplay];
     } failure:nil];
     
     [[BYRNetworkManager sharedInstance] GET:@"/refer/at/info.json" parameters:nil responseClass:nil success:^(NSURLSessionDataTask * _Nonnull task, id _Nullable responseObject) {
         self.atsNewCount = [[responseObject objectForKey:@"new_count"] intValue];
+        [self updateNotificationCountDisplay];
     } failure:nil];
 }
 
-
-- (void)setReplysNewCount:(NSInteger)replysNewCount {
-    _replysNewCount = replysNewCount;
-    
+- (void)updateNotificationCountDisplay {
     NSInteger total = _replysNewCount + _atsNewCount;
     self.tabBarItem.badgeValue = total == 0 ? nil : [NSString stringWithFormat:@"%li", total];
     [self.tableView reloadData];
-}
-
-- (void)setAtsNewCount:(NSInteger)atsNewCount {
-    _atsNewCount = atsNewCount;
     
-    NSInteger total = _replysNewCount + _atsNewCount;
-    self.tabBarItem.badgeValue = total == 0 ? nil : [NSString stringWithFormat:@"%li", total];
-    [self.tableView reloadData];
+    if (total > 0) {
+        self.navigationItem.rightBarButtonItem = self.clearButton;
+    } else {
+        self.navigationItem.rightBarButtonItem = nil;
+    }
 }
 
 #pragma mark -
@@ -176,6 +177,10 @@
             topicVC.topic = topic;
             [self.navigationController pushViewController:topicVC animated:YES];
         }
+        
+        if (!topic.is_read) {
+            [self deleteNotificationType:section topic:topic];
+        }
     } else if (section == 2) {
         Mail *mail = [self.mails objectAtIndex:row];
         MailViewController *mailVC = [MailViewController new];
@@ -189,15 +194,15 @@
     NSInteger row = indexPath.row - 1;
     
     UIContextMenuConfiguration *config = [UIContextMenuConfiguration configurationWithIdentifier:nil previewProvider:^UIViewController * _Nullable{
-        if (section == 0) {
-            Topic *topic = [self.replys objectAtIndex:row];
+        if (section == 0 || section == 1) {
+            Topic *topic = section == 0 ? [self.replys objectAtIndex:row] : [self.ats objectAtIndex:row];
             TopicViewController *topicVC = [TopicViewController new];
             topicVC.topic = topic;
-            return topicVC;
-        } else if (section == 1) {
-            Topic *topic = [self.ats objectAtIndex:row];
-            TopicViewController *topicVC = [TopicViewController new];
-            topicVC.topic = topic;
+            
+            if (!topic.is_read) {
+                [self deleteNotificationType:section topic:topic];
+            }
+            
             return topicVC;
         } else if (section == 2) {
             Mail *mail = [self.mails objectAtIndex:row];
@@ -258,6 +263,46 @@
         completion();
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         completion();
+    }];
+}
+
+
+#pragma mark - API
+
+- (void)deleteNotificationType:(NSInteger)type topic:(Topic *)topic {
+    topic.is_read = YES;
+    [[BYRNetworkManager sharedInstance] POST:[NSString stringWithFormat:@"/refer/%@/setRead/%li.json", type == 0 ? @"reply" : @"at", topic.index] parameters:nil responseClass:nil success:^(NSURLSessionDataTask * _Nonnull task, id _Nullable responseObject) {
+        if (type == 0) {
+            self.replysNewCount--;
+        } else {
+            self.atsNewCount--;
+        }
+        [self.tableView reloadData];
+        [self updateNotificationCountDisplay];
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+
+    }];
+}
+
+- (IBAction)clearAllNotifications:(id)sender {
+    [[BYRNetworkManager sharedInstance] POST:@"/refer/at/setRead.json" parameters:nil responseClass:nil success:^(NSURLSessionDataTask * _Nonnull task, id _Nullable responseObject) {
+        for (Topic *topic in self.ats) {
+            topic.is_read = YES;
+        }
+        self.atsNewCount = 0;
+        [self updateNotificationCountDisplay];
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+
+    }];
+    
+    [[BYRNetworkManager sharedInstance] POST:@"/refer/reply/setRead.json" parameters:nil responseClass:nil success:^(NSURLSessionDataTask * _Nonnull task, id _Nullable responseObject) {
+        for (Topic *topic in self.replys) {
+            topic.is_read = YES;
+        }
+        self.replysNewCount = 0;
+        [self updateNotificationCountDisplay];
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+
     }];
 }
 

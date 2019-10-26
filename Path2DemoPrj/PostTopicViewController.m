@@ -7,6 +7,8 @@
 //
 
 #import "PostTopicViewController.h"
+#import "BYRNetworkManager.h"
+#import "NSString+BYRTool.h"
 
 @implementation PostTopicViewController
 @synthesize rootTopic;
@@ -14,14 +16,6 @@
 @synthesize postType;
 @synthesize mDelegate;
 @synthesize keyboardToolbar;
-
-- (id)init {
-    self = [super init];
-    if (self) {
-        
-    }
-    return self;
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -91,7 +85,7 @@
         [postTitleCount setText:[NSString stringWithFormat:@"%lu", (unsigned long)[postTitle.text length]]];
         
         if (rootTopic.content != nil) {
-            [postContent setText:[NSString stringWithFormat:@"\n【 在 %@ 的大作中提到: 】\n%@", rootTopic.user.id, rootTopic.content.length > 30 ? [NSString stringWithFormat:@"%@...", [rootTopic.content substringToIndex:27]] : rootTopic.content]];
+            [postContent setText:[self generateQuote]];
         } else {
             [postContent setText:@""];
         }
@@ -156,9 +150,11 @@
 - (void)send {
     [postTitle resignFirstResponder];
     [postContent resignFirstResponder];
-    
-    [self.navigationController showSGProgressWithDuration:3 andTintColor:self.navigationController.navigationBar.tintColor andTitle:@"发送中..." ];
-    [NSThread detachNewThreadSelector:@selector(firstTimeLoad) toTarget:self withObject:nil];
+    if (postType == 0 || postType == 1) {
+        [self postWithBoard:boardName title:postTitle.text content:postContent.text];
+    } else if (postType == 2) {
+        
+    }
 }
 
 - (void)didAddUser:(NSString *)userID {
@@ -170,48 +166,46 @@
     [postContent becomeFirstResponder];
 }
 
-- (void)dismissAddUserView {
-    [self dismissViewControllerAnimated:YES completion:nil];
+- (void)postWithBoard:(NSString *)board title:(NSString *)title content:(NSString *)content {
+    NSMutableDictionary *param = [@{@"title" : title ?: @"",
+                                    @"content" : content ?: @""} mutableCopy];
+    if (rootTopic.id) {
+        [param setObject:rootTopic.id forKey:@"reid"];
+    }
+    
+    [[BYRNetworkManager sharedInstance] POST:[NSString stringWithFormat:@"/article/%@/post.json", board] parameters:param responseClass:nil success:^(NSURLSessionDataTask * _Nonnull task, id _Nullable responseObject) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.mode = MBProgressHUDModeText;
+        hud.label.text = @"发送失败";
+        hud.removeFromSuperViewOnHide = YES;
+        [hud hideAnimated:YES afterDelay:1];
+    }];
 }
 
-- (void)firstTimeLoad {
-    if([self post]) {
-        [self performSelectorOnMainThread:@selector(sendSuccess) withObject:nil waitUntilDone:NO];
-    }
-    else {
-        [self performSelectorOnMainThread:@selector(sendFailed) withObject:nil waitUntilDone:NO];
-    }
+- (NSString *)generateQuote {
+    NSMutableString *quote = [NSMutableString new];
+    [quote appendFormat:@"\n\n【 在 %@ 的大作中提到: 】\n", rootTopic.user.id];
+    __block int lineNum = 0;
+    [rootTopic.content enumerateLinesUsingBlock:^(NSString * _Nonnull line, BOOL * _Nonnull stop) {
+        NSString *newLine = [line trimedWhitespaceString];
+        
+        NSRegularExpression *expression = [NSRegularExpression regularExpressionWithPattern:@"【 在.*的(?:大作|邮件)中提到: 】.*\\s*" options:NSRegularExpressionCaseInsensitive error:nil];
+        NSArray *results = [expression matchesInString:newLine options:NSMatchingReportCompletion range:NSMakeRange(0, newLine.length)];
+        
+        if (newLine.length != 0 && //非空白行
+            results.count == 0 && // 非引用行
+            ![[newLine substringToIndex:1] isEqualToString:@":"]) {
+            [quote appendFormat:@":%@\n", line];
+            lineNum++;
+            if (lineNum == 5) {
+                *stop = YES;
+            }
+        }
+    }];
+    return quote;
 }
-
-- (void)sendSuccess {
-    [self.navigationController finishSGProgress];
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)sendFailed {
-    [self.navigationController finishSGProgress];
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.mode = MBProgressHUDModeText;
-    hud.labelText = @"发送失败";
-    hud.margin = 30.f;
-    hud.yOffset = 0.f;
-    hud.removeFromSuperViewOnHide = YES;
-    [hud hide:YES afterDelay:0.8];
-}
-
-- (BOOL)post {
-    if (postType == 0) {
-        return [BBSAPI postTopic:myBBS.mySelf Board:boardName Title:postTitle.text Content:[NSString stringWithFormat:@"%@", postContent.text] Reid:0];
-    }
-    if (postType == 1) {
-        return [BBSAPI postTopic:myBBS.mySelf Board:rootTopic.board_name Title:postTitle.text Content:[NSString stringWithFormat:@"%@", postContent.text] Reid:rootTopic.id];
-    }
-    if (postType == 2) {
-        return [BBSAPI editTopic:myBBS.mySelf Board:rootTopic.board_name Title:postTitle.text Content:[NSString stringWithFormat:@"%@", postContent.text] Reid:rootTopic.id];
-    }
-    return 0;
-}
-
 
 #pragma mark -
 #pragma mark textViewDelegate
@@ -220,8 +214,7 @@
     [postTitleCount setText:[NSString stringWithFormat:@"%i",count]];
     if (count == 0) {
         [self.navigationItem.rightBarButtonItem setEnabled:NO];
-    }
-    else {
+    } else {
         [self.navigationItem.rightBarButtonItem setEnabled:YES];
     }
 }

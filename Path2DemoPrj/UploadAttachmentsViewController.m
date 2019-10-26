@@ -30,22 +30,13 @@
     [self.view setFrame:CGRectMake(0, 0, rect.size.width, rect.size.height - 64)];
     [self.view setBackgroundColor:[UIColor whiteColor]];
     self.title = @"添加附件";
-    
-    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-//    myBBS = appDelegate.myBBS;
-    
+        
     NSArray *rightItemsArray;
     UIBarButtonItem *pickFromAlbumButton = [[UIBarButtonItem alloc] initWithTitle:@"相册" style:UIBarButtonItemStylePlain target:self action:@selector(pickImageFromAlbum:)];
     
-    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-        UIBarButtonItem *pickFromCameraButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(pickImageFromCamera:)];
-        rightItemsArray = [NSArray arrayWithObjects:pickFromCameraButton, pickFromAlbumButton, nil];
-    }
-    else{
-        rightItemsArray = [NSArray arrayWithObjects:pickFromAlbumButton, nil];
-    }
+    rightItemsArray = [NSArray arrayWithObjects:pickFromAlbumButton, nil];
     
-    UIBarButtonItem *doneButton=[[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStyleDone target:self action:@selector(cancel:)];
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStyleDone target:self action:@selector(cancel:)];
     self.navigationItem.leftBarButtonItem = doneButton;
     self.navigationItem.rightBarButtonItems = rightItemsArray;
 
@@ -281,19 +272,6 @@
 
     [HUD removeFromSuperview];
     [attTable reloadData];
-}
-
-
-#pragma mark - Rotation
--(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
-    return (toInterfaceOrientation == UIInterfaceOrientationPortrait);
-}
-- (BOOL)shouldAutorotate{
-    return NO;
-}
-
--(NSUInteger)supportedInterfaceOrientations{
-    return UIInterfaceOrientationMaskPortrait;
 }
 
 @end

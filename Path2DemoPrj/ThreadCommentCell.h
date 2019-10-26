@@ -14,7 +14,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ThreadCommentCell : UITableViewCell
 
-@property (nonatomic, copy) void (^userTapped)(User *user);
+@property (nonatomic, readonly) Topic *topic;
+
+@property (nonatomic, copy) void (^cellUserTapped)(Topic *topic);
 
 - (void)updateWithTopic:(Topic *)topic
                position:(NSInteger)position

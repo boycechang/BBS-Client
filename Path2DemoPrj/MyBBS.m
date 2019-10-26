@@ -63,17 +63,4 @@
     [defaults setValue:NULL forKey:@"UserAvatar"];
 }
 
-- (void)refreshNotification {
-    Notification *notifacation = [BBSAPI getAllNotificationCount:mySelf];
-    self.notification = notifacation;
-    if ((notification.atCount + notification.replyCount) > self.notificationCount) {
-        AudioServicesPlayAlertSound (1009);
-    }
-    self.notificationCount = notification.atCount + notification.replyCount;
-}
-
-- (void)clearNotification {
-    [BBSAPI clearNotification:mySelf];
-}
-
 @end

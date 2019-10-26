@@ -25,10 +25,6 @@
     if (self) {
         NSMutableDictionary *mapper = [NSMutableDictionary new];
         
-        for (int i = 1; i <= 73; i++) {
-            [mapper setObject:[YYImage imageNamed:[NSString stringWithFormat:@"[em%i].gif", i]] forKey:[NSString stringWithFormat:@"[em%i]", i]];
-        }
-        
         for (int i = 0; i <= 41; i++) {
             [mapper setObject:[YYImage imageNamed:[NSString stringWithFormat:@"[ema%i].gif", i]] forKey:[NSString stringWithFormat:@"[ema%i]", i]];
         }

@@ -18,7 +18,6 @@
 @interface ComposeViewController ()
 
 @property (nonatomic, strong) UIBarButtonItem *sendButtonItem;
-@property (nonatomic, strong) UIScrollView *contentView;
 @property (nonatomic, strong) ComposeContentView *composeContentView;
 @property (nonatomic, strong) ComposeToolView *composeToolView;
 
@@ -30,13 +29,16 @@
     [super viewDidLoad];
     self.navigationItem.title = @"发帖";
     self.view.backgroundColor = [UIColor systemBackgroundColor];
+    self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
+    
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(cancel:)];
+    self.navigationItem.leftBarButtonItem = cancelButton;
     
     self.sendButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage systemImageNamed:@"arrow.up.circle.fill"] style:UIBarButtonItemStylePlain target:self action:@selector(send:)];
-    self.navigationItem.rightBarButtonItems = @[self.sendButtonItem];
+    self.navigationItem.rightBarButtonItem = self.sendButtonItem;
     
-    [self.view addSubview:self.contentView];
+    [self.view addSubview:self.composeContentView];
     [self.view addSubview:self.composeToolView];
-    [self.contentView addSubview:self.composeContentView];
     
     [self.composeToolView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(self.view);
@@ -44,18 +46,18 @@
         make.height.mas_equalTo(100);
     }];
     
-    [self.contentView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.left.right.equalTo(self.view);
-        make.bottom.equalTo(self.composeToolView.mas_top).offset(-5);
-    }];
-    
     [self.composeContentView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.left.right.equalTo(self.contentView);
-        make.bottom.equalTo(self.contentView);
+        make.top.equalTo(self.view.mas_safeAreaLayoutGuideTop);
+        make.left.right.equalTo(self.view);
+        make.bottom.equalTo(self.composeToolView.mas_top).offset(-5);
     }];
     
     [self.composeContentView setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
     [self.composeContentView setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
+}
+
+- (BOOL)isModalInPresentation {
+    return YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -93,17 +95,12 @@
     
 }
 
-#pragma mark - getter
-
-- (UIScrollView *)contentView {
-    if (!_contentView) {
-        _contentView = [UIScrollView new];
-        _contentView.alwaysBounceVertical = YES;
-        _contentView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
-        _contentView.backgroundColor = [[UIColor yellowColor] colorWithAlphaComponent:0.3];
-    }
-    return _contentView;
+- (IBAction)cancel:(id)sender {
+    [self.view endEditing:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
+
+#pragma mark - getter
 
 - (ComposeContentView *)composeContentView {
     if (!_composeContentView) {

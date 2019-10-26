@@ -50,7 +50,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if(section == 0){
-        return 2;
+        return 0;
     }
     if (section == 1) {
         return 3;
@@ -77,43 +77,7 @@
 
     switch (indexPath.section) {
         case 0:
-            switch (indexPath.row) {
-                case 0:
-                {
-//                    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-//                    cell.textLabel.text = @"当前用户";
-//                    if (appDelegate.myBBS.mySelf.id != nil) {
-//                        cell.detailTextLabel.text = appDelegate.myBBS.mySelf.id;
-//                        [cell setAccessoryType:UITableViewCellAccessoryNone];
-//                    }
-//                    else{
-//                        cell.detailTextLabel.text = @"未登录";
-//                        [cell setAccessoryType:UITableViewCellAccessoryNone];
-//                    }
-                    break;
-                }
-                case 1:
-                {
-                    cell.textLabel.text = @"更改背景";
-                    cell.selectionStyle = UITableViewCellSelectionStyleDefault;
-                    if (self.backImage == nil) {
-                        [cell.imageView setImage:[UIImage imageNamed:@"icon.png"]];
-                        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                            NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-                            self.backImage = [UIImage imageWithData:[defaults dataForKey:@"backImage"]];
-                            dispatch_async(dispatch_get_main_queue(), ^{
-                                [cell.imageView setImage:self.backImage];
-                            });
-                        });
-                    } else {
-                        [cell.imageView setImage:self.backImage];
-                    }
-                    break;
-                }
-                default:
-                    break;
-            }
-            break;
+            
         case 1:
             switch (indexPath.row) {
                 case 0:
@@ -174,28 +138,7 @@
 }
 
 #pragma mark - Table view delegate
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-//    if (indexPath.section == 0 && indexPath.row == 0 && appDelegate.myBBS.mySelf.id != nil) {
-//        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-//
-//        UserInfoViewController * userInfoViewController;
-//        userInfoViewController = [[UserInfoViewController alloc] initWithNibName:@"UserInfoViewController" bundle:nil];
-//        userInfoViewController.userString = appDelegate.myBBS.mySelf.id;
-//        [self presentPopupViewController:userInfoViewController animationType:MJPopupViewAnimationSlideTopBottom];
-//    }
-    
-//    if (indexPath.section == 0 && indexPath.row == 0 && appDelegate.myBBS.mySelf.id == nil) {
-//        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-//        hud.mode = MBProgressHUDModeText;
-//        hud.labelText = @"请先登录";
-//        hud.margin = 30.f;
-//        hud.yOffset = 0.f;
-//        hud.removeFromSuperViewOnHide = YES;
-//        [hud hide:YES afterDelay:0.8];
-//        [tableView reloadData];
-//    }
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (indexPath.section == 0 && indexPath.row == 1) {
 //        [self pickImageFromAlbum:nil];

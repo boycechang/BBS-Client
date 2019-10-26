@@ -33,6 +33,7 @@
 }
 
 - (void)setupViews {
+    CGFloat itemWidth = (UIScreen.mainScreen.nativeBounds.size.width / UIScreen.mainScreen.nativeScale - 45) / 2;
     self.contentView.backgroundColor = [UIColor secondarySystemBackgroundColor];
     self.contentView.layer.cornerRadius = 6.f;
     self.contentView.layer.masksToBounds = YES;
@@ -59,7 +60,7 @@
         make.left.equalTo(self.contentView).offset(10);
         make.right.equalTo(self.contentView).offset(-10);
         make.top.equalTo(self.boardLabel.mas_bottom).offset(5);
-        make.width.mas_equalTo(85);
+        make.width.mas_equalTo(itemWidth - 21);
     }];
     
     [self.folderImageView mas_makeConstraints:^(MASConstraintMaker *make) {

@@ -23,6 +23,8 @@
 #import <BLTNBoard/BLTNBoard.h>
 #import <BLTNBoard-Swift.h>
 #import <UIImageView+WebCache.h>
+#import "PostMailViewController.h"
+#import "PostTopicViewController.h"
 
 @interface TopicViewController () <BYRBBCodeToYYConverterActionDelegate>
 
@@ -108,12 +110,18 @@
 #pragma mark - actions
 
 - (IBAction)compose:(id)sender {
-    ComposeViewController * composeVC = [[ComposeViewController alloc] init];
-//    postTopicViewController.postType = 0;
-//    postTopicViewController.boardName = self.board.name;
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:composeVC];
-    nav.modalPresentationStyle = UIModalPresentationFormSheet;
+    PostTopicViewController * postTopicViewController = [[PostTopicViewController alloc] init];
+    postTopicViewController.postType = 1;
+    postTopicViewController.rootTopic = self.topic;
+    postTopicViewController.boardName = self.topic.board_name;
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:postTopicViewController];
+    nav.navigationBar.prefersLargeTitles = NO;
     [self presentViewController:nav animated:YES completion:nil];
+    
+//    ComposeViewController * composeVC = [[ComposeViewController alloc] init];
+//    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:composeVC];
+//    nav.modalPresentationStyle = UIModalPresentationFormSheet;
+//    [self presentViewController:nav animated:YES completion:nil];
 }
 
 #pragma mark -
@@ -139,8 +147,8 @@
         [cell updateWithTopic:topic converter:self.converter];
         
         __weak typeof (self) wself = self;
-        cell.userTapped = ^(User * _Nonnull user) {
-            [wself showUser:user];
+        cell.cellUserTapped = ^(Topic * _Nonnull topic) {
+            [wself showUser:topic];
         };
         return cell;
     } else {
@@ -149,8 +157,8 @@
         [cell updateWithTopic:topic position:topic.position converter:self.converter];
         
         __weak typeof (self) wself = self;
-        cell.userTapped = ^(User * _Nonnull user) {
-            [wself showUser:user];
+        cell.cellUserTapped = ^(Topic * _Nonnull topic) {
+            [wself showUser:topic];
         };
         return cell;
     }
@@ -159,7 +167,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSArray *topics = [self.pageTopics objectForKey:@(indexPath.section)];
     Topic *topic = [topics objectAtIndex:indexPath.row];
-    [self showUser:topic.user];
+    [self showUser:topic];
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -216,7 +224,9 @@
 
 #pragma mark - private
 
-- (void)showUser:(User *)user {
+- (void)showUser:(Topic *)topic {
+    User *user = topic.user;
+    
     NSString *genderString = @"";
     if ([[user.gender lowercaseString] isEqualToString:@"m"]) {
         genderString = @"♂";
@@ -235,6 +245,27 @@
     
     userItem.loginStatusLabel.text = [NSString stringWithFormat:@"%@\n%@", user.is_online ? @"在线" : [NSString stringWithFormat:@"上次登录:%@", lastloginstring], [NSString stringWithFormat:@"访问IP: %@", user.last_login_ip]];
     
+    userItem.actionHandler = ^(BLTNActionItem * _Nonnull item) {
+        [self dismissViewControllerAnimated:NO completion:^{
+            PostTopicViewController * postTopicViewController = [[PostTopicViewController alloc] init];
+            postTopicViewController.postType = 1;
+            postTopicViewController.boardName = self.topic.board_name;
+            postTopicViewController.rootTopic = topic;
+            UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:postTopicViewController];
+            nav.navigationBar.prefersLargeTitles = NO;
+            [self presentViewController:nav animated:YES completion:nil];
+        }];
+    };
+    
+    userItem.alternativeHandler = ^(BLTNActionItem * _Nonnull item) {
+        [self dismissViewControllerAnimated:NO completion:^{
+            PostMailViewController * postMailVC = [[PostMailViewController alloc] init];
+            postMailVC.postType = 2;
+            postMailVC.sentToUser = user.id;
+            UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:postMailVC];
+            [self presentViewController:nav animated:YES completion:nil];
+        }];
+    };
     
     self.BLTNManager = [[BLTNItemManager alloc] initWithRootItem:userItem];
     self.BLTNManager.backgroundColor = [UIColor systemBackgroundColor];
