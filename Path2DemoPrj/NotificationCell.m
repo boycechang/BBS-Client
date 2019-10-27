@@ -29,6 +29,7 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        self.backgroundColor = [UIColor clearColor];
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         [self setupViews];
     }
@@ -176,7 +177,7 @@
 - (UIView *)contentBackground {
     if (!_contentBackground) {
         _contentBackground = [UIView new];
-        _contentBackground.backgroundColor = [UIColor secondarySystemBackgroundColor];
+        _contentBackground.backgroundColor = [UIColor tertiarySystemBackgroundColor];
     }
     return _contentBackground;
 }

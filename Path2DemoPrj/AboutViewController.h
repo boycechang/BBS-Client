@@ -12,6 +12,8 @@
 #import "AppDelegate.h"
 #import "articleViewController.h"
 
+@class MBProgressHUD;
+
 @protocol AboutViewControllerDelegate <NSObject>
 -(void)changeLeftBack;
 -(void)logout;

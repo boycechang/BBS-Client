@@ -23,6 +23,7 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        self.backgroundColor = [UIColor clearColor];
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         [self setupViews];
     }
@@ -104,7 +105,7 @@
 - (UIView *)contentBackground {
     if (!_contentBackground) {
         _contentBackground = [UIView new];
-        _contentBackground.backgroundColor = [UIColor secondarySystemBackgroundColor];
+        _contentBackground.backgroundColor = [UIColor tertiarySystemBackgroundColor];
         _contentBackground.layer.cornerRadius = 10.f;
         _contentBackground.layer.masksToBounds = YES;
         _contentBackground.layer.maskedCorners = kCALayerMinXMinYCorner | kCALayerMaxXMinYCorner;
@@ -117,7 +118,7 @@
         _seeAllButton = [UIButton new];
         [_seeAllButton setTitle:@"查看全部" forState:UIControlStateNormal];
         [_seeAllButton setTitleColor:[UIColor systemBlueColor] forState:UIControlStateNormal];
-        _seeAllButton.titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
+        _seeAllButton.titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
         _seeAllButton.titleLabel.adjustsFontForContentSizeCategory = YES;
         [_seeAllButton addTarget:self action:@selector(seeAllClicked:) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -136,6 +137,7 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        self.backgroundColor = [UIColor clearColor];
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         [self setupViews];
     }
@@ -155,7 +157,7 @@
 - (UIView *)contentBackground {
     if (!_contentBackground) {
         _contentBackground = [UIView new];
-        _contentBackground.backgroundColor = [UIColor secondarySystemBackgroundColor];
+        _contentBackground.backgroundColor = [UIColor tertiarySystemBackgroundColor];
         _contentBackground.layer.cornerRadius = 10.f;
         _contentBackground.layer.masksToBounds = YES;
         _contentBackground.layer.maskedCorners = kCALayerMinXMaxYCorner | kCALayerMaxXMaxYCorner;

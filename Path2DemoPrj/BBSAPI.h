@@ -34,9 +34,6 @@
 + (NSString *)dateToString:(NSDate *)date;
 
 
-
-
-
 +(NSArray *)getVoteList:(User *)user Type:(NSString *)type;   ///type: me|join|list|new|hot|all
 +(Vote *)getSingleVote:(User *)user ID:(int)ID;
 +(Vote *)doVote:(User *)user ID:(int)ID VoteArray:(NSArray *)voteArray;

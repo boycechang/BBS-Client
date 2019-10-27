@@ -119,18 +119,6 @@
         
         return topicViewController;
     } actionProvider:^UIMenu * _Nullable(NSArray<UIMenuElement *> * _Nonnull suggestedActions) {
-//        if (self.type == NotificationTypeMail) {
-//            Mail *mail = [self.notifications objectAtIndex:indexPath.row];
-//            UIAction *action1 = [UIAction actionWithTitle:@"回复" image:[UIImage systemImageNamed:@"arrowshape.turn.up.left"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
-//                PostMailViewController * postMailVC = [[PostMailViewController alloc] init];
-//                postMailVC.postType = 1;
-//                postMailVC.rootMail = mail;
-//                UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:postMailVC];
-//                [self presentViewController:nav animated:YES completion:nil];
-//            }];
-//            UIMenu *menu = [UIMenu menuWithTitle:nil children:@[action1]];
-//            return menu;
-//        }
         return nil;
     }];
 
@@ -140,35 +128,19 @@
 #pragma mark - BYRTableViewControllerProtocol
 
 - (void)refreshTriggled:(void (^)(void))completion {
-    __block int finishedCount = 0;
-    
     [[BYRNetworkManager sharedInstance] GET:@"/widget/topten.json" parameters:nil responseClass:TopicResponse.class success:^(NSURLSessionDataTask * _Nonnull task, TopicResponse * _Nullable responseObject) {
         [self.topTenContent setValue:responseObject.topics forKey:[self keyForSection:0]];
-        
-        finishedCount++;
-        if (finishedCount == 11) {
-            completion();
-        }
+        completion();
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        finishedCount++;
-        if (finishedCount == 11) {
-            completion();
-        }
+        completion();
     }];
     
     for (int section = 1; section <= 10; section++) {
         [[BYRNetworkManager sharedInstance] GET:[NSString stringWithFormat:@"/widget/section-%i.json", section - 1] parameters:nil responseClass:TopicResponse.class success:^(NSURLSessionDataTask * _Nonnull task, TopicResponse * _Nullable responseObject) {
             [self.topTenContent setValue:responseObject.topics forKey:[self keyForSection:section]];
-            
-            finishedCount++;
-            if (finishedCount == 11) {
-                completion();
-            }
+            completion();
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            finishedCount++;
-            if (finishedCount == 11) {
-                completion();
-            }
+            completion();
         }];
     }
 }

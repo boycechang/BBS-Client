@@ -12,6 +12,7 @@
 #include <sys/sysctl.h>
 #import <SDImageCache.h>
 #import "BYRSession.h"
+#import <MBProgressHUD/MBProgressHUD.h>
 
 @implementation AboutViewController
 @synthesize mDelegate;
@@ -33,13 +34,9 @@
     
     CGRect rect = [[UIScreen mainScreen] bounds];
     [self.view setFrame:CGRectMake(0, 0, rect.size.width, rect.size.height)];
-    
+    settingTableView.backgroundColor = [UIColor systemBackgroundColor];
     [settingTableView setFrame:CGRectMake(0, 0, rect.size.width, rect.size.height)];
     self.title = @"设置";
-    
-//    self.navigationController.navigationBar.barTintColor = [UIColor lightGrayColor];
-//    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-//    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
 }
 
 #pragma mark - Table view data source
@@ -67,7 +64,6 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 44;
 }
-
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell;

@@ -21,15 +21,10 @@
     [super viewDidLoad];
     CGRect rect = [[UIScreen mainScreen] bounds];
     [self.view setFrame:CGRectMake(0, 0, self.view.frame.size.width, rect.size.height)];
-    [self.view setBackgroundColor:[UIColor whiteColor]];
-    
-    self.navigationController.navigationBar.barTintColor = [UIColor lightGrayColor];
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    [self.view setBackgroundColor:[UIColor systemBackgroundColor]];
     
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(cancel)];
-    
-    UIBarButtonItem *sendButton =[[UIBarButtonItem alloc] initWithTitle:@"发送" style:UIBarButtonItemStylePlain target:self action:@selector(send)];
+    UIBarButtonItem *sendButton = [[UIBarButtonItem alloc] initWithTitle:@"发送" style:UIBarButtonItemStylePlain target:self action:@selector(send)];
 
     self.navigationItem.leftBarButtonItem = cancelButton;
     self.navigationItem.rightBarButtonItem = sendButton;
@@ -155,6 +150,10 @@
     } else if (postType == 2) {
         
     }
+}
+
+- (BOOL)isModalInPresentation {
+    return YES;
 }
 
 - (void)didAddUser:(NSString *)userID {

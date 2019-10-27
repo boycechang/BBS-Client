@@ -64,6 +64,13 @@
     [self.tableView registerClass:NotificationFooterCell.class
            forCellReuseIdentifier:NotificationFooterCell.class.description];
     
+    self.tableView.layer.masksToBounds = NO;
+    self.tableView.backgroundColor = [UIColor clearColor];
+    self.tableView.layer.shadowOffset = CGSizeMake(0.f, 0.f);
+    self.tableView.layer.shadowColor = [UIColor blackColor].CGColor;
+    self.tableView.layer.shadowOpacity = 0.2f;
+    self.tableView.layer.shadowRadius = 18.f;
+    
     [self refresh];
 }
 
@@ -163,6 +170,10 @@
     NSInteger section = indexPath.section;
     NSInteger row = indexPath.row - 1;
     
+    if (indexPath.row == [tableView numberOfRowsInSection:section] - 1) {
+        return;
+    }
+    
     if (section == 0 || section == 1) {
         Topic *topic = section == 0 ? [self.replys objectAtIndex:row] : [self.ats objectAtIndex:row];
         
@@ -192,6 +203,9 @@
 - (nullable UIContextMenuConfiguration *)tableView:(UITableView *)tableView contextMenuConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath point:(CGPoint)point {
     NSInteger section = indexPath.section;
     NSInteger row = indexPath.row - 1;
+    if (indexPath.row == [tableView numberOfRowsInSection:section] - 1) {
+        return nil;
+    }
     
     UIContextMenuConfiguration *config = [UIContextMenuConfiguration configurationWithIdentifier:nil previewProvider:^UIViewController * _Nullable{
         if (section == 0 || section == 1) {

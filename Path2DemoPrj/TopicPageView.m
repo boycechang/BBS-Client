@@ -237,7 +237,7 @@
         _contentView = [UIView new];
         _contentView.layer.cornerRadius = 10.f;
         _contentView.layer.masksToBounds = YES;
-        _contentView.backgroundColor = [[UIColor tertiarySystemBackgroundColor] colorWithAlphaComponent:0.7];
+        _contentView.backgroundColor = [[UIColor tertiarySystemBackgroundColor] colorWithAlphaComponent:0.6];
         
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(chooseClicked:)];
         [_contentView addGestureRecognizer:tap];
@@ -259,7 +259,7 @@
         _contentView2 = [UIView new];
         _contentView2.layer.cornerRadius = 10.f;
         _contentView2.layer.masksToBounds = YES;
-        _contentView2.backgroundColor = [[UIColor tertiarySystemBackgroundColor] colorWithAlphaComponent:0.7];
+        _contentView2.backgroundColor = [[UIColor tertiarySystemBackgroundColor] colorWithAlphaComponent:0.6];
         
         UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
         UIVisualEffectView *blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];

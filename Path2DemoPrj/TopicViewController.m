@@ -268,8 +268,7 @@
     };
     
     self.BLTNManager = [[BLTNItemManager alloc] initWithRootItem:userItem];
-    self.BLTNManager.backgroundColor = [UIColor systemBackgroundColor];
-    self.BLTNManager.backgroundViewStyle = [BLTNBackgroundViewStyle blurredWithStyle:UIBlurEffectStyleDark isDark:YES];
+    self.BLTNManager.backgroundColor = [UIColor tertiarySystemBackgroundColor];
     [self.BLTNManager showBulletinAboveViewController:self animated:YES completion:^{
         
     }];

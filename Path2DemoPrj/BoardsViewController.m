@@ -193,7 +193,6 @@
 
 - (void)refreshTriggled:(void (^)(void))completion {
     if (self.rootSection == nil) {
-        __block int finishedCount = 0;
         [[BYRNetworkManager sharedInstance] GET:@"/section.json" parameters:nil responseClass:BoardResponse.class success:^(NSURLSessionDataTask * _Nonnull task, BoardResponse * _Nullable responseObject) {
             
             NSMutableArray *allBoards = [NSMutableArray new];
@@ -211,34 +210,16 @@
             }
             
             self.boards = allBoards;
-            
-            finishedCount++;
-            if (finishedCount == 2) {
-                completion();
-            }
-            
             completion();
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            finishedCount++;
-            if (finishedCount == 2) {
-                completion();
-            }
+            completion();
         }];
         
         [[BYRNetworkManager sharedInstance] GET:@"/favorite/0.json" parameters:nil responseClass:BoardResponse.class success:^(NSURLSessionDataTask * _Nonnull task, BoardResponse * _Nullable responseObject) {
             self.favBoards = responseObject.boards;
-            
-            finishedCount++;
-            if (finishedCount == 2) {
-                completion();
-            }
-            
             completion();
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            finishedCount++;
-            if (finishedCount == 2) {
-                completion();
-            }
+            completion();
         }];
         
     } else {
