@@ -145,6 +145,41 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 
+@interface VoteOption : NSObject
+
+@property (nonatomic, strong) NSString *label;
+@property (nonatomic, assign) int viid;
+@property (nonatomic, assign) int num;
+
+@end
+
+
+@interface Vote : NSObject
+
+@property (nonatomic, assign) int vid;
+@property (nonatomic, strong) NSString *title;
+@property (nonatomic, strong) User *user;
+
+@property (nonatomic, assign) NSTimeInterval start;
+@property (nonatomic, assign) NSTimeInterval end;
+
+@property (nonatomic, assign) int user_count;
+@property (nonatomic, assign) int vote_count;
+
+@property (nonatomic, assign) int type; // 投票类型，0为单选，1为多选
+@property (nonatomic, assign) int limit; // 每个用户能投票数的最大值，只有当type为1时，此属性有效
+
+@property (nonatomic, assign) int aid; // 投票所关联的投票版面的文章id
+
+
+@property (nonatomic, assign) BOOL is_end;
+@property (nonatomic, assign) BOOL is_deleted;
+@property (nonatomic, assign) BOOL is_result_voted;
+
+@property (nonatomic, strong) NSArray <NSString *> *voted;
+@property (nonatomic, strong) NSArray <VoteOption *> *options;
+
+@end
 
 
 

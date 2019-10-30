@@ -19,5 +19,6 @@ pod 'KSPhotoBrowser'
 pod 'YYImage'
 pod 'Down'
 pod 'BulletinBoard'
+pod 'YLProgressBar'
 
 end

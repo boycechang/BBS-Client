@@ -22,9 +22,6 @@
 +(NSArray *)parseAttachments:(NSDictionary *)attDic;
 +(NSArray *)parseSingleTopic:(NSDictionary *)topicsDictionary;  ///
 +(NSArray *)parseReplyTopic:(NSDictionary *)topicsDictionary;     ///
-+(User *)parseUserInfo:(NSDictionary *)topicsDictionary;        ///
-
-+(NSArray *)parseVoteList:(NSDictionary *)votesDictionary;        ///
-+(Vote *)parseSingleVote:(NSDictionary *)voteDictionary;        ///
++(User *)parseUserInfo:(NSDictionary *)topicsDictionary;       
 
 @end

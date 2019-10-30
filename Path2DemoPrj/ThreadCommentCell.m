@@ -20,6 +20,7 @@
 
 @property (nonatomic, strong) YYLabel *contentTextView;
 
+@property (nonatomic, strong) UILabel *authorTagLabel;
 @property (nonatomic, strong) UIImageView *headImageView;
 @property (nonatomic, strong) UILabel *usernameLabel;
 
@@ -45,6 +46,7 @@
     [self.contentView addSubview:self.contentTextView];
     [self.contentView addSubview:self.headImageView];
     [self.contentView addSubview:self.usernameLabel];
+    [self.contentView addSubview:self.authorTagLabel];
     
     [self.contentView addSubview:self.boardLabel];
     
@@ -52,6 +54,12 @@
         make.top.left.equalTo(self.contentView).offset(15);
         make.width.height.mas_equalTo(30);
     }];
+    [self.authorTagLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.centerX.equalTo(self.headImageView);
+        make.width.mas_equalTo(25);
+        make.height.mas_equalTo(15);
+    }];
+    
     [self.usernameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.headImageView).offset(0);
         make.left.equalTo(self.headImageView.mas_right).offset(8);
@@ -90,6 +98,10 @@
     self.usernameLabel.text = topic.user.id.length ? topic.user.id : @"匿名";
     
     self.boardLabel.text = [NSString stringWithFormat:@"%@ · %@", [NSString stringWithFormat:@"%li楼", position] ,[BYRUtil fullDateDescriptionFromTimestamp:topic.post_time]];
+}
+
+- (void)showAuthorTag:(BOOL)show {
+    self.authorTagLabel.hidden = !show;
 }
 
 - (void)showHighlightAnimation {
@@ -136,6 +148,22 @@
         _usernameLabel.textColor = [UIColor labelColor];
     }
     return _usernameLabel;
+}
+
+- (UILabel *)authorTagLabel {
+    if (!_authorTagLabel) {
+        _authorTagLabel = [UILabel new];
+        _authorTagLabel.text = @"楼主";
+        _authorTagLabel.adjustsFontForContentSizeCategory = YES;
+        _authorTagLabel.font = [UIFont systemFontOfSize:8];
+        _authorTagLabel.textColor = [UIColor whiteColor];
+        _authorTagLabel.backgroundColor = [UIColor systemBlueColor];
+        _authorTagLabel.textAlignment = NSTextAlignmentCenter;
+        
+        _authorTagLabel.layer.cornerRadius = 4;
+        _authorTagLabel.layer.masksToBounds = YES;
+    }
+    return _authorTagLabel;
 }
 
 - (UILabel *)boardLabel {

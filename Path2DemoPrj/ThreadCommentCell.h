@@ -22,6 +22,8 @@ NS_ASSUME_NONNULL_BEGIN
                position:(NSInteger)position
               converter:(BYRBBCodeToYYConverter *)converter;
 
+- (void)showAuthorTag:(BOOL)show;
+
 - (void)showHighlightAnimation;
 
 @end

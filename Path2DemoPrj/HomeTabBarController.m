@@ -9,7 +9,6 @@
 #import "HomeTabBarController.h"
 #import "TopTenViewController.h"
 #import "BoardsViewController.h"
-#import "VoteListViewController.h"
 #import "NotificationViewController.h"
 #import "BYRSession.h"
 #import "HomeHeadView.h"

@@ -68,8 +68,8 @@
     self.tableView.backgroundColor = [UIColor clearColor];
     self.tableView.layer.shadowOffset = CGSizeMake(0.f, 0.f);
     self.tableView.layer.shadowColor = [UIColor blackColor].CGColor;
-    self.tableView.layer.shadowOpacity = 0.2f;
-    self.tableView.layer.shadowRadius = 18.f;
+    self.tableView.layer.shadowOpacity = 0.12f;
+    self.tableView.layer.shadowRadius = 15.f;
     
     [self refresh];
 }
@@ -169,8 +169,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSInteger section = indexPath.section;
     NSInteger row = indexPath.row - 1;
-    
-    if (indexPath.row == [tableView numberOfRowsInSection:section] - 1) {
+    if (row < 0 ||
+        row >= [tableView numberOfRowsInSection:section] - 2) {
         return;
     }
     
@@ -203,7 +203,8 @@
 - (nullable UIContextMenuConfiguration *)tableView:(UITableView *)tableView contextMenuConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath point:(CGPoint)point {
     NSInteger section = indexPath.section;
     NSInteger row = indexPath.row - 1;
-    if (indexPath.row == [tableView numberOfRowsInSection:section] - 1) {
+    if (row < 0 ||
+        row >= [tableView numberOfRowsInSection:section] - 2) {
         return nil;
     }
     

@@ -8,5 +8,4 @@
 
 #import "Models.h"
 #import "Notification.h"
-#import "Vote.h"
 #import "Memo.h"

@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class Board, Topic, Mail, Pagination;
+@class Board, Topic, Mail, Vote, Pagination;
 
 @interface BoardResponse : NSObject
 
@@ -36,6 +36,21 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) Pagination *pagination;
 @property (nonatomic, strong) NSArray <Mail *> *mails;
+
+@end
+
+
+@interface VoteResponse : NSObject
+
+@property (nonatomic, strong) Pagination *pagination;
+@property (nonatomic, strong) NSArray <Vote *> *votes;
+
+@end
+
+
+@interface SingleVoteResponse : NSObject
+
+@property (nonatomic, strong) Vote *vote;
 
 @end
 

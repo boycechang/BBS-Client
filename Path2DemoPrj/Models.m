@@ -54,9 +54,8 @@ MJCodingImplementation
 @implementation Topic
 
 + (NSDictionary *)mj_objectClassInArray {
-    return @{@"articles" : [Topic class],
-             @"attachments" : [Attachment class]
-    };
+    return @{@"articles" : Topic.class,
+             @"attachments" : Attachment.class};
 }
 
 + (NSDictionary *)mj_replacedKeyFromPropertyName {
@@ -87,12 +86,30 @@ MJCodingImplementation
 @implementation Mail
 
 + (NSDictionary *)mj_objectClassInArray {
-    return @{@"attachments" : [Attachment class]};
+    return @{@"attachments" : Attachment.class};
 }
 
 + (NSDictionary *)mj_replacedKeyFromPropertyName {
     return @{@"articles" : @"article",
              @"attachments" : @"attachment"};
+}
+
+@end
+
+
+
+@implementation VoteOption
+@end
+
+
+@implementation Vote
+
++ (NSDictionary *)mj_objectClassInArray {
+    return @{@"options" : VoteOption.class};
+}
+
++ (NSDictionary *)mj_replacedKeyFromPropertyName {
+    return @{@"voted" : @"voted.viid"};
 }
 
 @end

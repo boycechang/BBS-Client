@@ -156,6 +156,13 @@
         Topic *topic = [topics objectAtIndex:indexPath.row];
         [cell updateWithTopic:topic position:topic.position converter:self.converter];
         
+        if ([self.topic.id isEqualToString:self.topic.group_id] &&
+            [topic.user.id isEqualToString:self.topic.user.id]) {
+            [cell showAuthorTag:YES];
+        } else {
+            [cell showAuthorTag:NO];
+        }
+        
         __weak typeof (self) wself = self;
         cell.cellUserTapped = ^(Topic * _Nonnull topic) {
             [wself showUser:topic];

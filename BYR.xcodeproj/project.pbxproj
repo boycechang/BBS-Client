@@ -37,16 +37,6 @@
 		005B5C38181192A400041366 /* UINavigationController+SGProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = 005B5C37181192A400041366 /* UINavigationController+SGProgress.m */; };
 		006A75B4193D06EE00CE3809 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 006A75B3193D06EE00CE3809 /* CoreLocation.framework */; };
 		007AB947193D0B2400CC2F3F /* Memo.m in Sources */ = {isa = PBXBuildFile; fileRef = 007AB946193D0B2400CC2F3F /* Memo.m */; };
-		0085E5011821ECB50059D454 /* Vote.m in Sources */ = {isa = PBXBuildFile; fileRef = 0085E5001821ECB50059D454 /* Vote.m */; };
-		0085E5051821F3BE0059D454 /* VoteListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0085E5041821F3BE0059D454 /* VoteListViewController.m */; };
-		0085E50A1821F4260059D454 /* VoteCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0085E5071821F4260059D454 /* VoteCellView.xib */; };
-		0085E50B1821F4260059D454 /* VoteCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0085E5081821F4260059D454 /* VoteCellView.m */; };
-		0085E510182223120059D454 /* SingleVoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0085E50E182223120059D454 /* SingleVoteViewController.m */; };
-		0085E511182223120059D454 /* SingleVoteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0085E50F182223120059D454 /* SingleVoteViewController.xib */; };
-		0085E5161822294A0059D454 /* OptionCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0085E5141822294A0059D454 /* OptionCellView.xib */; };
-		0085E5171822294A0059D454 /* OptionCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0085E5151822294A0059D454 /* OptionCellView.m */; };
-		0085E51C182237D50059D454 /* LDProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0085E519182237D40059D454 /* LDProgressView.m */; };
-		0085E51D182237D50059D454 /* UIColor+RGBValues.m in Sources */ = {isa = PBXBuildFile; fileRef = 0085E51B182237D50059D454 /* UIColor+RGBValues.m */; };
 		00D71E5717BE333E008460E1 /* AttachmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D71E5617BE333E008460E1 /* AttachmentView.m */; };
 		00ED5F8217C649DD000843DD /* MainWindowiPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 00ED5F8117C649DD000843DD /* MainWindowiPad.xib */; };
 		00F213AD17C1D7D70001EFD0 /* UIViewController+MJPopupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F213AB17C1D7D70001EFD0 /* UIViewController+MJPopupViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -206,11 +196,13 @@
 		E152EB3023490B7C0032B979 /* BYRBBCodeToYYConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = E152EB2F23490B7C0032B979 /* BYRBBCodeToYYConverter.m */; };
 		E162F1E52353349A007EED48 /* ComposeContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = E162F1E42353349A007EED48 /* ComposeContentView.m */; };
 		E17E294E2344C11C004A0237 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E17E294D2344C11C004A0237 /* LaunchScreen.xib */; };
+		E188B2B9236731BE006D76D7 /* VoteCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E188B2B8236731BD006D76D7 /* VoteCell.m */; };
 		E189853C235B1BF600FB44D8 /* BLTNUserItem.m in Sources */ = {isa = PBXBuildFile; fileRef = E189853B235B1BF600FB44D8 /* BLTNUserItem.m */; };
 		E18B03FB2346EB4D00092480 /* BoardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E18B03FA2346EB4D00092480 /* BoardCell.m */; };
 		E18B03FE2347140900092480 /* BoardHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = E18B03FD2347140900092480 /* BoardHeaderView.m */; };
 		E18B04012347233A00092480 /* TopicsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E18B04002347233A00092480 /* TopicsViewController.m */; };
 		E198EAE92358B7B60050B482 /* TopicPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = E198EAE82358B7B60050B482 /* TopicPageView.m */; };
+		E1B14D872367432700CF0AF9 /* TopTenCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E1B14D862367432600CF0AF9 /* TopTenCell.m */; };
 		E1B2E1F82352F4F500DB0969 /* ComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E1B2E1F72352F4F500DB0969 /* ComposeViewController.m */; };
 		E1B3D7362348358800977139 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E1B3D7352348358800977139 /* LoginViewController.m */; };
 		E1B3D73923484E3E00977139 /* LoginInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = E1B3D73823484E3E00977139 /* LoginInfoView.m */; };
@@ -225,6 +217,8 @@
 		E1C5D05E2347889D00453D15 /* NotificationHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E1C5D05D2347889D00453D15 /* NotificationHeaderCell.m */; };
 		E1C5D0612347CC4600453D15 /* BYRSession.m in Sources */ = {isa = PBXBuildFile; fileRef = E1C5D0602347CC4600453D15 /* BYRSession.m */; };
 		E1C5D0652347DEDE00453D15 /* HomeHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = E1C5D0642347DEDE00453D15 /* HomeHeadView.m */; };
+		E1DC2BB0236898BD006B5F7E /* BLTNVoteItem.m in Sources */ = {isa = PBXBuildFile; fileRef = E1DC2BAF236898BD006B5F7E /* BLTNVoteItem.m */; };
+		E1DE30DC2369C58D001CBAF8 /* VoteOptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E1DE30DB2369C58D001CBAF8 /* VoteOptionCell.m */; };
 		E90BDC70157DC8A000AB1567 /* PostTopicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E90BDC6E157DC8A000AB1567 /* PostTopicViewController.m */; settings = {COMPILER_FLAGS = ""; }; };
 		E9142DB4158124A600E2F8CE /* PostMailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E9142DB2158124A600E2F8CE /* PostMailViewController.m */; settings = {COMPILER_FLAGS = ""; }; };
 		E91D85891578E77400FBDE75 /* BoardsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E91D85871578E77400FBDE75 /* BoardsViewController.m */; settings = {COMPILER_FLAGS = ""; }; };
@@ -295,23 +289,6 @@
 		006A75B3193D06EE00CE3809 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		007AB945193D0B2400CC2F3F /* Memo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Memo.h; sourceTree = "<group>"; };
 		007AB946193D0B2400CC2F3F /* Memo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Memo.m; sourceTree = "<group>"; };
-		0085E4FF1821ECB50059D454 /* Vote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vote.h; sourceTree = "<group>"; };
-		0085E5001821ECB50059D454 /* Vote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Vote.m; sourceTree = "<group>"; };
-		0085E5031821F3BE0059D454 /* VoteListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoteListViewController.h; sourceTree = "<group>"; };
-		0085E5041821F3BE0059D454 /* VoteListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoteListViewController.m; sourceTree = "<group>"; };
-		0085E5071821F4260059D454 /* VoteCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VoteCellView.xib; sourceTree = "<group>"; };
-		0085E5081821F4260059D454 /* VoteCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoteCellView.m; sourceTree = "<group>"; };
-		0085E5091821F4260059D454 /* VoteCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoteCellView.h; sourceTree = "<group>"; };
-		0085E50D182223110059D454 /* SingleVoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SingleVoteViewController.h; sourceTree = "<group>"; };
-		0085E50E182223120059D454 /* SingleVoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SingleVoteViewController.m; sourceTree = "<group>"; };
-		0085E50F182223120059D454 /* SingleVoteViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SingleVoteViewController.xib; sourceTree = "<group>"; };
-		0085E5131822294A0059D454 /* OptionCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionCellView.h; sourceTree = "<group>"; };
-		0085E5141822294A0059D454 /* OptionCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OptionCellView.xib; sourceTree = "<group>"; };
-		0085E5151822294A0059D454 /* OptionCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OptionCellView.m; sourceTree = "<group>"; };
-		0085E518182237D40059D454 /* LDProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LDProgressView.h; sourceTree = "<group>"; };
-		0085E519182237D40059D454 /* LDProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LDProgressView.m; sourceTree = "<group>"; };
-		0085E51A182237D50059D454 /* UIColor+RGBValues.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+RGBValues.h"; sourceTree = "<group>"; };
-		0085E51B182237D50059D454 /* UIColor+RGBValues.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+RGBValues.m"; sourceTree = "<group>"; };
 		00D71E5517BE333E008460E1 /* AttachmentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttachmentView.h; sourceTree = "<group>"; };
 		00D71E5617BE333E008460E1 /* AttachmentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttachmentView.m; sourceTree = "<group>"; };
 		00ED5F8117C649DD000843DD /* MainWindowiPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWindowiPad.xib; sourceTree = "<group>"; };
@@ -498,6 +475,8 @@
 		E162F1E32353349A007EED48 /* ComposeContentView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ComposeContentView.h; sourceTree = "<group>"; };
 		E162F1E42353349A007EED48 /* ComposeContentView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ComposeContentView.m; sourceTree = "<group>"; };
 		E17E294D2344C11C004A0237 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
+		E188B2B7236731BD006D76D7 /* VoteCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VoteCell.h; sourceTree = "<group>"; };
+		E188B2B8236731BD006D76D7 /* VoteCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VoteCell.m; sourceTree = "<group>"; };
 		E189853A235B1BF600FB44D8 /* BLTNUserItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLTNUserItem.h; sourceTree = "<group>"; };
 		E189853B235B1BF600FB44D8 /* BLTNUserItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLTNUserItem.m; sourceTree = "<group>"; };
 		E18B03F92346EB4D00092480 /* BoardCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BoardCell.h; sourceTree = "<group>"; };
@@ -509,6 +488,8 @@
 		E196FE68234517EA00F6BB67 /* Byr-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Byr-Prefix.pch"; sourceTree = "<group>"; };
 		E198EAE72358B7B60050B482 /* TopicPageView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TopicPageView.h; sourceTree = "<group>"; };
 		E198EAE82358B7B60050B482 /* TopicPageView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TopicPageView.m; sourceTree = "<group>"; };
+		E1B14D852367432600CF0AF9 /* TopTenCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TopTenCell.h; sourceTree = "<group>"; };
+		E1B14D862367432600CF0AF9 /* TopTenCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TopTenCell.m; sourceTree = "<group>"; };
 		E1B2E1F62352F4F500DB0969 /* ComposeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ComposeViewController.h; sourceTree = "<group>"; };
 		E1B2E1F72352F4F500DB0969 /* ComposeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ComposeViewController.m; sourceTree = "<group>"; };
 		E1B3D7342348358800977139 /* LoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
@@ -536,6 +517,10 @@
 		E1C5D0602347CC4600453D15 /* BYRSession.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BYRSession.m; sourceTree = "<group>"; };
 		E1C5D0632347DEDE00453D15 /* HomeHeadView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeHeadView.h; sourceTree = "<group>"; };
 		E1C5D0642347DEDE00453D15 /* HomeHeadView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeHeadView.m; sourceTree = "<group>"; };
+		E1DC2BAE236898BD006B5F7E /* BLTNVoteItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLTNVoteItem.h; sourceTree = "<group>"; };
+		E1DC2BAF236898BD006B5F7E /* BLTNVoteItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLTNVoteItem.m; sourceTree = "<group>"; };
+		E1DE30DA2369C58D001CBAF8 /* VoteOptionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VoteOptionCell.h; sourceTree = "<group>"; };
+		E1DE30DB2369C58D001CBAF8 /* VoteOptionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VoteOptionCell.m; sourceTree = "<group>"; };
 		E90BDC6D157DC8A000AB1567 /* PostTopicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostTopicViewController.h; sourceTree = "<group>"; };
 		E90BDC6E157DC8A000AB1567 /* PostTopicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostTopicViewController.m; sourceTree = "<group>"; };
 		E9142DB1158124A600E2F8CE /* PostMailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostMailViewController.h; sourceTree = "<group>"; };
@@ -695,60 +680,6 @@
 				005B5C37181192A400041366 /* UINavigationController+SGProgress.m */,
 			);
 			name = "UINavigationController+SGProgress";
-			sourceTree = "<group>";
-		};
-		0085E5021821F3AA0059D454 /* VoteListViewController */ = {
-			isa = PBXGroup;
-			children = (
-				0085E5031821F3BE0059D454 /* VoteListViewController.h */,
-				0085E5041821F3BE0059D454 /* VoteListViewController.m */,
-				0085E5061821F4150059D454 /* VoteCellView */,
-				0085E50C182210530059D454 /* SingleVoteViewController */,
-			);
-			name = VoteListViewController;
-			sourceTree = "<group>";
-		};
-		0085E5061821F4150059D454 /* VoteCellView */ = {
-			isa = PBXGroup;
-			children = (
-				0085E5091821F4260059D454 /* VoteCellView.h */,
-				0085E5081821F4260059D454 /* VoteCellView.m */,
-				0085E5071821F4260059D454 /* VoteCellView.xib */,
-			);
-			name = VoteCellView;
-			sourceTree = "<group>";
-		};
-		0085E50C182210530059D454 /* SingleVoteViewController */ = {
-			isa = PBXGroup;
-			children = (
-				0085E512182229400059D454 /* OptionCellView */,
-				0085E50D182223110059D454 /* SingleVoteViewController.h */,
-				0085E50E182223120059D454 /* SingleVoteViewController.m */,
-				0085E50F182223120059D454 /* SingleVoteViewController.xib */,
-			);
-			name = SingleVoteViewController;
-			sourceTree = "<group>";
-		};
-		0085E512182229400059D454 /* OptionCellView */ = {
-			isa = PBXGroup;
-			children = (
-				0085E51E18223B3A0059D454 /* LDProgressView */,
-				0085E5131822294A0059D454 /* OptionCellView.h */,
-				0085E5151822294A0059D454 /* OptionCellView.m */,
-				0085E5141822294A0059D454 /* OptionCellView.xib */,
-			);
-			name = OptionCellView;
-			sourceTree = "<group>";
-		};
-		0085E51E18223B3A0059D454 /* LDProgressView */ = {
-			isa = PBXGroup;
-			children = (
-				0085E518182237D40059D454 /* LDProgressView.h */,
-				0085E519182237D40059D454 /* LDProgressView.m */,
-				0085E51A182237D50059D454 /* UIColor+RGBValues.h */,
-				0085E51B182237D50059D454 /* UIColor+RGBValues.m */,
-			);
-			name = LDProgressView;
 			sourceTree = "<group>";
 		};
 		00A0FA3A1840FBB200CDE9AB /* OpenSourceUI */ = {
@@ -998,7 +929,6 @@
 				003D9913193B27F900DA5B68 /* Notification */,
 				E9E9A9F3154AFF9D005D65E5 /* Topics */,
 				E1B2E1F52352F3A000DB0969 /* Compose */,
-				0085E5021821F3AA0059D454 /* VoteListViewController */,
 				E90BDC6C157DC87F00AB1567 /* PostTopicViewController */,
 				E9142DB01581247600E2F8CE /* PostMailViewController */,
 			);
@@ -1040,6 +970,19 @@
 				E162F1E42353349A007EED48 /* ComposeContentView.m */,
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		E188B2B6236731A7006D76D7 /* Vote */ = {
+			isa = PBXGroup;
+			children = (
+				E188B2B7236731BD006D76D7 /* VoteCell.h */,
+				E188B2B8236731BD006D76D7 /* VoteCell.m */,
+				E1DC2BAE236898BD006B5F7E /* BLTNVoteItem.h */,
+				E1DC2BAF236898BD006B5F7E /* BLTNVoteItem.m */,
+				E1DE30DA2369C58D001CBAF8 /* VoteOptionCell.h */,
+				E1DE30DB2369C58D001CBAF8 /* VoteOptionCell.m */,
+			);
+			name = Vote;
 			sourceTree = "<group>";
 		};
 		E198EAE52358B7840050B482 /* Views */ = {
@@ -1101,6 +1044,8 @@
 			children = (
 				E14E0474234638AB00AC0EAF /* TopicHeaderCell.h */,
 				E14E0475234638AB00AC0EAF /* TopicHeaderCell.m */,
+				E1B14D852367432600CF0AF9 /* TopTenCell.h */,
+				E1B14D862367432600CF0AF9 /* TopTenCell.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1200,6 +1145,7 @@
 		E973E5EE154C08A1004412CD /* TopTen */ = {
 			isa = PBXGroup;
 			children = (
+				E188B2B6236731A7006D76D7 /* Vote */,
 				E1B3D7312348351B00977139 /* Views */,
 				E973E5FF154C0A54004412CD /* TopTenViewController.h */,
 				E973E600154C0A54004412CD /* TopTenViewController.m */,
@@ -1302,8 +1248,6 @@
 				E93DE82515805FBE00D763D2 /* Notification.h */,
 				E93DE82615805FBE00D763D2 /* Notification.m */,
 				E973E5E8154BEB7B004412CD /* DataModel.h */,
-				0085E4FF1821ECB50059D454 /* Vote.h */,
-				0085E5001821ECB50059D454 /* Vote.m */,
 			);
 			name = DataModel;
 			sourceTree = "<group>";
@@ -1415,7 +1359,6 @@
 				00F4B78A1823D66E00C6331A /* [emc32].gif in Resources */,
 				00F4B7891823D66E00C6331A /* [emc31].gif in Resources */,
 				000575D218269AA700060E69 /* keyboard_switch@2x.png in Resources */,
-				0085E50A1821F4260059D454 /* VoteCellView.xib in Resources */,
 				000575C818269AA700060E69 /* keyboard_popup@2x.png in Resources */,
 				000575BC18269AA700060E69 /* keyboard_bg@2x.png in Resources */,
 				00F4B77A1823D66E00C6331A /* [emc18].gif in Resources */,
@@ -1512,7 +1455,6 @@
 				00F4B82F1823D66E00C6331A /* [ema3].gif in Resources */,
 				00F4B8151823D66E00C6331A /* [ema16].gif in Resources */,
 				00F4B7C01823D66E00C6331A /* [emb5].gif in Resources */,
-				0085E5161822294A0059D454 /* OptionCellView.xib in Resources */,
 				00F4B77D1823D66E00C6331A /* [emc20].gif in Resources */,
 				000575BD18269AA700060E69 /* keyboard_del.png in Resources */,
 				00F4B8171823D66E00C6331A /* [ema18].gif in Resources */,
@@ -1546,7 +1488,6 @@
 				00F4B7A51823D66E00C6331A /* [emc57].gif in Resources */,
 				00F4B80E1823D66E00C6331A /* [ema0].gif in Resources */,
 				00F4B77E1823D66E00C6331A /* [emc21].gif in Resources */,
-				0085E511182223120059D454 /* SingleVoteViewController.xib in Resources */,
 				00F4B7781823D66E00C6331A /* [emc16].gif in Resources */,
 				00F4B7721823D66E00C6331A /* [emc10].gif in Resources */,
 			);
@@ -1573,6 +1514,7 @@
 				"${BUILT_PRODUCTS_DIR}/MJExtension/MJExtension.framework",
 				"${BUILT_PRODUCTS_DIR}/Masonry/Masonry.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
+				"${BUILT_PRODUCTS_DIR}/YLProgressBar/YLProgressBar.framework",
 				"${BUILT_PRODUCTS_DIR}/YYCache/YYCache.framework",
 				"${BUILT_PRODUCTS_DIR}/YYImage/YYImage.framework",
 				"${BUILT_PRODUCTS_DIR}/YYText/YYText.framework",
@@ -1590,6 +1532,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MJExtension.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Masonry.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YLProgressBar.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YYCache.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YYImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YYText.framework",
@@ -1634,6 +1577,7 @@
 				E1B3D7362348358800977139 /* LoginViewController.m in Sources */,
 				E9E9A9EC154AFE9B005D65E5 /* WBUtil.m in Sources */,
 				E9E9A9ED154AFE9B005D65E5 /* GTMBase64.m in Sources */,
+				E188B2B9236731BE006D76D7 /* VoteCell.m in Sources */,
 				E1C5D05B2347883900453D15 /* NotificationCell.m in Sources */,
 				E9E9A9EE154AFE9B005D65E5 /* Hmacsha1.m in Sources */,
 				E9E9A9FD154B01C7005D65E5 /* BBSAPI.m in Sources */,
@@ -1644,6 +1588,7 @@
 				E18B04012347233A00092480 /* TopicsViewController.m in Sources */,
 				E1B3D7412348BDBD00977139 /* TopicViewController.m in Sources */,
 				E14E0470234624DE00AC0EAF /* BYRTableViewController.m in Sources */,
+				E1DE30DC2369C58D001CBAF8 /* VoteOptionCell.m in Sources */,
 				0005757C1826988100060E69 /* WUEmoticonsKeyboardKeyCell.m in Sources */,
 				E198EAE92358B7B60050B482 /* TopicPageView.m in Sources */,
 				E973E5FC154C092C004412CD /* RefreshTableHeaderView.m in Sources */,
@@ -1657,13 +1602,13 @@
 				E144EB40234A215C000818BF /* MailHeaderCell.m in Sources */,
 				E973E602154C0A54004412CD /* TopTenViewController.m in Sources */,
 				E91D85891578E77400FBDE75 /* BoardsViewController.m in Sources */,
+				E1DC2BB0236898BD006B5F7E /* BLTNVoteItem.m in Sources */,
 				E1B3D7442348C94400977139 /* ThreadCell.m in Sources */,
 				E9FEB5C8157B39D800801E7F /* AboutViewController.m in Sources */,
+				E1B14D872367432700CF0AF9 /* TopTenCell.m in Sources */,
 				E9956132157B51BE00DCFCAD /* MyBBS.m in Sources */,
 				000575801826988100060E69 /* WUEmoticonsKeyboardKeysPageFlowLayout.m in Sources */,
-				0085E510182223120059D454 /* SingleVoteViewController.m in Sources */,
 				E1BC83BC234589D100AFE908 /* TopicCell.m in Sources */,
-				0085E50B1821F4260059D454 /* VoteCellView.m in Sources */,
 				E14E0476234638AB00AC0EAF /* TopicHeaderCell.m in Sources */,
 				E90BDC70157DC8A000AB1567 /* PostTopicViewController.m in Sources */,
 				0005757B1826988100060E69 /* WUEmoticonsKeyboard.m in Sources */,
@@ -1683,16 +1628,12 @@
 				E1309DE3234CEC8500833BB3 /* BYREmotionParser.m in Sources */,
 				E11067412346E57900C7F5CC /* BYRCollectionViewController.m in Sources */,
 				E144EB3423499613000818BF /* NotificationListViewController.m in Sources */,
-				0085E51C182237D50059D454 /* LDProgressView.m in Sources */,
 				0005758B182698A200060E69 /* WUDemoKeyboardPressedCellPopupView.m in Sources */,
 				E1C5D05E2347889D00453D15 /* NotificationHeaderCell.m in Sources */,
 				E13416482345E02A00A6C408 /* Models.m in Sources */,
-				0085E5051821F3BE0059D454 /* VoteListViewController.m in Sources */,
-				0085E51D182237D50059D454 /* UIColor+RGBValues.m in Sources */,
 				E1C5D0612347CC4600453D15 /* BYRSession.m in Sources */,
 				E1B3D73923484E3E00977139 /* LoginInfoView.m in Sources */,
 				000575811826988100060E69 /* WUEmoticonsKeyboardToolsView.m in Sources */,
-				0085E5171822294A0059D454 /* OptionCellView.m in Sources */,
 				E1C5D0582347856900453D15 /* NotificationViewController.m in Sources */,
 				00D71E5717BE333E008460E1 /* AttachmentView.m in Sources */,
 				E112D158235327EB00C8BBE8 /* ComposeToolView.m in Sources */,
@@ -1700,7 +1641,6 @@
 				0038D58817BC0413002CC5ED /* FPActivityView.m in Sources */,
 				00F213AD17C1D7D70001EFD0 /* UIViewController+MJPopupViewController.m in Sources */,
 				E99B9D7C16D1D2EB00FC0A88 /* articleViewController.m in Sources */,
-				0085E5011821ECB50059D454 /* Vote.m in Sources */,
 				E1B3D73E234860BF00977139 /* ProtocolViewController.m in Sources */,
 				0005757F1826988100060E69 /* WUEmoticonsKeyboardKeyItemGroupView.m in Sources */,
 				E99B9D8116D1D2F500FC0A88 /* FTCoreTextView.m in Sources */,
@@ -1775,7 +1715,7 @@
 				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 17;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = UXQ4US7LL6;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1839,7 +1779,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 17;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = UXQ4US7LL6;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1894,7 +1834,7 @@
 				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 17;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = UXQ4US7LL6;
 				FRAMEWORK_SEARCH_PATHS = (

@@ -14,8 +14,8 @@
 
 + (NSDictionary *)mj_objectClassInArray {
     return @{
-        @"boards"   : [Board class],
-        @"sections" : [Board class],
+        @"boards"   : Board.class,
+        @"sections" : Board.class,
     };
 }
 
@@ -48,7 +48,7 @@
 @implementation TopicResponse
 
 + (NSDictionary *)mj_objectClassInArray {
-    return @{@"topics" : [Topic class]};
+    return @{@"topics" : Topic.class};
 }
 
 + (NSDictionary *)mj_replacedKeyFromPropertyName {
@@ -57,14 +57,28 @@
 
 @end
 
+
 @implementation MailResponse
 
 + (NSDictionary *)mj_objectClassInArray {
-    return @{@"mails" : [Mail class]};
+    return @{@"mails" : Mail.class};
 }
 
 + (NSDictionary *)mj_replacedKeyFromPropertyName {
     return @{@"mails" : @"mail"};
 }
 
+@end
+
+
+@implementation VoteResponse
+
++ (NSDictionary *)mj_objectClassInArray {
+    return @{@"votes" : Vote.class};
+}
+
+@end
+
+
+@implementation SingleVoteResponse
 @end
