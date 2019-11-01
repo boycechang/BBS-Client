@@ -55,9 +55,10 @@
         make.width.height.mas_equalTo(30);
     }];
     [self.authorTagLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.centerX.equalTo(self.headImageView);
-        make.width.mas_equalTo(25);
-        make.height.mas_equalTo(15);
+        make.centerX.equalTo(self.headImageView);
+        make.bottom.equalTo(self.headImageView).offset(4);
+        make.width.mas_equalTo(23);
+        make.height.mas_equalTo(13);
     }];
     
     [self.usernameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -157,9 +158,8 @@
         _authorTagLabel.adjustsFontForContentSizeCategory = YES;
         _authorTagLabel.font = [UIFont systemFontOfSize:8];
         _authorTagLabel.textColor = [UIColor whiteColor];
-        _authorTagLabel.backgroundColor = [UIColor systemBlueColor];
+        _authorTagLabel.backgroundColor = [[UIColor systemBlueColor] colorWithAlphaComponent:0.9];
         _authorTagLabel.textAlignment = NSTextAlignmentCenter;
-        
         _authorTagLabel.layer.cornerRadius = 4;
         _authorTagLabel.layer.masksToBounds = YES;
     }

@@ -178,6 +178,7 @@
 		3EDA686016BE5CF600137E99 /* UploadAttachmentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EDA685E16BE5CF600137E99 /* UploadAttachmentsViewController.m */; };
 		E11067412346E57900C7F5CC /* BYRCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E11067402346E57900C7F5CC /* BYRCollectionViewController.m */; };
 		E112D158235327EB00C8BBE8 /* ComposeToolView.m in Sources */ = {isa = PBXBuildFile; fileRef = E112D157235327EB00C8BBE8 /* ComposeToolView.m */; };
+		E124356F236C5F170005F69E /* em in Resources */ = {isa = PBXBuildFile; fileRef = E124356E236C5F170005F69E /* em */; };
 		E1309DE3234CEC8500833BB3 /* BYREmotionParser.m in Sources */ = {isa = PBXBuildFile; fileRef = E1309DE2234CEC8500833BB3 /* BYREmotionParser.m */; };
 		E13416482345E02A00A6C408 /* Models.m in Sources */ = {isa = PBXBuildFile; fileRef = E13416472345E02A00A6C408 /* Models.m */; };
 		E144EB3123498E91000818BF /* BYRUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = E144EB3023498E91000818BF /* BYRUtil.m */; };
@@ -439,6 +440,7 @@
 		E11067402346E57900C7F5CC /* BYRCollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BYRCollectionViewController.m; sourceTree = "<group>"; };
 		E112D156235327EB00C8BBE8 /* ComposeToolView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ComposeToolView.h; sourceTree = "<group>"; };
 		E112D157235327EB00C8BBE8 /* ComposeToolView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ComposeToolView.m; sourceTree = "<group>"; };
+		E124356E236C5F170005F69E /* em */ = {isa = PBXFileReference; lastKnownFileType = folder; path = em; sourceTree = "<group>"; };
 		E1309DE1234CEC8500833BB3 /* BYREmotionParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BYREmotionParser.h; sourceTree = "<group>"; };
 		E1309DE2234CEC8500833BB3 /* BYREmotionParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BYREmotionParser.m; sourceTree = "<group>"; };
 		E13416462345E02A00A6C408 /* Models.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Models.h; sourceTree = "<group>"; };
@@ -629,7 +631,10 @@
 		0005759518269AA700060E69 /* Keyboard */ = {
 			isa = PBXGroup;
 			children = (
-				00E2B910182889740024DB3E /* emotions */,
+				E124356E236C5F170005F69E /* em */,
+				00F4B6A61823D66D00C6331A /* emc */,
+				00F4B6E21823D66D00C6331A /* emb */,
+				00F4B7461823D66E00C6331A /* ema */,
 				0005759618269AA700060E69 /* keyboard_bg.png */,
 				0005759718269AA700060E69 /* keyboard_bg@2x.png */,
 				0005759818269AA700060E69 /* keyboard_del.png */,
@@ -692,16 +697,6 @@
 				E973E5F3154C08EA004412CD /* CustomTableView */,
 			);
 			name = OpenSourceUI;
-			sourceTree = "<group>";
-		};
-		00E2B910182889740024DB3E /* emotions */ = {
-			isa = PBXGroup;
-			children = (
-				00F4B6A61823D66D00C6331A /* emc */,
-				00F4B6E21823D66D00C6331A /* emb */,
-				00F4B7461823D66E00C6331A /* ema */,
-			);
-			name = emotions;
 			sourceTree = "<group>";
 		};
 		00F213A717C1D7C40001EFD0 /* MJPopupView */ = {
@@ -776,8 +771,7 @@
 				00F4B6E01823D66D00C6331A /* [emc8].gif */,
 				00F4B6E11823D66D00C6331A /* [emc9].gif */,
 			);
-			name = emc;
-			path = ../emc;
+			path = emc;
 			sourceTree = "<group>";
 		};
 		00F4B6E21823D66D00C6331A /* emb */ = {
@@ -809,8 +803,7 @@
 				00F4B6FA1823D66D00C6331A /* [emb8].gif */,
 				00F4B6FB1823D66D00C6331A /* [emb9].gif */,
 			);
-			name = emb;
-			path = ../emb;
+			path = emb;
 			sourceTree = "<group>";
 		};
 		00F4B7461823D66E00C6331A /* ema */ = {
@@ -859,8 +852,7 @@
 				00F4B76F1823D66E00C6331A /* [ema8].gif */,
 				00F4B7701823D66E00C6331A /* [ema9].gif */,
 			);
-			name = ema;
-			path = ../ema;
+			path = ema;
 			sourceTree = "<group>";
 		};
 		3EDA685C16BE5CC400137E99 /* UploadAttachmentsViewController */ = {
@@ -1399,6 +1391,7 @@
 				00F4B7C41823D66E00C6331A /* [emb9].gif in Resources */,
 				00F4B8111823D66E00C6331A /* [ema12].gif in Resources */,
 				00F4B79C1823D66E00C6331A /* [emc49].gif in Resources */,
+				E124356F236C5F170005F69E /* em in Resources */,
 				00F4B8141823D66E00C6331A /* [ema15].gif in Resources */,
 				000575C518269AA700060E69 /* keyboard_grid_bg.png in Resources */,
 				00F4B7791823D66E00C6331A /* [emc17].gif in Resources */,
