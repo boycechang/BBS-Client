@@ -15,6 +15,8 @@
 
 @interface VoteCell ()
 
+@property (nonatomic, strong) UIView *innerContentView;
+
 @property (nonatomic, strong) UILabel *topicTitleLabel;
 @property (nonatomic, strong) UILabel *voteCountLabel;
 @property (nonatomic, strong) UILabel *voteCountLabel2;
@@ -26,6 +28,14 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        self.backgroundColor = [UIColor clearColor];
+        self.contentView.backgroundColor = [UIColor clearColor];
+        
+        self.layer.shadowOffset = CGSizeMake(0.f, 0.f);
+        self.layer.shadowColor = [UIColor blackColor].CGColor;
+        self.layer.shadowOpacity = 0.12f;
+        self.layer.shadowRadius = 7.f;
+        
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         [self setupViews];
     }
@@ -33,20 +43,25 @@
 }
 
 - (void)setupViews {
-    [self.contentView addSubview:self.topicTitleLabel];
+    [self.contentView addSubview:self.innerContentView];
     
-    [self.contentView addSubview:self.voteCountLabel];
-    [self.contentView addSubview:self.voteCountLabel2];
+    [self.innerContentView addSubview:self.topicTitleLabel];
+    [self.innerContentView addSubview:self.voteCountLabel];
+    [self.innerContentView addSubview:self.voteCountLabel2];
+    
+    [self.innerContentView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.contentView).insets(UIEdgeInsetsMake(8, 15, 8, 15));
+    }];
     
     [self.topicTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.top.equalTo(self.contentView).offset(15);
-        make.right.equalTo(self.contentView).offset(-15);
+        make.left.top.equalTo(self.innerContentView).offset(15);
+        make.right.equalTo(self.innerContentView).offset(-15);
     }];
     
     [self.voteCountLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.topicTitleLabel.mas_bottom).offset(8);
-        make.left.equalTo(self.contentView).offset(15);
-        make.bottom.equalTo(self.contentView).offset(-15);
+        make.left.equalTo(self.innerContentView).offset(15);
+        make.bottom.equalTo(self.innerContentView).offset(-15);
     }];
     
     [self.voteCountLabel2 mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -63,6 +78,16 @@
 }
 
 #pragma mark - getter
+
+- (UIView *)innerContentView {
+    if (!_innerContentView) {
+        _innerContentView = [UIView new];
+        _innerContentView.backgroundColor = [UIColor tertiarySystemBackgroundColor];
+        _innerContentView.layer.cornerRadius = 10.f;
+        _innerContentView.layer.masksToBounds = YES;
+    }
+    return _innerContentView;
+}
 
 - (UILabel *)topicTitleLabel {
     if (!_topicTitleLabel) {

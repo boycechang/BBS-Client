@@ -107,7 +107,7 @@
         _progressBar = [YLProgressBar new];
         _progressBar.type = YLProgressBarTypeFlat;
         _progressBar.trackTintColor = [UIColor tertiarySystemBackgroundColor];
-        _progressBar.progressTintColor = [UIColor secondarySystemFillColor];
+        _progressBar.progressTintColor = [UIColor systemGray3Color];
         _progressBar.uniformTintColor = YES;
         _progressBar.progressStretch = NO;
         _progressBar.hideStripes = YES;

@@ -53,6 +53,7 @@
     
     self.converter = [BYRBBCodeToYYConverter new];
     self.converter.actionDelegate = self;
+    [self.tableView.tableFooterView setFrame:CGRectMake(0, 0, 0, 60)];
     [self.tableView registerClass:ThreadCell.class
            forCellReuseIdentifier:ThreadCell.class.description];
     [self.tableView registerClass:ThreadCommentCell.class

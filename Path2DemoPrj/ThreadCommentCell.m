@@ -156,9 +156,9 @@
         _authorTagLabel = [UILabel new];
         _authorTagLabel.text = @"楼主";
         _authorTagLabel.adjustsFontForContentSizeCategory = YES;
-        _authorTagLabel.font = [UIFont systemFontOfSize:8];
+        _authorTagLabel.font = [UIFont systemFontOfSize:7];
         _authorTagLabel.textColor = [UIColor whiteColor];
-        _authorTagLabel.backgroundColor = [[UIColor systemBlueColor] colorWithAlphaComponent:0.9];
+        _authorTagLabel.backgroundColor = [UIColor systemBlueColor];
         _authorTagLabel.textAlignment = NSTextAlignmentCenter;
         _authorTagLabel.layer.cornerRadius = 4;
         _authorTagLabel.layer.masksToBounds = YES;

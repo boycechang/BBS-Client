@@ -97,13 +97,14 @@
     
     // 补充剩余的attachment
     for (Attachment *att in self.currentAttachments) {
+        if ([self.usedAttachments containsObject:att]) {
+            continue;
+        }
+        
         if (att.thumbnail_middle.length) {
-            if (![self.usedAttachments containsObject:att]) {
-                // 处理图片附件，未处理过的追加到末尾
-                BYRImageAttachmentModel *model = [self generateImageAttachmentModel:att];
-                [self.sotedAttachmentModels addObject:model];
-                [codeString.attributedString appendAttributedString:model.attachmentText];
-            }
+            BYRImageAttachmentModel *model = [self generateImageAttachmentModel:att];
+            [self.sotedAttachmentModels addObject:model];
+            [codeString.attributedString appendAttributedString:model.attachmentText];
         } else {
             //处理非图片附件
             [codeString.attributedString appendAttributedString:[[NSAttributedString alloc] initWithString:@"\n" attributes:@{NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleBody],
@@ -204,22 +205,38 @@
 - (NSAttributedString *)getAttributedTextForElement:(BBElement *)element {
     if ([[element.tag lowercaseString] containsString:@"upload="]) {
         NSInteger index = [[element.tag substringFromIndex:7] integerValue];
-        if (index >= self.currentAttachments.count) {
+        if (index > self.currentAttachments.count) {
             return nil;
         }
         
         Attachment *att = [self.currentAttachments objectAtIndex:index - 1];
-        if (!att.thumbnail_middle.length) {
-            return nil;
-        }
-        
         if (![self.usedAttachments containsObject:att]) {
             [self.usedAttachments addObject:att];
         }
         
-        BYRImageAttachmentModel *model = [self generateImageAttachmentModel:att];
-        [self.sotedAttachmentModels addObject:model];
-        return model.attachmentText;
+        if (att.thumbnail_middle.length) {
+            BYRImageAttachmentModel *model = [self generateImageAttachmentModel:att];
+            [self.sotedAttachmentModels addObject:model];
+            return model.attachmentText;
+        } else {
+            CGFloat width = self.containerWidth > 300 ? 300 : self.containerWidth;
+            CGFloat height = 80;
+            AttachmentView *attachmentView = [[AttachmentView alloc] initWithFrame:CGRectMake(0, 0, width, height)];
+            [attachmentView updateWithAttachment:att];
+            
+            NSMutableAttributedString *attachText = [NSMutableAttributedString yy_attachmentStringWithContent:attachmentView contentMode:UIViewContentModeCenter attachmentSize:attachmentView.frame.size alignToFont:[UIFont preferredFontForTextStyle:UIFontTextStyleBody] alignment:YYTextVerticalAlignmentTop];
+            
+            YYTextHighlight *highlight = [YYTextHighlight new];
+            __weak typeof (self) wself = self;
+            highlight.tapAction = ^(UIView *containerView, NSAttributedString *text, NSRange range, CGRect rect) {
+                if ([wself.actionDelegate respondsToSelector:@selector(BBCodeDidClickURL:)]) {
+                    [wself.actionDelegate BBCodeDidClickURL:att.url];
+                }
+            };
+            [attachText yy_setTextHighlight:highlight range:attachText.yy_rangeOfAll];
+            return attachText;
+        }
+        
     } else if ([[element.tag lowercaseString] containsString:@"img="]) {
         NSString *url = [element.tag substringFromIndex:4];
         
