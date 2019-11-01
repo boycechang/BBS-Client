@@ -76,6 +76,14 @@
 
 #pragma mark - private
 
+- (void)setReplysNewCount:(NSInteger)replysNewCount {
+    _replysNewCount = replysNewCount >= 0 ? replysNewCount : 0;
+}
+
+- (void)setAtsNewCount:(NSInteger)atsNewCount {
+    _atsNewCount = atsNewCount >= 0 ? atsNewCount : 0;
+}
+
 - (void)refreshNotificationCount {
     [[BYRNetworkManager sharedInstance] GET:@"/refer/reply/info.json" parameters:nil responseClass:nil success:^(NSURLSessionDataTask * _Nonnull task, id _Nullable responseObject) {
         self.replysNewCount = [[responseObject objectForKey:@"new_count"] intValue];
