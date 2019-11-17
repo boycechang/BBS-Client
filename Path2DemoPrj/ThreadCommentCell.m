@@ -10,7 +10,6 @@
 #import "ThreadCell.h"
 #import <Masonry.h>
 #import "Models.h"
-#import "BBSAPI.h"
 #import <UIImageView+WebCache.h>
 #import <YYText.h>
 #import "BYRBBCodeToYYConverter.h"

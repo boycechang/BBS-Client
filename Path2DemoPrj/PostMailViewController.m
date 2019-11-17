@@ -7,6 +7,7 @@
 //
 
 #import "PostMailViewController.h"
+#import <MBProgressHUD.h>
 
 @implementation PostMailViewController
 @synthesize rootMail;
@@ -14,8 +15,7 @@
 @synthesize postType;
 @synthesize keyboardToolbar;
 
-- (id)init
-{
+- (id)init {
     self = [super init];
     if (self) {
     }
@@ -43,8 +43,7 @@
     if ([[[UIDevice currentDevice]systemVersion]floatValue] >= 7.0) {
         [self setAutomaticallyAdjustsScrollViewInsets:NO];
         postScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height - 64)];
-    }
-    else {
+    } else {
         postScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 64)];
     }
 
@@ -244,13 +243,13 @@
 -(BOOL)didPost
 {
     if (postType == 0) {
-        return [BBSAPI postMail:myBBS.mySelf User:postUser.text Title:postTitle.text Content:postContent.text Reid:0];
+//        return [BBSAPI postMail:myBBS.mySelf User:postUser.text Title:postTitle.text Content:postContent.text Reid:0];
     }
     if (postType == 1) {
-        return [BBSAPI replyMail:myBBS.mySelf User:postUser.text Title:postTitle.text Content:postContent.text Type:0 ID:rootMail.index];
+//        return [BBSAPI replyMail:myBBS.mySelf User:postUser.text Title:postTitle.text Content:postContent.text Type:0 ID:rootMail.index];
     }
     if (postType == 2) {
-        return [BBSAPI postMail:myBBS.mySelf User:postUser.text Title:postTitle.text Content:postContent.text Reid:0];
+//        return [BBSAPI postMail:myBBS.mySelf User:postUser.text Title:postTitle.text Content:postContent.text Reid:0];
     }
     return 0;
 }

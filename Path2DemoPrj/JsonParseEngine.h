@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DataModel.h"
+#import "Models.h"
 
 @interface JsonParseEngine : NSObject
 

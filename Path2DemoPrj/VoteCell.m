@@ -9,7 +9,6 @@
 #import "VoteCell.h"
 #import <Masonry.h>
 #import "Models.h"
-#import "BBSAPI.h"
 #import <UIImageView+WebCache.h>
 #import "BYRUtil.h"
 

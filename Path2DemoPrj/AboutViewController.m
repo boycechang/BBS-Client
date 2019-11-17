@@ -7,7 +7,6 @@
 //
 
 #import "AboutViewController.h"
-#import "UIViewController+MJPopupViewController.h"
 #include <sys/types.h>
 #include <sys/sysctl.h>
 #import <SDImageCache.h>

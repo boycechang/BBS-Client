@@ -28,7 +28,7 @@
     [baseurl appendFormat:@"appkey=%@", APPKEY];
     [baseurl appendFormat:@"&board=%@", board];
     [baseurl appendFormat:@"&count=50&page=%i", start/50 + 1];
-    [baseurl appendFormat:@"&title1=%@", [key URLEncodedString]];
+//    [baseurl appendFormat:@"&title1=%@", [key URLEncodedString]];
     
 //    NSURL *url = [NSURL URLWithString:baseurl];
 //    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
@@ -59,7 +59,7 @@
     NSMutableString * baseurl = [APIADDR mutableCopy];
     [baseurl appendString:@"/search/board.json?"];
     [baseurl appendFormat:@"appkey=%@", APPKEY];
-    [baseurl appendFormat:@"&board=%@", [key URLEncodedString]];
+//    [baseurl appendFormat:@"&board=%@", [key URLEncodedString]];
     
 //    NSURL *url = [NSURL URLWithString:baseurl];
 //    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];

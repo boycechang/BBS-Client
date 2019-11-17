@@ -20,9 +20,9 @@
     UIScrollView * postScrollView;
     
     int postType; // 发表类型，0发表新文章，1回帖，2修改文章
-    MyBBS * myBBS;
     id __unsafe_unretained mDelegate;
 }
+
 @property(nonatomic, strong)Topic * rootTopic;
 @property(nonatomic, strong)NSString * boardName;
 @property(nonatomic, assign)int postType;

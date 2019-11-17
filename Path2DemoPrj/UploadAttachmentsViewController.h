@@ -8,14 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "BBSAPI.h"
-#import "MyBBS.h"
 #import "AppDelegate.h"
 #import "PostTopicViewController.h"
+#import "FPActivityView.h"
+#import <MBProgressHUD.h>
 
 @interface UploadAttachmentsViewController : UIViewController<UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIActionSheetDelegate, UITableViewDelegate, UITableViewDataSource>
 {
     UIImagePickerController *imagePicker;
-    MyBBS * myBBS;
     int postType;
     NSArray *attList;
     UITableView *attTable;

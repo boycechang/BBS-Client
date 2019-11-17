@@ -7,9 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MyBBS.h"
-
-@class PushNotificationWindow;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate> {
 

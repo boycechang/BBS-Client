@@ -31,8 +31,8 @@
     Mail * rootMail;
     NSString * sentToUser;
     int postType; // 发表类型，0发新邮件，1回复邮件，2已指定发件人
-    MyBBS * myBBS;
 }
+
 @property(nonatomic, strong)Mail * rootMail;
 @property(nonatomic, strong)NSString * sentToUser;
 @property(nonatomic, assign)int postType;

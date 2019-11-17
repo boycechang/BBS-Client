@@ -10,7 +10,6 @@
 #import <YLProgressBar/YLProgressBar.h>
 #import <Masonry.h>
 #import "Models.h"
-#import "BBSAPI.h"
 #import "BYRUtil.h"
 
 @interface VoteOptionCell ()

@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "WBUtil.h"
 #import "JsonParseEngine.h"
 #import <SystemConfiguration/SCNetworkReachability.h>
 #import <netinet/in.h>

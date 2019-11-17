@@ -7,7 +7,9 @@
 //
 
 #import "UploadAttachmentsViewController.h"
+
 @implementation UploadAttachmentsViewController
+
 @synthesize postType;
 @synthesize attList;
 @synthesize board;
@@ -15,16 +17,7 @@
 @synthesize postId;
 @synthesize photos = _photos;
 
-- (id)init
-{
-    self = [super init];
-    if (self) {
-    }
-    return self;
-}
-
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     CGRect rect = [[UIScreen mainScreen] bounds];
     [self.view setFrame:CGRectMake(0, 0, rect.size.width, rect.size.height - 64)];
@@ -265,9 +258,9 @@
     UIImage * newImage = [self image:self.image fillSize:CGSizeMake(self.image.size.width, self.image.size.height)];
     
     if (postType==0 || postType==1) {//新帖或回复
-        self.attList = [BBSAPI postImage:myBBS.mySelf Board:board ID:0 Image:newImage ImageName:imageFileName];
+//        self.attList = [BBSAPI postImage:myBBS.mySelf Board:board ID:0 Image:newImage ImageName:imageFileName];
     } else {  //修改
-        self.attList = [BBSAPI postImage:myBBS.mySelf Board:board ID:postId Image:newImage ImageName:imageFileName];
+//        self.attList = [BBSAPI postImage:myBBS.mySelf Board:board ID:postId Image:newImage ImageName:imageFileName];
     }
 
     [HUD removeFromSuperview];
