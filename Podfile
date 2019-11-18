@@ -6,19 +6,27 @@ inhibit_all_warnings!
 target 'BYR' do
   use_frameworks!
 
-pod 'Masonry'
-pod 'SDWebImage'
-pod 'MJExtension'
+# Networking
 pod 'AFNetworking'
+pod 'SDWebImage'
+pod 'SDWebImageWebPCoder'
+
+# Tools
+pod 'MJExtension'
+pod 'Masonry'
 pod 'YYCache'
-pod 'YYText'
-pod 'BlocksKit'
-pod 'BBCodeString'
-pod 'MBProgressHUD'
-pod 'KSPhotoBrowser'
 pod 'YYImage'
+pod 'BlocksKit'
+
+# Parser
 pod 'Down'
-pod 'BulletinBoard'
+pod 'BBCodeString'
+
+# UI
+pod 'YYText'
 pod 'YLProgressBar'
+pod 'MBProgressHUD'
+pod 'BulletinBoard'
+pod 'KSPhotoBrowser'
 
 end

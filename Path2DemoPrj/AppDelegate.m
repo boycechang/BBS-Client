@@ -8,8 +8,8 @@
 //
 
 #import "AppDelegate.h"
-#import <QuartzCore/QuartzCore.h>
 #import "HomeTabBarController.h"
+#import <SDWebImageWebPCoder/SDWebImageWebPCoder.h>
 
 @interface AppDelegate ()
 @property (nonatomic, strong) IBOutlet HomeViewController *homeVC;
@@ -20,6 +20,10 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [UINavigationBar appearance].prefersLargeTitles = YES;
     [UINavigationBar appearance].tintColor = [UIColor systemBlueColor];
+    
+    SDImageWebPCoder *webPCoder = [SDImageWebPCoder sharedCoder];
+    [[SDImageCodersManager sharedManager] addCoder:webPCoder];
+    
     return YES;
 }
 
