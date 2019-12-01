@@ -215,7 +215,7 @@
 - (void)showSingleVote:(Vote *)vote {
     BLTNVoteItem *voteItem = [[BLTNVoteItem alloc] initWithTitle:vote.title];
     [voteItem.headImageView sd_setImageWithURL:vote.user.face_url];
-    voteItem.usernameLabel.text = vote.user.user_name;
+    voteItem.usernameLabel.text = vote.user.id;
     [voteItem updateWithVote:vote];
     voteItem.alternativeButtonTitle = vote.type == 0 ? @"单选" : [NSString stringWithFormat:@"可选%i项", vote.limit];
     voteItem.actionButtonTitle = (vote.is_end ? @"已结束" : (vote.voted ? @"已投票" : @"投票"));
